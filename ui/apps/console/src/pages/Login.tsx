@@ -105,7 +105,7 @@ export default function Login() {
     <>
       <ScreenIntro
         eyebrow="Sign in"
-        title="Sign in to ShellHub"
+        title="Sign in to CloudMateHub"
         lead="Access your devices, sessions, and security rules from a single dashboard."
       />
 

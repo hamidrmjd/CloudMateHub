@@ -122,7 +122,7 @@ export default function AccountSecurity() {
         {isSsoUser ? (
           <SettingsField
             title="Managed by your identity provider"
-            description="You sign in through SSO, so your password and multi-factor authentication are set with your identity provider, not in ShellHub."
+            description="You sign in through SSO, so your password and multi-factor authentication are set with your identity provider, not in CloudMateHub."
           >
             <span className="px-1.5 py-0.5 text-2xs font-mono font-semibold uppercase tracking-wider rounded bg-primary/10 text-primary border border-primary/20">
               SSO

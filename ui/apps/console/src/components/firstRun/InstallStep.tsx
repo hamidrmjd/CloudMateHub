@@ -58,7 +58,7 @@ export default function InstallStep({
           )}
           {"\n"}
           <span className="text-text-secondary">
-            To accept this device, open the ShellHub console and enter this
+            To accept this device, open the CloudMateHub console and enter this
             code:
           </span>
           {"\n\n      "}

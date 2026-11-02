@@ -41,7 +41,7 @@ export default function AddDevice() {
         icon={<PlusIcon className="w-6 h-6" />}
         overline={overline}
         title="Add Device"
-        description="Install the ShellHub agent to connect a device to your namespace"
+        description="Install the CloudMateHub agent to connect a device to your namespace"
       />
 
       <nav

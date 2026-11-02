@@ -45,7 +45,7 @@ export default function BrowserEnrollDialog({
       onConfirm={handleConfirm}
       icon={<FingerPrintIcon />}
       title="Register this browser"
-      description="To connect from here, ShellHub registers this browser as an SSH identity: a key that never leaves it. You can revoke it any time in SSH Identities."
+      description="To connect from here, CloudMateHub registers this browser as an SSH identity: a key that never leaves it. You can revoke it any time in SSH Identities."
       confirmLabel="Register and connect"
       variant="primary"
       errorMessage={error}

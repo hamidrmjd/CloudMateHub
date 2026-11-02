@@ -48,3 +48,13 @@ docs/adr
 .claude/rules
 .claude/hooks
 .claude/skills
+
+# CloudMateHub private integration credentials
+deployments/.secrets/
+
+# Local deployment output and private runtime state
+deployments/*.log
+deployments/services.json
+**/__pycache__/
+**/*.pyc
+integrations/wgdashboard/*.db

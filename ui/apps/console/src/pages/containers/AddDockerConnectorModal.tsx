@@ -32,20 +32,20 @@ function AddDockerConnectorModal({
       onClose={onClose}
       icon={<CubeIcon />}
       title="Register a Docker host"
-      description="Install the ShellHub Connector on the host to bring its containers into ShellHub."
+      description="Install the CloudMateHub Connector on the host to bring its containers into CloudMateHub."
     >
       <div className="space-y-5">
         <p className="text-sm text-text-secondary leading-relaxed">
-          In order to add Docker containers to ShellHub, you need to install the
-          ShellHub Connector on the Docker host.
+          In order to add Docker containers to CloudMateHub, you need to install the
+          CloudMateHub Connector on the Docker host.
         </p>
 
         {legacy ? (
           <>
             <p className="text-sm text-text-secondary leading-relaxed">
-              The easiest way to install the ShellHub Connector is with our
+              The easiest way to install the CloudMateHub Connector is with our
               automatic one-line installation script, which connects to the
-              Docker API and exposes the running containers within ShellHub.
+              Docker API and exposes the running containers within CloudMateHub.
             </p>
 
             <div>

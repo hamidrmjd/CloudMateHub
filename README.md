@@ -1,109 +1,100 @@
-<p align="center">
-  <a href="https://shellhub.io">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset=".github/assets/logo-dark.svg">
-      <img src=".github/assets/logo-light.svg" alt="ShellHub" width="240">
-    </picture>
-  </a>
-</p>
+# CloudMateHub
 
-<p align="center">
-  <strong>Centralized SSH for Linux devices and servers behind NAT and firewalls.</strong>
-</p>
+A self-hosted workspace for remote Linux device access, built on **ShellHub Community v0.27.0**. CloudMateHub adds its own identity, teal/slate visual system, responsive sign-in/setup layouts and console styling while retaining the upstream API and agent compatibility.
 
-<p align="center">
-  <a href="https://github.com/shellhub-io/shellhub/releases/latest"><img src="https://img.shields.io/github/v/release/shellhub-io/shellhub" alt="Latest release"></a>
-  <a href="LICENSE.md"><img src="https://img.shields.io/github/license/shellhub-io/shellhub" alt="Apache 2.0 license"></a>
-  <a href="https://hub.docker.com/r/shellhubio/agent"><img src="https://img.shields.io/docker/pulls/shellhubio/agent" alt="Docker pulls"></a>
-  <a href="https://github.com/shellhub-io/shellhub/actions/workflows/qa.yml"><img src="https://github.com/shellhub-io/shellhub/actions/workflows/qa.yml/badge.svg" alt="QA"></a>
-</p>
+## Run locally
 
-<p align="center">
-  <a href="https://shellhub.io">Website</a> ·
-  <a href="https://docs.shellhub.io">Documentation</a> ·
-  <a href="https://cloud.shellhub.io">ShellHub Cloud</a> ·
-  <a href="https://github.com/shellhub-io/shellhub/discussions">Discussions</a>
-</p>
-
-ShellHub is an SSH gateway that ties every login to a person on your team. A small agent on each
-device dials out to the ShellHub server, and you reach the device through the server with `ssh`,
-`scp`, `sftp` or the browser. The device needs no public IP or inbound port, whether it is a
-server, a cloud instance or an embedded Linux device in the field.
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/screenshot-dark.png">
-  <img src=".github/assets/screenshot-light.png" alt="The ShellHub console listing devices">
-</picture>
-
-## Quickstart
-
-**ShellHub Cloud.** Create a free account at [cloud.shellhub.io](https://cloud.shellhub.io). The
-console walks you through your first device.
-
-**Self-hosted.** You need Docker with Compose, and ports 80 and 22 free on the host:
+Requires Docker Desktop on this Mac, or Docker Engine + Compose on Ubuntu.
 
 ```sh
-git clone -b v0.27.0 https://github.com/shellhub-io/shellhub.git
-cd shellhub
-make start
+./deployments/shellhub build
+./deployments/shellhub start
+./deployments/shellhub status
+./deployments/shellhub stop
 ```
 
-Open `http://<your-server>/setup` to create the admin account and its namespace, the group that
-holds your devices and the people who can reach them. The
-[deployment guide](https://docs.shellhub.io/self-hosted/deploying) covers HTTPS and production
-settings.
+Open **http://localhost:8080**. SSH ingress uses **localhost:2222**. Local bindings are loopback-only. `stop` preserves application data. Use the configured `localhost` hostname, not an unconfigured IP Host header.
 
-**Add a device.** Run the installer on the device:
+The source directory, Compose project (`shellhub-custom`), package imports and protocol identifiers retain their existing names for compatibility. The visible product is CloudMateHub.
 
-```sh
-curl -sSf http://<your-server>/install.sh | sh
+## Architecture picture
+
+![CloudMateHub architecture](docs/architecture/assets/cloudmatehub-architecture.png)
+
+[Scalable SVG](docs/architecture/assets/cloudmatehub-architecture.svg) · [Mermaid source](docs/architecture/overview.mmd)
+
+```mermaid
+flowchart LR
+    Browser["Browser · CloudMateHub console"] -->|"HTTP / WebSocket · localhost:8080"| Gateway
+    SSH["SSH / SCP / SFTP client"] -->|"localhost:2222 → server:2222"| Server
+    subgraph Stack["Local Docker Compose · shellhub-custom"]
+      Gateway["gateway · Go + Caddy"] -->|"UI and config"| UI["ui · static-web-server"]
+      Gateway -->|"API + terminal + tunnel routes"| Server["server · Go / Echo
+API + SSH + worker"]
+      Server -->|"Durable records"| PG[("PostgreSQL 18")]
+      Server -->|"Cache + jobs"| Redis[("Valkey · Redis protocol")]
+    end
+    Agent["Linux device agent
+not deployed in this local stack"] -->|"Outbound reverse tunnel via gateway"| Gateway
+    Server -.->|"Session carried over established tunnel"| Agent
+
 ```
 
-The agent prints a pairing code. Enter it in the console to pair the device, then open a shell
-from the console or from any SSH client:
+The browser reaches the gateway, which serves the UI and forwards API/terminal/tunnel requests to the Go server. Native SSH clients connect directly to the server's published SSH port. The device agent initiates an outbound reverse connection; it is not an extra service in the default local stack.
 
-```sh
-ssh <user>@<namespace>.<device>@<your-server>
-```
+The server owns **API + authorization + SSH/tunnel/session coordination + an in-process Asynq worker**. PostgreSQL stores durable records; Valkey supplies a Redis-compatible cache and queue. A separate worker or OpenAPI container is not part of this local production stack.
 
-To enroll many devices without pairing each one, create a provisioning key under **Add Device**
-→ **Fleet** and pass it to the installer.
+## Source layout
 
-## Features
+| Path | Responsibility |
+| --- | --- |
+| `ui/apps/console` | React/TypeScript console; hooks, stores, pages and browser terminal |
+| `ui/packages/design-system` | Shared primitives; console overrides provide CloudMateHub styling |
+| `server/api/routes`, `services`, `store/pg` | HTTP adapters → business operations → PostgreSQL |
+| `server/ssh`, `server/app` | SSH/tunnels/session lifecycle and process composition |
+| `gateway` | Go/Caddy HTTP routing and optional TLS |
+| `agent` | Managed-host agent; device identity and outbound tunnels |
+| `pkg` | Shared models, API, cache and job contracts |
+| `openapi` | API specification and build-time client generation |
+| `deployments` | Source-build overrides, platform examples and checks |
+| `docs/architecture` | Detailed architecture notes, diagrams and cleanup policy |
 
-- **Standard SSH.** OpenSSH, PuTTY, `scp`, `sftp` and port forwarding work unchanged.
-- **Web terminal.** Open a shell on any device from the console.
-- **SSH Identities.** Every SSH login belongs to a person on your team, not to a key copied into
-  `authorized_keys`, and it works with the plain `ssh` client, with no wrapper to install. Remove
-  someone from the team and their access ends on every device at once.
-- **Access Policies.** Default-deny rules for who reaches which devices and as which Linux user,
-  managed in one place. A policy can also require a fresh sign-in before each session.
-- **Sessions.** ShellHub logs every connection with the user, the source IP and the device.
-- **Tags.** [Group devices](https://docs.shellhub.io/user-guides/devices/tagging%20devices) and
-  filter by tag.
-- **Platforms.** Packages for [Yocto](https://docs.shellhub.io/overview/supported-platforms/yocto),
-  [Buildroot](https://docs.shellhub.io/overview/supported-platforms/buildroot),
-  [FreeBSD](https://docs.shellhub.io/overview/supported-platforms/freebsd) and
-  [Snap](https://docs.shellhub.io/overview/supported-platforms/snap).
+## Read the architecture
 
-## Editions
+- [System overview](docs/architecture/01%20System%20Overview.md)
+- [Console and design](docs/architecture/02%20Console%20and%20Design.md)
+- [Server and domain](docs/architecture/03%20Server%20and%20Domain.md)
+- [Gateway and connections](docs/architecture/04%20Gateway%20and%20Connections.md)
+- [Device agent](docs/architecture/05%20Device%20Agent.md)
+- [Data and trust](docs/architecture/06%20Data%20and%20Trust.md)
+- [Development and deployment](docs/architecture/07%20Development%20and%20Deployment.md)
 
-| Edition | Runs on | Adds |
-|---------|---------|------|
-| Community | Your servers | This repository, Apache 2.0 |
-| Cloud | Ours, shared | MFA, server-side recording, web endpoints, more namespaces, free to start |
-| Enterprise | Ours, dedicated to you | MFA, server-side recording, web endpoints, more namespaces, SAML SSO |
+**Obsidian:** open the `CloudMateHub` vault at `../CloudMateHub/CloudMateHub`, then open `CloudMateHub Architecture.md` or `CloudMateHub Architecture.canvas`. The vault includes linked notes for Graph view, editable canvas connections, Mermaid diagrams and PNG/SVG attachments.
 
-See [editions](https://docs.shellhub.io/overview/editions) for the full comparison.
+## VPN / WireGuard
 
-## Contributing
+**VPN → WireGuard** adds personal `.conf` downloads/QR codes, instance-admin peer assignment, and the embedded **WGDashboard 4.3.4** management workspace. Ordinary users receive only their assigned configurations; management is checked on the backend. Namespace admin roles alone do not grant instance management.
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) for the development setup and how to send a change. Ask
-questions and share ideas in [Discussions](https://github.com/shellhub-io/shellhub/discussions);
-report bugs in [Issues](https://github.com/shellhub-io/shellhub/issues). Security reports go
-through [SECURITY.md](SECURITY.md).
+[Integration, upstream feature coverage and Ubuntu requirements](integrations/wgdashboard/README.md).
 
-## License
+This is local management preparation: a reachable Ubuntu host and VPN endpoint are still required. No public management or VPN UDP port is enabled on this Mac. Unassigning a download does not revoke an already-installed peer; restrict/delete the peer in administration to revoke its network access.
 
-[O.S. Systems](https://www.ossystems.com.br) develops ShellHub and releases it under the
-[Apache License 2.0](LICENSE.md).
+The diagram above describes the base device-access stack. The current deployment adds two internal containers: the VPN broker and WGDashboard, with separate persistent state. API/SSH/worker ownership in the existing server is unchanged.
+
+## Data and feature changes
+
+After each feature, remove **only the test/demo fixtures that the feature created and explicitly owns**. Preserve real accounts, devices, settings, sessions, keys, browser state and Docker volumes. Do not use a database reset or `down -v` as cleanup. Record fixture IDs and cleanup results; if no persistent fixtures were created, no cleanup is needed.
+
+See [project instructions](AGENTS.md) and [test/demo data policy](docs/architecture/TEST-DATA-POLICY.md). No application fixtures were created or deleted for this documentation update.
+
+## Deployment and current limits
+
+[Deployment instructions](deployments/README.md) cover the existing source-build setup. Separate `deployments/macos` and `deployments/ubuntu` directories hold platform notes/examples. Remote Ubuntu deployment needs the actual host, DNS/TLS and firewall configuration. The local agent is not automatically installed or enrolled.
+
+The UI build and type checking passed; **110 selected UI tests**, **19 VPN broker tests**, and **4 user-directory tests** passed. The live login screen was checked at desktop and phone widths. Real enrolled-device SSH/web-terminal/SCP/SFTP workflows remain unverified; a complete security audit and full upstream test suite have not been performed. Cloud/Enterprise-only backend extensions are not added by this customization.
+
+## Upstream and license
+
+Based on [ShellHub](https://github.com/shellhub-io/shellhub), release `v0.27.0`, commit `fdcc51e4fdad55440b8cfa3061b2729a50deea7b`. Original source is developed by O.S. Systems and contributors. The [Apache-2.0 license](LICENSE.md) and upstream attribution remain intact. The original README is preserved in [docs/upstream/README.shellhub.md](docs/upstream/README.shellhub.md).
+
+[CloudMateHub customization notes](CLOUDMATEHUB.md) · [Security policy](SECURITY.md)

@@ -173,7 +173,7 @@ describe("Setup", () => {
       renderSetup();
 
       expect(
-        screen.getByRole("heading", { name: /get your first shell/i }),
+        screen.getByRole("heading", { name: /build your connected workspace/i }),
       ).toBeInTheDocument();
       expect(
         screen.getByText(/create your account and namespace/i),

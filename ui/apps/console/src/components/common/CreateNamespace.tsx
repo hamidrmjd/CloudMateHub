@@ -110,7 +110,7 @@ export function CommunityInstructions({
             rel="noopener noreferrer"
             className="text-primary hover:text-primary-400 transition-colors"
           >
-            ShellHub Cloud and Enterprise
+            CloudMateHub Cloud and Enterprise
           </a>{" "}
           let you create and manage namespaces directly from the UI.
         </p>

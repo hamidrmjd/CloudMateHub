@@ -111,7 +111,7 @@ function WebhookPanel({
 
   const secretHint = isEditing
     ? "Leave blank to keep the current secret. Signs the request as the X-ShellHub-Signature header (HMAC-SHA256)."
-    : "Signs the request as the X-ShellHub-Signature header (HMAC-SHA256), so your endpoint can verify it came from ShellHub.";
+    : "Signs the request as the X-ShellHub-Signature header (HMAC-SHA256), so your endpoint can verify it came from CloudMateHub.";
 
   return (
     <div className="space-y-3 border-t border-primary/20 bg-card/40 px-3.5 py-3">
@@ -142,7 +142,7 @@ function WebhookPanel({
             value={timeoutStr}
             onChange={handleTimeoutChange}
             onBlur={handleTimeoutBlur}
-            hint="How long ShellHub waits for your endpoint to answer, in seconds (1–15)."
+            hint="How long CloudMateHub waits for your endpoint to answer, in seconds (1–15)."
             error={timeoutError}
           />
         </div>

@@ -91,7 +91,7 @@ export function EditProfileModal({
       onClose={onClose}
       icon={<UserCircleIcon />}
       title="Edit profile"
-      description="Your name and the emails ShellHub signs you in with and writes to."
+      description="Your name and the emails CloudMateHub signs you in with and writes to."
       submitLabel="Save"
       requireDirty
       submitIcon={<CheckIcon className="w-4 h-4" strokeWidth={2} />}
@@ -148,7 +148,7 @@ export default function AccountProfile() {
     <>
       <SettingsSection
         title="Profile"
-        description="How you appear in ShellHub and how it reaches you."
+        description="How you appear in CloudMateHub and how it reaches you."
         action={
           <Button
             size="sm"

@@ -238,12 +238,12 @@ describe("VaultSettingsSection", () => {
       [
         "server",
         "Move",
-        "Synced with the ShellHub server. Click to move it to this device.",
+        "Synced with the CloudMateHub server. Click to move it to this device.",
       ],
       [
         "local",
         "Sync",
-        "Stored in this browser only. Click to sync it to the ShellHub server.",
+        "Stored in this browser only. Click to sync it to the CloudMateHub server.",
       ],
     ] as const)("a %s vault offers '%s'", (storageMode, action, copy) => {
       useVaultStore.setState({ storageMode });

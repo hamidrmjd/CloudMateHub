@@ -27,14 +27,14 @@ describe("SidebarShell", () => {
   it("names the logo link and keeps the mark out of the accessibility tree", () => {
     renderSidebarShell();
 
-    expect(screen.getByRole("link", { name: "ShellHub" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "CloudMateHub" })).toBeInTheDocument();
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
   });
 
   it("leaves only the logo usable once the page frame covers it", () => {
     renderSidebarShell({ covered: true });
 
-    expect(screen.getByRole("link", { name: "ShellHub" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "CloudMateHub" })).toBeInTheDocument();
     expect(
       screen.getByRole("navigation", { name: "Test navigation" }),
     ).toHaveAttribute("inert");

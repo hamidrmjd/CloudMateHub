@@ -89,7 +89,7 @@ function SyncForm({
         icon={toServer ? <ServerStackIcon /> : <ComputerDesktopIcon />}
         title={
           toServer
-            ? "Sync vault to the ShellHub server"
+            ? "Sync vault to the CloudMateHub server"
             : "Move vault to this device"
         }
         description={
@@ -111,7 +111,7 @@ function SyncForm({
       ) : toServer && conflict ? (
         <>
           <Callout variant="warning" className="mb-4">
-            The ShellHub server already has a synced vault, created on another
+            The CloudMateHub server already has a synced vault, created on another
             machine. Pick the vault to keep. The other one is deleted.
           </Callout>
           <div
@@ -154,7 +154,7 @@ function SyncForm({
           {toServer ? (
             <>
               <p>
-                Your encrypted vault moves to the ShellHub server and is removed
+                Your encrypted vault moves to the CloudMateHub server and is removed
                 from this browser. Unlock it with the same master password from
                 any machine you sign in to.
               </p>
@@ -167,7 +167,7 @@ function SyncForm({
             <>
               <p>
                 Your encrypted vault moves to this browser and is removed from
-                the ShellHub server. Other machines lose access to it.
+                the CloudMateHub server. Other machines lose access to it.
               </p>
               <p className="text-xs text-text-muted">
                 Clearing this browser's data deletes the vault permanently.

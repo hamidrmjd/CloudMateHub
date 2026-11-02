@@ -31,7 +31,7 @@ function scopeKey(scope?: VaultScope): string {
 }
 
 /**
- * Vault backend that stores the encrypted vault on the ShellHub server
+ * Vault backend that stores the encrypted vault on the CloudMateHub server
  * (Cloud/Enterprise). The server is the single source of truth: every load
  * hits the API and every save writes through. Encryption stays in the
  * browser — the server only ever sees opaque strings.

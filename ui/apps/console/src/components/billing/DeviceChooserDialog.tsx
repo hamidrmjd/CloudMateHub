@@ -193,7 +193,7 @@ export default function DeviceChooserDialog({
         icon={<ExclamationTriangleIcon />}
         iconColor="yellow"
         title="Update account or select three devices"
-        description="Your namespace has more than three accepted devices and no active subscription. Subscribe to ShellHub Cloud to keep them all, or pick three devices to stay accepted; the rest move to pending."
+        description="Your namespace has more than three accepted devices and no active subscription. Subscribe to CloudMateHub Cloud to keep them all, or pick three devices to stay accepted; the rest move to pending."
         titleId={titleId}
         descriptionId={descriptionId}
       />

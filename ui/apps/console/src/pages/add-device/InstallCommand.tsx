@@ -127,7 +127,7 @@ export default function InstallCommand({
             value={hostname}
             onChange={setHostname}
             placeholder="my-device"
-            hint="Override the device hostname reported to ShellHub."
+            hint="Override the device hostname reported to CloudMateHub."
           />
           <InputField
             id="add-device-identity"

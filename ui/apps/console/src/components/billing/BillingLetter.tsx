@@ -13,7 +13,7 @@ export default function BillingLetter() {
         </IconBadge>
         <div>
           <p className="text-2xs font-mono font-semibold uppercase tracking-label text-primary">
-            ShellHub Cloud
+            CloudMateHub Cloud
           </p>
           <h3 className="text-base font-semibold text-text-primary">
             Premium subscription
@@ -34,7 +34,7 @@ export default function BillingLetter() {
         </p>
         <p className="text-text-muted text-xs">
           Payment is processed securely by Stripe. Your card details are never
-          stored on ShellHub servers.
+          stored on CloudMateHub servers.
         </p>
       </div>
     </div>

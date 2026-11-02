@@ -4,8 +4,8 @@ import { cn } from "@shellhub/design-system/cn";
 import LogoMark from "./LogoMark";
 
 const navBase =
-  "flex items-center gap-3 h-[38px] px-3 rounded-md text-[13px] font-medium whitespace-nowrap [&>svg]:shrink-0 focus-visible:relative focus-visible:z-raised";
-const navActive = "bg-primary/10 text-primary border border-primary/20";
+  "flex items-center gap-3 h-[42px] px-3 rounded-xl text-[13px] font-medium whitespace-nowrap [&>svg]:shrink-0 focus-visible:relative focus-visible:z-raised";
+const navActive = "bg-primary/15 text-primary border border-primary/25";
 const navIdle =
   "text-text-secondary hover:text-text-primary hover:bg-hover-subtle border border-transparent";
 /**
@@ -27,7 +27,7 @@ export const SIDEBAR_RAIL_PX = 60;
 /**
  * The expanded sidebar's width in pixels, read the same way as SIDEBAR_RAIL_PX.
  */
-export const SIDEBAR_EXPANDED_PX = 220;
+export const SIDEBAR_EXPANDED_PX = 252;
 
 interface NavItemLinkProps {
   item: { to: string; label: string; icon: ReactNode };
@@ -172,13 +172,13 @@ export default function SidebarShell({
   return (
     <aside
       style={{ width: expanded ? SIDEBAR_EXPANDED_PX : SIDEBAR_RAIL_PX }}
-      className="flex flex-col h-full shrink-0 bg-background transition-all duration-200 ease-in-out overflow-hidden"
+      className="flex flex-col h-full shrink-0 cmh-sidebar bg-background transition-all duration-200 ease-in-out overflow-hidden"
     >
       <div
         data-tauri-drag-region
         className="flex items-end h-12 pl-[12.7px] pb-[5px]"
       >
-        <NavLink to={logoHref} onClick={onNavigate} aria-label="ShellHub">
+        <NavLink to={logoHref} onClick={onNavigate} aria-label="CloudMateHub">
           <LogoMark full={expanded} />
         </NavLink>
       </div>

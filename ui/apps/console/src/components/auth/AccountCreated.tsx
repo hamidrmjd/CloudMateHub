@@ -39,7 +39,7 @@ export default function AccountCreated() {
       <ScreenIntro
         eyebrow="Account"
         title="Account Creation Successful"
-        lead="Thank you for registering an account on ShellHub."
+        lead="Thank you for registering an account on CloudMateHub."
       />
 
       <Callout variant="success" className="mb-6">

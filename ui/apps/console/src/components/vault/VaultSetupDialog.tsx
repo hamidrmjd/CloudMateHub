@@ -36,7 +36,7 @@ const STORAGE_OPTIONS: {
   {
     mode: "server",
     icon: ServerStackIcon,
-    title: "Sync to the ShellHub server",
+    title: "Sync to the CloudMateHub server",
     description:
       "Use your keys on any machine you sign in to. Stored encrypted — the server never sees them.",
   },

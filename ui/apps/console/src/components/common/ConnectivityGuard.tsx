@@ -11,7 +11,7 @@ function ApiUnavailablePage() {
       <ScreenIntro
         eyebrow="Connection issue"
         title="Waiting for the API"
-        lead="The ShellHub API is not responding. This is likely temporary, and the app resumes on its own once the connection is back."
+        lead="The CloudMateHub API is not responding. This is likely temporary, and the app resumes on its own once the connection is back."
       />
       <div className="flex items-center gap-2.5 text-xs font-mono text-text-secondary">
         <Spinner size="xs" tone="subtle" />

@@ -48,7 +48,7 @@ export default function Install() {
     <div>
       <ScreenIntro
         eyebrow="Install"
-        title="Install ShellHub"
+        title="Install CloudMateHub"
         lead="Run one command on the machine you want to reach. Nothing listens on it, and nothing is installed on your side."
       />
 

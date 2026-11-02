@@ -260,7 +260,7 @@ function ApiKeysTab() {
             <KeyIcon className="w-10 h-10 text-text-muted/30 mx-auto mb-3" />
             <p className="text-sm text-text-muted">No API keys yet</p>
             <p className="text-2xs text-text-muted/60 mt-1">
-              Generate a key to access the ShellHub API
+              Generate a key to access the CloudMateHub API
             </p>
           </div>
         }

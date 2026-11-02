@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+cd "$ROOT"
+umask 077
+mkdir -p deployments/.secrets
+chmod 700 deployments/.secrets
+if [ ! -s deployments/.secrets/wgdashboard-key ]; then
+  openssl rand -hex 48 > deployments/.secrets/wgdashboard-key
+fi
+chmod 600 deployments/.secrets/wgdashboard-key

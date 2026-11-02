@@ -46,11 +46,11 @@ const STATUS_LABEL: Record<BillingStatus, string> = {
 
 const PREMIUM = {
   tier: "Premium",
-  description: "ShellHub Cloud Premium, unlimited devices.",
+  description: "CloudMateHub Cloud Premium, unlimited devices.",
 } as const;
 const SUSPENDED = {
   tier: "Premium",
-  description: "ShellHub Cloud Premium, suspended.",
+  description: "CloudMateHub Cloud Premium, suspended.",
 } as const;
 const FREE = {
   tier: "Free",
@@ -137,7 +137,7 @@ function bannerFor(status: BillingStatus, endAt: number): BannerConfig | null {
       return {
         tone: "info",
         title: "No active subscription",
-        body: "Subscribe to ShellHub Cloud to register unlimited devices and unlock premium features.",
+        body: "Subscribe to CloudMateHub Cloud to register unlimited devices and unlock premium features.",
         Icon: InformationCircleIcon,
       };
     default:

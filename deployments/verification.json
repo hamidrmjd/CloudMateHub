@@ -1,0 +1,44 @@
+{
+  "release": "v0.27.0",
+  "commit": "fdcc51e4fdad55440b8cfa3061b2729a50deea7b",
+  "application_source_matches_release": true,
+  "build": "all three original-source images built successfully",
+  "services": {
+    "gateway": {
+      "state": "running",
+      "health": "healthy"
+    },
+    "postgres": {
+      "state": "running",
+      "health": "healthy"
+    },
+    "redis": {
+      "state": "running",
+      "health": "not configured upstream"
+    },
+    "server": {
+      "state": "running",
+      "health": "healthy"
+    },
+    "ui": {
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "http": {
+    "/setup": 200,
+    "/api/healthcheck": 200,
+    "/api/info": 200,
+    "/info": 200,
+    "/healthcheck": 200,
+    "/config.json": 200
+  },
+  "browser": "Original Get your first shell setup wizard visually verified at http://localhost:8080/setup",
+  "edition": "community",
+  "limitations": [
+    "No administrator account created",
+    "No device enrolled: authenticated terminal, SSH, SCP and SFTP workflows not tested",
+    "No remote Ubuntu deployment performed",
+    "Full upstream test suite and comprehensive security audit not performed"
+  ]
+}

@@ -94,6 +94,14 @@
 			respond 404
 		}
 
+		# The broker independently resolves CloudMateHub identity on every request.
+		handle /api/vpn/* {
+			reverse_proxy vpn-broker:8090 {
+				import forwarded
+				header_up Host {http.request.hostport}
+			}
+		}
+
 		handle /api* {
 			reverse_proxy {{ $cfg.APIBackend }} {
 				import forwarded

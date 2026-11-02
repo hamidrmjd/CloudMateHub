@@ -18,7 +18,7 @@ const highlights: EmptyStateFeature[] = [
     icon: <HomeIcon className="w-5 h-5" />,
     title: "Main Application",
     description:
-      "Return to the main ShellHub application to manage your resources.",
+      "Return to the main CloudMateHub application to manage your resources.",
   },
   {
     icon: <UserGroupIcon className="w-5 h-5" />,
@@ -63,7 +63,7 @@ export default function AdminUnauthorized() {
           icon={<ArrowLeftIcon className="w-4 h-4" aria-hidden="true" />}
           onClick={() => void navigate("/dashboard")}
         >
-          Go to ShellHub
+          Go to CloudMateHub
         </Button>
         <Button
           size="lg"

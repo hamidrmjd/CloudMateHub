@@ -42,7 +42,7 @@ function Output({ theme }: { theme: TerminalTheme }) {
       {"\n"}
       -rw-r--r-- 1 root root 512 Sep 26 09:40 notes.txt{"\n"}
       {prompt}systemctl status shellhub-agent{"\n"}
-      {colored("green", "●")} shellhub-agent.service - ShellHub Agent{"\n"}
+      {colored("green", "●")} shellhub-agent.service - CloudMateHub Agent{"\n"}
       {"     "}Active: {colored("green", "active (running)")} since Fri 10:02
       {"\n"}
       {"   "}Warnings: {colored("yellow", "1")} Errors: {colored("red", "0")}

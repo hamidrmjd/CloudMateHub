@@ -159,6 +159,7 @@ export const useAuthStore = create<AuthState>()(
       },
 
       logout: () => {
+        void fetch("/api/vpn/session", { method: "DELETE", credentials: "same-origin", keepalive: true }).catch(() => undefined);
         tearDownChatwoot("logout");
         useVaultStore.getState().lock();
         const terminal = useTerminalStore.getState();

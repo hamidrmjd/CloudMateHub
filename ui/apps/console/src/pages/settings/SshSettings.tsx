@@ -370,8 +370,8 @@ function EnforceSignaturesCard({ ns }: { ns: Namespace }) {
       >
         <p className="mb-4 text-xs text-text-secondary leading-relaxed">
           {unsigned === 1
-            ? "ShellHub will refuse its agent until it's updated, and you won't be able to reach it in the meantime."
-            : "ShellHub will refuse their agents until they're updated, and you won't be able to reach them in the meantime."}
+            ? "CloudMateHub will refuse its agent until it's updated, and you won't be able to reach it in the meantime."
+            : "CloudMateHub will refuse their agents until they're updated, and you won't be able to reach them in the meantime."}
         </p>
       </ConfirmDialog>
     </>

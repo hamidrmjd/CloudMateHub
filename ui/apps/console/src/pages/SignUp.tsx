@@ -211,7 +211,7 @@ export default function SignUp() {
             checked={acceptMarketing}
             onChange={setAcceptMarketing}
             labelSize="sm"
-            label="Send me news and updates from ShellHub by email."
+            label="Send me news and updates from CloudMateHub by email."
           />
         </div>
 

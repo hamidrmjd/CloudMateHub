@@ -385,7 +385,7 @@ export default function Containers() {
         icon={<CubeIcon className="w-6 h-6" />}
         overline={sectionTitle}
         title="Containers"
-        description="Manage and monitor Docker containers connected via ShellHub Connector"
+        description="Manage and monitor Docker containers connected via CloudMateHub Connector"
       >
         <Button
           onClick={() => setAddConnectorOpen(true)}

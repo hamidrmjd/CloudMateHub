@@ -34,7 +34,7 @@ export default function AuthFooterLinks() {
         className={linkClass}
       >
         <GithubIcon className="w-3.5 h-3.5" />
-        Community
+        Upstream
       </a>
     </div>
   );

@@ -115,7 +115,7 @@ export default function NamespaceTrail() {
       <FirstRunLayout
         eyebrow={eyebrow}
         title="Join a namespace"
-        lead="Everything in ShellHub lives in a namespace. Once you are in one, this page takes you there."
+        lead="Everything in CloudMateHub lives in a namespace. Once you are in one, this page takes you there."
         signedIn
         inConsole={false}
       >

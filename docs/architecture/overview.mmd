@@ -1,0 +1,13 @@
+flowchart LR
+    Browser["Browser · CloudMateHub console"] -->|"HTTP / WebSocket · localhost:8080"| Gateway
+    SSH["SSH / SCP / SFTP client"] -->|"localhost:2222 → server:2222"| Server
+    subgraph Stack["Local Docker Compose · shellhub-custom"]
+      Gateway["gateway · Go + Caddy"] -->|"UI and config"| UI["ui · static-web-server"]
+      Gateway -->|"API + terminal + tunnel routes"| Server["server · Go / Echo
+API + SSH + worker"]
+      Server -->|"Durable records"| PG[("PostgreSQL 18")]
+      Server -->|"Cache + jobs"| Redis[("Valkey · Redis protocol")]
+    end
+    Agent["Linux device agent
+not deployed in this local stack"] -->|"Outbound reverse tunnel via gateway"| Gateway
+    Server -.->|"Session carried over established tunnel"| Agent

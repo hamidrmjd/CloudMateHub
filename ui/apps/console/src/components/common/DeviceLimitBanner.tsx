@@ -16,8 +16,8 @@ export default function DeviceLimitBanner() {
   const severity = over ? "error" : "warning";
 
   const message = over
-    ? "You've reached your licensed device limit. New devices can't connect until you contact the ShellHub team to raise the limit or remove some."
-    : "You're approaching your licensed device limit. Contact the ShellHub team to raise it before new devices are blocked.";
+    ? "You've reached your licensed device limit. New devices can't connect until you contact the CloudMateHub team to raise the limit or remove some."
+    : "You're approaching your licensed device limit. Contact the CloudMateHub team to raise it before new devices are blocked.";
 
   return (
     <NoticeBanner visible={visible} severity={severity}>

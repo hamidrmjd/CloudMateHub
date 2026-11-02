@@ -15,3 +15,7 @@ agent/shellhub.key
 api_private_key
 api_public_key
 ssh_private_key
+
+# Local deployment credentials and reports
+.env.override
+deployments

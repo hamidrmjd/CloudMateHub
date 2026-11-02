@@ -41,7 +41,7 @@ export default function Dashboard() {
       <PageHeader
         icon={<Squares2X2Icon className="w-6 h-6" />}
         title={currentNamespace?.name ?? "Dashboard"}
-        description="Manage your ShellHub namespace"
+        description="Manage your CloudMateHub namespace"
       >
         {currentNamespace && (
           <Card className="flex items-center gap-2 px-3 py-2">

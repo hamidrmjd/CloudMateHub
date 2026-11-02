@@ -4,12 +4,12 @@
  */
 export function useRecoveryCodeActions() {
   const handleDownload = (codes: string[]): void => {
-    const content = `ShellHub Recovery Codes\n\n${codes.join("\n")}\n\nKeep these codes in a safe place. Each code can only be used once.`;
+    const content = `CloudMateHub Recovery Codes\n\n${codes.join("\n")}\n\nKeep these codes in a safe place. Each code can only be used once.`;
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "shellhub-recovery-codes.txt";
+    a.download = "cloudmatehub-recovery-codes.txt";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

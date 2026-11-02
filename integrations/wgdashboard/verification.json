@@ -1,0 +1,43 @@
+{
+  "feature": "VPN / WireGuard",
+  "upstream": {
+    "name": "WGDashboard",
+    "version": "4.3.4",
+    "commit": "0018a9b1e280f8a09a63d63d32866a56047d6570",
+    "image_digest": "sha256:8c5b550db4fda04eff06e96af801499be485c73e0912fcf0c1031babca0f7e7b"
+  },
+  "authorization": "Instance admins manage; signed-in users download only their immutable-ID assignments",
+  "checks": {
+    "ui_and_regression_tests": 110,
+    "broker_permission_and_ownership_tests": 19,
+    "go_user_directory_tests": 4,
+    "typecheck": "passed",
+    "native_internal_handshake": "200 / status true",
+    "anonymous_live_request": "401",
+    "compose": "7 services; no WGDashboard/broker/VPN UDP host ports",
+    "live_security": {
+      "anonymous_assignments": 401,
+      "forged_admin_directory": 401,
+      "public_internal_directory": 404
+    },
+    "all_configured_service_health_checks": "passed"
+  },
+  "browser": [
+    "VPN navigation section visible",
+    "Personal configuration empty state loads",
+    "Native embedded WGDashboard interfaces workspace loads for the signed-in instance admin",
+    "User assignment controls load real user directory and wg0 interface without error"
+  ],
+  "cleanup": {
+    "persistent_test_users_created": 0,
+    "demo_peers_created": 0,
+    "test_databases": "TemporaryDirectory teardown removed isolated test SQLite/key files",
+    "real_accounts_devices_settings_and_keys": "preserved"
+  },
+  "limitations": [
+    "No reachable Ubuntu VPN endpoint configured",
+    "No real VPN tunnel, peer provisioning, or client download tested end-to-end",
+    "External email, sharing, OIDC, webhooks, cross-server and AmneziaWG integrations not end-to-end verified",
+    "Native public share/client paths remain behind CloudMateHub admin gate; personal CloudMateHub view is used instead"
+  ]
+}

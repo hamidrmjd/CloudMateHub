@@ -1,11 +1,11 @@
 [
   {
-    "name": "ShellHub Dark",
+    "name": "CloudMateHub Dark",
     "file": "shellhub_dark.json",
     "dark": true
   },
   {
-    "name": "ShellHub Light",
+    "name": "CloudMateHub Light",
     "file": "shellhub_light.json",
     "dark": false
   },

@@ -1,62 +1,18 @@
-# Contributing to ShellHub
+# Contributing to CloudMateHub
 
-ShellHub is an open source project and we love to receive
-contributions from our community.
+Use focused branches and pull requests. Explain the problem, resulting behavior, validation and known limits. Preserve Apache-2.0 licensing and upstream attribution.
 
-Here are a few general guidelines on contributing and reporting bugs
-to ShellHub that we ask you to take a look first.  Notice that all of
-your interactions in the project are expected to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+## Local setup
 
-## Reporting Issues
+Follow README.md and `deployments/README.md`. Never commit private environment files, runtime data, credentials or generated client/build output. Use the existing Compose wrapper and pinned integration image.
 
-Before reporting a new issue, please be sure that the issue wasn't
-already reported or fixed by searching on GitHub through our
-[issues](https://github.com/ShellHub-io/shellhub/issues).
+## Before submitting
 
+1. Read `AGENTS.md` and the relevant architecture notes.
+2. Keep business authorization on the backend, including ownership checks for private VPN material.
+3. Run the meaningful checks for the affected layers. VPN broker tests are in `integrations/wgdashboard/test_broker.py`, directory tests in `server/vpn`, and UI tests in `ui/apps/console/src/pages/vpn/__tests__`. The container check recipes are in `deployments/ui-check.Dockerfile` and `integrations/wgdashboard/Tests.Dockerfile`.
+4. Remove only test/demo fixtures explicitly owned by your change; preserve real records and signing keys.
+5. Update README.md and architecture documentation when flows or deployment change.
+6. Review the diff for secrets and unrelated changes.
 
-## Development environment
-
-Everything runs in containers, so the host needs only Docker with Compose and git. Use the
-`bin/docker-compose` wrapper rather than `docker compose` directly. The wrapper picks the compose
-files for the edition and environment you set.
-
-Switch the stack to development mode, which adds hot reload and a built-in agent, and start it.
-`make start` generates the service keys on the first run:
-
-```sh
-echo "SHELLHUB_ENV=development" >> .env.override
-make start
-```
-
-In development mode `make start` stays in the foreground, following the logs. Once the services
-are up, run the next commands from another terminal to create a user and a namespace. Keep the
-tenant ID as written, because the built-in agent registers into it.
-
-```sh
-./bin/cli user create <username> <password> <email>
-./bin/cli namespace create <namespace> <username> 00000000-0000-4000-0000-000000000000
-```
-
-Open `http://localhost` and accept the pending device. Open a shell on it from the console, or with
-your own SSH key through `ssh shellhub@<namespace>.shellhub@localhost`. The first time, ShellHub
-prints a link to confirm the key in the console. The session lands in the agent's container, not
-on your machine. [devscripts](devscripts) has helpers for adding more devices and running tests.
-
-## Submitting Changes
-
-* Check for open issues, or open a fresh issue to start a discussion
-  around a feature idea or a bug. Opening a separate issue to discuss
-  the change is less important for smaller changes, as the discussion
-  can be done in the pull request.
-* Fork the relevant repository on GitHub, and start making your
-  changes.
-* Check out the README for the project for specific information to
-  that repository.
-* Run `devscripts/comment-scan --diff` before pushing. The code style
-  allows a comment only as a doc comment on an exported declaration or as
-  the reason on a linter suppression; CI runs the same check on every pull
-  request.
-* Push the change to a separate branch for your feature.
-* Open a pull request.
-* We try to merge and deploy changes as soon as possible, or at least
-  leave some feedback.
+The archived upstream contributing guide is `docs/upstream/CONTRIBUTING.md`; upstream release automation and private enterprise infrastructure are not required for CloudMateHub contributions.

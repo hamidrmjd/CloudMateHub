@@ -34,6 +34,7 @@ import (
 	sshserver "github.com/shellhub-io/shellhub/server/ssh/server"
 	"github.com/shellhub-io/shellhub/server/ssh/session"
 	"github.com/shellhub-io/shellhub/server/ssh/web"
+	"github.com/shellhub-io/shellhub/server/vpn"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -323,6 +324,8 @@ func (s *Server) Setup(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
+
+	vpn.RegisterDirectory(s.router, store)
 
 	s.worker = asynq.NewServer(
 		s.env.RedisURI,

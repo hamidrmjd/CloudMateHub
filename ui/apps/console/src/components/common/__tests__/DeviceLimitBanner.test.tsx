@@ -67,7 +67,7 @@ describe("DeviceLimitBanner", () => {
           screen.getByText(/you've reached your licensed device limit/i),
         ).toBeInTheDocument();
         expect(
-          screen.getByText(/contact the ShellHub team/i),
+          screen.getByText(/contact the CloudMateHub team/i),
         ).toBeInTheDocument();
       });
     });
@@ -92,7 +92,7 @@ describe("DeviceLimitBanner", () => {
           screen.getByText(/you're approaching your licensed device limit/i),
         ).toBeInTheDocument();
         expect(
-          screen.getByText(/contact the ShellHub team/i),
+          screen.getByText(/contact the CloudMateHub team/i),
         ).toBeInTheDocument();
       });
     });

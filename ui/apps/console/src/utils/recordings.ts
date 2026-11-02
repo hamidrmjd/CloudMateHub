@@ -77,7 +77,7 @@ export function castFilename(
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
-  return `shellhub-${slug || "session"}-${format(at, "yyyyMMdd-HHmmss")}.cast`;
+  return `cloudmatehub-${slug || "session"}-${format(at, "yyyyMMdd-HHmmss")}.cast`;
 }
 
 /**

@@ -118,7 +118,7 @@ export default function AdminAuthentication() {
           icon={<KeyIcon className="w-6 h-6" />}
           overline={adminNavSectionTitle(ADMIN_AUTHENTICATION_PATH)}
           title="Authentication"
-          description="Control how users authenticate to ShellHub, including local credentials and SAML SSO."
+          description="Control how users authenticate to CloudMateHub, including local credentials and SAML SSO."
         />
         <div className="mt-8">
           <PageLoader label="Loading settings..." showLabel padding="none" />
@@ -137,7 +137,7 @@ export default function AdminAuthentication() {
         icon={<KeyIcon className="w-6 h-6" />}
         overline={adminNavSectionTitle(ADMIN_AUTHENTICATION_PATH)}
         title="Authentication"
-        description="Control how users authenticate to ShellHub, including local credentials and SAML SSO."
+        description="Control how users authenticate to CloudMateHub, including local credentials and SAML SSO."
       />
 
       {error && (
@@ -150,7 +150,7 @@ export default function AdminAuthentication() {
         <SettingsSwitchCard
           icon={<KeyIcon />}
           title="Local authentication"
-          description="Users sign in with a username and password stored in ShellHub."
+          description="Users sign in with a username and password stored in CloudMateHub."
           control={
             <Toggle
               enabled={localEnabled}

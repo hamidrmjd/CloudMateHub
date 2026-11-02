@@ -1,0 +1,25 @@
+{
+  "product": "CloudMateHub",
+  "base": "ShellHub Community v0.27.0",
+  "build": "passed",
+  "typecheck": "passed",
+  "tests": {
+    "files": 6,
+    "passed": 102,
+    "failed": 0
+  },
+  "visual_checks": [
+    "Live login page: new identity, wordmark, teal/slate layout and browser title",
+    "Phone layout checked at 390x844; temporary viewport reset"
+  ],
+  "deployment": "Updated only the local UI container; existing backend and volumes retained",
+  "limits": [
+    "Signed-in device/terminal workflows not exercised in the browser",
+    "Cloud/Enterprise capabilities not added"
+  ],
+  "compatibility": [
+    "API routes and protocol headers retained",
+    "Browser storage keys retained; saved built-in terminal theme labels normalized to the new product name"
+  ],
+  "upstream_survey": "Disabled in local .env.override and deployment examples"
+}

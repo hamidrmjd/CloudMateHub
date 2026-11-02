@@ -188,7 +188,7 @@ export default function SamlConfigModal({
               control={control}
               id="saml-sign-requests"
               label="Sign authorization requests"
-              description="Allows the IdP to verify that SAML requests originated from ShellHub"
+              description="Allows the IdP to verify that SAML requests originated from CloudMateHub"
             />
           </div>
         )}

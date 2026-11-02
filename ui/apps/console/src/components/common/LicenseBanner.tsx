@@ -29,15 +29,15 @@ export default function LicenseBanner() {
 
   const message = (() => {
     if (noLicense)
-      return "No license installed. This instance needs a valid license to run properly — contact the ShellHub team to get one.";
+      return "No license installed. This instance needs a valid license to run properly — contact the CloudMateHub team to get one.";
     if (expired)
-      return "Your license has expired. This instance won't function properly until it's renewed — contact the ShellHub team.";
+      return "Your license has expired. This instance won't function properly until it's renewed — contact the CloudMateHub team.";
     if (gracePeriod)
-      return "Your license has expired and is in its grace period. Contact the ShellHub team to renew it before this instance stops working.";
+      return "Your license has expired and is in its grace period. Contact the CloudMateHub team to renew it before this instance stops working.";
     if (aboutToExpire) {
       return daysUntilExpiration !== null
-        ? `Your license expires in ${daysUntilExpiration} day${daysUntilExpiration === 1 ? "" : "s"}. Contact the ShellHub team to renew it before it lapses.`
-        : "Your license is about to expire. Contact the ShellHub team to renew it before it lapses.";
+        ? `Your license expires in ${daysUntilExpiration} day${daysUntilExpiration === 1 ? "" : "s"}. Contact the CloudMateHub team to renew it before it lapses.`
+        : "Your license is about to expire. Contact the CloudMateHub team to renew it before it lapses.";
     }
     return "";
   })();

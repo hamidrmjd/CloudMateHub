@@ -28,7 +28,7 @@ export default function FramedShell({
         data-tauri-drag-region
         className="h-12 shrink-0 flex items-end min-w-0 pl-[12.7px] pr-2"
       >
-        <span className="sr-only">ShellHub</span>
+        <span className="sr-only">CloudMateHub</span>
         <LogoMark full className="mb-[5px] shrink-0" />
         <div
           data-tauri-drag-region

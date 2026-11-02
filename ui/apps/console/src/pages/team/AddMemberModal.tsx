@@ -151,7 +151,7 @@ function AddMemberModal({ open, onClose, tenantId }: AddMemberModalProps) {
           <Card className="rounded-lg px-3.5 py-3 flex items-center gap-3">
             <CheckCircleIcon className="w-5 h-5 text-accent-green shrink-0" />
             <p className="text-xs text-text-secondary leading-relaxed">
-              This person already has a ShellHub account, so we added them to the
+              This person already has a CloudMateHub account, so we added them to the
               namespace as{" "}
               <span className="font-medium text-text-primary">{role}</span> right
               away.

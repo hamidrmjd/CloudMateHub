@@ -428,7 +428,7 @@ describe("SshSettings", () => {
         "3 of 42 devices will stop connecting.",
       );
       expect(dialog).toHaveTextContent(
-        "ShellHub will refuse their agents until they're updated",
+        "CloudMateHub will refuse their agents until they're updated",
       );
       expect(bodies).toEqual([]);
 

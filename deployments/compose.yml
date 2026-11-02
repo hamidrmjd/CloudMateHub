@@ -1,0 +1,102 @@
+name: shellhub-custom
+services:
+  server:
+    image: shellhub-custom/server:v0.27.0
+    build:
+      context: .
+      dockerfile: deployments/server.Dockerfile
+      target: production
+      args:
+        GOPROXY: ${SHELLHUB_GOPROXY:-https://proxy.golang.org|direct}
+        GOLANG_VERSION: ${GOLANG_VERSION}
+        AIR_VERSION: ${AIR_VERSION}
+        GOLANGCI_LINT_VERSION: ${GOLANGCI_LINT_VERSION}
+        MOCKERY_VERSION: ${MOCKERY_VERSION}
+        DOCKER_VERSION: ${DOCKER_VERSION}
+        MJML_VERSION: ${MJML_VERSION}
+        ALPINE_VERSION: ${ALPINE_VERSION}
+        EDITION: community
+    ports: !override
+      - "${SHELLHUB_BIND_ADDRESS}:${SHELLHUB_SSH_PORT}:2222"
+  ui:
+    image: shellhub-custom/ui:v0.27.0
+    build:
+      context: .
+      dockerfile: ui/Dockerfile
+      target: production
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+        ALPINE_VERSION: ${ALPINE_VERSION}
+        SWS_VERSION: ${SWS_VERSION}
+        REDOCLY_VERSION: ${REDOCLY_VERSION}
+  gateway:
+    image: shellhub-custom/gateway:v0.27.0
+    build:
+      context: .
+      dockerfile: deployments/gateway.Dockerfile
+      target: production
+      args:
+        GOPROXY: ${SHELLHUB_GOPROXY:-https://proxy.golang.org|direct}
+        GOLANG_VERSION: ${GOLANG_VERSION}
+        AIR_VERSION: ${AIR_VERSION}
+        GOLANGCI_LINT_VERSION: ${GOLANGCI_LINT_VERSION}
+        MOCKERY_VERSION: ${MOCKERY_VERSION}
+        DOCKER_VERSION: ${DOCKER_VERSION}
+        MJML_VERSION: ${MJML_VERSION}
+        ALPINE_VERSION: ${ALPINE_VERSION}
+    volumes:
+      - gateway-data:/data
+  postgres:
+    volumes:
+      - postgres-data:/var/lib/postgresql
+  wgdashboard:
+    image: cloudmatehub/wgdashboard:4.3.4
+    build:
+      context: .
+      dockerfile: integrations/wgdashboard/Dockerfile
+    restart: unless-stopped
+    cap_add: [NET_ADMIN]
+    environment:
+      dynamic_config: "false"
+    secrets: [wgdashboard_key]
+    volumes:
+      - wgdashboard-data:/data
+      - wireguard-config:/etc/wireguard
+      - amnezia-config:/etc/amnezia/amneziawg
+    networks: [vpn-private]
+  vpn-broker:
+    image: cloudmatehub/wgdashboard:4.3.4
+    build:
+      context: .
+      dockerfile: integrations/wgdashboard/Dockerfile
+    entrypoint: ["/opt/wgdashboard/src/venv/bin/gunicorn"]
+    command: ["--config", "/dev/null", "--chdir", "/opt/cloudmatehub", "--bind", "0.0.0.0:8090", "--workers", "1", "--threads", "4", "broker:app"]
+    restart: unless-stopped
+    environment:
+      VPN_DB_FILE: /data/assignments.db
+      CLOUDMATE_URL: http://server:8080
+      WGDASHBOARD_URL: http://wgdashboard:10086
+    secrets: [wgdashboard_key]
+    volumes: [vpn-assignments:/data]
+    networks: [shellhub, vpn-private]
+    depends_on: [wgdashboard, server]
+    healthcheck:
+      test: ["CMD", "/opt/wgdashboard/src/venv/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+volumes:
+  postgres-data:
+  gateway-data:
+
+# WGDashboard is internal-only during local preparation. No public dashboard or VPN ports.
+  wgdashboard-data:
+  wireguard-config:
+  amnezia-config:
+  vpn-assignments:
+secrets:
+  wgdashboard_key:
+    file: ./deployments/.secrets/wgdashboard-key
+networks:
+  vpn-private:
+    internal: true

@@ -122,7 +122,7 @@ export default function Setup() {
 
   return (
     <FirstRunLayout
-      eyebrow="Welcome to ShellHub"
+      eyebrow="Welcome to CloudMateHub"
       signedIn={false}
       inConsole={false}
     >

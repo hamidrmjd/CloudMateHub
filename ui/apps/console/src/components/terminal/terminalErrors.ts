@@ -25,20 +25,20 @@ const errorMap: Record<string, ErrorEntry> = {
     message: "The username or password is incorrect.",
     reconnect: true,
     hints: [
-      "The username must match the OS user on the device, not your ShellHub account.",
+      "The username must match the OS user on the device, not your CloudMateHub account.",
     ],
   },
   "failed to find the device": {
     message: "Cannot reach this device.",
     reconnect: false,
-    hints: ["The device may be offline or removed from ShellHub."],
+    hints: ["The device may be offline or removed from CloudMateHub."],
     links: [{ label: "Device details", to: "/devices/$uid" }],
   },
   "failed to connect to device": {
     message: "Cannot reach this device.",
     reconnect: false,
     hints: [
-      "Make sure the device is powered on and the ShellHub agent is running.",
+      "Make sure the device is powered on and the CloudMateHub agent is running.",
     ],
     links: [{ label: "Device details", to: "/devices/$uid" }],
   },
@@ -47,7 +47,7 @@ const errorMap: Record<string, ErrorEntry> = {
     reconnect: false,
     hints: [
       "This is usually temporary. Wait a few seconds and try again.",
-      "If it persists, the ShellHub agent on the device may need to be restarted.",
+      "If it persists, the CloudMateHub agent on the device may need to be restarted.",
     ],
   },
   "failed to get the shell to agent": {
@@ -92,7 +92,7 @@ const errorMap: Record<string, ErrorEntry> = {
       message: "This device does not support public key authentication.",
       reconnect: true,
       hints: [
-        "The ShellHub agent is v0.5.x or earlier. Update to v0.6.0+ for public key support, or reconnect using a password.",
+        "The CloudMateHub agent is v0.5.x or earlier. Update to v0.6.0+ for public key support, or reconnect using a password.",
       ],
       links: [{ label: "Device details", to: "/devices/$uid" }],
     },
@@ -134,7 +134,7 @@ export const HTTP_CONNECT_ERROR: TerminalError = {
   message: "Could not start the session.",
   reconnect: true,
   hints: [
-    "The ShellHub server may be temporarily unavailable. Try again in a moment.",
+    "The CloudMateHub server may be temporarily unavailable. Try again in a moment.",
   ],
   links: [],
 };
@@ -171,7 +171,7 @@ export const WS_NETWORK_ERROR: TerminalError = {
   message: "Could not reach the device.",
   reconnect: false,
   hints: [
-    "Check your network connection and make sure the ShellHub server is running.",
+    "Check your network connection and make sure the CloudMateHub server is running.",
   ],
   links: [],
 };

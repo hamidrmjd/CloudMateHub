@@ -1,5 +1,5 @@
 /**
- * Builds the ShellHub agent install command. Pass the credential env pair:
+ * Builds the CloudMateHub agent install command. Pass the credential env pair:
  * `PROVISIONING_KEY=<key>` to enroll into the key's namespace under the key's mode,
  * or the deprecated `TENANT_ID=<id>` to land the device in the namespace's pending list.
  */

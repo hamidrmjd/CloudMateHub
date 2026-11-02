@@ -140,6 +140,10 @@ function buildSections(isNewNamespace: boolean): NavSection[] {
       items: security,
     },
     {
+      title: "VPN",
+      items: [{ to: "/vpn/wireguard", label: "WireGuard", icon: <ShieldCheckIcon className={navIcon} /> }],
+    },
+    {
       title: "Management",
       items: [
         {

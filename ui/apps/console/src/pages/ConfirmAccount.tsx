@@ -34,7 +34,7 @@ export default function ConfirmAccount() {
       <ScreenIntro
         eyebrow="Account"
         title="Account Activation Required"
-        lead="Thank you for registering an account on ShellHub. An email was sent with a confirmation link. You need to click on the link to activate your account. If you haven't received the email, click on the Resend Email button."
+        lead="Thank you for registering an account on CloudMateHub. An email was sent with a confirmation link. You need to click on the link to activate your account. If you haven't received the email, click on the Resend Email button."
       />
 
       <div className="flex flex-col gap-3 mb-6 empty:hidden">

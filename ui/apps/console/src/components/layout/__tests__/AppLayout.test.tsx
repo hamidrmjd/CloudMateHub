@@ -236,7 +236,7 @@ describe("AppLayout", () => {
       renderLayout("/dashboard");
 
       await user.click(
-        await screen.findByRole("link", { name: "ShellHub", hidden: true }),
+        await screen.findByRole("link", { name: "CloudMateHub", hidden: true }),
       );
 
       await waitFor(() =>
@@ -258,7 +258,7 @@ describe("AppLayout", () => {
       expect(adminTab).toHaveAttribute("aria-selected", "false");
 
       await user.click(
-        screen.getByRole("link", { name: "ShellHub", hidden: true }),
+        screen.getByRole("link", { name: "CloudMateHub", hidden: true }),
       );
 
       await waitFor(() =>

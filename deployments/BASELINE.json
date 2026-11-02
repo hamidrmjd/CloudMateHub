@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/shellhub-io/shellhub",
+  "tag": "v0.27.0",
+  "commit": "fdcc51e4fdad55440b8cfa3061b2729a50deea7b",
+  "branch": "custom/shellhub-baseline",
+  "edition": "community",
+  "application_source_changes": false,
+  "scope": "Original ShellHub source and UI, with separate local deployment configuration",
+  "tracked_application_source_matches_release": true,
+  "modified_upstream_files": [
+    ".dockerignore"
+  ]
+}

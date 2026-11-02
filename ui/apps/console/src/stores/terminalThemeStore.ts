@@ -134,7 +134,7 @@ const STORAGE_KEYS = {
 };
 
 const FALLBACK_THEME: TerminalTheme = {
-  name: "ShellHub Dark",
+  name: "CloudMateHub Dark",
   dark: true,
   colors: {
     background: "#22263A",
@@ -192,7 +192,7 @@ export const useTerminalThemeStore = create<TerminalThemeState>((set, get) => {
   const savedFont = localStorage.getItem(STORAGE_KEYS.fontFamily);
   const savedSize = localStorage.getItem(STORAGE_KEYS.fontSize);
 
-  const initialThemeName = savedTheme || "ShellHub Dark";
+  const initialThemeName = savedTheme?.replace(/^ShellHub /, "CloudMateHub ") || "CloudMateHub Dark";
   const initialFont = (savedFont as TerminalFont) || "IBM Plex Mono";
   const parsedSize = savedSize ? parseInt(savedSize, 10) : NaN;
   const initialSize = Number.isNaN(parsedSize)

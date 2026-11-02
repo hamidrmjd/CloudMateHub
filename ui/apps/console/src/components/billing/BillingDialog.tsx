@@ -92,7 +92,7 @@ export default function BillingDialog({
       onClose={handleClose}
       canClose={canClose}
       size="md"
-      aria-label="Subscribe to ShellHub Cloud"
+      aria-label="Subscribe to CloudMateHub Cloud"
     >
       <span role="status" aria-live="polite" className="sr-only">
         {`Step ${step} of ${TOTAL_STEPS}: ${STEPS[step - 1]}`}

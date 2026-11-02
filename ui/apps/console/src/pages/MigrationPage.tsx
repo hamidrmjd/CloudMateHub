@@ -11,7 +11,7 @@ const COPY: Record<
 > = {
   completed: {
     title: "Migration completed",
-    lead: "The database migration finished successfully. You can now update ShellHub to the next version to start using the new database.",
+    lead: "The database migration finished successfully. You can now update CloudMateHub to the next version to start using the new database.",
   },
   failed: {
     title: "Migration failed",
@@ -19,7 +19,7 @@ const COPY: Record<
   },
   running: {
     title: "Migration in progress",
-    lead: "ShellHub is migrating its database to a new format. This may take a while depending on the amount of data.",
+    lead: "CloudMateHub is migrating its database to a new format. This may take a while depending on the amount of data.",
   },
 };
 

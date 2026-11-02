@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+<title id="title">CloudMateHub architecture</title><desc id="desc">Browser traffic enters the gateway. SSH enters the server directly. Five local services use PostgreSQL and Valkey; a remote device agent makes an outbound reverse tunnel.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#5b8193"/></marker></defs>
+<rect width="1600" height="1000" fill="#091118"/>
+<style>text{font-family:Arial,Helvetica,sans-serif}.title{fill:#edf7fa;font-weight:700}.label{fill:#a7c0cc;font-size:17px}.small{fill:#a7c0cc;font-size:15px}.line{fill:none;stroke:#5b8193;stroke-width:3;marker-end:url(#arrow)}</style>
+<text x="70" y="70" class="title" font-size="36">CloudMateHub</text><text x="70" y="105" class="label">Architecture · customized ShellHub Community v0.27.0 · 02 November 2026</text>
+<rect x="370" y="160" width="1160" height="680" rx="24" fill="#0c1923" stroke="#294252" stroke-width="2"/>
+<text x="400" y="200" class="label">LOCAL DOCKER COMPOSE / shellhub-custom</text>
+<rect x="60" y="260" width="245" height="110" rx="16" fill="#111e28" stroke="#3b5362" stroke-width="2"/>
+<text x="82" y="296" class="title" font-size="23">Browser console</text>
+<text x="82" y="326" class="small">React + TypeScript</text>
+<text x="82" y="351" class="small">HTTP + WebSocket</text>
+<rect x="60" y="450" width="245" height="110" rx="16" fill="#111e28" stroke="#3b5362" stroke-width="2"/>
+<text x="82" y="486" class="title" font-size="23">SSH client</text>
+<text x="82" y="516" class="small">SSH / SCP / SFTP</text>
+<text x="82" y="541" class="small">direct server ingress</text>
+<rect x="60" y="665" width="245" height="120" rx="16" fill="#111e28" stroke="#3b5362" stroke-width="2"/>
+<text x="82" y="701" class="title" font-size="23">Device agent</text>
+<text x="82" y="731" class="small">Linux host · outbound tunnel</text>
+<text x="82" y="756" class="small">not deployed locally</text>
+<rect x="425" y="265" width="260" height="125" rx="16" fill="#122a32" stroke="#1da895" stroke-width="2"/>
+<text x="447" y="301" class="title" font-size="23">Gateway</text>
+<text x="447" y="331" class="small">Go + Caddy</text>
+<text x="447" y="356" class="small">routing and optional TLS</text>
+<rect x="770" y="245" width="290" height="120" rx="16" fill="#122a32" stroke="#1da895" stroke-width="2"/>
+<text x="792" y="281" class="title" font-size="23">UI</text>
+<text x="792" y="311" class="small">static-web-server</text>
+<text x="792" y="336" class="small">built React application</text>
+<rect x="770" y="455" width="290" height="140" rx="16" fill="#122a32" stroke="#1da895" stroke-width="2"/>
+<text x="792" y="491" class="title" font-size="23">Server</text>
+<text x="792" y="521" class="small">Go + Echo · API / SSH</text>
+<text x="792" y="546" class="small">in-process background worker</text>
+<rect x="1175" y="400" width="285" height="115" rx="16" fill="#122a32" stroke="#1da895" stroke-width="2"/>
+<text x="1197" y="436" class="title" font-size="23">PostgreSQL 18</text>
+<text x="1197" y="466" class="small">accounts, devices, policies</text>
+<text x="1197" y="491" class="small">sessions and durable records</text>
+<rect x="1175" y="615" width="285" height="115" rx="16" fill="#122a32" stroke="#1da895" stroke-width="2"/>
+<text x="1197" y="651" class="title" font-size="23">Valkey</text>
+<text x="1197" y="681" class="small">Redis-compatible cache</text>
+<text x="1197" y="706" class="small">and background job queue</text>
+<path d="M305 305H425" class="line"/>
+<text x="315" y="290" class="small">localhost:8080</text>
+<path d="M685 300H770" class="line"/>
+<text x="715" y="283" class="small">UI</text>
+<path d="M685 355H715V510H770" class="line"/>
+<text x="693" y="423" class="small">API / WS</text>
+<path d="M305 505H770" class="line"/>
+<text x="350" y="489" class="small">localhost:2222 → server:2222</text>
+<path d="M1060 490H1115V450H1175" class="line"/>
+<text x="1090" y="430" class="small">records</text>
+<path d="M1060 555H1115V670H1175" class="line"/>
+<text x="1070" y="645" class="small">cache / jobs</text>
+<path d="M305 720H350V365H425" class="line"/>
+<text x="370" y="750" class="small">reverse tunnel</text>
+<text x="400" y="790" class="small">Only HTTP 8080 and SSH 2222 are published locally. Database and cache remain internal.</text>
+<text x="70" y="895" class="label">Persistent: PostgreSQL volume · gateway state volume · host signing / SSH keys</text>
+<text x="70" y="930" class="label">Browser state: session / preferences / vault metadata · Secrets stay outside architecture notes</text>
+<text x="70" y="970" class="small">Source-derived architecture. The external agent is a supported component, not an enrolled device in this deployment.</text>
+</svg>

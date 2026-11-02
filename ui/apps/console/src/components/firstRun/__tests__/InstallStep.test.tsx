@@ -20,7 +20,7 @@ describe("InstallStep", () => {
 
       expect(
         screen.getByText(
-          "To accept this device, open the ShellHub console and enter this code:",
+          "To accept this device, open the CloudMateHub console and enter this code:",
         ),
       ).toBeInTheDocument();
       expect(screen.getByText("XXXX-XXXX")).toBeInTheDocument();

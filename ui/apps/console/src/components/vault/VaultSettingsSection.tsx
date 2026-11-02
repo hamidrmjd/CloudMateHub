@@ -216,8 +216,8 @@ export default function VaultSettingsSection() {
 
   const storageDescription =
     storageMode === "server"
-      ? "Synced with the ShellHub server. Click to move it to this device."
-      : "Stored in this browser only. Click to sync it to the ShellHub server.";
+      ? "Synced with the CloudMateHub server. Click to move it to this device."
+      : "Stored in this browser only. Click to sync it to the CloudMateHub server.";
 
   return (
     <>

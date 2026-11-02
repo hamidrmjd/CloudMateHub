@@ -104,7 +104,7 @@ const ANSI = [
 describe("bundled theme files", () => {
   const metadata = readJson<{ name: string; file: string }[]>("metadata.json");
 
-  it("ship ShellHub Dark as the theme the store starts with", async () => {
+  it("ship CloudMateHub Dark as the theme the store starts with", async () => {
     const { useTerminalThemeStore } = await import("@/stores/terminalThemeStore");
 
     expect(useTerminalThemeStore.getState().theme.colors).toEqual(

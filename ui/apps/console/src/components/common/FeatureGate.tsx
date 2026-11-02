@@ -33,7 +33,7 @@ export default function FeatureGate({
       overline="Premium Feature"
       title={feature}
       description={description}
-      footnote="Available on ShellHub Cloud and Enterprise editions."
+      footnote="Available on CloudMateHub Cloud and Enterprise editions."
     >
       <Button
         as="a"

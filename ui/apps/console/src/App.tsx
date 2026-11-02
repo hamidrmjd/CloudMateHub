@@ -36,6 +36,7 @@ const ValidationAccount = lazy(() => import("./pages/ValidationAccount"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Devices = lazy(() => import("./pages/devices"));
 const PendingDevices = lazy(() => import("./pages/devices/PendingDevices"));
+const WireGuard = lazy(() => import("./pages/vpn/WireGuard"));
 const Containers = lazy(() => import("./pages/containers"));
 const ContainerDetails = lazy(() => import("./pages/ContainerDetails"));
 const Sessions = lazy(() => import("./pages/sessions"));
@@ -228,6 +229,8 @@ export default function App() {
                     />
                     <Route path="/devices/:uid" element={<DeviceDetails />} />
                     <Route path="/containers" element={<Containers />} />
+                    <Route path="/vpn" element={<Navigate to="/vpn/wireguard" replace />} />
+                    <Route path="/vpn/wireguard" element={<WireGuard />} />
                     <Route
                       path="/containers/:uid"
                       element={<ContainerDetails />}

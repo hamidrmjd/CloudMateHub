@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="720" viewBox="0 0 1400 720"><defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#30cbb4"/></marker></defs><rect width="1400" height="720" rx="20" fill="#091118"/><style>text{font-family:Arial,sans-serif;fill:#eaf4f7}.small{font-size:16px;fill:#9eb7c4}.line{fill:none;stroke:#30cbb4;stroke-width:3;marker-end:url(#a)}</style><text x="55" y="60" font-size="32" font-weight="bold">CloudMateHub · VPN / WireGuard</text><text x="55" y="94" class="small">CloudMateHub owns identity and peer access. WGDashboard owns VPN management.</text>
+<rect x="50" y="250" width="230" height="110" rx="15" fill="#122631" stroke="#278e80"/><text x="68" y="283" font-size="22" font-weight="bold">Browser</text>
+<text x="68" y="313" class="small">My configurations</text>
+<text x="68" y="337" class="small">Admin workspace</text>
+<rect x="345" y="250" width="220" height="110" rx="15" fill="#122631" stroke="#278e80"/><text x="363" y="283" font-size="22" font-weight="bold">Gateway</text>
+<text x="363" y="313" class="small">/api/vpn/*</text>
+<text x="363" y="337" class="small">same-origin routing</text>
+<rect x="635" y="235" width="260" height="140" rx="15" fill="#122631" stroke="#278e80"/><text x="653" y="268" font-size="22" font-weight="bold">VPN broker</text>
+<text x="653" y="298" class="small">Live identity and role checks</text>
+<text x="653" y="322" class="small">Per-user peer ownership</text>
+<rect x="1020" y="140" width="320" height="110" rx="15" fill="#122631" stroke="#278e80"/><text x="1038" y="173" font-size="22" font-weight="bold">CloudMateHub server</text>
+<text x="1038" y="203" class="small">Validate existing credentials</text>
+<text x="1038" y="227" class="small">Resolve current instance admin</text>
+<rect x="1020" y="350" width="320" height="110" rx="15" fill="#122631" stroke="#278e80"/><text x="1038" y="383" font-size="22" font-weight="bold">WGDashboard 4.3.4</text>
+<text x="1038" y="413" class="small">Native management features</text>
+<text x="1038" y="437" class="small">Private service key</text>
+<rect x="620" y="510" width="290" height="110" rx="15" fill="#122631" stroke="#278e80"/><text x="638" y="543" font-size="22" font-weight="bold">Assignment state</text>
+<text x="638" y="573" class="small">Peer → immutable user ID</text>
+<text x="638" y="597" class="small">Separate SQLite volume</text>
+<rect x="1020" y="535" width="320" height="110" rx="15" fill="#122631" stroke="#278e80"/><text x="1038" y="568" font-size="22" font-weight="bold">VPN runtime state</text>
+<text x="1038" y="598" class="small">WireGuard / Amnezia configs</text>
+<text x="1038" y="622" class="small">Native state and backups</text>
+<path d="M280 305H345" class="line"/>
+<path d="M565 305H635" class="line"/>
+<path d="M895 270H955V195H1020" class="line"/>
+<path d="M895 335H950V405H1020" class="line"/>
+<path d="M765 375V510" class="line"/>
+<path d="M1180 460V535" class="line"/>
+<text x="55" y="684" class="small">Local preparation only · no public management/UDP ports · a reachable Ubuntu VPN host is still required</text></svg>

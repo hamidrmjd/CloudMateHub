@@ -271,7 +271,7 @@ function PendingRequest({
       <p className="text-sm text-text-secondary leading-relaxed mb-5">
         {reauth
           ? `An access policy on ${details.deviceName || "this device"} asks you to re-authenticate before the login goes through.`
-          : "The SSH login waiting in your terminal used a key ShellHub doesn't know yet."}
+          : "The SSH login waiting in your terminal used a key CloudMateHub doesn't know yet."}
       </p>
 
       {!reauth && (

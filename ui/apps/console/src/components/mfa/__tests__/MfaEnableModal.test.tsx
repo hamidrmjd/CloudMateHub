@@ -9,7 +9,7 @@ import MfaEnableModal from "../MfaEnableModal";
 vi.mock("qrcode");
 
 const mockMfaData: MfaGenerate = {
-  link: "otpauth://totp/ShellHub:user@example.com?secret=ABCD1234&issuer=ShellHub",
+  link: "otpauth://totp/CloudMateHub:user@example.com?secret=ABCD1234&issuer=CloudMateHub",
   secret: "ABCD1234",
   recovery_codes: ["code1", "code2", "code3", "code4", "code5", "code6"],
 };

@@ -1,0 +1,9 @@
+CloudMateHub
+
+Derived from ShellHub Community v0.27.0, developed by O.S. Systems and contributors.
+https://github.com/shellhub-io/shellhub
+
+Integrates WGDashboard v4.3.4, developed by WGDashboard contributors.
+https://github.com/WGDashboard/WGDashboard
+
+Both upstream projects are licensed under Apache License 2.0. Original copyright and license notices are retained. WGDashboard's license is included at integrations/wgdashboard/LICENSE.upstream. CloudMateHub modifications include branding, console layouts, VPN identity/ownership integration and deployment documentation.
