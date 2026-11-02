@@ -212,7 +212,7 @@ http://{{ $cfg.Domain }} {
 {{ end }}
 # The fallback, and the reason it is here at all: a request whose Host is none of
 # the names above reaches Caddy's own default otherwise, which answers 200 with an
-# empty body. An agent reading that as ShellHub's /info gets no server info and no
+# empty body. An agent reading that as CloudMateHub's /info gets no server info and no
 # error, so what should say "you are pointed at the wrong place" says nothing.
 http:// {
 	respond 404

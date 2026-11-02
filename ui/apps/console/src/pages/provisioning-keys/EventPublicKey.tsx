@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
 import { KeyIcon } from "@heroicons/react/24/outline";
-import { Button, Card } from "@shellhub/design-system/primitives";
+import { Button, Card } from "@cloudmatehub/design-system/primitives";
 import { type ProvisioningKeyEvent } from "@/client";
 import CopyButton from "@/components/common/CopyButton";
 import BaseDialog from "@/components/common/BaseDialog";

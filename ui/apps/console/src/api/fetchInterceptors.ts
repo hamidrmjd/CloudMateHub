@@ -1,6 +1,7 @@
 import { client } from "../client/client.gen";
 import { useAuthStore } from "../stores/authStore";
 import { useConnectivityStore } from "../stores/connectivityStore";
+import { loginPathFor } from "@/utils/navigation";
 
 function isTokenExpired(token: string): boolean {
   try {
@@ -57,7 +58,7 @@ client.interceptors.request.use((request) => {
       );
       if (!isTokenLogin) {
         useAuthStore.getState().logout();
-        window.location.href = "/login";
+        window.location.href = loginPathFor(window.location.pathname, window.location.search, window.location.hash);
       }
       throw new ExpiredTokenError("Token expired");
     }
@@ -89,7 +90,7 @@ client.interceptors.response.use((response, request) => {
       const abandoned = isFromAbandonedSession(sentToken(request));
       if (!isSignInStep && !isTokenLogin && !abandoned) {
         logout();
-        window.location.href = "/login";
+        window.location.href = loginPathFor(window.location.pathname, window.location.search, window.location.hash);
       }
     }
   } else if (isApiDown(response.status)) {

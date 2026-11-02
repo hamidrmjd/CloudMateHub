@@ -62,7 +62,7 @@ async function expectUnlockRefused(page: Page, attempt: string) {
 function readLocalVaultEntries(page: Page) {
   return page.evaluate(() =>
     Object.keys(localStorage).filter((key) =>
-      /^shellhub-vault-(meta|data):/.test(key),
+      /^cloudmatehub-vault-(meta|data):/.test(key),
     ),
   );
 }
@@ -306,7 +306,7 @@ test.describe("Secure vault", () => {
         .getByRole("button", { name: "Change vault storage location" })
         .click();
       const dialog = page.getByRole("dialog", {
-        name: "Sync vault to the ShellHub server",
+        name: "Sync vault to the CloudMateHub server",
       });
       await dialog.getByRole("button", { name: "Sync vault" }).click();
       await expect(dialog).toBeHidden();

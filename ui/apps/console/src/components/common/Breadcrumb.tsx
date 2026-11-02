@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 /**
  * One crumb. An item with no to is the current page, and is rendered as text rather than a link.

@@ -14,7 +14,7 @@ import (
 )
 
 // NewSlogLogger returns the logger Echo writes its internals to, backed by logrus so the
-// framework's own messages land in the same stream and format as everything else ShellHub logs.
+// framework's own messages land in the same stream and format as everything else CloudMateHub logs.
 func NewSlogLogger(logger *logrus.Entry) *slog.Logger {
 	return slog.New(&slogHandler{entry: logger})
 }

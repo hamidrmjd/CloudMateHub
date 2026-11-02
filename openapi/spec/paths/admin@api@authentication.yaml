@@ -50,26 +50,26 @@ get:
                         type: object
                         nullable: true
                         description: |
-                          Configuration for SAML binding methods that define how authentication requests 
-                          and responses are transmitted between ShellHub and the IdP.
+                          Configuration for SAML binding methods that define how authentication requests
+                          and responses are transmitted between CloudMateHub and the IdP.
                         properties:
                           post:
                             type: string
                             format: url
                             description: |
-                              The Single Sign-On URL for HTTP-POST binding. This URL is where ShellHub 
+                              The Single Sign-On URL for HTTP-POST binding. This URL is where CloudMateHub
                               will redirect users for authentication using the HTTP-POST method.
                           redirect:
                             type: string
                             format: url
                             description: |
-                              The Single Sign-On URL for HTTP-Redirect binding. This URL is where ShellHub 
+                              The Single Sign-On URL for HTTP-Redirect binding. This URL is where CloudMateHub
                               will redirect users for authentication using the HTTP-Redirect method.
                           preferred:
                             type: string
                             enum: ['', post, redirect]
                             description: |
-                              Specifies which binding method ShellHub prefers when both POST and 
+                              Specifies which binding method CloudMateHub prefers when both POST and
                               Redirect bindings are available. If left blank or empty, POST binding is preferred.
                       mappings:
                         type: object
@@ -86,11 +86,11 @@ get:
                     properties:
                       sign_auth_requests:
                         type: boolean
-                        description: Indicates whether ShellHub signs authentication requests.
+                        description: Indicates whether CloudMateHub signs authentication requests.
                       certificate:
                         type: string
                         description: |
-                          The X509 certificate the IdP uses to verify requests ShellHub signs.
+                          The X509 certificate the IdP uses to verify requests CloudMateHub signs.
                           Empty when signing is off.
     '401':
       $ref: ../components/responses/401.yaml

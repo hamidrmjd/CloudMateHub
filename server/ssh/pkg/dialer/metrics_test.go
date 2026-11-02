@@ -13,27 +13,27 @@ import (
 )
 
 const (
-	connectionsMetric = "shellhub_ssh_dialer_connections"
-	devicesMetric     = "shellhub_ssh_dialer_devices"
-	displacedMetric   = "shellhub_ssh_dialer_connections_displaced_total"
+	connectionsMetric = "cloudmatehub_ssh_dialer_connections"
+	devicesMetric     = "cloudmatehub_ssh_dialer_devices"
+	displacedMetric   = "cloudmatehub_ssh_dialer_connections_displaced_total"
 )
 
 func expositionOf(connections, devices int) string {
 	return fmt.Sprintf(`
-		# HELP shellhub_ssh_dialer_connections Reverse connections currently held, across every device. Counted per server process; sum() across replicas for a fleet total.
-		# TYPE shellhub_ssh_dialer_connections gauge
-		shellhub_ssh_dialer_connections %d
-		# HELP shellhub_ssh_dialer_devices Devices holding at least one reverse connection. Counted per server process; sum() across replicas for a fleet total.
-		# TYPE shellhub_ssh_dialer_devices gauge
-		shellhub_ssh_dialer_devices %d
+		# HELP cloudmatehub_ssh_dialer_connections Reverse connections currently held, across every device. Counted per server process; sum() across replicas for a fleet total.
+		# TYPE cloudmatehub_ssh_dialer_connections gauge
+		cloudmatehub_ssh_dialer_connections %d
+		# HELP cloudmatehub_ssh_dialer_devices Devices holding at least one reverse connection. Counted per server process; sum() across replicas for a fleet total.
+		# TYPE cloudmatehub_ssh_dialer_devices gauge
+		cloudmatehub_ssh_dialer_devices %d
 	`, connections, devices)
 }
 
 func displacedExpositionOf(displaced int) string {
 	return fmt.Sprintf(`
-		# HELP shellhub_ssh_dialer_connections_displaced_total Reverse connections displaced by a newer registration for the same device. Counted per server process; sum() across replicas for a fleet total.
-		# TYPE shellhub_ssh_dialer_connections_displaced_total counter
-		shellhub_ssh_dialer_connections_displaced_total %d
+		# HELP cloudmatehub_ssh_dialer_connections_displaced_total Reverse connections displaced by a newer registration for the same device. Counted per server process; sum() across replicas for a fleet total.
+		# TYPE cloudmatehub_ssh_dialer_connections_displaced_total counter
+		cloudmatehub_ssh_dialer_connections_displaced_total %d
 	`, displaced)
 }
 
@@ -118,8 +118,8 @@ func TestCollectorCountsEvictedConnections(t *testing.T) {
 	m.Evict("tenant", "uid")
 
 	assert.NoError(t, testutil.CollectAndCompare(collector, strings.NewReader(`
-		# HELP shellhub_ssh_dialer_connections_evicted_total Reverse connections closed because their device was removed. Counted per server process; sum() across replicas for a fleet total.
-		# TYPE shellhub_ssh_dialer_connections_evicted_total counter
-		shellhub_ssh_dialer_connections_evicted_total 1
-	`), "shellhub_ssh_dialer_connections_evicted_total"))
+		# HELP cloudmatehub_ssh_dialer_connections_evicted_total Reverse connections closed because their device was removed. Counted per server process; sum() across replicas for a fleet total.
+		# TYPE cloudmatehub_ssh_dialer_connections_evicted_total counter
+		cloudmatehub_ssh_dialer_connections_evicted_total 1
+	`), "cloudmatehub_ssh_dialer_connections_evicted_total"))
 }

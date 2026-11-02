@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { getConfig } from "@/env";
 import { useSubmitOnboardingSurvey } from "@/hooks/useOnboardingSurvey";
 import {

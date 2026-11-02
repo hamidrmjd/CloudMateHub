@@ -45,7 +45,7 @@ func (f finding) key() string {
 }
 
 func main() {
-	workspace := flag.String("workspace", "", "directory holding the shellhub and cloud checkouts (default: this shellhub checkout, with cloud next to its main checkout)")
+	workspace := flag.String("workspace", "", "directory holding the cloudmatehub and cloud checkouts (default: this cloudmatehub checkout, with cloud next to its main checkout)")
 	requireCloud := flag.Bool("require-cloud", false, "fail instead of skipping when the cloud checkout is missing")
 	tagSets := flag.String("tags", "enterprise,docker;enterprise,native", "semicolon-separated build tag sets; code counts as dead only when it is dead under every set")
 	base := flag.String("base", "", "git ref each checkout is measured against through its merge base with HEAD, such as origin/master; report only what the change introduces")
@@ -58,7 +58,7 @@ func main() {
 }
 
 func run(ctx context.Context, workspace, baseRef string, requireCloud bool, tagSets []string) error {
-	shellhubRoot, cloudRoot, err := checkouts(workspace)
+	cloudmatehubRoot, cloudRoot, err := checkouts(workspace)
 	if err != nil {
 		return err
 	}
@@ -68,17 +68,17 @@ func run(ctx context.Context, workspace, baseRef string, requireCloud bool, tagS
 			return fmt.Errorf("cloud checkout not found at %s", cloudRoot)
 		}
 
-		fmt.Fprintf(os.Stderr, "skipping: cloud is not checked out next to shellhub (%s), and shellhub alone cannot tell dead code from code only cloud calls\n", cloudRoot)
+		fmt.Fprintf(os.Stderr, "skipping: cloud is not checked out next to cloudmatehub (%s), and cloudmatehub alone cannot tell dead code from code only cloud calls\n", cloudRoot)
 
 		return nil
 	}
 
-	deadcode, err := deadcodeBinary(ctx, shellhubRoot)
+	deadcode, err := deadcodeBinary(ctx, cloudmatehubRoot)
 	if err != nil {
 		return err
 	}
 
-	head, err := analyze(ctx, shellhubRoot, cloudRoot, tagSets, deadcode)
+	head, err := analyze(ctx, cloudmatehubRoot, cloudRoot, tagSets, deadcode)
 	if err != nil {
 		return err
 	}
@@ -93,7 +93,7 @@ func run(ctx context.Context, workspace, baseRef string, requireCloud bool, tagS
 	}
 	defer func() { _ = os.RemoveAll(baseline) }()
 
-	for name, root := range map[string]string{"shellhub": shellhubRoot, "cloud": cloudRoot} {
+	for name, root := range map[string]string{"shellhub": cloudmatehubRoot, "cloud": cloudRoot} {
 		if err := exportMergeBase(ctx, root, baseRef, filepath.Join(baseline, name)); err != nil {
 			return err
 		}
@@ -109,9 +109,9 @@ func run(ctx context.Context, workspace, baseRef string, requireCloud bool, tagS
 	return report(os.Stdout, introduced, head.count()-introduced.count())
 }
 
-func deadcodeBinary(ctx context.Context, shellhubRoot string) (string, error) {
+func deadcodeBinary(ctx context.Context, cloudmatehubRoot string) (string, error) {
 	cmd := exec.CommandContext(ctx, "go", "tool", "-n", "deadcode")
-	cmd.Dir = filepath.Join(shellhubRoot, "tests")
+	cmd.Dir = filepath.Join(cloudmatehubRoot, "tests")
 	cmd.Env = append(os.Environ(), "GOWORK=off")
 	cmd.Stderr = os.Stderr
 
@@ -123,10 +123,10 @@ func deadcodeBinary(ctx context.Context, shellhubRoot string) (string, error) {
 	return strings.TrimSpace(string(out)), nil
 }
 
-func analyze(ctx context.Context, shellhubRoot, cloudRoot string, tagSets []string, deadcode string) (problems, error) {
-	shellhub := repository{
+func analyze(ctx context.Context, cloudmatehubRoot, cloudRoot string, tagSets []string, deadcode string) (problems, error) {
+	cloudmatehub := repository{
 		name:    "shellhub",
-		root:    shellhubRoot,
+		root:    cloudmatehubRoot,
 		modules: []string{".", "server", "agent", "gateway", "openapi", "tests"},
 	}
 	cloud := repository{
@@ -134,16 +134,16 @@ func analyze(ctx context.Context, shellhubRoot, cloudRoot string, tagSets []stri
 		root:    cloudRoot,
 		modules: []string{"."},
 	}
-	repos := []repository{shellhub, cloud}
+	repos := []repository{cloudmatehub, cloud}
 
-	work, err := writeWorkspace(shellhub, repos)
+	work, err := writeWorkspace(cloudmatehub, repos)
 	if err != nil {
 		return problems{}, err
 	}
 	defer func() { _ = os.RemoveAll(filepath.Dir(work)) }()
 
 	dead, err := deadUnderEvery(tagSets, func(tags string) (map[string]finding, error) {
-		return collect(ctx, shellhub.root, repos, work, tags, deadcode)
+		return collect(ctx, cloudmatehub.root, repos, work, tags, deadcode)
 	})
 	if err != nil {
 		return problems{}, err
@@ -256,12 +256,12 @@ func checkouts(workspace string) (string, string, error) {
 		return "", "", err
 	}
 
-	shellhub, err := findShellHubRoot(wd)
+	cloudmatehub, err := findCloudMateHubRoot(wd)
 	if err != nil {
 		return "", "", err
 	}
 
-	return shellhub, filepath.Join(filepath.Dir(mainCheckout(shellhub)), "cloud"), nil
+	return cloudmatehub, filepath.Join(filepath.Dir(mainCheckout(cloudmatehub)), "cloud"), nil
 }
 
 func mainCheckout(root string) string {
@@ -288,7 +288,7 @@ func mainCheckout(root string) string {
 	return checkout
 }
 
-func findShellHubRoot(dir string) (string, error) {
+func findCloudMateHubRoot(dir string) (string, error) {
 	for {
 		data, err := os.ReadFile(filepath.Join(dir, "go.mod")) //nolint:gosec // walks up from the working directory to find the checkout
 		if err == nil && strings.HasPrefix(string(data), "module github.com/shellhub-io/shellhub\n") {
@@ -297,15 +297,15 @@ func findShellHubRoot(dir string) (string, error) {
 
 		parent := filepath.Dir(dir)
 		if parent == dir {
-			return "", errors.New("run from inside the shellhub checkout or pass -workspace")
+			return "", errors.New("run from inside the cloudmatehub checkout or pass -workspace")
 		}
 
 		dir = parent
 	}
 }
 
-func writeWorkspace(shellhub repository, repos []repository) (string, error) {
-	goMod, err := os.ReadFile(filepath.Join(shellhub.root, "go.mod"))
+func writeWorkspace(cloudmatehub repository, repos []repository) (string, error) {
+	goMod, err := os.ReadFile(filepath.Join(cloudmatehub.root, "go.mod"))
 	if err != nil {
 		return "", err
 	}
@@ -328,8 +328,8 @@ func writeWorkspace(shellhub repository, repos []repository) (string, error) {
 	}
 	work.WriteString(")\n")
 
-	for _, module := range shellhub.modules {
-		dir := filepath.Join(shellhub.root, module)
+	for _, module := range cloudmatehub.modules {
+		dir := filepath.Join(cloudmatehub.root, module)
 
 		path, err := modulePath(dir)
 		if err != nil {
@@ -350,7 +350,7 @@ func writeWorkspace(shellhub repository, repos []repository) (string, error) {
 }
 
 func modulePath(dir string) (string, error) {
-	data, err := os.ReadFile(filepath.Join(dir, "go.mod")) //nolint:gosec // reads a module of the shellhub checkout
+	data, err := os.ReadFile(filepath.Join(dir, "go.mod")) //nolint:gosec // reads a module of the cloudmatehub checkout
 	if err != nil {
 		return "", err
 	}

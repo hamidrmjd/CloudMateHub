@@ -11,7 +11,7 @@ Usage: devscripts/comment-scan --diff [<base>]
        devscripts/comment-scan <file>
        devscripts/comment-scan --language <file>
 
-Reports the comments the ShellHub code style does not allow. Two kinds stay:
+Reports the comments the CloudMateHub code style does not allow. Two kinds stay:
 a doc comment on an exported declaration (what revive's exported rule and
 jsdoc/require-jsdoc ask for), and a linter suppression or tool directive with
 its reason. Name the thing in code instead, and put the reason a name cannot

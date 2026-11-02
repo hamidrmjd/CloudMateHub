@@ -35,7 +35,7 @@ func TestEnterpriseSessionRecording(t *testing.T) {
 
 	compose := newEnterpriseEnvironment(t, ctx,
 		environment.New(t, run).WithEnv("SHELLHUB_SESSION_RETENTION_DAYS", "1").WithCronTrigger())
-	compose.SetSessionRecording(t, ShellHubNamespace, true)
+	compose.SetSessionRecording(t, CloudMateHubNamespace, true)
 
 	signer := registerDeviceKey(t, ctx, compose)
 	_, device := startAcceptedAgent(t, ctx, compose)
@@ -326,8 +326,8 @@ func testRecordingRetention(t *testing.T, fixture *recordingFixture) {
 func stopRecording(t *testing.T, compose *environment.DockerCompose) {
 	t.Helper()
 
-	compose.SetSessionRecording(t, ShellHubNamespace, false)
-	t.Cleanup(func() { compose.SetSessionRecording(t, ShellHubNamespace, true) })
+	compose.SetSessionRecording(t, CloudMateHubNamespace, false)
+	t.Cleanup(func() { compose.SetSessionRecording(t, CloudMateHubNamespace, true) })
 }
 
 type recordingFixture struct {

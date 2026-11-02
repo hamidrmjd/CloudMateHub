@@ -1,12 +1,12 @@
 ---
 import { ServerIcon, UserIcon } from "@heroicons/react/24/outline";
-import { ShellHubCloudIcon } from "@shellhub/design-system/primitives";
+import { CloudMateHubCloudIcon } from "@cloudmatehub/design-system/primitives";
 ---
 
 <div
   class="diagram-container"
   role="img"
-  aria-label="Diagram comparing two connection models. Traditional SSH: you connect directly to the device over SSH on port 22, which requires the device to have a public IP and breaks behind NAT, CGNAT, or firewalls. ShellHub: the device connects outbound to the ShellHub server over a WebSocket on port 443, and you connect to the server, which bridges the two."
+  aria-label="Diagram comparing two connection models. Traditional SSH: you connect directly to the device over SSH on port 22, which requires the device to have a public IP and breaks behind NAT, CGNAT, or firewalls. CloudMateHub: the device connects outbound to the CloudMateHub server over a WebSocket on port 443, and you connect to the server, which bridges the two."
 >
   <div class="diagram-row">
     <div class="diagram-label">
@@ -39,10 +39,10 @@ import { ShellHubCloudIcon } from "@shellhub/design-system/primitives";
 
   <div class="diagram-row">
     <div class="diagram-label">
-      <span class="diagram-tag diagram-tag--primary">ShellHub</span>
+      <span class="diagram-tag diagram-tag--primary">CloudMateHub</span>
       <span class="diagram-hint">Device connects outbound — works through any network</span>
     </div>
-    <div class="diagram-flow diagram-flow--shellhub">
+    <div class="diagram-flow diagram-flow--cloudmatehub">
       <div class="diagram-node">
         <ServerIcon className="diagram-icon" />
         <span class="diagram-node-label">Device</span>
@@ -58,8 +58,8 @@ import { ShellHubCloudIcon } from "@shellhub/design-system/primitives";
       </div>
 
       <div class="diagram-node diagram-node--primary diagram-node--server">
-        <ShellHubCloudIcon className="diagram-icon" />
-        <span class="diagram-node-label">ShellHub Server</span>
+        <CloudMateHubCloudIcon className="diagram-icon" />
+        <span class="diagram-node-label">CloudMateHub Server</span>
       </div>
 
       <div class="diagram-arrow diagram-arrow--primary diagram-arrow--reverse">

@@ -1,4 +1,4 @@
--- Bind the ShellHub instance (the `systems` singleton) to its one namespace. In the
+-- Bind the CloudMateHub instance (the `systems` singleton) to its one namespace. In the
 -- Community Edition tenant = instance: a set instance_tenant_id makes NamespaceCreate
 -- refuse any further namespace, and the FK's ON DELETE RESTRICT protects the bound
 -- namespace from deletion. Enterprise/Cloud keep this NULL (the store wrapper strips it

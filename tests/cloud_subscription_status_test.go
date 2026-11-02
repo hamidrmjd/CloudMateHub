@@ -22,10 +22,10 @@ func TestCloudSubscriptionStatus(t *testing.T) {
 	compose := environment.New(t, run).WithEdition(environment.EditionCloud).Up(ctx)
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubUsername+stripeTestEmailDomain, ShellHubPassword)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubUsername+stripeTestEmailDomain, CloudMateHubPassword)
 	ownNamespace(t, ctx, compose, legacyNamespace)
 
-	subscription := billedSubscription{tenant: ShellHubNamespace, customer: "cus_" + stripeTestID(), id: "sub_" + stripeTestID()}
+	subscription := billedSubscription{tenant: CloudMateHubNamespace, customer: "cus_" + stripeTestID(), id: "sub_" + stripeTestID()}
 	subscription.storeIn(t, compose, models.BillingStatusCanceled)
 
 	signer := registerDeviceKey(t, ctx, compose)

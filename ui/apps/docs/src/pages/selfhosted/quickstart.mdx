@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: Self-Hosting Quickstart
-description: Bring up your own ShellHub server with Docker Compose.
+description: Bring up your own CloudMateHub server with Docker Compose.
 ---
 
 import { Code } from "astro:components";
@@ -14,7 +14,7 @@ import { releaseTag } from "../../data/version";
 From nothing to a running server.
 
 <Callout variant="info" action={{ href: "https://cloud.shellhub.io", label: "Try it on Cloud" }}>
-Trying ShellHub rather than committing to it? Cloud takes a few clicks and we run the server. The
+Trying CloudMateHub rather than committing to it? Cloud takes a few clicks and we run the server. The
 agents and the daily workflow are identical, so nothing you learn there is wasted if you
 self-host afterwards.
 </Callout>
@@ -28,7 +28,7 @@ composition is four services plus PostgreSQL.
 ## 1. Clone
 
 <Code lang="bash" code={`$ git clone -b ${releaseTag} https://github.com/shellhub-io/shellhub.git
-$ cd shellhub`} />
+$ cd cloudmatehub`} />
 
 Every release is on the [releases page](https://github.com/shellhub-io/shellhub/releases) if you
 need a different one.
@@ -56,7 +56,7 @@ $ touch .env.override
 
 ```bash
 # .env.override
-SHELLHUB_DOMAIN=shellhub.example.com
+SHELLHUB_DOMAIN=cloudmatehub.example.com
 SHELLHUB_AUTO_SSL=true
 SHELLHUB_POSTGRES_PASSWORD=<something-that-is-not-admin>
 ```
@@ -82,7 +82,7 @@ PostgreSQL overlay entirely, and the server comes up with no database.
 
 The stack comes up with no users. The first one is created in the browser:
 
-<Shot src="/img/selfhosted/setup.png" alt="The ShellHub initial setup page" />
+<Shot src="/img/selfhosted/setup.png" alt="The CloudMateHub initial setup page" />
 
 1. Open the server's address. Until the first account exists every path redirects to `/setup`.
 2. Enter a name, a username and an email. This user is the instance's superadmin.

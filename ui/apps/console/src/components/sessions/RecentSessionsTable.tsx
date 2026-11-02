@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { CommandLineIcon } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
-import { Callout, Card } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { Callout, Card } from "@cloudmatehub/design-system/primitives";
 import DataTable, { type Column } from "@/components/common/DataTable";
 import DeviceChip from "@/components/common/DeviceChip";
 import { formatRelative } from "@/utils/date";

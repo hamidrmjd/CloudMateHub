@@ -1,4 +1,4 @@
-import preset from "@shellhub/design-system/tailwind.preset";
+import preset from "@cloudmatehub/design-system/tailwind.preset";
 
 export default {
   presets: [preset],

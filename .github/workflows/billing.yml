@@ -6,8 +6,8 @@ on:
 
   workflow_dispatch:
     inputs:
-      shellhub-ref:
-        description: shellhub branch, tag or SHA to test
+      cloudmatehub-ref:
+        description: cloudmatehub branch, tag or SHA to test
         required: true
         default: master
       cloud-ref:
@@ -45,12 +45,12 @@ jobs:
           sparse-checkout: .github/actions
           persist-credentials: false
 
-      - name: Determine the shellhub branch paired with the cloud pull request
+      - name: Determine the cloudmatehub branch paired with the cloud pull request
         id: paired
         if: github.event_name == 'repository_dispatch'
         uses: ./workflow/.github/actions/paired-branch
         with:
-          repository: shellhub-io/shellhub
+          repository: shellhub-io/cloudmatehub
           head-ref: ${{ github.event.client_payload.head_ref }}
           token: ${{ github.token }}
 
@@ -60,18 +60,18 @@ jobs:
           EVENT: ${{ github.event_name }}
           PAIRED_REF: ${{ steps.paired.outputs.ref }}
           CLOUD_HEAD_SHA: ${{ github.event.client_payload.head_sha }}
-          INPUT_SHELLHUB_REF: ${{ inputs.shellhub-ref }}
+          INPUT_SHELLHUB_REF: ${{ inputs.cloudmatehub-ref }}
           INPUT_CLOUD_REF: ${{ inputs.cloud-ref }}
         run: |
           case "$EVENT" in
             repository_dispatch)
-              { echo "shellhub=$PAIRED_REF"; echo "cloud=$CLOUD_HEAD_SHA"; } >> "$GITHUB_OUTPUT"
+              { echo "cloudmatehub=$PAIRED_REF"; echo "cloud=$CLOUD_HEAD_SHA"; } >> "$GITHUB_OUTPUT"
               ;;
             workflow_dispatch)
-              { echo "shellhub=$INPUT_SHELLHUB_REF"; echo "cloud=$INPUT_CLOUD_REF"; } >> "$GITHUB_OUTPUT"
+              { echo "cloudmatehub=$INPUT_SHELLHUB_REF"; echo "cloud=$INPUT_CLOUD_REF"; } >> "$GITHUB_OUTPUT"
               ;;
             *)
-              { echo "shellhub=master"; echo "cloud=master"; } >> "$GITHUB_OUTPUT"
+              { echo "cloudmatehub=master"; echo "cloud=master"; } >> "$GITHUB_OUTPUT"
               ;;
           esac
 
@@ -99,16 +99,16 @@ jobs:
               repo: 'cloud',
               sha: process.env.CLOUD_HEAD_SHA,
               state: 'pending',
-              context: 'shellhub / billing',
+              context: 'cloudmatehub / billing',
               description: 'TestCloudBilling against Stripe test mode',
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
 
-      - name: Check out shellhub source
+      - name: Check out cloudmatehub source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ref: ${{ steps.refs.outputs.shellhub }}
-          path: shellhub
+          ref: ${{ steps.refs.outputs.cloudmatehub }}
+          path: cloudmatehub
           persist-credentials: false
 
       - name: Check out cloud source
@@ -125,7 +125,7 @@ jobs:
         uses: ./workflow/.github/actions/go-cache
         with:
           name: qa-integration
-          sum-files: shellhub/tests/go.sum
+          sum-files: cloudmatehub/tests/go.sum
 
       - name: Restore the image build cache
         uses: ./workflow/.github/actions/build-cache
@@ -134,7 +134,7 @@ jobs:
         uses: ./workflow/.github/actions/integration-setup
 
       - name: Run TestCloudBilling
-        working-directory: shellhub/tests
+        working-directory: cloudmatehub/tests
         run: gotestsum --format testname -- -run '^TestCloudBilling$' -timeout 30m .
         env:
           TESTCONTAINERS_RYUK_DISABLED: true
@@ -147,7 +147,7 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: billing-stack-logs
-          path: shellhub/tests/.stack/*.log
+          path: cloudmatehub/tests/.stack/*.log
           include-hidden-files: true
           if-no-files-found: ignore
           retention-days: 14
@@ -167,7 +167,7 @@ jobs:
               repo: 'cloud',
               sha: process.env.CLOUD_HEAD_SHA,
               state: states[process.env.JOB_STATUS] ?? 'error',
-              context: 'shellhub / billing',
+              context: 'cloudmatehub / billing',
               description: `TestCloudBilling ${process.env.JOB_STATUS}`,
               target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
             });
@@ -177,7 +177,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           JOB_STATUS: ${{ job.status }}
-          SHELLHUB_REF: ${{ steps.refs.outputs.shellhub }}
+          SHELLHUB_REF: ${{ steps.refs.outputs.cloudmatehub }}
           CLOUD_REF: ${{ steps.refs.outputs.cloud }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
@@ -186,13 +186,13 @@ jobs:
 
           if [ "$JOB_STATUS" = success ]; then
               if [ -n "$number" ]; then
-                  gh issue close "$number" -R "$GITHUB_REPOSITORY" --comment "TestCloudBilling passes again on shellhub $SHELLHUB_REF and cloud $CLOUD_REF: $RUN_URL"
+                  gh issue close "$number" -R "$GITHUB_REPOSITORY" --comment "TestCloudBilling passes again on cloudmatehub $SHELLHUB_REF and cloud $CLOUD_REF: $RUN_URL"
               fi
               exit 0
           fi
 
           if [ -n "$number" ]; then
-              gh issue comment "$number" -R "$GITHUB_REPOSITORY" --body "Still failing on shellhub $SHELLHUB_REF and cloud $CLOUD_REF: $RUN_URL"
+              gh issue comment "$number" -R "$GITHUB_REPOSITORY" --body "Still failing on cloudmatehub $SHELLHUB_REF and cloud $CLOUD_REF: $RUN_URL"
               exit 0
           fi
 
@@ -200,4 +200,4 @@ jobs:
               --description "TestCloudBilling fails in the Billing workflow" --force
           gh issue create -R "$GITHUB_REPOSITORY" --label "$label" \
               --title "TestCloudBilling fails against Stripe test mode" \
-              --body "The Billing workflow failed TestCloudBilling on shellhub $SHELLHUB_REF and cloud $CLOUD_REF. The issue closes when a reporting run passes again. Run: $RUN_URL"
+              --body "The Billing workflow failed TestCloudBilling on cloudmatehub $SHELLHUB_REF and cloud $CLOUD_REF. The issue closes when a reporting run passes again. Run: $RUN_URL"

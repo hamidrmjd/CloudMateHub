@@ -27,7 +27,7 @@ func TestPasswordChangeRevokesTokens(t *testing.T) {
 				t.Helper()
 
 				resp, err := asBearer(t, compose, before.Token).
-					SetBody(map[string]string{"password": next, "current_password": ShellHubPassword}).
+					SetBody(map[string]string{"password": next, "current_password": CloudMateHubPassword}).
 					Patch("/api/users")
 				require.NoError(t, err)
 				require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
@@ -40,7 +40,7 @@ func TestPasswordChangeRevokesTokens(t *testing.T) {
 				t.Helper()
 
 				resp, err := asBearer(t, compose, before.Token).
-					SetBody(map[string]string{"current_password": ShellHubPassword, "new_password": next}).
+					SetBody(map[string]string{"current_password": CloudMateHubPassword, "new_password": next}).
 					Patch("/api/users/" + before.ID + "/password")
 				require.NoError(t, err)
 				require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
@@ -52,22 +52,22 @@ func TestPasswordChangeRevokesTokens(t *testing.T) {
 			change: func(t *testing.T, _ *models.UserAuthResponse, next string) {
 				t.Helper()
 
-				compose.SetUserPassword(t, ShellHubUsername, next)
+				compose.SetUserPassword(t, CloudMateHubUsername, next)
 			},
 		},
 	}
 
 	for _, tc := range cases {
 		t.Run(tc.description, func(t *testing.T) {
-			compose.SetUserPassword(t, ShellHubUsername, ShellHubPassword)
-			before := signInto(t, compose, ShellHubUsername, ShellHubPassword)
+			compose.SetUserPassword(t, CloudMateHubUsername, CloudMateHubPassword)
+			before := signInto(t, compose, CloudMateHubUsername, CloudMateHubPassword)
 			assertTokenStatus(t, compose, before.Token, http.StatusOK)
 
 			tc.change(t, before, tc.next)
 
 			assertTokenStatus(t, compose, before.Token, http.StatusUnauthorized)
 
-			after := signInto(t, compose, ShellHubUsername, tc.next)
+			after := signInto(t, compose, CloudMateHubUsername, tc.next)
 			assertTokenStatus(t, compose, after.Token, http.StatusOK)
 		})
 	}
@@ -78,8 +78,8 @@ func TestRevokeUserTokens(t *testing.T) {
 
 	compose := newSSHEnvironment(t, t.Context(), legacyNamespace)
 
-	first := signInto(t, compose, ShellHubUsername, ShellHubPassword)
-	second := signInto(t, compose, ShellHubUsername, ShellHubPassword)
+	first := signInto(t, compose, CloudMateHubUsername, CloudMateHubPassword)
+	second := signInto(t, compose, CloudMateHubUsername, CloudMateHubPassword)
 	assertTokenStatus(t, compose, second.Token, http.StatusOK)
 
 	resp, err := asBearer(t, compose, first.Token).Delete("/api/users/tokens")
@@ -89,13 +89,13 @@ func TestRevokeUserTokens(t *testing.T) {
 	assertTokenStatus(t, compose, first.Token, http.StatusUnauthorized)
 	assertTokenStatus(t, compose, second.Token, http.StatusUnauthorized)
 
-	assertTokenStatus(t, compose, signInto(t, compose, ShellHubUsername, ShellHubPassword).Token, http.StatusOK)
+	assertTokenStatus(t, compose, signInto(t, compose, CloudMateHubUsername, CloudMateHubPassword).Token, http.StatusOK)
 }
 
 func signInto(t *testing.T, compose *environment.DockerCompose, username, password string) *models.UserAuthResponse {
 	t.Helper()
 
-	return signIntoTenant(t, compose, username, password, ShellHubNamespace)
+	return signIntoTenant(t, compose, username, password, CloudMateHubNamespace)
 }
 
 func signIntoTenant(t *testing.T, compose *environment.DockerCompose, username, password, tenant string) *models.UserAuthResponse {
@@ -113,7 +113,7 @@ func signIntoTenant(t *testing.T, compose *environment.DockerCompose, username, 
 	return signedInto
 }
 
-var tokenRoutes = []string{"/api/auth/user", "/api/auth/token/" + ShellHubNamespace, "/api/namespaces"}
+var tokenRoutes = []string{"/api/auth/user", "/api/auth/token/" + CloudMateHubNamespace, "/api/namespaces"}
 
 func assertTokenStatus(t *testing.T, compose *environment.DockerCompose, token string, status int) {
 	t.Helper()

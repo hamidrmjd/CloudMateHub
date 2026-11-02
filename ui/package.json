@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "dev:console": "npm run dev -w @shellhub/console",
+    "dev:console": "npm run dev -w @cloudmatehub/console",
     "lint": "npm run lint --workspaces --if-present",
     "knip": "knip --no-gitignore",
     "test": "npm run test --workspaces --if-present"

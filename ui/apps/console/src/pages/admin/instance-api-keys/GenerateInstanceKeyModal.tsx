@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { KeyIcon, CheckIcon } from "@heroicons/react/24/outline";
-import { Card, Button } from "@shellhub/design-system/primitives";
+import { Card, Button } from "@cloudmatehub/design-system/primitives";
 import { isSdkError } from "@/api/errors";
 import { useResetOnOpen } from "@/hooks/useResetOnOpen";
 import { useInvalidateByIds } from "@/hooks/useInvalidateQueries";

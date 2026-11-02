@@ -30,14 +30,14 @@ type DockerConnector struct {
 	provisioningKey string
 	cli             *dockerclient.Client
 	privateKeys     string
-	// Label is the label used to identify the containers managed by the ShellHub agent.
+	// Label is the label used to identify the containers managed by the CloudMateHub agent.
 	Label   string
 	cancels map[string]context.CancelFunc
 }
 
 // ConfigConnector provides the configuration for the agent connector service.
 type ConfigConnector struct {
-	// Set the ShellHub server address the agent will use to connect.
+	// Set the CloudMateHub server address the agent will use to connect.
 	// This is required.
 	ServerAddress string `env:"SERVER_ADDRESS,required"`
 
@@ -57,7 +57,7 @@ type ConfigConnector struct {
 	// state. Default is 30 seconds.
 	KeepAliveInterval int `env:"KEEPALIVE_INTERVAL,overwrite,default=30"`
 
-	// Label is the label used to identify the containers managed by the ShellHub agent.
+	// Label is the label used to identify the containers managed by the CloudMateHub agent.
 	Label string `env:"CONNECTOR_LABEL,default="`
 }
 
@@ -231,7 +231,7 @@ func (d *DockerConnector) CheckUpdate() (*semver.Version, error) {
 	if err != nil {
 		log.WithError(err).WithFields(log.Fields{
 			"version": connector.ConnectorVersion,
-		}).Error("Failed to get info from ShellHub's server")
+		}).Error("Failed to get info from CloudMateHub's server")
 
 		return nil, err
 	}

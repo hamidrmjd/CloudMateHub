@@ -73,8 +73,8 @@ func testInstanceAPIKeys(t *testing.T, compose *environment.DockerCompose) {
 	})
 
 	t.Run("a user who is not an instance administrator cannot create an instance key", func(t *testing.T) {
-		compose.NewUser(t, "plain", "plain@shellhub.io", ShellHubPassword)
-		user := compose.AuthUser(t, "plain", ShellHubPassword)
+		compose.NewUser(t, "plain", "plain@shellhub.io", CloudMateHubPassword)
+		user := compose.AuthUser(t, "plain", CloudMateHubPassword)
 
 		resp, err := asBearer(t, compose, user.Token).
 			SetBody(map[string]any{"name": "unprivileged", "expires_at": 30}).
@@ -86,8 +86,8 @@ func testInstanceAPIKeys(t *testing.T, compose *environment.DockerCompose) {
 	})
 
 	t.Run("an instance key stops authenticating once its creator is no longer an administrator", func(t *testing.T) {
-		compose.NewAdmin(t, "keeper", "keeper@shellhub.io", ShellHubPassword)
-		keeper := compose.AuthUser(t, "keeper", ShellHubPassword)
+		compose.NewAdmin(t, "keeper", "keeper@shellhub.io", CloudMateHubPassword)
+		keeper := compose.AuthUser(t, "keeper", CloudMateHubPassword)
 
 		key := createInstanceAPIKey(t, asBearer(t, compose, keeper.Token), "keeper-automation")
 		require.Equal(t, keeper.ID, key.CreatedBy)
@@ -115,8 +115,8 @@ func testInstanceAPIKeys(t *testing.T, compose *environment.DockerCompose) {
 func testAdminAccessGuard(t *testing.T, compose *environment.DockerCompose) {
 	t.Helper()
 
-	compose.NewUser(t, "outsider", "outsider@shellhub.io", ShellHubPassword)
-	outsider := compose.AuthUser(t, "outsider", ShellHubPassword)
+	compose.NewUser(t, "outsider", "outsider@shellhub.io", CloudMateHubPassword)
+	outsider := compose.AuthUser(t, "outsider", CloudMateHubPassword)
 
 	t.Run("an administrator's token reaches the admin routes", func(t *testing.T) {
 		requireAnswer(t, compose.R(t.Context()), http.MethodGet, "/admin/api/users", http.StatusOK)
@@ -136,8 +136,8 @@ func testAdminAccessGuard(t *testing.T, compose *environment.DockerCompose) {
 func testAdminExports(t *testing.T, compose *environment.DockerCompose) {
 	t.Helper()
 
-	compose.NewUser(t, "export-alpha", "alpha@export.shellhub.io", ShellHubPassword)
-	compose.NewUser(t, "export-beta", "beta@export.shellhub.io", ShellHubPassword)
+	compose.NewUser(t, "export-alpha", "alpha@export.shellhub.io", CloudMateHubPassword)
+	compose.NewUser(t, "export-beta", "beta@export.shellhub.io", CloudMateHubPassword)
 
 	tenant := uuid.Generate()
 	compose.NewNamespace(t, "export-alpha", "export-space", tenant)
@@ -199,10 +199,10 @@ func testAdminStats(t *testing.T, compose *environment.DockerCompose) {
 		conn, session := openSession(t, ctx, compose, connected, registerDeviceKey(t, ctx, compose), "")
 		requireSessionActive(t, ctx, compose, session.UID, true)
 
-		compose.NewUser(t, "stats-owner", "stats-owner@shellhub.io", ShellHubPassword)
+		compose.NewUser(t, "stats-owner", "stats-owner@shellhub.io", CloudMateHubPassword)
 		tenant := uuid.Generate()
 		compose.NewLegacyNamespace(t, "stats-owner", "stats-space", tenant)
-		owner := compose.AuthUser(t, "stats-owner", ShellHubPassword)
+		owner := compose.AuthUser(t, "stats-owner", CloudMateHubPassword)
 
 		enrollPendingDevice(t, compose, "stats-pending", "02:00:00:00:24:01")
 		enrollPendingDeviceAs(t, compose, owner, "stats-other-pending", "02:00:00:00:24:02")
@@ -233,7 +233,7 @@ func testAdminAuthToken(t *testing.T, compose *environment.DockerCompose) {
 	t.Helper()
 
 	t.Run("an administrator gets a token that signs in as the user", func(t *testing.T) {
-		compose.NewUser(t, "impersonated", "impersonated@shellhub.io", ShellHubPassword)
+		compose.NewUser(t, "impersonated", "impersonated@shellhub.io", CloudMateHubPassword)
 		tenant := uuid.Generate()
 		compose.NewNamespace(t, "impersonated", "impersonated-space", tenant)
 		target := adminUser(t, compose, "impersonated")
@@ -279,7 +279,7 @@ func testAdminUserWrites(t *testing.T, compose *environment.DockerCompose) {
 		assert.Equal(t, "created@admin.shellhub.io", created.Email)
 		assert.Equal(t, models.UserStatusConfirmed, created.Status)
 
-		signedIn := compose.AuthUser(t, "created", ShellHubPassword)
+		signedIn := compose.AuthUser(t, "created", CloudMateHubPassword)
 		assert.Equal(t, created.ID, signedIn.ID)
 		assert.Equal(t, "created", signedIn.User)
 	})
@@ -318,7 +318,7 @@ func testAdminUserWrites(t *testing.T, compose *environment.DockerCompose) {
 		assert.Equal(t, before.UserData, after.UserData)
 		assert.Equal(t, before.Status, after.Status)
 		assert.Equal(t, before.Admin, after.Admin)
-		assert.Equal(t, before.ID, compose.AuthUser(t, "partial", ShellHubPassword).ID)
+		assert.Equal(t, before.ID, compose.AuthUser(t, "partial", CloudMateHubPassword).ID)
 
 		requireAnswer(t, compose.R(t.Context()).SetBody(map[string]any{"password": "partial-replaced"}), http.MethodPut, "/admin/api/users/"+before.ID, http.StatusOK)
 
@@ -330,7 +330,7 @@ func testAdminUserWrites(t *testing.T, compose *environment.DockerCompose) {
 
 	t.Run("a password an administrator sets refuses the user's earlier tokens", func(t *testing.T) {
 		createUserAsAdmin(t, compose, "reset")
-		earlier := compose.AuthUser(t, "reset", ShellHubPassword)
+		earlier := compose.AuthUser(t, "reset", CloudMateHubPassword)
 		requireAnswer(t, asBearer(t, compose, earlier.Token), http.MethodGet, "/api/auth/user", http.StatusOK)
 
 		requireAnswer(t, compose.R(t.Context()).SetBody(map[string]any{"password": "reset-by-admin"}), http.MethodPut, "/admin/api/users/"+earlier.ID, http.StatusOK)
@@ -341,12 +341,12 @@ func testAdminUserWrites(t *testing.T, compose *environment.DockerCompose) {
 
 	t.Run("the generated password reset refuses a user who already has a password", func(t *testing.T) {
 		createUserAsAdmin(t, compose, "has-password")
-		user := compose.AuthUser(t, "has-password", ShellHubPassword)
+		user := compose.AuthUser(t, "has-password", CloudMateHubPassword)
 
 		requireAnswer(t, compose.R(t.Context()), http.MethodPatch, "/admin/api/users/"+user.ID+"/password/reset", http.StatusBadRequest)
 
 		requireAnswer(t, asBearer(t, compose, user.Token), http.MethodGet, "/api/auth/user", http.StatusOK)
-		compose.AuthUser(t, "has-password", ShellHubPassword)
+		compose.AuthUser(t, "has-password", CloudMateHubPassword)
 	})
 
 	t.Run("deleting a user takes their owned namespaces and paired devices with them", func(t *testing.T) {
@@ -354,7 +354,7 @@ func testAdminUserWrites(t *testing.T, compose *environment.DockerCompose) {
 
 		tenant := uuid.Generate()
 		compose.NewNamespace(t, "doomed", "doomed-space", tenant)
-		owner := signIntoTenant(t, compose, "doomed", ShellHubPassword, tenant)
+		owner := signIntoTenant(t, compose, "doomed", CloudMateHubPassword, tenant)
 
 		req := newDeviceAuthRequest(t, "doomed-owned", "02:00:00:00:24:11")
 		req.TenantID = tenant
@@ -362,9 +362,9 @@ func testAdminUserWrites(t *testing.T, compose *environment.DockerCompose) {
 		requireAnswer(t, asBearer(t, compose, owner.Token), http.MethodPatch, "/api/devices/"+owned+"/"+string(environment.DeviceActionAccept), http.StatusOK)
 
 		pairedTenant := uuid.Generate()
-		compose.NewNamespace(t, ShellHubUsername, "doomed-pairs-here", pairedTenant)
+		compose.NewNamespace(t, CloudMateHubUsername, "doomed-pairs-here", pairedTenant)
 		compose.NewMember(t, "doomed", "doomed-pairs-here", string(authorizer.RoleOperator))
-		member := signIntoTenant(t, compose, "doomed", ShellHubPassword, pairedTenant)
+		member := signIntoTenant(t, compose, "doomed", CloudMateHubPassword, pairedTenant)
 		pairing := startPairing(t, compose, newPairingRequest(t, "doomed-paired", "02:00:00:00:24:12"))
 		paired := acceptPairingInto(t, asBearer(t, compose, member.Token), pairedTenant, pairing.Code)
 		require.Equal(t, owner.ID, paired.OwnerID)
@@ -387,10 +387,10 @@ func testAdminNamespaceWrites(t *testing.T, compose *environment.DockerCompose) 
 	t.Helper()
 
 	t.Run("a device limit an administrator sets holds on the next accept", func(t *testing.T) {
-		compose.NewUser(t, "limited", "limited@admin.shellhub.io", ShellHubPassword)
+		compose.NewUser(t, "limited", "limited@admin.shellhub.io", CloudMateHubPassword)
 		tenant := uuid.Generate()
 		compose.NewNamespace(t, "limited", "limited-space", tenant)
-		owner := compose.AuthUser(t, "limited", ShellHubPassword)
+		owner := compose.AuthUser(t, "limited", CloudMateHubPassword)
 
 		held := enrollPendingDeviceAs(t, compose, owner, "limited-held", "02:00:00:00:24:21")
 		requireAnswer(t, asBearer(t, compose, owner.Token), http.MethodPatch, "/api/devices/"+held.UID+"/"+string(environment.DeviceActionAccept), http.StatusOK)
@@ -422,7 +422,7 @@ func newAdminUserBody(username string) map[string]any {
 		"name":     username + " by admin",
 		"username": username,
 		"email":    username + "@admin.shellhub.io",
-		"password": ShellHubPassword,
+		"password": CloudMateHubPassword,
 	}
 }
 

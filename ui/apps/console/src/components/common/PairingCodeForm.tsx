@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import { useOtpInput } from "@/hooks/useOtpInput";
 import { normalizePairingCode } from "@/utils/pairingCode";
 

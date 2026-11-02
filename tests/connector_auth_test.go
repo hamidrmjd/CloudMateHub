@@ -50,7 +50,7 @@ func TestConnectorPasswordAuth(t *testing.T) {
 }
 
 func connectorPasswordHandshake(ctx context.Context, compose *environment.DockerCompose, device *models.Device, user, password string) error {
-	return handshake(ctx, compose.SSHAddress(), user+"@"+ShellHubNamespaceName+"."+device.Name, []ssh.AuthMethod{ssh.Password(password)})
+	return handshake(ctx, compose.SSHAddress(), user+"@"+CloudMateHubNamespaceName+"."+device.Name, []ssh.AuthMethod{ssh.Password(password)})
 }
 
 func execInContainer(t *testing.T, ctx context.Context, c testcontainers.Container, script string) {

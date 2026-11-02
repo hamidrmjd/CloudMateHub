@@ -46,7 +46,7 @@ func testEnrollmentLimits(t *testing.T, compose *environment.DockerCompose) {
 		within := enroll(t, compose, newKeyedDeviceAuthRequest(t, key.Key, "limit-within", "02:00:00:00:60:03"))
 		require.Equal(t, models.DeviceStatusAccepted, within.Status)
 
-		compose.LimitNamespaceToItsAcceptedDevices(t, ShellHubNamespace)
+		compose.LimitNamespaceToItsAcceptedDevices(t, CloudMateHubNamespace)
 
 		req := newKeyedDeviceAuthRequest(t, key.Key, "limit-over", "02:00:00:00:60:04")
 		over := enroll(t, compose, req)
@@ -54,7 +54,7 @@ func testEnrollmentLimits(t *testing.T, compose *environment.DockerCompose) {
 		assert.Equal(t, models.DeviceStatusPending, over.Status)
 		compose.RequireProvisioningKeyUsesHold(t, "automatic-limited", 1)
 
-		require.NoError(t, compose.SetNamespaceMaxDevices(t.Context(), ShellHubNamespace, -1))
+		require.NoError(t, compose.SetNamespaceMaxDevices(t.Context(), CloudMateHubNamespace, -1))
 
 		requireStatusOnReauth(t, compose, req, over.UID, models.DeviceStatusAccepted)
 		compose.AwaitProvisioningKeyUses(t, "automatic-limited", 2)

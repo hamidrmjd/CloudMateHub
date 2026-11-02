@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const licenseBlockedConnection = "Connection blocked: your ShellHub instance has exceeded the maximum number of devices allowed by your license"
+const licenseBlockedConnection = "Connection blocked: your CloudMateHub instance has exceeded the maximum number of devices allowed by your license"
 
 func testLicensedDeviceAcceptance(t *testing.T, compose *environment.DockerCompose) {
 	t.Helper()

@@ -1,4 +1,4 @@
-import { GlowOrbs, Reveal } from "@shellhub/design-system/components";
+import { GlowOrbs, Reveal } from "@cloudmatehub/design-system/components";
 
 /**
  * Hero of the pricing page.

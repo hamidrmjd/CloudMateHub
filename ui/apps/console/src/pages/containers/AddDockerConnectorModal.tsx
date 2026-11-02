@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { CubeIcon } from "@heroicons/react/24/outline";
-import { Button, Card } from "@shellhub/design-system/primitives";
+import { Button, Card } from "@cloudmatehub/design-system/primitives";
 import Modal from "@/components/common/Modal";
 import CopyButton from "@/components/common/CopyButton";
 import { useNamespaceLegacy } from "@/hooks/useNamespaceLegacy";

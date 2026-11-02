@@ -168,7 +168,7 @@ describe("useSessionRecording", () => {
       ),
     );
 
-    expect(saved.filename).toBe("shellhub-web-01-20240101-000000.cast");
+    expect(saved.filename).toBe("cloudmatehub-web-01-20240101-000000.cast");
     expect(await saved.blob?.text()).toBe("asciicast");
     expect(result.current.error).toBeNull();
   });

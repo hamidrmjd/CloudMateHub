@@ -1,12 +1,12 @@
 openapi: 3.0.3
 info:
-  title: ShellHub OpenAPI
+  title: CloudMateHub OpenAPI
   description: |
-    Full OpenAPI specification for ShellHub, covering every edition and surface.
+    Full OpenAPI specification for CloudMateHub, covering every edition and surface.
     This is the internal reference; the customer-facing documentation is a
     filtered build of the per-edition specs.
   contact:
-    name: ShellHub
+    name: CloudMateHub
     email: contact@shellhub.io
   license:
     name: Apache License 2.0
@@ -14,7 +14,7 @@ info:
   version: 0.20.0
 servers:
   - url: /
-    description: ShellHub server.
+    description: CloudMateHub server.
 components:
   securitySchemes:
     jwt:
@@ -39,15 +39,15 @@ components:
         `sh_admin_`.
 tags:
   - name: internal
-    description: Requests executed internally by ShellHub server.
+    description: Requests executed internally by CloudMateHub server.
   - name: external
-    description: Requests executed by the ShellHub user.
+    description: Requests executed by the CloudMateHub user.
   - name: community
     description: Routes provided by ShellHub Community API.
   - name: enterprise
-    description: Routes provided by ShellHub Enterprise API.
+    description: Routes provided by CloudMateHub Enterprise API.
   - name: cloud
-    description: Routes provided by ShellHub Cloud API.
+    description: Routes provided by CloudMateHub Cloud API.
   - name: users
     description: Routes related to user resource.
   - name: devices
@@ -95,11 +95,11 @@ tags:
     description: Routes related to session resource.
   - name: authentication-settings
     description: |
-      Defines the routes to configure and retrieve the ShellHub authentication
-      settings. Currently, ShellHub supports both local authentication (email 
+      Defines the routes to configure and retrieve the CloudMateHub authentication
+      settings. Currently, CloudMateHub supports both local authentication (email
       and password) and SAML-based authentication (Single Sign-On).
   - name: admin
-    description: Routes provide by ShellHub Admin API.
+    description: Routes provide by CloudMateHub Admin API.
   - name: stats
     description: Routes related to stats resource.
   - name: license

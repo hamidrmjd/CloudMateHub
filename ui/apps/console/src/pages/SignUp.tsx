@@ -5,7 +5,7 @@ import { signUpResolver } from "./setup/signUpResolver";
 import type { SignUpFormValues } from "./setup/signUpResolver";
 import { useSignUpStore } from "../stores/signUpStore";
 import AccountCreated from "../components/auth/AccountCreated";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import PendingDeviceCallout from "@/components/auth/PendingDeviceCallout";
 import AuthActions from "@/components/auth/AuthActions";
 import {

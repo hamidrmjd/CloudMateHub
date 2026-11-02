@@ -10,9 +10,9 @@ CloudMateHub is this project's customized remote device workspace, built on Shel
 - Visible product copy and downloaded recovery/session filenames use CloudMateHub.
 - Upstream onboarding marketing survey disabled in this local deployment.
 
-Backend API routes, package names, agent environment variables, webhook headers and browser storage identifiers retain upstream compatibility. Existing devices, accounts, volumes and signing keys are retained.
+Npm workspace names and owned assets use CloudMateHub. Backend API routes, Go module paths, agent environment variables, webhook headers and browser storage identifiers retain upstream compatibility. Existing devices, accounts, volumes and signing keys are retained.
 
-Run `./deployments/shellhub start` and open http://localhost:8080. Deployment commands and the source folder keep their existing names. The historical baseline report documents the original release, before this customization.
+Run `./deployments/cloudmatehub start` and open http://localhost:8080. The deployment command is `deployments/cloudmatehub`; `deployments/shellhub` remains a compatibility alias. The historical baseline report documents the original release, before this customization.
 
 This redesign does not add Cloud/Enterprise backend capabilities. Authenticated device workflows still require account setup and device enrollment.
 

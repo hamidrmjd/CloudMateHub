@@ -1,7 +1,7 @@
 post:
   summary: Submit a deferred enrollment decision
   description: |
-    Redeems the signed callback token that ShellHub included in a webhook-mode enrollment request
+    Redeems the signed callback token that CloudMateHub included in a webhook-mode enrollment request
     (`callback_url`). The token is the credential, not an API key or JWT, and is scoped to a single
     device, single-use (it only acts while the device is pending), and expires. Used by an integrator
     that answered `defer` to accept or reject the device later.

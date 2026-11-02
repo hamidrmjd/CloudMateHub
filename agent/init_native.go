@@ -11,10 +11,10 @@ package main
 // to be used during development only.
 var AgentVersion string
 
-// AgentPlatform stores what platform the agent is running on. This is injected in build time in the [ShellHub Agent]
+// AgentPlatform stores what platform the agent is running on. This is injected in build time in the [CloudMateHub Agent]
 // implementation.
 //
-// [ShellHub Agent]: https://github.com/shellhub-io/shellhub/tree/master/agent
+// [CloudMateHub Agent]: https://github.com/shellhub-io/shellhub/tree/master/agent
 var AgentPlatform string
 
 func init() {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import QRCode from "qrcode";
 import { ArrowDownTrayIcon, ShieldCheckIcon, QrCodeIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
-import { Button, Callout, Card } from "@shellhub/design-system/primitives";
+import { Button, Callout, Card } from "@cloudmatehub/design-system/primitives";
 import PageHeader from "@/components/common/PageHeader";
 import { useAuthStore } from "@/stores/authStore";
 import { vpnRequest } from "./api";

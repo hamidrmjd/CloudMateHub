@@ -1,4 +1,4 @@
-import { Card } from "@shellhub/design-system/primitives";
+import { Card } from "@cloudmatehub/design-system/primitives";
 import { useCustomer } from "@/hooks/useBilling";
 import BillingIcon from "./BillingIcon";
 

@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-// TestRootAliasesReachCanonicalRoutes pins the URLs ShellHub publishes at the
+// TestRootAliasesReachCanonicalRoutes pins the URLs CloudMateHub publishes at the
 // root of its domain. The console boots by calling /info and /healthcheck, and
 // /install.sh is an address already in the wild, so an alias that stops
 // resolving is a broken console or a broken installer, not a degraded one.

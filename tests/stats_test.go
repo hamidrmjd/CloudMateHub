@@ -16,10 +16,10 @@ func TestStatsDeviceCounts(t *testing.T) {
 	compose := environment.New(t, run).Up(t.Context())
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-	compose.NewLegacyNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+	compose.NewLegacyNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
 
-	compose.JWT(compose.AuthUser(t, ShellHubUsername, ShellHubPassword).Token)
+	compose.JWT(compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword).Token)
 
 	stats := func(t *testing.T) models.Stats {
 		t.Helper()

@@ -1,7 +1,7 @@
 get:
   operationId: getStats
   summary: Get stats
-  description: Get stats about the ShellHub instance.
+  description: Get stats about the CloudMateHub instance.
   tags:
     - admin
     - enterprise
@@ -11,7 +11,7 @@ get:
     - instance-api-key: []
   responses:
     '200':
-      description: Success to get stats about the ShellHub instance
+      description: Success to get stats about the CloudMateHub instance
       content:
         application/json:
           schema:

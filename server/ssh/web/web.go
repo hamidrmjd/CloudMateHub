@@ -24,7 +24,7 @@ const (
 	// stream. It is gated by a single-use token rather than authenticated.
 	WebsocketSSHBridgeRoute = "/ws/ssh"
 	// WebSessionRoute is the credential/token POST. It is authenticated, so the
-	// bridge learns the logged-in ShellHub account (used in a new namespace). It
+	// bridge learns the logged-in CloudMateHub account (used in a new namespace). It
 	// requires authorizer.DeviceConnect, and refuses a device outside the caller's
 	// namespace, since the role it checks is the one held there. In a legacy
 	// namespace it is the only permission check a browser terminal meets.

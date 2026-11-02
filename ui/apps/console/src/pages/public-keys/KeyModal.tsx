@@ -8,7 +8,7 @@ import {
   ClipboardDocumentListIcon,
   KeyIcon,
 } from "@heroicons/react/24/outline";
-import { DevicesIcon } from "@shellhub/design-system/primitives";
+import { DevicesIcon } from "@cloudmatehub/design-system/primitives";
 import { useInvalidateByIds } from "@/hooks/useInvalidateQueries";
 import {
   createPublicKeyMutation,

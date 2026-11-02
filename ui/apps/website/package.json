@@ -1,5 +1,5 @@
 {
-  "name": "@shellhub/website",
+  "name": "@cloudmatehub/website",
   "version": "0.0.0",
   "type": "module",
   "private": true,
@@ -12,6 +12,6 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@shellhub/design-system": "*"
+    "@cloudmatehub/design-system": "*"
   }
 }

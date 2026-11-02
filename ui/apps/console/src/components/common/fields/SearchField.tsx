@@ -1,6 +1,6 @@
 import { useId } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import InputField from "@/components/common/fields/InputField";
 
 interface SearchFieldProps {

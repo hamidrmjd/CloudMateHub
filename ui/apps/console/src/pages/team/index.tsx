@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useAuthStore } from "@/stores/authStore";
 import PageHeader from "@/components/common/PageHeader";
 import { useNavSectionTitle } from "@/components/layout/navSections";

@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { isSdkError } from "@/api/errors";
 import { useAuthStore } from "@/stores/authStore";
 import {

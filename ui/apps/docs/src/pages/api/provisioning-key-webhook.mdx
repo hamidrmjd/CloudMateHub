@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: Provisioning Key Webhook
-description: The request ShellHub sends when a device enrolls, and the answer it expects.
+description: The request CloudMateHub sends when a device enrolls, and the answer it expects.
 ---
 
 import Callout from "../../components/Callout.astro";
@@ -9,12 +9,12 @@ import Callout from "../../components/Callout.astro";
 # Provisioning Key Webhook
 
 A [provisioning key](/manage/devices/provisioning-keys) in webhook mode asks your service whether to admit
-each device that enrolls with it. This page is the contract: what ShellHub sends, what it accepts
+each device that enrolls with it. This page is the contract: what CloudMateHub sends, what it accepts
 back, and how to answer later instead of immediately.
 
 ## The request
 
-ShellHub sends a `POST` with a JSON body and two headers.
+CloudMateHub sends a `POST` with a JSON body and two headers.
 
 | Header | Value |
 |---|---|

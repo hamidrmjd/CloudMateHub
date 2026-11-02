@@ -7,7 +7,7 @@ import type { ShotDeclaration } from "./manifest";
  * component never wrote to: an empty manifest and a green build. Hanging the
  * store off `globalThis` under a shared key is what makes both graphs agree.
  */
-const REGISTRY: unique symbol = Symbol.for("@shellhub/docs:shots");
+const REGISTRY: unique symbol = Symbol.for("@cloudmatehub/docs:shots");
 
 type Host = typeof globalThis & { [REGISTRY]?: ShotDeclaration[] };
 

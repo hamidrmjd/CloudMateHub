@@ -3,8 +3,8 @@ import {
   ChevronDownIcon,
   ChevronUpDownIcon,
 } from "@heroicons/react/24/outline";
-import { Dropdown } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Dropdown } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { accountDisplayName, useAuthStore } from "@/stores/authStore";
 import { getInitials } from "@/utils/string";
 import AccountMenuItems from "./AccountMenuItems";

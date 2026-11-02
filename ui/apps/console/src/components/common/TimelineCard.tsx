@@ -1,5 +1,5 @@
 import { ClockIcon } from "@heroicons/react/24/outline";
-import { Card } from "@shellhub/design-system/primitives";
+import { Card } from "@cloudmatehub/design-system/primitives";
 import InfoItem from "@/components/common/InfoItem";
 import { formatDateFull, formatRelative } from "@/utils/date";
 

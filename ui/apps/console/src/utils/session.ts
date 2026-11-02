@@ -1,4 +1,4 @@
-import type { BadgeColor } from "@shellhub/design-system/primitives";
+import type { BadgeColor } from "@cloudmatehub/design-system/primitives";
 
 import type { Session } from "../client";
 

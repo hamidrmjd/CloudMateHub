@@ -214,10 +214,10 @@ func testBillingPermissions(t *testing.T, compose *environment.DockerCompose) {
 		t.Run(fmt.Sprintf("an %s is refused managing the namespace's billing", role), func(t *testing.T) {
 			username := "billing-" + string(role)
 
-			compose.NewUser(t, username, username+stripeTestEmailDomain, ShellHubPassword)
+			compose.NewUser(t, username, username+stripeTestEmailDomain, CloudMateHubPassword)
 			compose.NewMember(t, username, owner.username, string(role))
 
-			member := compose.AuthUser(t, username, ShellHubPassword)
+			member := compose.AuthUser(t, username, CloudMateHubPassword)
 			require.NotNil(t, member.Tenant)
 			require.Equal(t, owner.tenant, *member.Tenant)
 

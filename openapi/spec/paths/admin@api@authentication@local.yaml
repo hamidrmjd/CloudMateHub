@@ -1,7 +1,7 @@
 put:
   operationId: configureLocalAuthentication
   summary: Configure Local Authentication
-  description: Configure local authentication settings for the ShellHub instance.
+  description: Configure local authentication settings for the CloudMateHub instance.
   tags:
     - admin
     - authentication-settings

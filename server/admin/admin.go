@@ -43,7 +43,7 @@ func Command() *cobra.Command {
 		Use:   "admin",
 		Short: "Manage users and namespaces directly in the database",
 		Long: `Manage users and namespaces by writing to the database directly, without going
-through the API. Intended for operators administering a ShellHub instance.`,
+through the API. Intended for operators administering a CloudMateHub instance.`,
 		PersistentPreRunE: func(cmd *cobra.Command, _ []string) error {
 			s, err := connect(cmd.Context())
 			if err != nil {

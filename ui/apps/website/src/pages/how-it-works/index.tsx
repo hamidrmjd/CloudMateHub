@@ -14,13 +14,13 @@ import {
   Card,
   IconBadge,
   WindowChrome,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import {
   ActionButtonGroup,
   ArrowMarker,
@@ -31,7 +31,7 @@ import {
   SectionHeader,
   SiteLayout,
 } from "@/components";
-import { C, FONT_SANS, FONT_MONO } from "@shellhub/design-system/constants";
+import { C, FONT_SANS, FONT_MONO } from "@cloudmatehub/design-system/constants";
 
 const techDetails = [
   {
@@ -72,7 +72,7 @@ const techDetails = [
   },
 ];
 
-const shellhubAdvantages = [
+const cloudmatehubAdvantages = [
   { label: "No public IPs required", has: true },
   { label: "No firewall changes", has: true },
   { label: "No client software to install", has: true },
@@ -120,7 +120,7 @@ export default function HowItWorks() {
           </Reveal>
           <Reveal>
             <p className="text-sm text-text-secondary max-w-lg mx-auto leading-relaxed mb-10">
-              ShellHub replaces VPNs, public IPs, and firewall rules with a
+              CloudMateHub replaces VPNs, public IPs, and firewall rules with a
               single secure gateway. Install an agent, and SSH in from anywhere
               in the world.
             </p>
@@ -144,7 +144,7 @@ export default function HowItWorks() {
         <SectionHeader
           eyebrow="Architecture"
           title="The full picture, from user to device"
-          subtitle="Every connection flows through the ShellHub gateway where it is authenticated, encrypted, and logged before reaching the target device."
+          subtitle="Every connection flows through the CloudMateHub gateway where it is authenticated, encrypted, and logged before reaching the target device."
         />
 
         <Reveal>
@@ -634,7 +634,7 @@ export default function HowItWorks() {
                   </span>
                 </div>
                 <h3 className="text-lg font-bold tracking-[-0.02em] mb-3">
-                  Install the ShellHub Agent
+                  Install the CloudMateHub Agent
                 </h3>
                 <p className="text-sm text-text-secondary leading-relaxed mb-4">
                   Deploy a lightweight agent on each device you want to manage.
@@ -673,7 +673,7 @@ export default function HowItWorks() {
                         </span>
                       </p>
                       <p className="text-text-muted">
-                        # Downloading ShellHub agent...
+                        # Downloading CloudMateHub agent...
                       </p>
                       <p className="text-text-muted">
                         # Installing to /usr/local/bin/shellhub-agent
@@ -708,10 +708,10 @@ export default function HowItWorks() {
                   </span>
                 </div>
                 <h3 className="text-lg font-bold tracking-[-0.02em] mb-3">
-                  Agent Connects to ShellHub
+                  Agent Connects to CloudMateHub
                 </h3>
                 <p className="text-sm text-text-secondary leading-relaxed mb-4">
-                  The agent initiates an outbound connection to the ShellHub
+                  The agent initiates an outbound connection to the CloudMateHub
                   gateway. No inbound ports, no public IPs, no firewall changes
                   required on the device side.
                 </p>
@@ -912,7 +912,7 @@ export default function HowItWorks() {
                           fill={C.textSec}
                           textAnchor="middle"
                         >
-                          ShellHub Gateway
+                          CloudMateHub Gateway
                         </text>
                         <text
                           x="305"
@@ -970,7 +970,7 @@ export default function HowItWorks() {
                   SSH from Anywhere
                 </h3>
                 <p className="text-sm text-text-secondary leading-relaxed mb-4">
-                  Use your standard SSH client to connect through ShellHub. The
+                  Use your standard SSH client to connect through CloudMateHub. The
                   gateway authenticates the user, applies firewall rules, and
                   routes the connection to the right device.
                 </p>
@@ -1006,7 +1006,7 @@ export default function HowItWorks() {
                         </span>
                       </p>
                       <p className="text-text-muted">
-                        # Connecting through ShellHub gateway...
+                        # Connecting through CloudMateHub gateway...
                       </p>
                       <p className="text-text-muted">
                         # Authenticating with public key...
@@ -1044,8 +1044,8 @@ export default function HowItWorks() {
       <Section>
         <SectionHeader
           eyebrow="Comparison"
-          title="Why ShellHub over a VPN?"
-          subtitle="VPNs were designed to link networks, not manage individual devices. ShellHub gives you direct, secure access without the overhead."
+          title="Why CloudMateHub over a VPN?"
+          subtitle="VPNs were designed to link networks, not manage individual devices. CloudMateHub gives you direct, secure access without the overhead."
         />
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -1061,7 +1061,7 @@ export default function HowItWorks() {
                       <ShieldCheckIcon className="w-5 h-5 text-primary" />
                     </IconBadge>
                     <div>
-                      <h3 className="text-sm font-bold">ShellHub</h3>
+                      <h3 className="text-sm font-bold">CloudMateHub</h3>
                       <p className="text-2xs text-primary">
                         Purpose-built for device access
                       </p>
@@ -1072,7 +1072,7 @@ export default function HowItWorks() {
                   </div>
 
                   <ul className="space-y-3">
-                    {shellhubAdvantages.map((item) => (
+                    {cloudmatehubAdvantages.map((item) => (
                       <li
                         key={item.label}
                         className="flex items-center gap-2.5 text-sm text-text-secondary"
@@ -1149,7 +1149,7 @@ export default function HowItWorks() {
       <CTABanner
         eyebrow="Ready to try it?"
         title="See it in action"
-        subtitle="Deploy ShellHub in under five minutes and connect to your first device. No credit card required."
+        subtitle="Deploy CloudMateHub in under five minutes and connect to your first device. No credit card required."
         primaryAction={{ label: "Get Started Free", to: "/getting-started" }}
         secondaryAction={{ label: "View Pricing", to: "/pricing" }}
       />

@@ -33,7 +33,7 @@ type Mode interface {
 
 // HostMode is the Agent execution mode for `Host`.
 //
-// The host mode is the default mode one, and turns the host machine into a ShellHub's Agent. The host is
+// The host mode is the default mode one, and turns the host machine into a CloudMateHub's Agent. The host is
 // responsible for the SSH server, authentication and authorization, `/etc/passwd`, `/etc/shadow`, and etc.
 type HostMode struct{}
 
@@ -70,9 +70,9 @@ func (m *HostMode) GetInfo() (*Info, error) {
 
 // ConnectorMode is the Agent execution mode for `Connector`.
 //
-// The `Connector` mode is used to turn a container inside a host into a single device ShellHub's Agent. The host is
+// The `Connector` mode is used to turn a container inside a host into a single device CloudMateHub's Agent. The host is
 // responsible for the SSH server, but the authentication and authorization is made by either the conainer
-// internals, `passwd` or `shadow`, or by the ShellHub API.
+// internals, `passwd` or `shadow`, or by the CloudMateHub API.
 type ConnectorMode struct {
 	cli      *dockerclient.Client
 	identity string

@@ -159,7 +159,7 @@ package pkg
 
 const banner = `
 ******************************
-* Welcome to ShellHub        *
+* Welcome to CloudMateHub        *
 ******************************
 `
 EOF

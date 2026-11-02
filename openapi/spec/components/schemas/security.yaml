@@ -10,7 +10,7 @@ api-key:
   description: |
     Send your API key in the `X-API-KEY` header. A namespace API key belongs to a
     single namespace and is not tied to a user, and is never accepted on the admin
-    surface. Create one in the ShellHub console under **Namespace → API Keys**.
+    surface. Create one in the CloudMateHub console under **Namespace → API Keys**.
 
     For automating the admin surface, see `instance-api-key` instead.
 instance-api-key:

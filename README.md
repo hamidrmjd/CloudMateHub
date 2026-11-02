@@ -7,15 +7,15 @@ A self-hosted workspace for remote Linux device access, built on **ShellHub Comm
 Requires Docker Desktop on this Mac, or Docker Engine + Compose on Ubuntu.
 
 ```sh
-./deployments/shellhub build
-./deployments/shellhub start
-./deployments/shellhub status
-./deployments/shellhub stop
+./deployments/cloudmatehub build
+./deployments/cloudmatehub start
+./deployments/cloudmatehub status
+./deployments/cloudmatehub stop
 ```
 
-Open **http://localhost:8080**. SSH ingress uses **localhost:2222**. Local bindings are loopback-only. `stop` preserves application data. Use the configured `localhost` hostname, not an unconfigured IP Host header.
+The default local configuration opens **http://localhost:8080**, with SSH at **localhost:2222**, bound to loopback. For LAN access, set both `SHELLHUB_BIND_ADDRESS` and `SHELLHUB_DOMAIN` in the ignored `.env.override` to the Mac’s LAN IPv4 address, then run `./deployments/cloudmatehub start`. Open `http://<LAN-IP>:8080`; SSH uses `<LAN-IP>:2222`. The gateway accepts the configured host, so use that IP after switching. Update both values if the LAN address changes. `stop` preserves application data.
 
-The source directory, Compose project (`shellhub-custom`), package imports and protocol identifiers retain their existing names for compatibility. The visible product is CloudMateHub.
+Project-owned product copy, npm workspaces (`@cloudmatehub/*`), icon/theme assets, and deployment commands use CloudMateHub. `deployments/shellhub` remains an alias. Upstream licenses, source attribution, published dependency/image addresses, Go module imports, `SHELLHUB_*` configuration, agent executable names and device authentication wire formats, existing browser storage keys, and the deployed Compose project (`shellhub-custom`) remain compatible with existing installations.
 
 ## Architecture picture
 
@@ -85,16 +85,24 @@ The diagram above describes the base device-access stack. The current deployment
 
 After each feature, remove **only the test/demo fixtures that the feature created and explicitly owns**. Preserve real accounts, devices, settings, sessions, keys, browser state and Docker volumes. Do not use a database reset or `down -v` as cleanup. Record fixture IDs and cleanup results; if no persistent fixtures were created, no cleanup is needed.
 
-See [project instructions](AGENTS.md) and [test/demo data policy](docs/architecture/TEST-DATA-POLICY.md). No application fixtures were created or deleted for this documentation update.
+See [project instructions](AGENTS.md) and [test/demo data policy](docs/architecture/TEST-DATA-POLICY.md). The branding/SSH-link verification created one owned, unapproved temporary SSH request; its key files and expired approval were removed through local teardown and the normal cleanup job. See the [verification and cleanup report](docs/verification/2026-11-03-branding-ssh-approval.md).
 
 ## Deployment and current limits
 
 [Deployment instructions](deployments/README.md) cover the existing source-build setup. Separate `deployments/macos` and `deployments/ubuntu` directories hold platform notes/examples. Remote Ubuntu deployment needs the actual host, DNS/TLS and firewall configuration. The local agent is not automatically installed or enrolled.
 
-The UI build and type checking passed; **110 selected UI tests**, **19 VPN broker tests**, and **4 user-directory tests** passed. The live login screen was checked at desktop and phone widths. Real enrolled-device SSH/web-terminal/SCP/SFTP workflows remain unverified; a complete security audit and full upstream test suite have not been performed. Cloud/Enterprise-only backend extensions are not added by this customization.
+The production build and type checking passed. The latest checks passed **2,772 console tests**, **247 design-system tests**, **117 website tests**, **47 documentation tests**, and the relevant backend/shared API/SSH suites, including installed-agent authentication compatibility. Live verification covered the unknown-key browser link and a real enrolled-key SSH command. Interactive web-terminal/SCP/SFTP workflows, a complete security audit, and the full upstream integration suite remain unverified. Cloud/Enterprise-only backend extensions are not added by this customization.
 
 ## Upstream and license
 
 Based on [ShellHub](https://github.com/shellhub-io/shellhub), release `v0.27.0`, commit `fdcc51e4fdad55440b8cfa3061b2729a50deea7b`. Original source is developed by O.S. Systems and contributors. The [Apache-2.0 license](LICENSE.md) and upstream attribution remain intact. The original README is preserved in [docs/upstream/README.shellhub.md](docs/upstream/README.shellhub.md).
 
 [CloudMateHub customization notes](CLOUDMATEHUB.md) · [Security policy](SECURITY.md)
+
+## Native SSH identification links
+
+When an unknown SSH key connects, the terminal’s approval link includes the published HTTP/HTTPS port (`SHELLHUB_HTTP_PORT` or `SHELLHUB_HTTPS_PORT`). For example, HTTP on port 8080 produces `http://<LAN-IP>:8080/ssh-identities/new/<code>`. After signing in, the browser returns to that approval page, including when a previous session expired. Add the key only if you started the connection, then enter the browser’s confirmation code in the waiting terminal. Approval requests expire after 90 seconds; restart SSH for a fresh link if needed. The browser-port correction leaves token issuers and existing identities unchanged.
+
+Native keyboard-interactive prompts use `cloudmatehub-approval` and `cloudmatehub-approval-denied`. The server and browser terminal bridge share these names; existing device key signatures and signing keys remain unchanged.
+
+SSH welcome announcements are saved per namespace. Updating the default in source does not rewrite existing saved announcements. The current namespace’s saved welcome message was backed up and explicitly updated to CloudMateHub; upstream attribution remains in this repository.

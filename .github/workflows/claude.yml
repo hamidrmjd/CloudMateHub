@@ -32,7 +32,7 @@ jobs:
           app-id: ${{ secrets.CLOUD_DISPATCH_APP_ID }}
           private-key: ${{ secrets.CLOUD_DISPATCH_APP_PRIVATE_KEY }}
           owner: shellhub-io
-          repositories: shellhub,cloud,claude,team
+          repositories: cloudmatehub,cloud,claude,team
 
       - name: Resolve PR head ref
         id: pr-ref
@@ -56,7 +56,7 @@ jobs:
             echo "sha=$SHA" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Checkout shellhub
+      - name: Checkout cloudmatehub
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ steps.pr-ref.outputs.sha || '' }}
@@ -101,13 +101,13 @@ jobs:
 
       - name: Setup workspace context
         run: |
-          "$GITHUB_WORKSPACE/claude/workspace.sh" sync -w "$GITHUB_WORKSPACE" --project shellhub
+          "$GITHUB_WORKSPACE/claude/workspace.sh" sync -w "$GITHUB_WORKSPACE" --project cloudmatehub
 
       - name: Verify the workspace config is readable
         run: |
           for file in \
             "$GITHUB_WORKSPACE/claude/CLAUDE.md" \
-            "$GITHUB_WORKSPACE/claude/.claude/repos/shellhub/CLAUDE.md" \
+            "$GITHUB_WORKSPACE/claude/.claude/repos/cloudmatehub/CLAUDE.md" \
             "$GITHUB_WORKSPACE/claude/.claude/rules/code-style.md" \
             "$GITHUB_WORKSPACE/claude/.claude/skills/code-review/SKILL.md"; do
             if [[ ! -f "$file" ]]; then
@@ -128,4 +128,4 @@ jobs:
           trigger_phrase: "@claude"
           claude_args: |
             --add-dir ${{ github.workspace }}/claude
-            --add-dir ${{ github.workspace }}/claude/.claude/repos/shellhub
+            --add-dir ${{ github.workspace }}/claude/.claude/repos/cloudmatehub

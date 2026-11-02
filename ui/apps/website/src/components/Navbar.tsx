@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { cn } from "@shellhub/design-system/cn";
-import { Dropdown } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { Dropdown } from "@cloudmatehub/design-system/primitives";
 import {
   ArrowTopRightOnSquareIcon,
   ChevronDownIcon,

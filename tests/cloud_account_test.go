@@ -23,12 +23,12 @@ func TestCloudAccountDeletion(t *testing.T) {
 
 	t.Run("deleting the account removes the member's paired devices", func(t *testing.T) {
 		tenant := uuid.Generate()
-		compose.NewUser(t, "account-owner", "account-owner"+stripeTestEmailDomain, ShellHubPassword)
+		compose.NewUser(t, "account-owner", "account-owner"+stripeTestEmailDomain, CloudMateHubPassword)
 		compose.NewNamespace(t, "account-owner", "account-space", tenant)
 
-		compose.NewUser(t, "account-deleter", "account-deleter"+stripeTestEmailDomain, ShellHubPassword)
+		compose.NewUser(t, "account-deleter", "account-deleter"+stripeTestEmailDomain, CloudMateHubPassword)
 		compose.NewMember(t, "account-deleter", "account-space", string(authorizer.RoleOperator))
-		member := signIntoTenant(t, compose, "account-deleter", ShellHubPassword, tenant)
+		member := signIntoTenant(t, compose, "account-deleter", CloudMateHubPassword, tenant)
 
 		pairing := startPairing(t, compose, newPairingRequest(t, "gone-with-account", "02:00:00:00:a6:41"))
 		paired := acceptPairingInto(t, asBearer(t, compose, member.Token), tenant, pairing.Code)
@@ -38,7 +38,7 @@ func TestCloudAccountDeletion(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, http.StatusNoContent, resp.StatusCode(), resp.String())
 
-		compose.JWT(compose.AuthUser(t, "account-owner", ShellHubPassword).Token)
+		compose.JWT(compose.AuthUser(t, "account-owner", CloudMateHubPassword).Token)
 
 		requireRemovedDevice(t, compose, paired.UID)
 	})

@@ -2,7 +2,7 @@ import { useState, useEffect, FormEvent } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { isSdkError } from "@/api/errors";
 import { setup } from "@/client";
 import { isCommunity } from "@/env";

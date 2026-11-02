@@ -1,5 +1,5 @@
 import type { ComponentProps, ReactNode } from "react";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import DeviceCard from "@/components/firstRun/DeviceCard";
 import ScreenIntro from "@/components/layout/ScreenIntro";

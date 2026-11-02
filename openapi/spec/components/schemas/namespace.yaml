@@ -94,7 +94,7 @@ properties:
     default: personal
     description: |
       this field, on majority of cases is default 'personal', if the running
-      instance of shellhub is cloud, the default value is 'team'.
+      instance of cloudmatehub is cloud, the default value is 'team'.
       This field requires a valid input of either 'personal' or 'team'. the default
       will match the current Shellhub instance type. When a "type" field value is
       specified, it will override the default, but must be either 'personal' or 'team'.

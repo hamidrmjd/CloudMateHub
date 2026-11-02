@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { updateRecoverPassword } from "@/client";
 import { updatePasswordResolver } from "./setup/updatePasswordResolver";
 import type { UpdatePasswordFormValues } from "./setup/updatePasswordResolver";

@@ -9,13 +9,13 @@ import EditionBanner from "../../components/EditionBanner.astro";
 
 # Administration
 
-Most of ShellHub is scoped to a namespace. Administering the **instance** — every account, every
+Most of CloudMateHub is scoped to a namespace. Administering the **instance** — every account, every
 namespace — is done from the host it runs on, with the admin commands built into the server
 binary. They write to the database directly, without going through the API.
 
 <EditionBanner>
 The admin **console** at `/admin` is Enterprise, and it opens only for an account carrying the
-superadmin flag. On Cloud and Enterprise the instance is operated by ShellHub, so there is no host
+superadmin flag. On Cloud and Enterprise the instance is operated by CloudMateHub, so there is no host
 of yours to run these commands on.
 </EditionBanner>
 
@@ -26,7 +26,7 @@ $ ./bin/cli user list
 ```
 
 `bin/cli` runs the command inside the `server` container, so there is nothing separate to install.
-It refuses to run when the stack is down, with `ShellHub is not running`.
+It refuses to run when the stack is down, with `CloudMateHub is not running`.
 
 ## Users
 

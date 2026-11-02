@@ -1,10 +1,10 @@
 # Threat model
 
-## What ShellHub does and where untrusted input enters
+## What CloudMateHub does and where untrusted input enters
 
-ShellHub is a centralized SSH gateway. Devices run an agent that dials out to the server and keeps a
+CloudMateHub is a centralized SSH gateway. Devices run an agent that dials out to the server and keeps a
 reverse tunnel open, so users reach a device behind NAT or a firewall with
-`ssh <user>@<namespace>.<device>@<server>`. One server holds many namespaces, ShellHub's tenants.
+`ssh <user>@<namespace>.<device>@<server>`. One server holds many namespaces, CloudMateHub's tenants.
 Each namespace has its own devices, members, API keys, public keys, firewall rules and session
 recordings.
 
@@ -12,7 +12,7 @@ Untrusted input enters at:
 
 - The HTTP API in `server/api`, built on Echo. It takes user logins, JWTs, API keys in the
   `X-API-KEY` header, and the calls the agent makes to register and authenticate a device.
-- The SSH server in `server/ssh`, built on ShellHub's fork of gliderlabs/ssh. Any client on the
+- The SSH server in `server/ssh`, built on CloudMateHub's fork of gliderlabs/ssh. Any client on the
   internet can connect and present an SSHID, a password or a public key.
 - The agent connection. An accepted device talks to the server over a reverse tunnel through
   `pkg/revdial` and `pkg/wsconnadapter`. Treat every device as untrusted, since its owner may be
@@ -45,7 +45,7 @@ Less important but still in scope: the gateway's Caddy configuration, the consol
 
 Out of scope: the `tests/` integration suite, `devscripts/`, the `docker-compose*.yml` development
 setups, the static sites in `ui/apps/website` and `ui/apps/docs`, and vulnerabilities in
-third-party dependencies with no exploit path through ShellHub.
+third-party dependencies with no exploit path through CloudMateHub.
 
 ## How to exercise it
 

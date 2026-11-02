@@ -98,7 +98,7 @@ func TestEnrollmentWebhook(t *testing.T) {
 		assert.Equal(t, hex.EncodeToString(mac.Sum(nil)), call.Signature)
 
 		payload := call.payload(t)
-		assert.Equal(t, ShellHubNamespace, payload.TenantID)
+		assert.Equal(t, CloudMateHubNamespace, payload.TenantID)
 		assert.Equal(t, key.ID, payload.ProvisioningKeyID)
 		assert.Equal(t, "webhook-payload", payload.ProvisioningKeyName)
 		assert.Equal(t, device.UID, payload.DeviceUID)

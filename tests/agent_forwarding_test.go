@@ -24,8 +24,8 @@ func TestAgentSSHAgentForwarding(t *testing.T) {
 
 	compose := newSSHEnvironment(t, t.Context(), legacyNamespace)
 
-	shellhubAgent, device := startAcceptedAgent(t, t.Context(), compose)
-	execInAgent(t, shellhubAgent, "adduser", "-D", forwardingUser)
+	cloudmatehubAgent, device := startAcceptedAgent(t, t.Context(), compose)
+	execInAgent(t, cloudmatehubAgent, "adduser", "-D", forwardingUser)
 
 	forwardedKey, err := rsa.GenerateKey(rand.Reader, 2048)
 	require.NoError(t, err)
@@ -37,7 +37,7 @@ func TestAgentSSHAgentForwarding(t *testing.T) {
 	require.NoError(t, keyring.Add(agent.AddedKey{PrivateKey: forwardedKey}))
 
 	conn := dialClientWithin(t, t.Context(), compose.SSHAddress(), &ssh.ClientConfig{
-		User:            forwardingUser + "@" + ShellHubNamespaceName + "." + device.Name,
+		User:            forwardingUser + "@" + CloudMateHubNamespaceName + "." + device.Name,
 		Auth:            []ssh.AuthMethod{ssh.PublicKeys(registerDeviceKey(t, t.Context(), compose))},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(), //nolint:gosec // the test stack's host key is ephemeral
 	}, 30*time.Second)

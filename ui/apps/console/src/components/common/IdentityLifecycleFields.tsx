@@ -1,6 +1,6 @@
 import { BoltIcon } from "@heroicons/react/24/outline";
-import { Toggle } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Toggle } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import KeyExpiryField from "@/components/common/KeyExpiryField";
 
 /**

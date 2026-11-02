@@ -33,9 +33,9 @@ if [ -d "$CLOUD_DIR" ]; then
     fi
 
     go work init \
-        "$WORKSPACE/shellhub" \
-        "$WORKSPACE/shellhub/openapi" \
-        "$WORKSPACE/shellhub/server" \
+        "$WORKSPACE/cloudmatehub" \
+        "$WORKSPACE/cloudmatehub/openapi" \
+        "$WORKSPACE/cloudmatehub/server" \
         "$WORKSPACE/cloud"
 
     exec air -build.cmd "go build -tags enterprise -o /tmp/air/main github.com/shellhub-io/cloud/cmd/server"

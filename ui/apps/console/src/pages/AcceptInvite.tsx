@@ -15,7 +15,7 @@ import {
   FormInputField,
   FormPasswordField,
 } from "@/components/common/fields/rhf";
-import { Button, Spinner, Callout } from "@shellhub/design-system/primitives";
+import { Button, Spinner, Callout } from "@cloudmatehub/design-system/primitives";
 import { acceptInviteMutation, resolveInvitationOptions } from "@/client";
 import { useInvalidateByIds } from "@/hooks/useInvalidateQueries";
 import { inviteResolver, type InviteFormValues } from "./setup/inviteResolver";

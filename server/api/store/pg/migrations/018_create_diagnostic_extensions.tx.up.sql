@@ -1,4 +1,4 @@
--- Three diagnostic extensions the image already ships, none of which ShellHub itself queries:
+-- Three diagnostic extensions the image already ships, none of which CloudMateHub itself queries:
 -- pg_stat_statements attributes load to statements rather than tables, pgstattuple measures
 -- bloat and in-page free space directly, and pg_buffercache shows what occupies shared_buffers.
 -- Without the first, a scan storm can be traced to a table but never to the query behind it.

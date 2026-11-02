@@ -3,7 +3,7 @@ import {
   ExclamationTriangleIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { disableMfa } from "@/client";
 import { useHandOverSignOut } from "@/hooks/useHandOverSignOut";
 import { useOtpInput } from "@/hooks/useOtpInput";

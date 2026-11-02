@@ -222,8 +222,8 @@ func (c *client) GetDeviceAuthStatus(token string) (*models.DeviceAuthStatus, er
 	return requireBody(res)
 }
 
-// NewReverseListener creates a new reverse listener connection to ShellHub's server. This listener receives the SSH
-// requests coming from the ShellHub server. Only authenticated devices can obtain a listener connection.
+// NewReverseListener creates a new reverse listener connection to CloudMateHub's server. This listener receives the SSH
+// requests coming from the CloudMateHub server. Only authenticated devices can obtain a listener connection.
 func (c *client) NewReverseListenerV1(ctx context.Context, token string, path string) (net.Listener, error) {
 	if token == "" {
 		return nil, errors.New("token is empty")

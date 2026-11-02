@@ -17,7 +17,7 @@ import EditNamespaceModal from "./EditNamespaceModal";
 import DeleteNamespaceDialog from "./DeleteNamespaceDialog";
 import { formatDateShort } from "@/utils/date";
 import { formatMaxDevices } from "./utils";
-import { Callout, IconButton } from "@shellhub/design-system/primitives";
+import { Callout, IconButton } from "@cloudmatehub/design-system/primitives";
 import { apiErrorMessage } from "@/api/errors";
 import { PER_PAGE } from "@/utils/pagination";
 

@@ -21,8 +21,8 @@ import {
   Button,
   Dropdown,
   IconButton,
-} from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+} from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useAccessPolicies } from "@/hooks/useAccessPolicyRequests";
 import { useInvalidateByIds } from "@/hooks/useInvalidateQueries";
 import { useRowAction } from "@/hooks/useRowAction";

@@ -33,7 +33,7 @@ func TestSingleNamespaceInstance(t *testing.T) {
 			Name:      boundUsername,
 			Username:  boundUsername,
 			Email:     boundUsername + "@ossystems.com.br",
-			Password:  ShellHubPassword,
+			Password:  CloudMateHubPassword,
 			Namespace: boundNamespace,
 		}).
 		SetResult(setup).
@@ -66,16 +66,16 @@ func TestSingleNamespaceInstance(t *testing.T) {
 
 	t.Run("removing a member deletes their account, which belongs to no other namespace", func(t *testing.T) {
 		const orphanUsername = "orphan"
-		compose.NewUser(t, orphanUsername, "orphan@ossystems.com.br", ShellHubPassword)
+		compose.NewUser(t, orphanUsername, "orphan@ossystems.com.br", CloudMateHubPassword)
 		compose.NewMember(t, orphanUsername, boundNamespace, string(authorizer.RoleObserver))
-		orphan := compose.AuthUser(t, orphanUsername, ShellHubPassword)
+		orphan := compose.AuthUser(t, orphanUsername, CloudMateHubPassword)
 
 		resp, err := asBearer(t, compose, setup.Token).Delete("/api/namespaces/" + tenant + "/members/" + orphan.ID)
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
 		resp, err = compose.Anonymous(t.Context()).
-			SetBody(map[string]string{"username": orphanUsername, "password": ShellHubPassword}).
+			SetBody(map[string]string{"username": orphanUsername, "password": CloudMateHubPassword}).
 			Post("/api/login")
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode(), "the removed member's account still signs in: %s", resp.String())

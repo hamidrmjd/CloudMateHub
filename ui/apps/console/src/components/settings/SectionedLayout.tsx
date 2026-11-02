@@ -1,7 +1,7 @@
 import { ComponentType, ReactNode, SVGProps } from "react";
 import { Link, NavLink, Navigate, Outlet, useMatch } from "react-router-dom";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import PageHeader from "@/components/common/PageHeader";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 

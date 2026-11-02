@@ -33,3 +33,7 @@ Visible copy uses CloudMateHub. Package imports, browser-storage keys, API route
 The UI does **not** talk directly to PostgreSQL or Valkey. Hiding a button is not authorization: backend checks remain the security boundary.
 
 Related: [03 Server and Domain](03%20Server%20and%20Domain.md), [06 Data and Trust](06%20Data%20and%20Trust.md), [07 Development and Deployment](07%20Development%20and%20Deployment.md).
+
+## Branding and compatibility
+
+Owned UI copy, npm workspaces, icon symbols, theme assets and documentation use CloudMateHub. Published upstream links and legal attribution remain original. Persisted session/vault/browser-key identifiers retain their legacy values so existing accounts, preferences and encrypted vaults remain readable. The native SSH approval destination survives both initial sign-in and expired-token recovery.

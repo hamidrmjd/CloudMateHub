@@ -275,9 +275,9 @@ func TestTagsAreNamespaceScoped(t *testing.T) {
 
 	compose := newSSHEnvironment(t, t.Context(), legacyNamespace)
 
-	compose.NewUser(t, neighbourUsername, "neighbour@ossystems.com.br", ShellHubPassword)
+	compose.NewUser(t, neighbourUsername, "neighbour@ossystems.com.br", CloudMateHubPassword)
 	compose.NewLegacyNamespace(t, neighbourUsername, "neighbourhood", neighbourTenant)
-	neighbour := compose.AuthUser(t, neighbourUsername, ShellHubPassword)
+	neighbour := compose.AuthUser(t, neighbourUsername, CloudMateHubPassword)
 	asNeighbour := func(ctx context.Context) *resty.Request {
 		return compose.Anonymous(ctx).SetAuthToken(neighbour.Token)
 	}

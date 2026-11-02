@@ -38,7 +38,7 @@ func TestUnhealthyServicesNamesEachFailedService(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			ctx := t.Context()
 
-			project := "shellhub-e2e-unhealthy-" + newRunID()
+			project := "cloudmatehub-e2e-unhealthy-" + newRunID()
 			dc, err := newComposeStack(project, []string{test.file})
 			require.NoError(t, err)
 

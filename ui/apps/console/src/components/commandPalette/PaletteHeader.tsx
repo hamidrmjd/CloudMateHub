@@ -1,6 +1,6 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
-import { IconButton } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import type { NormalizedDevice } from "@/hooks/useDevices";
 import { LISTBOX_ID, icons } from "./items";
 

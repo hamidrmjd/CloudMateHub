@@ -31,7 +31,7 @@ import KeyModal from "./KeyModal";
 import KeyDeleteDialog from "./KeyDeleteDialog";
 import { formatRelative } from "@/utils/date";
 import type { VaultKeyEntry } from "@/types/vault";
-import { Button, IconButton } from "@shellhub/design-system/primitives";
+import { Button, IconButton } from "@cloudmatehub/design-system/primitives";
 
 const VAULT_FEATURES: EmptyStateFeature[] = [
   {

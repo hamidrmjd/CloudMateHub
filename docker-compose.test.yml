@@ -1,15 +1,15 @@
 version: "3.7"
 
 x-e2e-labels: &e2e-labels
-  io.shellhub.e2e.run: ${SHELLHUB_E2E_RUN:?}
-  io.shellhub.e2e.lease: ${SHELLHUB_E2E_LEASE:-}
-  io.shellhub.e2e.kind: ${SHELLHUB_E2E_KIND:-}
-  io.shellhub.e2e.expires: ${SHELLHUB_E2E_EXPIRES:-}
-  io.shellhub.e2e.checkout: ${SHELLHUB_E2E_CHECKOUT:-}
+  io.cloudmatehub.e2e.run: ${SHELLHUB_E2E_RUN:?}
+  io.cloudmatehub.e2e.lease: ${SHELLHUB_E2E_LEASE:-}
+  io.cloudmatehub.e2e.kind: ${SHELLHUB_E2E_KIND:-}
+  io.cloudmatehub.e2e.expires: ${SHELLHUB_E2E_EXPIRES:-}
+  io.cloudmatehub.e2e.checkout: ${SHELLHUB_E2E_CHECKOUT:-}
 
 services:
   server:
-    image: shellhub-e2e/server:${SHELLHUB_E2E_RUN:?}-${SHELLHUB_BUILD_EDITION:-community}
+    image: cloudmatehub-e2e/server:${SHELLHUB_E2E_RUN:?}-${SHELLHUB_BUILD_EDITION:-community}
     labels: *e2e-labels
     pull_policy: never
     restart: on-failure:3
@@ -20,13 +20,13 @@ services:
     ports: []
     environment:
       - SHELLHUB_OPENAPI_VALIDATION=strict
-      - SHELLHUB_OPENAPI_SCHEMA=file:///etc/shellhub/openapi.json
+      - SHELLHUB_OPENAPI_SCHEMA=file:///etc/cloudmatehub/openapi.json
       - SHELLHUB_LOG_FORMAT=text
       - SHELLHUB_SESSION_RETENTION_DAYS=${SHELLHUB_SESSION_RETENTION_DAYS:-0}
     volumes:
-      - ./openapi/static/openapi-${SHELLHUB_EDITION:-community}.json:/etc/shellhub/openapi.json:ro
+      - ./openapi/static/openapi-${SHELLHUB_EDITION:-community}.json:/etc/cloudmatehub/openapi.json:ro
   gateway:
-    image: shellhub-e2e/gateway:${SHELLHUB_E2E_RUN:?}
+    image: cloudmatehub-e2e/gateway:${SHELLHUB_E2E_RUN:?}
     labels: *e2e-labels
     pull_policy: never
     restart: on-failure:3
@@ -36,7 +36,7 @@ services:
       retries: 20
     ports: []
   ui:
-    image: shellhub-e2e/ui:${SHELLHUB_E2E_RUN:?}
+    image: cloudmatehub-e2e/ui:${SHELLHUB_E2E_RUN:?}
     labels: *e2e-labels
     pull_policy: never
     restart: on-failure:3

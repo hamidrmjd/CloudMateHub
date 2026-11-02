@@ -1,12 +1,2 @@
 #!/bin/sh
-set -eu
-ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-cd "$ROOT"
-case "${1:-help}" in
-  build) exec ./bin/docker-compose build server ui gateway wgdashboard ;;
-  start) umask 077; ./deployments/prepare-vpn; make keygen; exec ./bin/docker-compose up -d --wait --wait-timeout 180 ;;
-  stop) exec ./bin/docker-compose stop ;;
-  status) exec ./bin/docker-compose ps ;;
-  logs) exec ./bin/docker-compose logs --tail 100 ;;
-  *) echo "Usage: ./deployments/shellhub {build|start|stop|status|logs}" ;;
-esac
+exec "$(dirname "$0")/cloudmatehub" "$@"

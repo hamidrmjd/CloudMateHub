@@ -31,16 +31,16 @@ import (
 )
 
 const (
-	ShellHubAgentUsername = environment.AgentUsername
-	ShellHubAgentPassword = environment.AgentPassword
+	CloudMateHubAgentUsername = environment.AgentUsername
+	CloudMateHubAgentPassword = environment.AgentPassword
 )
 
 const (
-	ShellHubUsername      = "test"
-	ShellHubPassword      = "password"
-	ShellHubNamespaceName = "testspace"
-	ShellHubNamespace     = "00000000-0000-4000-0000-000000000000"
-	ShellHubEmail         = "test@ossystems.com.br"
+	CloudMateHubUsername      = "test"
+	CloudMateHubPassword      = "password"
+	CloudMateHubNamespaceName = "testspace"
+	CloudMateHubNamespace     = "00000000-0000-4000-0000-000000000000"
+	CloudMateHubEmail         = "test@ossystems.com.br"
 )
 
 type NewAgentContainerOption func(envs map[string]string)
@@ -250,7 +250,7 @@ func TestSSHNewNamespace(t *testing.T) {
 	t.Run("password authentication is not offered", func(t *testing.T) {
 		config := &ssh.ClientConfig{
 			User:            sshid,
-			Auth:            []ssh.AuthMethod{ssh.Password(ShellHubAgentPassword)},
+			Auth:            []ssh.AuthMethod{ssh.Password(CloudMateHubAgentPassword)},
 			HostKeyCallback: ssh.InsecureIgnoreHostKey(), //nolint:gosec
 		}
 
@@ -368,7 +368,7 @@ func testSSHWithVersion(t *testing.T, connectionVersion int) {
 				config := &ssh.ClientConfig{
 					User: deviceSSHID(device),
 					Auth: []ssh.AuthMethod{
-						ssh.Password(ShellHubAgentPassword),
+						ssh.Password(CloudMateHubAgentPassword),
 					},
 					HostKeyCallback: ssh.InsecureIgnoreHostKey(), //nolint:gosec
 				}
@@ -417,7 +417,7 @@ func testSSHWithVersion(t *testing.T, connectionVersion int) {
 				config := &ssh.ClientConfig{
 					User: deviceSSHID(device),
 					Auth: []ssh.AuthMethod{
-						ssh.Password(ShellHubAgentPassword),
+						ssh.Password(CloudMateHubAgentPassword),
 					},
 					HostKeyCallback: ssh.InsecureIgnoreHostKey(), //nolint:gosec
 				}
@@ -1879,7 +1879,7 @@ func skipUnlessAgentAcceptsPasswords(t *testing.T) {
 }
 
 func deviceSSHID(device *models.Device) string {
-	return ShellHubAgentUsername + "@" + ShellHubNamespaceName + "." + device.Name
+	return CloudMateHubAgentUsername + "@" + CloudMateHubNamespaceName + "." + device.Name
 }
 
 type namespaceModel bool
@@ -1901,7 +1901,7 @@ func newConfiguredSSHEnvironment(t *testing.T, ctx context.Context, configurator
 	compose := configurator.Up(ctx)
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
 	ownNamespace(t, ctx, compose, model)
 
 	return compose
@@ -1965,9 +1965,9 @@ func ownNamespace(t *testing.T, ctx context.Context, compose *environment.Docker
 	t.Helper()
 
 	if model == legacyNamespace {
-		compose.NewLegacyNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
+		compose.NewLegacyNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
 	} else {
-		compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
+		compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
 	}
 
 	auth := models.UserAuthResponse{}
@@ -1975,8 +1975,8 @@ func ownNamespace(t *testing.T, ctx context.Context, compose *environment.Docker
 	require.EventuallyWithT(t, func(tt *assert.CollectT) {
 		resp, err := compose.R(ctx).
 			SetBody(map[string]string{
-				"username": ShellHubUsername,
-				"password": ShellHubPassword,
+				"username": CloudMateHubUsername,
+				"password": CloudMateHubPassword,
 			}).
 			SetResult(&auth).
 			Post("/api/login")

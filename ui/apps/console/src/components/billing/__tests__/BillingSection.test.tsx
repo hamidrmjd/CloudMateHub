@@ -192,7 +192,7 @@ describe("BillingSection — Subscribe button interaction", () => {
     await user.click(await screen.findByRole("button", { name: SUBSCRIBE }));
     expect(await screen.findByTestId("billing-letter")).toBeInTheDocument();
     expect(
-      screen.getByRole("dialog", { name: /subscribe to shellhub cloud/i }),
+      screen.getByRole("dialog", { name: /subscribe to cloudmatehub cloud/i }),
     ).toBeInTheDocument();
   });
 });

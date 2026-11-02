@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { Spinner } from "@shellhub/design-system/primitives";
+import { Spinner } from "@cloudmatehub/design-system/primitives";
 import { useConnectivityStore } from "@/stores/connectivityStore";
 import FramedShell from "@/components/layout/FramedShell";
 import ScreenIntro from "@/components/layout/ScreenIntro";

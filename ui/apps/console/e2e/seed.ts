@@ -41,7 +41,7 @@ export function runInGateway(args: string[], command: string[] = []) {
       "--detach",
       `--label=com.docker.compose.project=${stackName}`,
       "--label=com.docker.compose.service=agent",
-      `--label=io.shellhub.e2e.run=${stackName}`,
+      `--label=io.cloudmatehub.e2e.run=${stackName}`,
       `--network=container:${gateway}`,
       ...args,
       agentImage,

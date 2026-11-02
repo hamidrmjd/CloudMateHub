@@ -19,7 +19,7 @@ import { ADMIN_AUTHENTICATION_PATH } from "@/utils/adminRoute";
 import CopyButton from "@/components/common/CopyButton";
 import SamlConfigModal from "./SamlConfigModal";
 import PageLoader from "@/components/common/PageLoader";
-import { Button, Callout, Toggle } from "@shellhub/design-system/primitives";
+import { Button, Callout, Toggle } from "@cloudmatehub/design-system/primitives";
 
 type AuthSettings = GetAuthenticationSettingsResponse;
 

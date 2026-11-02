@@ -159,7 +159,7 @@ function startContainer(name: string, label: string) {
 
 async function createContainer(team: Team) {
   const name = `e2e-container-${buildShortId()}`;
-  const label = `io.shellhub.e2e.connector=${name}`;
+  const label = `io.cloudmatehub.e2e.connector=${name}`;
   containers.push(startContainer(name, label));
   containers.push(startConnector(team, label));
   return {

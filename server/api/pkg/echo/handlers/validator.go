@@ -5,13 +5,13 @@ import (
 	errors "github.com/shellhub-io/shellhub/server/api/routes/errors"
 )
 
-// Validator adapts ShellHub's validator to echo's, so a request is checked against the same
+// Validator adapts CloudMateHub's validator to echo's, so a request is checked against the same
 // rules the services apply to the same models.
 type Validator struct {
 	validator *validator.Validator
 }
 
-// NewValidator creates a new validator for the echo framework from the ShellHub validator.
+// NewValidator creates a new validator for the echo framework from the CloudMateHub validator.
 func NewValidator() *Validator {
 	return &Validator{validator: validator.New()}
 }

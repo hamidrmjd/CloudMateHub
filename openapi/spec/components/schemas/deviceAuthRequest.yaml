@@ -32,7 +32,7 @@ properties:
   signature:
     description: |
       The base64 SSH wire-format signature, made with the device's private key, over the SSH
-      wire encoding of the strings "shellhub-device-auth-v1", the challenge, the tenant ID, the
+      wire encoding of the strings "cloudmatehub-device-auth-v1", the challenge, the tenant ID, the
       provisioning key and the public key, in that order, each empty when the request omits it.
     type: string
     maxLength: 4096

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import LogoMark from "./LogoMark";
 import WindowControls from "./WindowControls";
 import { columnWidths, type ColumnWidth } from "./columnWidths";

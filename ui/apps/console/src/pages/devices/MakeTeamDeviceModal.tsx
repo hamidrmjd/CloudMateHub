@@ -5,7 +5,7 @@ import {
   CheckCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Callout, IconBadge } from "@shellhub/design-system/primitives";
+import { Button, Callout, IconBadge } from "@cloudmatehub/design-system/primitives";
 import { apiErrorMessage } from "@/api/errors";
 import Modal from "@/components/common/Modal";
 import ObjectName from "@/components/common/ObjectName";

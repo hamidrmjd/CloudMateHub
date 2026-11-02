@@ -20,7 +20,7 @@ import (
 	"github.com/testcontainers/testcontainers-go"
 )
 
-const connectorLabel = "io.shellhub.e2e.connector"
+const connectorLabel = "io.cloudmatehub.e2e.connector"
 
 // TestConnectorContainerLifecycle covers a container a connector serves going through the states a
 // device goes through, in order: it asks to join as pending, comes online once accepted, goes
@@ -154,7 +154,7 @@ func startConnectorWithEnv(t *testing.T, ctx context.Context, compose *environme
 
 	env := map[string]string{
 		"SHELLHUB_SERVER_ADDRESS":  "http://localhost",
-		"SHELLHUB_TENANT_ID":       ShellHubNamespace,
+		"SHELLHUB_TENANT_ID":       CloudMateHubNamespace,
 		"SHELLHUB_PRIVATE_KEYS":    "/tmp/keys",
 		"SHELLHUB_CONNECTOR_LABEL": label,
 	}

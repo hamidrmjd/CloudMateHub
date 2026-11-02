@@ -49,7 +49,7 @@ func TestAccessPolicyEvaluation(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, 200, resp.StatusCode(), resp.String())
 
-		compose.RemoveMember(t, "leaver", ShellHubNamespaceName)
+		compose.RemoveMember(t, "leaver", CloudMateHubNamespaceName)
 
 		mark := compose.ServerLogMark(t)
 
@@ -105,13 +105,13 @@ func TestAccessPolicyEvaluation(t *testing.T) {
 			Name:    "root only",
 			Subject: userSubject(member.ID),
 			Filter:  requests.AccessPolicyFilter{All: true},
-			Logins:  []string{ShellHubAgentUsername},
+			Logins:  []string{CloudMateHubAgentUsername},
 		})
 
 		requireStraightThrough(t, compose, sshid, signer)
 
 		mark := compose.ServerLogMark(t)
-		requireRefusedAtAuth(t, compose, "operator@"+ShellHubNamespaceName+"."+device.Name, signer)
+		requireRefusedAtAuth(t, compose, "operator@"+CloudMateHubNamespaceName+"."+device.Name, signer)
 		compose.AwaitServerLogLine(t, mark, "reason="+string(models.ReasonNoGrant), "user="+member.ID, "username=operator")
 	})
 

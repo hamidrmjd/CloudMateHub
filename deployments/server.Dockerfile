@@ -32,7 +32,7 @@ COPY ./openapi/go.mod ./openapi/go.sum ./
 WORKDIR /go/src/github.com/shellhub-io/shellhub/server
 COPY ./server/go.mod ./server/go.sum ./
 
-RUN --mount=type=cache,id=shellhub-go-mod,target=/go/pkg/mod,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-go-mod,target=/go/pkg/mod,sharing=shared \
     go mod download
 
 FROM base AS builder
@@ -40,7 +40,7 @@ FROM base AS builder
 ARG EDITION=community
 ARG MJML_VERSION
 
-RUN --mount=type=cache,id=shellhub-npm,target=/root/.npm,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-npm,target=/root/.npm,sharing=shared \
     if [ "$EDITION" = "enterprise" ]; then \
         apk add --no-cache npm && npm install -g mjml@${MJML_VERSION:?}; \
     fi
@@ -57,8 +57,8 @@ COPY ./install.sh /templates/install.sh
 ARG GO_LDFLAGS
 
 RUN --mount=type=bind,from=cloud-src,target=/go/src/github.com/shellhub-io/cloud \
-    --mount=type=cache,id=shellhub-go-mod,target=/go/pkg/mod,sharing=shared \
-    --mount=type=cache,id=shellhub-go-build,target=/root/.cache/go-build,sharing=shared \
+    --mount=type=cache,id=cloudmatehub-go-mod,target=/go/pkg/mod,sharing=shared \
+    --mount=type=cache,id=cloudmatehub-go-build,target=/root/.cache/go-build,sharing=shared \
     if [ "$EDITION" = "enterprise" ]; then \
         cd /go/src && go work init \
             ./github.com/shellhub-io/shellhub \

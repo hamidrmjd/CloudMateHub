@@ -23,10 +23,10 @@ func TestDeviceListRefusesAStatusThePostgresEnumCannotHold(t *testing.T) {
 	compose := environment.New(t, run).Up(ctx)
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-	compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+	compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
 
-	auth := compose.AuthUser(t, ShellHubUsername, ShellHubPassword)
+	auth := compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword)
 	compose.JWT(auth.Token)
 
 	cases := []struct {

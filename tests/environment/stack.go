@@ -32,7 +32,7 @@ import (
 	"github.com/testcontainers/testcontainers-go/modules/compose"
 )
 
-// Config describes a ShellHub stack to bring up. Zero values select sensible defaults:
+// Config describes a CloudMateHub stack to bring up. Zero values select sensible defaults:
 // community edition, random ports, random network, cloudDir at ../../cloud. Run is required:
 // the stack's images, containers and network belong to it.
 //
@@ -103,7 +103,7 @@ var stackImages struct {
 	built map[imageBuild]bool
 }
 
-// Stack is a running ShellHub compose stack. All methods return errors instead of calling
+// Stack is a running CloudMateHub compose stack. All methods return errors instead of calling
 // [testing.T], so standalone binaries can use it. The test-time wrapper is [DockerCompose].
 type Stack struct {
 	name      string
@@ -118,7 +118,7 @@ type Stack struct {
 	artifacts []string
 }
 
-// Up brings a ShellHub stack up according to cfg, blocking until every service is running and
+// Up brings a CloudMateHub stack up according to cfg, blocking until every service is running and
 // healthy. The first Up per edition in a run builds the images, tagged with the run's ID, unless
 // [BuildStackImages] or [BuildEditionImages] built them; later Ups reuse them. The stack's network is created by the run,
 // so Up returns an error when cfg has no run and when the daemon refuses the network. It also returns an error, after taking the
@@ -202,7 +202,7 @@ func Up(ctx context.Context, cfg Config) (_ *Stack, err error) {
 	}
 
 	if cfg.Network == "" {
-		cfg.Network = "shellhub_network_" + uuid.Generate()
+		cfg.Network = "cloudmatehub_network_" + uuid.Generate()
 	}
 
 	if cfg.Name == "" {

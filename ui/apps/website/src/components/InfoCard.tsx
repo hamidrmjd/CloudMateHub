@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode, SVGProps } from "react";
-import { Card } from "@shellhub/design-system/primitives";
-import { Reveal, ShimmerCard } from "@shellhub/design-system/components";
+import { Card } from "@cloudmatehub/design-system/primitives";
+import { Reveal, ShimmerCard } from "@cloudmatehub/design-system/components";
 
 /**
  * Props of InfoCard. layout chooses the marker: an icon tile, a horizontal row, or a plain dot

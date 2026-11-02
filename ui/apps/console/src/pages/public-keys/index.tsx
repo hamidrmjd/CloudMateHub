@@ -32,8 +32,8 @@ import {
   getPublicKeysQueryKey,
   type PublicKeyResponse as PublicKey,
 } from "@/client";
-import { Button, Callout, IconButton } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Button, Callout, IconButton } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { apiErrorMessage } from "@/api/errors";
 import { PER_PAGE } from "@/utils/pagination";
 import { useNavSectionTitle } from "@/components/layout/navSections";

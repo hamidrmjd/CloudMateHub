@@ -1,14 +1,14 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: Buildroot
-description: Add the agent to a root filesystem with the ShellHub external tree.
+description: Add the agent to a root filesystem with the CloudMateHub external tree.
 ---
 
 import Callout from "../../../components/Callout.astro";
 
 # Buildroot
 
-ShellHub maintains a Buildroot external tree, so a manufactured unit arrives with the
+CloudMateHub maintains a Buildroot external tree, so a manufactured unit arrives with the
 agent already on it. Use it rather than writing a package yourself.
 
 ## Prerequisites
@@ -21,23 +21,23 @@ agent already on it. Use it rather than writing a package yourself.
 
 ```bash
 $ git clone git://git.buildroot.net/buildroot
-$ git clone https://github.com/shellhub-io/buildroot.git shellhub
+$ git clone https://github.com/shellhub-io/buildroot.git cloudmatehub
 ```
 
 Point Buildroot at it with `BR2_EXTERNAL`, here against the emulated target:
 
 ```bash
 $ cd buildroot
-$ make BR2_EXTERNAL=../shellhub qemu_x86_64_defconfig
+$ make BR2_EXTERNAL=../cloudmatehub qemu_x86_64_defconfig
 ```
 
 ## Selecting the package
 
 ```bash
-$ make BR2_EXTERNAL=../shellhub menuconfig
+$ make BR2_EXTERNAL=../cloudmatehub menuconfig
 ```
 
-Select **shellhub** under **External options**, then build.
+Select **cloudmatehub** under **External options**, then build.
 
 The package needs a toolchain with threads and Go support for your target
 architecture, and pulls in `ca-certificates` and `libxcrypt`. Buildroot selects both for
@@ -88,7 +88,7 @@ device, once.
 
 ## Init systems
 
-The package installs a systemd unit or an `S42shellhub` sysvinit script, following the
+The package installs a systemd unit or an `S42cloudmatehub` sysvinit script, following the
 init system your configuration selects. Neither needs configuration beyond the overlay
 above.
 

@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
 import { TrashIcon, VideoCameraIcon } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import SettingsSection from "@/components/settings/SettingsSection";
 import SettingsField from "@/components/settings/SettingsField";
 import RadioGroupField from "@/components/common/fields/RadioGroupField";

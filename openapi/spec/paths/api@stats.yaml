@@ -10,7 +10,7 @@ get:
     - api-key: []
   responses:
     '200':
-      description: Success get stats from ShellHub instance.
+      description: Success get stats from CloudMateHub instance.
       content:
         application/json:
           schema:

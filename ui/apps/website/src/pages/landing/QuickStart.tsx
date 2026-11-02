@@ -1,10 +1,10 @@
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { CommandBlock, Section, SectionHeader } from "@/components";
-import { Reveal } from "@shellhub/design-system/components";
+import { Reveal } from "@cloudmatehub/design-system/components";
 import { docsUrl } from "@/links";
 
 const SETUP_CMD =
-  "git clone https://github.com/shellhub-io/shellhub.git && cd shellhub && make keygen && make start";
+  "git clone https://github.com/shellhub-io/shellhub.git && cd cloudmatehub && make keygen && make start";
 
 /**
  * Landing section with the one-line install command.
@@ -15,7 +15,7 @@ export function QuickStart() {
       <SectionHeader
         className="mb-10"
         eyebrow="Quick Start"
-        title="Try ShellHub in seconds."
+        title="Try CloudMateHub in seconds."
         subtitle="Get up and running in minutes."
         subtitleClassName="mt-3 max-w-md"
       />

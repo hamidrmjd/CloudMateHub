@@ -19,7 +19,7 @@ import {
 import MfaEnableModal from "@/components/mfa/MfaEnableModal";
 import MfaDisableDialog from "@/components/mfa/MfaDisableDialog";
 import { isEnterpriseOrCloud } from "@/env";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import SettingsSection from "@/components/settings/SettingsSection";
 import SettingsField from "@/components/settings/SettingsField";
 import SettingsSwitchCard from "@/components/settings/SettingsSwitchCard";

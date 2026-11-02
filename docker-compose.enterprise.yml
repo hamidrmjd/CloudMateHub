@@ -1,6 +1,6 @@
 services:
   server:
-    image: registry.infra.ossystems.io/shellhub/server-enterprise:${SHELLHUB_VERSION}
+    image: registry.infra.ossystems.io/cloudmatehub/server-enterprise:${SHELLHUB_VERSION}
     restart: unless-stopped
     environment:
       - REDIS_URI=redis://redis:6379

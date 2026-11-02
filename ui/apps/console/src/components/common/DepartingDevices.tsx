@@ -4,8 +4,8 @@ import {
   Callout,
   IconBadge,
   Spinner,
-} from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+} from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { MAX_KEPT_DEVICES, useMemberDevices } from "@/hooks/useMemberDevices";
 import CheckboxField from "@/components/common/fields/CheckboxField";
 import { LABEL_BASE } from "@/utils/styles";

@@ -6,7 +6,7 @@ CloudMateHub is a development-stage customization of ShellHub Community with a W
 
 Use this repository's **Security → Report a vulnerability** when private reporting is enabled. Do not put credentials, private configurations, user data, or exploit details in a public issue. If private reporting is unavailable, request a private contact channel without disclosing the vulnerability.
 
-Upstream-only issues should also be reported through the relevant project's security policy: ShellHub or WGDashboard. The upstream security policy is archived under `docs/upstream/SECURITY.md`; its response commitments and contacts belong to upstream, not CloudMateHub.
+Upstream-only issues should also be reported through the relevant project's security policy: CloudMateHub or WGDashboard. The upstream security policy is archived under `docs/upstream/SECURITY.md`; its response commitments and contacts belong to upstream, not CloudMateHub.
 
 ## Deployment practices
 

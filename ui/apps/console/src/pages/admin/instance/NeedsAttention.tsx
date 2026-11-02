@@ -6,8 +6,8 @@ import {
   ExclamationTriangleIcon,
   UserPlusIcon,
 } from "@heroicons/react/24/outline";
-import { Badge, Button } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Badge, Button } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import type { UserAdminResponse } from "@/client";
 import { useAdminUsers } from "@/hooks/useAdminUsers";
 import { useAwaitingMemberNamespaces } from "@/hooks/useAdminNamespaces";

@@ -24,7 +24,7 @@ func TestLoginWithoutANamespace(t *testing.T) {
 	compose := environment.New(t, run).Up(ctx)
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, "nobody", "nobody@ossystems.com.br", ShellHubPassword)
+	compose.NewUser(t, "nobody", "nobody@ossystems.com.br", CloudMateHubPassword)
 
 	body := map[string]any{}
 
@@ -32,7 +32,7 @@ func TestLoginWithoutANamespace(t *testing.T) {
 		resp, err := compose.R(ctx).
 			SetBody(map[string]string{
 				"username": "nobody",
-				"password": ShellHubPassword,
+				"password": CloudMateHubPassword,
 			}).
 			Post("/api/login")
 		assert.NoError(tt, err)

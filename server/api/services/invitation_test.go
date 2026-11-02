@@ -241,7 +241,7 @@ func TestService_GenerateInvitationLink(t *testing.T) {
 	namespace := &models.Namespace{TenantID: "tenant", Members: []models.Member{owner}}
 
 	req := &requests.GenerateInvitationLink{
-		ForwardedHost: "shellhub.test",
+		ForwardedHost: "cloudmatehub.test",
 		TenantID:      "tenant",
 		UserID:        "owner",
 		MemberEmail:   "invitee@test.com",
@@ -392,7 +392,7 @@ func TestService_GenerateInvitationLink(t *testing.T) {
 			link, err := s.GenerateInvitationLink(ctx, req)
 			assert.Equal(t, tc.expected.err, err)
 			if tc.expected.hasLink {
-				assert.Contains(t, link, "shellhub.test/accept-invite?invite=")
+				assert.Contains(t, link, "cloudmatehub.test/accept-invite?invite=")
 			} else {
 				assert.Empty(t, link)
 			}

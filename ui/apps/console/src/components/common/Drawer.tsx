@@ -1,7 +1,7 @@
 import { ReactNode, useId, useRef } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { IconButton } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useEscapeKey } from "@/hooks/useEscapeKey";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 

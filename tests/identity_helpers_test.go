@@ -20,8 +20,8 @@ import (
 )
 
 const (
-	approvalChallengeName = "shellhub-approval"
-	deniedChallengeName   = "shellhub-approval-denied"
+	approvalChallengeName = "cloudmatehub-approval"
+	deniedChallengeName   = "cloudmatehub-approval-denied"
 )
 
 const (
@@ -265,7 +265,7 @@ func postReauth(ctx context.Context, compose *environment.DockerCompose, fingerp
 	confirmation := new(models.SSHApprovalConfirmation)
 
 	resp, err := compose.R(ctx).
-		SetBody(&requests.WebReauthVerify{Password: ShellHubPassword, Fingerprint: fingerprint, ApprovalCode: code}).
+		SetBody(&requests.WebReauthVerify{Password: CloudMateHubPassword, Fingerprint: fingerprint, ApprovalCode: code}).
 		SetResult(confirmation).
 		Post("/api/web-terminal/reauth")
 
@@ -318,10 +318,10 @@ func enrollOwnerKey(t *testing.T, compose *environment.DockerCompose) (ssh.Signe
 func newMember(t *testing.T, compose *environment.DockerCompose, username string, role authorizer.Role) *models.UserAuthResponse {
 	t.Helper()
 
-	compose.NewUser(t, username, username+"@ossystems.com.br", ShellHubPassword)
-	compose.NewMember(t, username, ShellHubNamespaceName, string(role))
+	compose.NewUser(t, username, username+"@ossystems.com.br", CloudMateHubPassword)
+	compose.NewMember(t, username, CloudMateHubNamespaceName, string(role))
 
-	return compose.AuthUser(t, username, ShellHubPassword)
+	return compose.AuthUser(t, username, CloudMateHubPassword)
 }
 
 func reassignRoleAndSignIn(t *testing.T, compose *environment.DockerCompose, member *models.UserAuthResponse, role authorizer.Role) *models.UserAuthResponse {
@@ -329,11 +329,11 @@ func reassignRoleAndSignIn(t *testing.T, compose *environment.DockerCompose, mem
 
 	resp, err := compose.R(t.Context()).
 		SetBody(map[string]any{"role": role}).
-		Patch("/api/namespaces/" + ShellHubNamespace + "/members/" + member.ID)
+		Patch("/api/namespaces/" + CloudMateHubNamespace + "/members/" + member.ID)
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
-	return compose.AuthUser(t, member.User, ShellHubPassword)
+	return compose.AuthUser(t, member.User, CloudMateHubPassword)
 }
 
 func newAPIKeyIdentity(t *testing.T, compose *environment.DockerCompose, name string, singleUse bool) (*responses.CreateAPIKey, ssh.Signer) {

@@ -17,7 +17,7 @@ import {
   CheckIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import PageLoader from "@/components/common/PageLoader";
 import SettingsSection from "@/components/settings/SettingsSection";
 import SettingsField from "@/components/settings/SettingsField";

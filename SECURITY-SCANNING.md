@@ -1,6 +1,6 @@
 # Security Scanning
 
-This document describes the security scanning infrastructure for ShellHub.
+This document describes the security scanning infrastructure for CloudMateHub.
 
 **Quick reference**
 

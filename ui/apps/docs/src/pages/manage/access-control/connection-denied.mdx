@@ -8,7 +8,7 @@ import Callout from "../../../components/Callout.astro";
 
 # Connection Denied
 
-Authorization runs before ShellHub contacts the device, so a refused connection fails at the
+Authorization runs before CloudMateHub contacts the device, so a refused connection fails at the
 server and never reaches the agent. In the web terminal you get an access-denied banner; a native
 client sees the raw error.
 
@@ -88,7 +88,7 @@ source IP matching is operating on the wrong address entirely. See
 
 ## The namespace has no policies at all
 
-A new namespace with zero policies refuses everything, and ShellHub short-circuits it
+A new namespace with zero policies refuses everything, and CloudMateHub short-circuits it
 — refusing immediately rather than proceeding toward a login that could never succeed.
 
 This happens after upgrading a legacy namespace without writing policies first. The

@@ -6,8 +6,8 @@ import (
 	"github.com/Masterminds/semver/v3"
 )
 
-// ConnectorVersion stores the version of the ShellHub Instane that is running the connector.
-// It is used in the ShellHub Agents initialized by the connector when a container is started.
+// ConnectorVersion stores the version of the CloudMateHub Instane that is running the connector.
+// It is used in the CloudMateHub Agents initialized by the connector when a container is started.
 var ConnectorVersion string
 
 // Container is a struct that represents a container that will be managed by the connector.
@@ -16,7 +16,7 @@ type Container struct {
 	ID string
 	// Name is the container name.
 	Name string
-	// ServerAddress is the ShellHub address of the server that the agent will connect to.
+	// ServerAddress is the CloudMateHub address of the server that the agent will connect to.
 	ServerAddress string
 	// Tenant is the tenant ID of the namespace that the agent belongs to, when the connector was
 	// given one.

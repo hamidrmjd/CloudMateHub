@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import { PauseIcon } from "@heroicons/react/24/solid";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import {
   ansiColor,
   useTerminalThemeStore,

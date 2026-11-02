@@ -24,7 +24,7 @@ Put every change in `.env.override`.
 
 ```bash
 # .env.override
-SHELLHUB_DOMAIN=shellhub.example.com
+SHELLHUB_DOMAIN=cloudmatehub.example.com
 SHELLHUB_AUTO_SSL=true
 SHELLHUB_POSTGRES_PASSWORD=<not-admin>
 ```
@@ -38,7 +38,7 @@ SHELLHUB_POSTGRES_PASSWORD=<not-admin>
 | `SHELLHUB_HTTPS_PORT` | `443` | HTTPS port. **Only bound when `SHELLHUB_AUTO_SSL=true`** |
 | `SHELLHUB_SSH_PORT` | `22` | SSH port. Published by the server, not the gateway |
 | `SHELLHUB_DOMAIN` | `localhost` | Public domain. Required for auto-SSL |
-| `SHELLHUB_NETWORK` | `shellhub_network` | Docker network name. Change to run several instances on one host |
+| `SHELLHUB_NETWORK` | `cloudmatehub_network` | Docker network name. Change to run several instances on one host |
 | `SHELLHUB_NETWORK_EXTERNAL` | `false` | Join `SHELLHUB_NETWORK` as an existing network instead of creating it. It must exist before the stack starts, and `down` leaves it in place |
 
 ## TLS
@@ -105,7 +105,7 @@ value that is not a positive duration under one minute.
 | `SHELLHUB_REDIS_CACHE_POOL_SIZE` | `0` | 0 means the driver default |
 | `SHELLHUB_WORKER_SCHEDULE` | `@daily` | Cron format |
 | `SHELLHUB_ASYNQ_UNIQUENESS_TIMEOUT` | `24` | Hours; 0 or less disables uniqueness |
-| `SHELLHUB_ONBOARDING_URL` | the ShellHub survey workspace | Client API root of the survey workspace (`https://<host>/api/v1/client/<workspaceId>`); empty disables the survey |
+| `SHELLHUB_ONBOARDING_URL` | the CloudMateHub survey workspace | Client API root of the survey workspace (`https://<host>/api/v1/client/<workspaceId>`); empty disables the survey |
 | `SHELLHUB_PROVISIONING_KEY_WEBHOOK_ALLOWED_CIDRS` | *(empty)* | Empty blocks all private, loopback and metadata addresses |
 | `SHELLHUB_ALLOW_PUBLIC_KEY_ACCESS_BELLOW_0_6_0` | `false` | Permit public-key auth from agents older than 0.6.0 |
 | `SHELLHUB_NAMESPACE_REQUIRE_VERIFIED_DEVICE_KEY` | `true` | Whether a namespace created from now on starts with [Device signature enforcement](/manage/settings#device-signature-enforcement) on. Namespaces that already exist keep their own setting |
@@ -130,7 +130,7 @@ From `.env.enterprise`, and only meaningful when the edition is not community.
 | `SHELLHUB_WEB_ENDPOINTS_DNS_PROVIDER_TOKEN` | *(empty)* | Required with auto-SSL |
 | `SHELLHUB_OBJECT_STORAGE_ENDPOINT` | `http://minio:9000` | Session recording storage |
 | `SHELLHUB_OBJECT_STORAGE_REGION` | `default` | |
-| `SHELLHUB_OBJECT_STORAGE_BUCKET` | `shellhub` | |
+| `SHELLHUB_OBJECT_STORAGE_BUCKET` | `cloudmatehub` | |
 | `SHELLHUB_OBJECT_STORAGE_ACCESS_KEY` | `username` | **Change this** |
 | `SHELLHUB_OBJECT_STORAGE_SECRET_KEY` | `password` | **Change this** |
 | `SHELLHUB_MAXMIND_MIRROR` | *(empty)* | GeoIP source |

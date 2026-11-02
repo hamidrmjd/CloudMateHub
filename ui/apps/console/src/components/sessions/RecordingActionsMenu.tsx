@@ -4,7 +4,7 @@ import {
   EllipsisVerticalIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import { Dropdown, IconButton } from "@shellhub/design-system/primitives";
+import { Dropdown, IconButton } from "@cloudmatehub/design-system/primitives";
 import RestrictedAction from "@/components/common/RestrictedAction";
 import { useRecordingPermissions } from "@/hooks/useRecordingPermissions";
 import { type Action } from "@/utils/permission";

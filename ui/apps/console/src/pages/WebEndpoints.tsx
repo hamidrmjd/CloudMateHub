@@ -49,8 +49,8 @@ import {
   Dropdown,
   IconButton,
   Toggle,
-} from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+} from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { PER_PAGE } from "@/utils/pagination";
 import { useNavSectionTitle } from "@/components/layout/navSections";
 import ObjectName from "@/components/common/ObjectName";

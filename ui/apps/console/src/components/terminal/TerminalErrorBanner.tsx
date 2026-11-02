@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ExclamationCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Button, IconButton } from "@shellhub/design-system/primitives";
+import { Button, IconButton } from "@cloudmatehub/design-system/primitives";
 import { useTerminalStore } from "@/stores/terminalStore";
 import type { TerminalError } from "./terminalErrors";
 

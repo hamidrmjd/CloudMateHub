@@ -1,20 +1,20 @@
 type: object
 properties:
   version:
-    description: The current version of ShellHub.
+    description: The current version of CloudMateHub.
     type: string
     example: 'v0.20.0'
   endpoints:
     type: object
     nullable: true
-    description: Network endpoints for the ShellHub instance.
+    description: Network endpoints for the CloudMateHub instance.
     properties:
       ssh:
         description: The SSH endpoint where devices connect.
         type: string
         example: 'localhost:2222'
       api:
-        description: The API endpoint for managing ShellHub configurations.
+        description: The API endpoint for managing CloudMateHub configurations.
         type: string
         example: 'localhost:8080'
   setup:
@@ -22,7 +22,7 @@ properties:
     type: boolean
     example: true
   authentication:
-    description: Authentication methods available for the ShellHub instance.
+    description: Authentication methods available for the CloudMateHub instance.
     type: object
     nullable: true
     properties:

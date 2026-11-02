@@ -1,4 +1,4 @@
-import { CopyButton as CopyButtonBase } from "@shellhub/design-system/components";
+import { CopyButton as CopyButtonBase } from "@cloudmatehub/design-system/components";
 import { useClipboardWarning } from "@/hooks/useCopy";
 
 /**

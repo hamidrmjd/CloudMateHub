@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useCountdown } from "@/hooks/useCountdown";
 import CheckboxField from "@/components/common/fields/CheckboxField";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import Modal from "@/components/common/Modal";
 
 interface MfaRecoveryTimeoutModalProps {

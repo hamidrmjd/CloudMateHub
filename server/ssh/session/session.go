@@ -971,7 +971,7 @@ func (s *Session) NoKeyReason() string {
 func (s *Session) EnrollInstruction() string {
 	return strings.Join([]string{
 		"",
-		"  ShellHub doesn't know this SSH key yet.",
+		"  CloudMateHub doesn't know this SSH key yet.",
 		"",
 		"  Open the link to add it to your identities:",
 		"",
@@ -1222,7 +1222,7 @@ func (s *Session) KeepAlive(ctx context.Context) error {
 // Returns the announcement or an error, if any. If no announcement is set, it returns an empty string.
 func (s *Session) Announce(client gossh.Channel) error {
 	if _, err := client.Write([]byte(
-		"Connected to " + s.SSHID + " via ShellHub.\n\r",
+		"Connected to " + s.SSHID + " via CloudMateHub.\n\r",
 	)); err != nil {
 		return err
 	}

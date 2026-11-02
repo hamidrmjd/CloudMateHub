@@ -22,8 +22,8 @@ func TestCreateNamespace(t *testing.T) {
 	compose := newEnterpriseEnvironment(t, t.Context(), environment.New(t, run))
 
 	const creatorUsername = "creator"
-	compose.NewUser(t, creatorUsername, "creator@ossystems.com.br", ShellHubPassword)
-	creator := compose.AuthUser(t, creatorUsername, ShellHubPassword)
+	compose.NewUser(t, creatorUsername, "creator@ossystems.com.br", CloudMateHubPassword)
+	creator := compose.AuthUser(t, creatorUsername, CloudMateHubPassword)
 
 	create := func(t *testing.T, name string) (*models.Namespace, *resty.Response) {
 		t.Helper()

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { SectionHeader } from "@/components";
 
-vi.mock("@shellhub/design-system/components", () => ({
+vi.mock("@cloudmatehub/design-system/components", () => ({
   Reveal: ({
     children,
     className,

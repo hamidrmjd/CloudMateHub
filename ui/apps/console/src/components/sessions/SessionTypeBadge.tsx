@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Badge, type BadgeShape } from "@shellhub/design-system/primitives";
+import { Badge, type BadgeShape } from "@cloudmatehub/design-system/primitives";
 
 import type { Session } from "@/client";
 import { sessionType } from "@/utils/session";

@@ -1,5 +1,5 @@
 import { Tag } from "@/client";
-import { Badge } from "@shellhub/design-system/primitives";
+import { Badge } from "@cloudmatehub/design-system/primitives";
 import {
   TagIcon,
   CpuChipIcon,

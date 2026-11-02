@@ -1,14 +1,14 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: Ansible
-description: Run playbooks against devices reached through ShellHub.
+description: Run playbooks against devices reached through CloudMateHub.
 ---
 
 import Callout from "../../components/Callout.astro";
 
 # Ansible
 
-ShellHub ships an Ansible collection, `shellhub.core`, whose dynamic inventory plugin lists the
+CloudMateHub ships an Ansible collection, `cloudmatehub.core`, whose dynamic inventory plugin lists the
 devices in a namespace and connects to each one through the gateway. Ansible treats them like any
 other SSH host.
 
@@ -20,23 +20,23 @@ $ ansible-galaxy collection install ./ansible-collection
 ```
 
 <Callout variant="warning" title="Not on Galaxy yet">
-`ansible-galaxy collection install shellhub.core` does not resolve — the collection is not
+`ansible-galaxy collection install cloudmatehub.core` does not resolve — the collection is not
 published. Install it from the repository until it is.
 </Callout>
 
 ## The inventory
 
-The source file's name must end in `shellhub.yml`, which is how Ansible knows to hand it to the
+The source file's name must end in `cloudmatehub.yml`, which is how Ansible knows to hand it to the
 plugin:
 
 ```yaml
-# inventory.shellhub.yml
-plugin: shellhub.core.devices
+# inventory.cloudmatehub.yml
+plugin: cloudmatehub.core.devices
 api_url: https://cloud.shellhub.io
 ssh_user: root
 ssh_key: ~/.ssh/id_ed25519
 keyed_groups:
-  - key: shellhub_tags
+  - key: cloudmatehub_tags
     prefix: tag
 ```
 
@@ -45,8 +45,8 @@ which namespace to list. Pass it in the environment rather than the file:
 
 ```bash
 $ export SHELLHUB_API_KEY=...
-$ ansible-inventory -i inventory.shellhub.yml --graph
-$ ansible -i inventory.shellhub.yml tag_production -m ping
+$ ansible-inventory -i inventory.cloudmatehub.yml --graph
+$ ansible -i inventory.cloudmatehub.yml tag_production -m ping
 ```
 
 Every option can come from the file or the environment:
@@ -68,9 +68,9 @@ Only accepted devices, paged through the API. For each one:
 |---|---|
 | `ansible_host` | The gateway. The same for every device |
 | `ansible_user` | The device's SSHID, `<ssh_user>@<namespace>.<device>` |
-| `shellhub_tags` | The device's tags, which is what `keyed_groups` groups on |
-| `shellhub_online` | Whether it is connected |
-| `shellhub_namespace` | The namespace the key resolved to |
+| `cloudmatehub_tags` | The device's tags, which is what `keyed_groups` groups on |
+| `cloudmatehub_online` | Whether it is connected |
+| `cloudmatehub_namespace` | The namespace the key resolved to |
 
 `ansible_host` being identical for every host is the whole point: one inventory reaches machines
 on networks that have no route to each other, and the device is identified entirely by
@@ -110,7 +110,7 @@ looks like a network problem. If a subset of hosts fails, check the policy befor
 
 ## Performance
 
-Every connection goes through the ShellHub server, so a play against a large fleet has a different
+Every connection goes through the CloudMateHub server, so a play against a large fleet has a different
 shape to one on a LAN. Pipelining helps by reducing round trips:
 
 ```ini

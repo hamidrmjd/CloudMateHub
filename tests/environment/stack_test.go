@@ -12,7 +12,7 @@ import (
 func TestStackArtifactsCoverWhatUpWrites(t *testing.T) {
 	t.Chdir(t.TempDir())
 
-	cfg := Config{Name: "shellhub-e2e-a", Located: &Location{Country: "BR"}, Run: &Run{issuer: newLicenseIssuer(t)}}
+	cfg := Config{Name: "cloudmatehub-e2e-a", Located: &Location{Country: "BR"}, Run: &Run{issuer: newLicenseIssuer(t)}}
 
 	_, written, err := cfg.licensingEnvs()
 	require.NoError(t, err)

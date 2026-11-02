@@ -1,5 +1,5 @@
 x-e2e-build-labels: &e2e-build-labels
-  io.shellhub.e2e.run: ${SHELLHUB_E2E_RUN:?}
+  io.cloudmatehub.e2e.run: ${SHELLHUB_E2E_RUN:?}
 
 services:
   server:

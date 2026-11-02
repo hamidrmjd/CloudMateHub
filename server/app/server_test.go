@@ -105,8 +105,8 @@ func TestInstanceIssuer(t *testing.T) {
 		},
 		{
 			description: "derives https from the domain when the gateway terminates TLS",
-			env:         &Env{Domain: "shellhub.example.com", AutoSSL: true},
-			expected:    "https://shellhub.example.com",
+			env:         &Env{Domain: "cloudmatehub.example.com", AutoSSL: true},
+			expected:    "https://cloudmatehub.example.com",
 		},
 	}
 
@@ -182,4 +182,24 @@ func TestAccountLockoutConfiguration(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, 30, env.Cache.MaximumAccountLockout)
 	})
+}
+
+func TestConsoleHostUsesPublishedBrowserPort(t *testing.T) {
+	for _, tc := range []struct {
+		name, domain, httpPort, httpsPort, want string
+		tls                                     bool
+	}{
+		{name: "LAN HTTP", domain: "192.168.1.103", httpPort: "8080", want: "192.168.1.103:8080"},
+		{name: "standard HTTP", domain: "hub.example.com", httpPort: "80", want: "hub.example.com"},
+		{name: "mapped HTTPS", domain: "hub.example.com", httpsPort: "8443", tls: true, want: "hub.example.com:8443"},
+		{name: "standard HTTPS", domain: "hub.example.com", httpsPort: "443", tls: true, want: "hub.example.com"},
+		{name: "explicit port", domain: "hub.example.com:9000", httpPort: "8080", want: "hub.example.com:9000"},
+		{name: "IPv6", domain: "::1", httpPort: "8080", want: "[::1]:8080"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			s := &Server{env: &Env{Domain: tc.domain, HTTPPort: tc.httpPort, HTTPSPort: tc.httpsPort, AutoSSL: tc.tls}}
+			assert.Equal(t, tc.want, s.consoleHost())
+			assert.NotContains(t, s.instanceIssuer(), ":8080", "published browser ports must not change existing token issuers")
+		})
+	}
 }

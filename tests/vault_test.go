@@ -27,8 +27,8 @@ func TestEnterpriseVault(t *testing.T) {
 	compose := newEnterpriseEnvironment(t, ctx, environment.New(t, run))
 
 	t.Run("a write based on a stale version is refused with 409 and the first write is kept", func(t *testing.T) {
-		first := compose.AuthUser(t, ShellHubUsername, ShellHubPassword).Token
-		second := compose.AuthUser(t, ShellHubUsername, ShellHubPassword).Token
+		first := compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword).Token
+		second := compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword).Token
 
 		resp, err := asBearer(t, compose, first).
 			SetBody(map[string]string{"meta": `{"salt":"c2FsdA=="}`}).

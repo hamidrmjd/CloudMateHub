@@ -4,7 +4,7 @@ import {
   PlusIcon,
   ServerStackIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import PageHeader from "@/components/common/PageHeader";
 import { useNavSectionTitle } from "@/components/layout/navSections";
 import { useNamespaceLegacy } from "@/hooks/useNamespaceLegacy";

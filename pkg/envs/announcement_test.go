@@ -7,14 +7,13 @@ import (
 
 func TestAnnouncementFor(t *testing.T) {
 	cases := []struct {
-		edition       Edition
-		wantTitle     string
-		wantCommunity bool
+		edition   Edition
+		wantTitle string
 	}{
-		{Community, "Welcome to ShellHub Community!", true},
-		{Enterprise, "Welcome to ShellHub Enterprise!", false},
-		{Cloud, "Welcome to ShellHub Cloud!", false},
-		{"", "Welcome to ShellHub Community!", true},
+		{Community, "Welcome to CloudMateHub Community!"},
+		{Enterprise, "Welcome to CloudMateHub Enterprise!"},
+		{Cloud, "Welcome to CloudMateHub Cloud!"},
+		{"", "Welcome to CloudMateHub Community!"},
 	}
 
 	for _, tc := range cases {
@@ -25,10 +24,10 @@ func TestAnnouncementFor(t *testing.T) {
 				t.Errorf("expected title %q in announcement, got:\n%s", tc.wantTitle, got)
 			}
 
-			hasCommunityLinks := strings.Contains(got, "github.com/shellhub-io/shellhub")
-			if hasCommunityLinks != tc.wantCommunity {
-				t.Errorf("community links: want %v, got %v", tc.wantCommunity, hasCommunityLinks)
+			if strings.Contains(strings.ToLower(got), "shellhub") {
+				t.Errorf("welcome banner still contains upstream branding: %s", got)
 			}
+
 		})
 	}
 }

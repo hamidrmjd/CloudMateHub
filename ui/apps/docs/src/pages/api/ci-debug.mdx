@@ -1,14 +1,14 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: Debugging a CI Run
-description: SSH into a live GitHub Actions runner through ShellHub when a build fails.
+description: SSH into a live GitHub Actions runner through CloudMateHub when a build fails.
 ---
 
 import Callout from "../../components/Callout.astro";
 
 # Debugging a CI Run
 
-A build that only fails in CI is the worst kind. ShellHub ships a GitHub Action that registers
+A build that only fails in CI is the worst kind. CloudMateHub ships a GitHub Action that registers
 the runner itself as a device, so you open a shell on the machine while the job is still standing.
 
 The action installs the agent on the runner, registers it as an ephemeral device, accepts it, and
@@ -69,12 +69,12 @@ watching it holds a runner until the workflow's own timeout kills it.
 
 ## Authorizing yourself
 
-Your public key has to be authorized in ShellHub, scoped to the device's tags — `github` unless
+Your public key has to be authorized in CloudMateHub, scoped to the device's tags — `github` unless
 you set `tags`. Three ways, and they differ in what is left behind:
 
 | | What you do | Afterwards |
 |---|---|---|
-| **Register it yourself** | Add your key in ShellHub once, scoped to the `github` tag | Persists. Every runner the action registers is reachable |
+| **Register it yourself** | Add your key in CloudMateHub once, scoped to the `github` tag | Persists. Every runner the action registers is reachable |
 | **`public-key`** | Pass the key to the action | Removed on teardown |
 | **`authorize-actor`** | The action fetches the triggering user's keys from GitHub | Removed on teardown |
 

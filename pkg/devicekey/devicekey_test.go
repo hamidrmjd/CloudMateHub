@@ -117,3 +117,18 @@ func TestSignature(t *testing.T) {
 		require.ErrorIs(t, Verify(statement, base64.StdEncoding.EncodeToString([]byte("garbage"))), ErrInvalidSignature)
 	})
 }
+
+// This fixed wire value is shared with installed upstream agents. Branding must
+// not change the bytes they sign, even when both local Sign and Verify agree.
+func TestStatementPreservesInstalledAgentWireFormat(t *testing.T) {
+	statement := Statement{Challenge: "challenge", TenantID: "tenant", PublicKey: "public"}
+	var wire struct {
+		Purpose         string
+		Challenge       string
+		TenantID        string
+		ProvisioningKey string
+		PublicKey       string
+	}
+	require.NoError(t, gossh.Unmarshal(statement.message(), &wire))
+	assert.Equal(t, "shellhub-device-auth-v1", wire.Purpose)
+}

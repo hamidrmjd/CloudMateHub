@@ -171,15 +171,15 @@ var Rules = []Rule{
 	},
 }
 
-// Validator is the ShellHub validator.
-// It uses the go-playground/validator package internally and add custom validation rules for ShellHub types.
+// Validator is the CloudMateHub validator.
+// It uses the go-playground/validator package internally and add custom validation rules for CloudMateHub types.
 type Validator struct {
 	Validate *validator.Validate
 }
 
-// New creates a new ShellHub validator.
+// New creates a new CloudMateHub validator.
 //
-// The ShellHub validator contains custom validation rules for ShellHub types.
+// The CloudMateHub validator contains custom validation rules for CloudMateHub types.
 func New() *Validator {
 	validate := validator.New()
 
@@ -192,7 +192,7 @@ func New() *Validator {
 	}
 }
 
-// Var validates a variable using a ShellHub validation's tags.
+// Var validates a variable using a CloudMateHub validation's tags.
 func (v *Validator) Var(value any, tag Tag) (bool, error) {
 	if err := v.Validate.Var(value, string(tag)); err != nil {
 		return false, ErrVarInvalid
@@ -201,7 +201,7 @@ func (v *Validator) Var(value any, tag Tag) (bool, error) {
 	return true, nil
 }
 
-// Struct validates a structure using ShellHub validation's tags.
+// Struct validates a structure using CloudMateHub validation's tags.
 func (v *Validator) Struct(structure any) (bool, error) {
 	if err := v.Validate.Struct(structure); err != nil {
 		return false, ErrStructureInvalid
@@ -210,7 +210,7 @@ func (v *Validator) Struct(structure any) (bool, error) {
 	return true, nil
 }
 
-// StructWithFields validades a structure using ShellHub validation's tags, returnig the invalid fields and its tags.
+// StructWithFields validades a structure using CloudMateHub validation's tags, returnig the invalid fields and its tags.
 func (v *Validator) StructWithFields(structure any) (bool, map[string]any, error) {
 	if err := v.Validate.Struct(structure); err != nil {
 		fields := make(map[string]any, 0)

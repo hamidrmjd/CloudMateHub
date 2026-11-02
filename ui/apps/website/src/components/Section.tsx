@@ -1,5 +1,5 @@
 import type { ComponentPropsWithoutRef, ElementType } from "react";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 type Padding = "lg" | "md" | "none";
 type Background = "surface" | "none";

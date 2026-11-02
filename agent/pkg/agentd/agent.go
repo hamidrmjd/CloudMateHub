@@ -1,7 +1,7 @@
-// Package agentd provides packages and functions to create a new ShellHub Agent instance.
+// Package agentd provides packages and functions to create a new CloudMateHub Agent instance.
 //
-// The ShellHub Agent is a lightweight software component that runs the device and provide communication between the
-// device and ShellHub's server. Its main role is to provide a reserve SSH server always connected to the ShellHub
+// The CloudMateHub Agent is a lightweight software component that runs the device and provide communication between the
+// device and CloudMateHub's server. Its main role is to provide a reserve SSH server always connected to the CloudMateHub
 // server, allowing SSH connections to be established to the device even when it is behind a firewall or NAT.
 //
 // This package provides a simple API to create a new agent instance and start the communication with the server. The
@@ -9,7 +9,7 @@
 // agent will also automatically reconnect to the server if the connection is lost.
 //
 // The update process isn't handled by this package. This feature is provided by its main implementation in
-// [ShellHub Agent]. Check the [ShellHub Agent] documentation for more information.
+// [CloudMateHub Agent]. Check the [CloudMateHub Agent] documentation for more information.
 //
 // # Example:
 //
@@ -38,12 +38,12 @@
 // # Embedding the agent
 //
 // This package is meant to be importable so the agent can run in-process inside another Go
-// program (for example, ShellHub Desktop). Note that the agent's go.mod replaces
+// program (for example, CloudMateHub Desktop). Note that the agent's go.mod replaces
 // github.com/gliderlabs/ssh with github.com/shellhub-io/ssh (a fork). Go ignores replace
 // directives from non-main modules, so any program embedding this package must replicate that
 // same replace directive in its own go.mod.
 //
-// [ShellHub Agent]: https://github.com/shellhub-io/shellhub/tree/master/agent
+// [CloudMateHub Agent]: https://github.com/shellhub-io/shellhub/tree/master/agent
 package agentd
 
 import (
@@ -81,7 +81,7 @@ import (
 
 // Config provides the configuration for the agent service.
 type Config struct {
-	// Set the ShellHub Cloud server address the agent will use to connect.
+	// Set the CloudMateHub Cloud server address the agent will use to connect.
 	// This is required.
 	ServerAddress string `env:"SERVER_ADDRESS,required" validate:"required"`
 
@@ -310,7 +310,7 @@ func requirementOf(rule any) string {
 	}
 }
 
-// Agent is a device's connection to a ShellHub server: it authenticates, keeps the device
+// Agent is a device's connection to a CloudMateHub server: it authenticates, keeps the device
 // record current, and serves the SSH sessions the server routes to it.
 //
 // Use [NewAgentWithConfig] to build one, [Agent.Initialize] to authenticate, and
@@ -333,7 +333,7 @@ type Agent struct {
 	tenantMu   sync.RWMutex
 }
 
-// NewAgent creates a new agent instance, requiring the ShellHub server's address to connect to, the namespace's tenant
+// NewAgent creates a new agent instance, requiring the CloudMateHub server's address to connect to, the namespace's tenant
 // where device own and the path to the private key on the file system.
 //
 // It builds a minimal [Config], leaving optional fields (including Version and Platform) unset. As a result the device
@@ -403,8 +403,8 @@ func NewAgentWithConfig(config *Config, mode Mode) (*Agent, error) {
 	}, nil
 }
 
-// Initialize initializes the ShellHub Agent, generating device identity, loading device information, generating or
-// reading the device's private key, probing server information and authorizing device on ShellHub server.
+// Initialize initializes the CloudMateHub Agent, generating device identity, loading device information, generating or
+// reading the device's private key, probing server information and authorizing device on CloudMateHub server.
 //
 // When Setup fails it returns Setup's error. Otherwise it returns [Agent.Authorize]'s:
 // ErrAuthorizeNoNamespaceCredential, ErrDeviceRemoved wrapping the server's answer, or any other
@@ -456,7 +456,7 @@ func (a *Agent) Setup() error {
 	return nil
 }
 
-// Authorize registers the device on the ShellHub server within its namespace.
+// Authorize registers the device on the CloudMateHub server within its namespace.
 // [Agent.Setup] must have been run first, and the device must carry something
 // naming a namespace: a tenant (from configuration, or injected with
 // [Agent.SetTenantID] after a pairing) or a provisioning key, which is
@@ -749,7 +749,7 @@ func (a *Agent) isClosed() bool {
 	return a.closed.Load()
 }
 
-// Close closes the ShellHub Agent's listening, stoping it from receive new connection requests.
+// Close closes the CloudMateHub Agent's listening, stoping it from receive new connection requests.
 func (a *Agent) Close() error {
 	a.closed.Store(true)
 
@@ -976,7 +976,7 @@ func (a *Agent) ping(ctx context.Context, removed context.CancelCauseFunc, inter
 	}
 }
 
-// CheckUpdate gets the ShellHub's server version.
+// CheckUpdate gets the CloudMateHub's server version.
 func (a *Agent) CheckUpdate() (*semver.Version, error) {
 	info, err := a.cli.GetInfo(a.config.Version)
 	if err != nil {
@@ -986,7 +986,7 @@ func (a *Agent) CheckUpdate() (*semver.Version, error) {
 	return semver.NewVersion(info.Version)
 }
 
-// GetInfo gets the ShellHub's server information like version and endpoints, and updates the Agent's server's info.
+// GetInfo gets the CloudMateHub's server information like version and endpoints, and updates the Agent's server's info.
 func (a *Agent) GetInfo() (*models.Info, error) {
 	if a.serverInfo != nil {
 		return a.serverInfo, nil
@@ -1002,7 +1002,7 @@ func (a *Agent) GetInfo() (*models.Info, error) {
 	return info, nil
 }
 
-// GetInfo gets information like the version and the enpoints for HTTP and SSH to ShellHub server.
+// GetInfo gets information like the version and the enpoints for HTTP and SSH to CloudMateHub server.
 func GetInfo(cfg *Config) (*models.Info, error) {
 	cli, err := client.NewClient(cfg.ServerAddress)
 	if err != nil {

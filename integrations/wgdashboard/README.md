@@ -62,7 +62,7 @@ The native dashboard is **admin gated**, including client/share routes behind th
 
 The current setup is **management preparation**, not a working remote VPN: no UDP VPN port is published, the service is on an internal network, and no reachable public endpoint has been configured. A default `wg0` configuration may be initialized by the upstream image, but no demo peer/user is seeded.
 
-`./deployments/shellhub start` creates a missing service secret idempotently via `deployments/prepare-vpn`. Preserve that file and the persistent volumes; do not commit them. On a fresh Ubuntu deployment, generate a new secret locally rather than copying a private developer credential.
+`./deployments/cloudmatehub start` creates a missing service secret idempotently via `deployments/prepare-vpn`. Preserve that file and the persistent volumes; do not commit them. On a fresh Ubuntu deployment, generate a new secret locally rather than copying a private developer credential.
 
 Before a real deployment, provide the Ubuntu host/domain or public address, decide split/full tunnel routing, assign subnets/DNS, configure persistent forwarding/NAT as appropriate, and intentionally publish the chosen UDP ports. Replace `localhost` endpoints in actual peers. Give WGDashboard the required host/container networking arrangement for that deployment, and enable HTTPS plus `VPN_COOKIE_SECURE=true` on the broker. These host changes are not performed on the Mac.
 

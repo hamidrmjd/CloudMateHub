@@ -1,9 +1,9 @@
 x-e2e-labels: &e2e-labels
-  io.shellhub.e2e.run: ${SHELLHUB_E2E_RUN:?}
-  io.shellhub.e2e.lease: ${SHELLHUB_E2E_LEASE:-}
-  io.shellhub.e2e.kind: ${SHELLHUB_E2E_KIND:-}
-  io.shellhub.e2e.expires: ${SHELLHUB_E2E_EXPIRES:-}
-  io.shellhub.e2e.checkout: ${SHELLHUB_E2E_CHECKOUT:-}
+  io.cloudmatehub.e2e.run: ${SHELLHUB_E2E_RUN:?}
+  io.cloudmatehub.e2e.lease: ${SHELLHUB_E2E_LEASE:-}
+  io.cloudmatehub.e2e.kind: ${SHELLHUB_E2E_KIND:-}
+  io.cloudmatehub.e2e.expires: ${SHELLHUB_E2E_EXPIRES:-}
+  io.cloudmatehub.e2e.checkout: ${SHELLHUB_E2E_CHECKOUT:-}
 
 services:
   redis:
@@ -21,6 +21,6 @@ services:
       minio:
         condition: service_healthy
     volumes:
-      - ${SHELLHUB_LICENSE_FILE:-/dev/null}:/etc/shellhub/license.dat:ro
+      - ${SHELLHUB_LICENSE_FILE:-/dev/null}:/etc/cloudmatehub/license.dat:ro
     environment:
-      - ADMIN_API_LICENSE_FILE=${SHELLHUB_LICENSE_FILE:+/etc/shellhub/license.dat}
+      - ADMIN_API_LICENSE_FILE=${SHELLHUB_LICENSE_FILE:+/etc/cloudmatehub/license.dat}

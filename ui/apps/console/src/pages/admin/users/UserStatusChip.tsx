@@ -3,7 +3,7 @@ import {
   ExclamationCircleIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 /**
  * Where an account stands. awaiting_approval is not the same as unconfirmed: the person may

@@ -49,7 +49,7 @@ rescoped
 revdial
 rootfs
 selfhosted
-ShellHub
+CloudMateHub
 shellhubio
 sshkeys
 SSHID

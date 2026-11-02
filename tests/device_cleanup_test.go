@@ -47,7 +47,7 @@ func TestDeviceCleanup(t *testing.T) {
 		compose.AwaitDeviceOffline(t, offline.UID)
 		time.Sleep(heartbeatFlushWindow)
 
-		before := compose.Namespace(t, ShellHubNamespace)
+		before := compose.Namespace(t, CloudMateHubNamespace)
 
 		compose.AgeDevice(t, offline.UID, 2*time.Minute)
 
@@ -55,7 +55,7 @@ func TestDeviceCleanup(t *testing.T) {
 
 		awaitDeviceDeleted(t, compose, offline.UID)
 
-		after := compose.Namespace(t, ShellHubNamespace)
+		after := compose.Namespace(t, CloudMateHubNamespace)
 		assert.Equal(t, before.DevicesAcceptedCount-1, after.DevicesAcceptedCount, "the namespace still counts the deleted device")
 
 		kept := requireDevice(t, compose, online.UID)
@@ -67,7 +67,7 @@ func TestDeviceCleanup(t *testing.T) {
 		expired := removeAcceptedDevice(t, compose, "removed-expired", "02:00:00:00:c1:01")
 		recent := removeAcceptedDevice(t, compose, "removed-recent", "02:00:00:00:c1:02")
 
-		before := compose.Namespace(t, ShellHubNamespace)
+		before := compose.Namespace(t, CloudMateHubNamespace)
 
 		compose.AgeDeviceRemoval(t, expired, removedRetention+time.Hour)
 		compose.AgeDeviceRemoval(t, recent, removedRetention-24*time.Hour)
@@ -76,7 +76,7 @@ func TestDeviceCleanup(t *testing.T) {
 
 		awaitDeviceDeleted(t, compose, expired)
 
-		after := compose.Namespace(t, ShellHubNamespace)
+		after := compose.Namespace(t, CloudMateHubNamespace)
 		assert.Equal(t, before.DevicesRemovedCount-1, after.DevicesRemovedCount, "the namespace still counts the purged device")
 
 		assert.Equal(t, models.DeviceStatusRemoved, requireDevice(t, compose, recent).Status, "a device removed inside the retention window was purged")

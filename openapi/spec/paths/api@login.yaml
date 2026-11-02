@@ -3,7 +3,7 @@ post:
   summary: Login
   description: |
     Authenticate a "local" user by returning the session's JWT token and user
-    data. Local users are those registered via the ShellHub form without
+    data. Local users are those registered via the CloudMateHub form without
     relying on external Identity Providers (IdPs).
 
     Authentication may result in an account lockout after N consecutive

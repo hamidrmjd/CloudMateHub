@@ -9,7 +9,7 @@ import { isSdkError } from "@/api/errors";
 import CopyButton from "@/components/common/CopyButton";
 import BaseDialog from "@/components/common/BaseDialog";
 import InputField from "@/components/common/fields/InputField";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import DialogHeader from "@/components/common/DialogHeader";
 import { adminResetUserPasswordMutation } from "@/client";
 import { useInvalidateByIds } from "@/hooks/useInvalidateQueries";

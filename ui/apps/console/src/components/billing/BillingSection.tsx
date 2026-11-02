@@ -11,9 +11,9 @@ import { useOpenBillingPortal, useSubscription } from "@/hooks/useBilling";
 import { useInvalidateByIds } from "@/hooks/useInvalidateQueries";
 import { formatExpiry } from "@/utils/date";
 import type { BillingStatus } from "@/client";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import SettingsField from "@/components/settings/SettingsField";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 
 const BillingDialog = lazy(() => import("./BillingDialog"));
 

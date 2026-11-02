@@ -251,7 +251,7 @@ func testWebEndpointCreation(t *testing.T, compose *environment.DockerCompose, d
 	t.Run("a token whose namespace was deleted cannot create an endpoint", func(t *testing.T) {
 		const username, password = "orphan", "password"
 
-		compose.NewUser(t, username, "orphan@shellhub.example.com", password)
+		compose.NewUser(t, username, "orphan@cloudmatehub.example.com", password)
 		compose.NewNamespace(t, username, "orphanspace", "00000000-0000-4000-0000-000000002201")
 		token := compose.AuthUser(t, username, password).Token
 
@@ -267,7 +267,7 @@ func testWebEndpointCreation(t *testing.T, compose *environment.DockerCompose, d
 
 		assert.Regexp(t, webEndpointAddress, endpoint.Address)
 		assert.Equal(t, endpoint.Address+"."+webEndpointDomain, endpoint.FullAddress)
-		assert.Equal(t, ShellHubNamespace, endpoint.Namespace)
+		assert.Equal(t, CloudMateHubNamespace, endpoint.Namespace)
 		assert.Equal(t, device.UID, endpoint.DeviceUID)
 		assert.Equal(t, -1, endpoint.TTL)
 		assert.True(t, endpoint.ExpiresIn.IsZero(), "an endpoint with a TTL of -1 has no expiry")
@@ -522,11 +522,11 @@ func testWebEndpointAnotherNamespace(t *testing.T, ctx context.Context, compose 
 	endpoint := compose.CreateWebEndpoint(t, service.plain(device.UID, -1))
 	requireDeviceAnswer(t, compose, endpoint.FullAddress, "/")
 
-	owner := compose.AuthUser(t, ShellHubUsername, ShellHubPassword)
+	owner := compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword)
 
-	compose.NewUser(t, intruderUsername, "intruder@ossystems.com.br", ShellHubPassword)
+	compose.NewUser(t, intruderUsername, "intruder@ossystems.com.br", CloudMateHubPassword)
 	compose.NewNamespace(t, intruderUsername, intruderNamespaceName, intruderNamespace)
-	compose.JWT(compose.AuthUser(t, intruderUsername, ShellHubPassword).Token)
+	compose.JWT(compose.AuthUser(t, intruderUsername, CloudMateHubPassword).Token)
 	t.Cleanup(func() { compose.JWT(owner.Token) })
 
 	intruderKey := compose.CreateProvisioningKey(t, &requests.CreateProvisioningKey{Name: "intruder", Mode: string(models.ProvisioningKeyModeManual)})

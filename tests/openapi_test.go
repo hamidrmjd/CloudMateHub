@@ -140,13 +140,13 @@ func TestOpenAPIDescribesEveryRefusal(t *testing.T) {
 	compose := environment.New(t, run).Up(ctx)
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-	compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+	compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
 	compose.NewUser(t, sweepObserver, sweepObserverEmail, sweepObserverPassword)
-	compose.NewMember(t, sweepObserver, ShellHubNamespaceName, string(authorizer.RoleObserver))
+	compose.NewMember(t, sweepObserver, CloudMateHubNamespaceName, string(authorizer.RoleObserver))
 
 	compose.NewUser(t, sweepRevoker, sweepRevokerEmail, sweepRevokerPassword)
-	compose.NewMember(t, sweepRevoker, ShellHubNamespaceName, string(authorizer.RoleObserver))
+	compose.NewMember(t, sweepRevoker, CloudMateHubNamespaceName, string(authorizer.RoleObserver))
 
 	observer := compose.AuthUser(t, sweepObserver, sweepObserverPassword)
 	revoker := compose.AuthUser(t, sweepRevoker, sweepRevokerPassword)

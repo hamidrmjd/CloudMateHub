@@ -9,7 +9,7 @@ import Callout from "../../components/Callout.astro";
 # Port Forwarding
 
 Port forwarding is what turns "I can get a shell" into "I can reach the thing that shell can
-reach". Standard SSH local forwarding works through ShellHub.
+reach". Standard SSH local forwarding works through CloudMateHub.
 
 ## Reaching a service on the device
 
@@ -36,7 +36,7 @@ $ ssh -L 8080:192.168.1.50:80 root@mycompany.raspberrypi@cloud.shellhub.io
 Now `localhost:8080` on your machine reaches a web interface on `192.168.1.50` — a PLC, a camera,
 a switch — on a LAN that has no route to you at all.
 
-This is worth dwelling on, because it is the widest thing ShellHub does. One device with an agent
+This is worth dwelling on, because it is the widest thing CloudMateHub does. One device with an agent
 becomes a way in to everything that device can see. A device on a factory network is a way to
 reach the factory network.
 
@@ -86,7 +86,7 @@ A forward rides on a session, so it is governed by whatever authorized that sess
 grant a device and a set of unix logins; there is no separate per-port permission.
 
 The practical consequence: granting somebody shell on a device grants them forwarding from it
-too. If you need someone to reach one service and nothing else, ShellHub's port forwarding is not
+too. If you need someone to reach one service and nothing else, CloudMateHub's port forwarding is not
 the mechanism — a [web endpoint](/connect/web-endpoints) is closer, since it publishes exactly
 one service.
 

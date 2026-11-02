@@ -2,7 +2,7 @@ import { ReactNode, useId, useState } from "react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { ClipboardContext } from "@/hooks/useCopy";
 import BaseDialog from "./BaseDialog";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import DialogHeader from "@/components/common/DialogHeader";
 
 /**

@@ -1,6 +1,6 @@
 import { FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { useMfaResetStore } from "../stores/mfaResetStore";
 import { useOtpInput } from "../hooks/useOtpInput";
 import AuthActions from "@/components/auth/AuthActions";

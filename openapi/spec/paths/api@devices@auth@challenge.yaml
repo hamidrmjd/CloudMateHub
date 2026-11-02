@@ -2,7 +2,7 @@ post:
   operationId: createDeviceAuthChallenge
   summary: Create a device auth challenge
   description: |
-    Issue a challenge that a ShellHub agent signs with its device key and sends back to the
+    Issue a challenge that a CloudMateHub agent signs with its device key and sends back to the
     device auth route, proving it holds the private half of the public key it authenticates
     with. The server keeps no record of it: the challenge carries the time it was issued and
     a MAC only the server can produce, and it is accepted for a minute after it was issued.

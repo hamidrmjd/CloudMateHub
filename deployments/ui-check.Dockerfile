@@ -17,7 +17,7 @@ COPY ui/apps/console/package.json ./apps/console/
 COPY ui/apps/website/package.json ./apps/website/
 COPY ui/apps/docs/package.json ./apps/docs/
 
-RUN --mount=type=cache,id=shellhub-npm,target=/root/.npm,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-npm,target=/root/.npm,sharing=shared \
     npm install
 
 FROM base AS development
@@ -37,7 +37,7 @@ CMD ["/scripts/entrypoint-dev.sh"]
 
 FROM node:${NODE_VERSION} AS spec-bundler
 ARG REDOCLY_VERSION
-RUN --mount=type=cache,id=shellhub-npm,target=/root/.npm,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-npm,target=/root/.npm,sharing=shared \
     npm install -g @redocly/cli@${REDOCLY_VERSION:?}
 WORKDIR /spec
 COPY openapi/spec ./spec
@@ -53,8 +53,8 @@ COPY ui/. .
 
 COPY --from=spec-bundler /spec/openapi.json ./apps/console/openapi.json
 
-RUN OPENAPI_SPEC_PATH=./openapi.json npm run generate -w @shellhub/console
-RUN npm exec -w @shellhub/console -- vite build
+RUN OPENAPI_SPEC_PATH=./openapi.json npm run generate -w @cloudmatehub/console
+RUN npm exec -w @cloudmatehub/console -- vite build
 
 RUN apk add --no-cache brotli gzip && \
     find apps/console/dist -type f -size +1024c \
@@ -70,7 +70,7 @@ RUN apk upgrade --no-cache libssl3 libcrypto3
 
 COPY --from=sws /static-web-server /usr/local/bin/static-web-server
 
-RUN addgroup -g 1000 -S shellhub && adduser -u 1000 -S -G shellhub shellhub
+RUN addgroup -g 1000 -S cloudmatehub && adduser -u 1000 -S -G cloudmatehub cloudmatehub
 
 COPY ui/sws.toml /etc/sws.toml
 COPY ui/scripts /scripts
@@ -84,5 +84,5 @@ EXPOSE 8080
 CMD ["/scripts/entrypoint.sh"]
 
 FROM builder AS checks
-RUN npm exec -w @shellhub/console -- tsc -b
-RUN npm exec -w @shellhub/console -- vitest run src/components/layout/__tests__/AuthLayout.test.tsx src/components/layout/__tests__/SidebarShell.test.tsx src/components/layout/__tests__/AppLayout.test.tsx src/pages/__tests__/Setup.test.tsx src/pages/__tests__/Login.test.tsx src/stores/__tests__/terminalThemeStore.test.ts src/pages/vpn/__tests__/WireGuard.test.tsx src/components/layout/__tests__/Sidebar.test.tsx
+RUN npm exec -w @cloudmatehub/console -- tsc -b
+RUN npm exec -w @cloudmatehub/console -- vitest run src/components/layout/__tests__/AuthLayout.test.tsx src/components/layout/__tests__/SidebarShell.test.tsx src/components/layout/__tests__/AppLayout.test.tsx src/pages/__tests__/Setup.test.tsx src/pages/__tests__/Login.test.tsx src/stores/__tests__/terminalThemeStore.test.ts src/pages/vpn/__tests__/WireGuard.test.tsx src/components/layout/__tests__/Sidebar.test.tsx

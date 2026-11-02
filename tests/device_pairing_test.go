@@ -78,7 +78,7 @@ func TestDevicePairingAgent(t *testing.T) {
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 		assert.Equal(t, &models.DevicePairingStatus{
 			Status:   models.DeviceStatusAccepted,
-			TenantID: ShellHubNamespace,
+			TenantID: CloudMateHubNamespace,
 			UID:      accepted.UID,
 			Name:     "pairing-polled",
 		}, status)
@@ -87,7 +87,7 @@ func TestDevicePairingAgent(t *testing.T) {
 
 		logs, err := agentLogs(t.Context(), agent)
 		require.NoError(t, err)
-		assert.Equal(t, 1, bytes.Count(logs, []byte(`msg="Starting ShellHub"`)), "the agent restarted to learn of the acceptance")
+		assert.Equal(t, 1, bytes.Count(logs, []byte(`msg="Starting CloudMateHub"`)), "the agent restarted to learn of the acceptance")
 	})
 
 	t.Run("the agent keeps the tenant it receives and serves the namespace with it", func(t *testing.T) {
@@ -95,9 +95,9 @@ func TestDevicePairingAgent(t *testing.T) {
 
 		accepted := acceptPairing(t, compose.R(t.Context()), awaitAgentPairingCode(t, agent))
 
-		assert.Equal(t, ShellHubNamespace, awaitAgentConnected(t, agent))
-		assert.Equal(t, ShellHubNamespace, readAgentFile(t, agent, "/tmp/shellhub.key.tenant"), "the agent did not keep the tenant it learned")
-		assert.Equal(t, ShellHubNamespace, compose.AwaitDeviceOnline(t, accepted.UID).TenantID)
+		assert.Equal(t, CloudMateHubNamespace, awaitAgentConnected(t, agent))
+		assert.Equal(t, CloudMateHubNamespace, readAgentFile(t, agent, "/tmp/shellhub.key.tenant"), "the agent did not keep the tenant it learned")
+		assert.Equal(t, CloudMateHubNamespace, compose.AwaitDeviceOnline(t, accepted.UID).TenantID)
 	})
 
 	t.Run("an agent whose device was removed while it was stopped pairs again", func(t *testing.T) {
@@ -138,7 +138,7 @@ func testPairingCode(t *testing.T, compose *environment.DockerCompose) {
 
 		acceptPairing(t, compose.R(t.Context()), startPairing(t, compose, req).Code)
 
-		assert.Equal(t, &models.DevicePairing{Status: models.DeviceStatusAccepted, TenantID: ShellHubNamespace}, startPairing(t, compose, req))
+		assert.Equal(t, &models.DevicePairing{Status: models.DeviceStatusAccepted, TenantID: CloudMateHubNamespace}, startPairing(t, compose, req))
 	})
 
 	t.Run("a code past its lifetime is not found", func(t *testing.T) {
@@ -263,7 +263,7 @@ func getPairingStatus(ctx context.Context, compose *environment.DockerCompose, c
 }
 
 func postPairingAccept(req *resty.Request, code string) (*models.DevicePairingAccepted, *resty.Response, error) {
-	return postPairingAcceptInto(req, ShellHubNamespace, code)
+	return postPairingAcceptInto(req, CloudMateHubNamespace, code)
 }
 
 func postPairingAcceptInto(req *resty.Request, tenant, code string) (*models.DevicePairingAccepted, *resty.Response, error) {
@@ -280,7 +280,7 @@ func postPairingAcceptInto(req *resty.Request, tenant, code string) (*models.Dev
 func acceptPairing(t *testing.T, req *resty.Request, code string) *models.DevicePairingAccepted {
 	t.Helper()
 
-	return acceptPairingInto(t, req, ShellHubNamespace, code)
+	return acceptPairingInto(t, req, CloudMateHubNamespace, code)
 }
 
 func acceptPairingInto(t *testing.T, req *resty.Request, tenant, code string) *models.DevicePairingAccepted {

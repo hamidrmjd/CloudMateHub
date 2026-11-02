@@ -31,7 +31,7 @@ func TestCloudStackLicenseAuthorization(t *testing.T) {
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Chdir(t.TempDir())
-			envs, _, err := (Config{Name: "shellhub-e2e-grant", Edition: test.edition, License: test.license, Run: &Run{issuer: issuer}}).licensingEnvs()
+			envs, _, err := (Config{Name: "cloudmatehub-e2e-grant", Edition: test.edition, License: test.license, Run: &Run{issuer: issuer}}).licensingEnvs()
 			require.NoError(t, err)
 			raw, err := os.ReadFile(envs[licenseFileEnv])
 			require.NoError(t, err)
@@ -124,10 +124,10 @@ func TestLicenseIssuerKeyPathDefaultsLikeTheLoad(t *testing.T) {
 func TestLicensingEnvsWithoutIssuer(t *testing.T) {
 	run := &Run{}
 
-	_, _, err := Config{Name: "shellhub-e2e-a", Run: run}.licensingEnvs()
+	_, _, err := Config{Name: "cloudmatehub-e2e-a", Run: run}.licensingEnvs()
 	require.ErrorIs(t, err, errRunIssuesNoLicense)
 
-	envs, written, err := Config{Name: "shellhub-e2e-a", Run: run, Unlicensed: true}.licensingEnvs()
+	envs, written, err := Config{Name: "cloudmatehub-e2e-a", Run: run, Unlicensed: true}.licensingEnvs()
 	require.NoError(t, err)
 	assert.Empty(t, written)
 	assert.Equal(t, map[string]string{licenseFileEnv: ""}, envs)

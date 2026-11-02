@@ -3,7 +3,7 @@ import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { CommandBlock } from "@/components";
 
 const COMMAND =
-  "git clone https://github.com/shellhub-io/shellhub.git && cd shellhub && make keygen && make start";
+  "git clone https://github.com/shellhub-io/shellhub.git && cd cloudmatehub && make keygen && make start";
 
 const writeText = vi.fn();
 

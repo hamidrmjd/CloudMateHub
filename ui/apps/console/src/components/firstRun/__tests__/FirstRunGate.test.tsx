@@ -92,7 +92,7 @@ describe("FirstRunGate", () => {
     renderAt("/dashboard");
 
     expect(
-      await screen.findByRole("heading", { name: /get your first shell/i }),
+      await screen.findByRole("heading", { name: /build your connected workspace/i }),
     ).toBeInTheDocument();
     expect(screen.getByText(/install the agent/i)).toBeInTheDocument();
     expect(screen.queryByText("normal dashboard")).not.toBeInTheDocument();
@@ -104,7 +104,7 @@ describe("FirstRunGate", () => {
 
     expect(await screen.findByText("normal dashboard")).toBeInTheDocument();
     expect(
-      screen.queryByRole("heading", { name: /get your first shell/i }),
+      screen.queryByRole("heading", { name: /build your connected workspace/i }),
     ).not.toBeInTheDocument();
   });
 
@@ -129,7 +129,7 @@ describe("FirstRunGate", () => {
     renderAt("/dashboard");
 
     expect(
-      await screen.findByRole("heading", { name: /get your first shell/i }),
+      await screen.findByRole("heading", { name: /build your connected workspace/i }),
     ).toBeInTheDocument();
   });
 
@@ -139,7 +139,7 @@ describe("FirstRunGate", () => {
 
     expect(await screen.findByText("normal dashboard")).toBeInTheDocument();
     expect(
-      screen.queryByRole("heading", { name: /get your first shell/i }),
+      screen.queryByRole("heading", { name: /build your connected workspace/i }),
     ).not.toBeInTheDocument();
   });
 
@@ -251,7 +251,7 @@ describe("FirstRunGate pairing", () => {
     renderAt("/dashboard");
 
     await user.click(await screen.findByLabelText(/character 1 of 8/i));
-    await user.paste("http://shellhub.local/accept-device?code=7K2M9QXR");
+    await user.paste("http://cloudmatehub.local/accept-device?code=7K2M9QXR");
 
     expect(codeCells()).toBe("7K2M9QXR");
   });
@@ -471,7 +471,7 @@ function serveLinkedDevice(sshEndpoint: string) {
     http.get("*/info", () =>
       HttpResponse.json({
         version: "test",
-        endpoints: { api: "shellhub.local", ssh: sshEndpoint },
+        endpoints: { api: "cloudmatehub.local", ssh: sshEndpoint },
         setup: true,
       }),
     ),
@@ -482,7 +482,7 @@ describe("FirstRunGate shell step", () => {
   it("shows the paired device online once its agent connects", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     serveDashboard();
-    serveLinkedDevice("shellhub.local:22");
+    serveLinkedDevice("cloudmatehub.local:22");
     let checks = 0;
     server.use(
       http.get("*/api/devices/:uid", ({ params }) => {
@@ -506,19 +506,19 @@ describe("FirstRunGate shell step", () => {
 
   it("gives the ssh command for the paired device, with the SSH port", async () => {
     serveDashboard();
-    serveLinkedDevice("shellhub.local:2202");
+    serveLinkedDevice("cloudmatehub.local:2202");
     renderAt("/dashboard");
 
     expect(
       await screen.findByRole("button", {
-        name: "Copy ssh -p 2202 root@dev.box@shellhub.local",
+        name: "Copy ssh -p 2202 root@dev.box@cloudmatehub.local",
       }),
     ).toBeInTheDocument();
   });
 
   it("addresses the device by its stored name, not the one the code previewed", async () => {
     serveDashboard();
-    serveLinkedDevice("shellhub.local:22");
+    serveLinkedDevice("cloudmatehub.local:22");
     server.use(
       http.get("*/api/devices/:uid", ({ params }) =>
         HttpResponse.json(
@@ -534,26 +534,26 @@ describe("FirstRunGate shell step", () => {
 
     expect(
       await screen.findByRole("button", {
-        name: "Copy ssh root@dev.renamed@shellhub.local",
+        name: "Copy ssh root@dev.renamed@cloudmatehub.local",
       }),
     ).toBeInTheDocument();
   });
 
   it("leaves the port out when it is the default one", async () => {
     serveDashboard();
-    serveLinkedDevice("shellhub.local:22");
+    serveLinkedDevice("cloudmatehub.local:22");
     renderAt("/dashboard");
 
     expect(
       await screen.findByRole("button", {
-        name: "Copy ssh root@dev.box@shellhub.local",
+        name: "Copy ssh root@dev.box@cloudmatehub.local",
       }),
     ).toBeInTheDocument();
   });
 
   it("lets the user change the login in the command", async () => {
     serveDashboard();
-    serveLinkedDevice("shellhub.local:22");
+    serveLinkedDevice("cloudmatehub.local:22");
     const user = userEvent.setup();
     renderAt("/dashboard");
 
@@ -563,7 +563,7 @@ describe("FirstRunGate shell step", () => {
 
     expect(
       screen.getByRole("button", {
-        name: "Copy ssh pi@dev.box@shellhub.local",
+        name: "Copy ssh pi@dev.box@cloudmatehub.local",
       }),
     ).toBeInTheDocument();
   });
@@ -581,7 +581,7 @@ describe("FirstRunGate shell step", () => {
     "tells how the ssh command signs in when the namespace is in $mode mode",
     async ({ mode, hint }) => {
       serveDashboard();
-      serveLinkedDevice("shellhub.local:22");
+      serveLinkedDevice("cloudmatehub.local:22");
       server.use(
         http.get(`*/api/namespaces/${TENANT}`, () =>
           HttpResponse.json(
@@ -606,7 +606,7 @@ describe("FirstRunGate shell step", () => {
 
   it("opens the terminal dialog on the paired device", async () => {
     serveDashboard();
-    serveLinkedDevice("shellhub.local:22");
+    serveLinkedDevice("cloudmatehub.local:22");
     const user = userEvent.setup();
     renderAt("/dashboard");
 

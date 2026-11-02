@@ -120,7 +120,7 @@ func (e *enrollmentE2E) enrollAs(t *testing.T, hostname, mac, publicKey, provisi
 		Info:           &requests.DeviceInfo{ID: "debian", PrettyName: "Debian", Version: "v0.1.0", Arch: "amd64", Platform: "docker"},
 		PublicKey:      publicKey,
 		RealIP:         "203.0.113.7",
-		ForwardedHost:  "shellhub.test",
+		ForwardedHost:  "cloudmatehub.test",
 		ForwardedProto: "https",
 	}
 	if provisioningKey != "" {
@@ -593,7 +593,7 @@ func TestEnrollmentE2E_UsageLimitUnderConcurrency(t *testing.T) {
 				Info:            &requests.DeviceInfo{ID: "debian", PrettyName: "Debian", Version: "v0.1.0", Arch: "amd64", Platform: "docker"},
 				PublicKey:       fmt.Sprintf("pk-80-%02d", i),
 				RealIP:          "203.0.113.7",
-				ForwardedHost:   "shellhub.test",
+				ForwardedHost:   "cloudmatehub.test",
 				ForwardedProto:  "https",
 				ProvisioningKey: plaintextFor(0x80),
 			}

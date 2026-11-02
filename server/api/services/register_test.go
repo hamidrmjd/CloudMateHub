@@ -190,7 +190,7 @@ func TestService_RegisterUser(t *testing.T) {
 
 			s := NewService(store.Store(storeMock), privateKey, publicKey, storecache.NewNullCache(), WithClock(clock.NewFixed(now)))
 
-			res, err := s.RegisterUser(ctx, tc.req, "shellhub.test", "")
+			res, err := s.RegisterUser(ctx, tc.req, "cloudmatehub.test", "")
 			assert.Equal(t, tc.expected.err, err)
 			if tc.expected.hasToken {
 				assert.NotNil(t, res)

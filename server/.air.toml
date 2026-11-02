@@ -6,5 +6,5 @@ cmd = "go build -o /tmp/air/main github.com/shellhub-io/shellhub/server"
 bin = "/tmp/air/main"
 args_bin = ["server"]
 exclude_regex = ["_test.go"]
-include_dir = ["shellhub/server", "shellhub/openapi", "shellhub/pkg", "cloud"]
+include_dir = ["cloudmatehub/server", "cloudmatehub/openapi", "cloudmatehub/pkg", "cloud"]
 include_ext = ["go", "tpl", "tmpl", "html", "yaml", "yml", "json"]

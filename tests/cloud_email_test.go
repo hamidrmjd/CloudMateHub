@@ -22,7 +22,7 @@ func TestCloudEmailPartials(t *testing.T) {
 
 	t.Run("the password reset email carries the shared header, footer and copyright", func(t *testing.T) {
 		email := "email-partials" + stripeTestEmailDomain
-		compose.NewUser(t, "email-partials", email, ShellHubPassword)
+		compose.NewUser(t, "email-partials", email, CloudMateHubPassword)
 
 		resp, err := compose.Anonymous(t.Context()).
 			SetBody(map[string]string{"username": "email-partials"}).
@@ -32,7 +32,7 @@ func TestCloudEmailPartials(t *testing.T) {
 
 		reset := compose.AwaitEmail(t, email, "/update-password")
 
-		logo, ok := reset.Image("ShellHub")
+		logo, ok := reset.Image("CloudMateHub")
 		require.True(t, ok, "the header's logo is missing: %s", reset.Text())
 		assert.Equal(t, "https://docs.shellhub.io/img/logo.png", logo)
 
@@ -40,6 +40,6 @@ func TestCloudEmailPartials(t *testing.T) {
 		assert.Contains(t, text, "Reset your password")
 		assert.Contains(t, text, "This link is valid until", "the footer is missing")
 		assert.Contains(t, text, "If you were not expecting this email, please ignore it.", "the footer is missing")
-		assert.Contains(t, text, "© ShellHub", "the copyright is missing")
+		assert.Contains(t, text, "© CloudMateHub", "the copyright is missing")
 	})
 }

@@ -29,8 +29,8 @@ import { choiceDevicesMutation, getDevicesMostUsedOptions } from "@/client";
 import { normalizeDeviceTags } from "@/utils/deviceTags";
 import { isSdkError } from "@/api/errors";
 import { FREE_TIER_DEVICE_LIMIT } from "./DeviceChooserTrigger";
-import { cn } from "@shellhub/design-system/cn";
-import { Button, IconButton } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { Button, IconButton } from "@cloudmatehub/design-system/primitives";
 import { pageCount } from "@/utils/pagination";
 import DialogHeader from "@/components/common/DialogHeader";
 

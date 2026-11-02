@@ -58,7 +58,7 @@ type BillingSubscription struct {
 	CurrentPeriodEnd int64 `json:"current_period_end"`
 }
 
-// Billing contains information about the ShellHub's subscription.
+// Billing contains information about the CloudMateHub's subscription.
 type Billing struct {
 	// CustomerID is the ID of the customer on the payment gateway.
 	CustomerID string `json:"customer_id"`

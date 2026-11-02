@@ -2,7 +2,7 @@ import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import { ActionButton, Section } from "@/components";
 import { signupUrl } from "@/links";
 
@@ -26,7 +26,7 @@ export function CTA() {
         </Reveal>
         <Reveal>
           <p className="text-sm text-text-secondary max-w-md mx-auto mb-10 leading-relaxed">
-            Get started with ShellHub in minutes. Free forever for small teams.
+            Get started with CloudMateHub in minutes. Free forever for small teams.
           </p>
         </Reveal>
         <Reveal>

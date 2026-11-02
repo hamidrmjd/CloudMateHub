@@ -16,7 +16,7 @@ which is what makes the machine reachable without anything listening on it.
 $ curl -sSf https://cloud.shellhub.io/install.sh | sh
 ```
 
-<ActionLink href="https://cloud.shellhub.io/install">Install ShellHub</ActionLink>
+<ActionLink href="https://cloud.shellhub.io/install">Install CloudMateHub</ActionLink>
 
 Nothing else is needed. Given no credential the agent pairs: it prints a code, you enter it in the
 console, and the device joins the namespace you pick. [Quickstart](/get-started) walks that path
@@ -51,7 +51,7 @@ filesystem and process namespace: the agent opens shells as real unix users and 
 their behalf, and a confined container can do neither.
 
 ```bash
-$ docker ps | grep shellhub          # is it running
+$ docker ps | grep cloudmatehub          # is it running
 $ docker logs -f <container>         # what it is doing
 $ docker restart <container>         # restart it
 ```
@@ -70,26 +70,26 @@ check if you manage the lifecycle yourself, through Quadlet or an orchestrator.
 </Callout>
 
 ```bash
-$ podman ps | grep shellhub          # is it running
+$ podman ps | grep cloudmatehub          # is it running
 $ podman logs -f <container>         # what it is doing
 $ podman restart <container>         # restart it
 ```
 
 ### Snap
 
-Picked when the `snap` command is present. Leaves the `shellhub` snap. The snap needs the tenant
+Picked when the `snap` command is present. Leaves the `cloudmatehub` snap. The snap needs the tenant
 named up front and cannot pair or take a provisioning key, so its device always lands pending until
 somebody accepts it.
 
 That snap is **classic** rather than strict, for the same reason the containers are privileged,
 and classic snaps cannot be installed on **Ubuntu Core** — run the agent as a container under the
 Docker snap there instead. Being a snap also means `snapd` refreshes it on its own schedule, so
-the agent updates itself; `sudo snap refresh --hold shellhub` pins it.
+the agent updates itself; `sudo snap refresh --hold cloudmatehub` pins it.
 
 ```bash
-$ snap services shellhub             # is it running
-$ sudo snap logs -f shellhub         # what it is doing
-$ sudo snap restart shellhub         # restart it
+$ snap services cloudmatehub             # is it running
+$ sudo snap logs -f cloudmatehub         # what it is doing
+$ sudo snap restart cloudmatehub         # restart it
 ```
 
 ### WSL
@@ -157,7 +157,7 @@ $ curl -sSf https://cloud.shellhub.io/install.sh | sh -s uninstall
 ```
 
 Standalone, WSL, Docker and Podman are supported. Other methods refuse rather than half-remove
-themselves; a Snap install goes with `snap remove shellhub`.
+themselves; a Snap install goes with `snap remove cloudmatehub`.
 
 ## Machines the script does not cover
 
@@ -170,10 +170,10 @@ Building from source is you producing the binary.
 
 - [Raspberry Pi](/get-started/install/raspberry-pi) — A card image that enrols itself on first
   boot.
-- [Yocto Project](/get-started/install/yocto) — The `meta-shellhub` OpenEmbedded layer.
-- [Buildroot](/get-started/install/buildroot) — The ShellHub external tree, same idea.
+- [Yocto Project](/get-started/install/yocto) — The `meta-cloudmatehub` OpenEmbedded layer.
+- [Buildroot](/get-started/install/buildroot) — The CloudMateHub external tree, same idea.
 - [FreeBSD](/get-started/install/freebsd) — The
-  [ShellHub ports tree](https://github.com/shellhub-io/ports).
+  [CloudMateHub ports tree](https://github.com/shellhub-io/ports).
 - [Building from Source](/get-started/install/build-from-source) — For a platform nothing above
   covers, or to run an agent you built yourself.
 

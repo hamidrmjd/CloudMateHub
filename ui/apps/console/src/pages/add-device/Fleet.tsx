@@ -5,7 +5,7 @@ import {
   Callout,
   Spinner,
   WindowChrome,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import CopyButton from "@/components/common/CopyButton";
 import { apiErrorMessage } from "@/api/errors";
 import {

@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { PencilSquareIcon, UserCircleIcon } from "@heroicons/react/24/outline";
-import { IconButton } from "@shellhub/design-system/primitives";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
 import { apiErrorMessage } from "@/api/errors";
 import ContextualDialog from "@/components/common/ContextualDialog";
 import ObjectName from "@/components/common/ObjectName";

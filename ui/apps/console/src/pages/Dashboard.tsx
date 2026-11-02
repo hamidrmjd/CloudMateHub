@@ -12,7 +12,7 @@ import PageHeader from "@/components/common/PageHeader";
 import StatCard from "@/components/common/StatCard";
 import CopyButton from "@/components/common/CopyButton";
 import RecentSessionsTable from "@/components/sessions/RecentSessionsTable";
-import { Card } from "@shellhub/design-system/primitives";
+import { Card } from "@cloudmatehub/design-system/primitives";
 
 /**
  * The namespace dashboard: device counts and recent sessions.

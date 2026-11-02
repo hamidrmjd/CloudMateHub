@@ -3,7 +3,7 @@ properties:
   link:
     description: The link to establish a connection with the OTP server.
     type: string
-    example: 'otpauth://totp/shellhub-enterprise:662ba312616a7bdb5a2b608d?issuer=shellhub-enterprise&secret=TWBIH44WRHW44B773HJSG3RNZXH4KWSD'
+    example: 'otpauth://totp/cloudmatehub-enterprise:662ba312616a7bdb5a2b608d?issuer=cloudmatehub-enterprise&secret=TWBIH44WRHW44B773HJSG3RNZXH4KWSD'
   secret:
     description: A secret key to authenticate with the OTP server.
     type: string

@@ -8,6 +8,19 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestConfigDomainAcceptsHostnamesAndIPv4(t *testing.T) {
+	for _, domain := range []string{"localhost", "hub.example.com", "192.168.1.103", "127.0.0.1"} {
+		t.Run(domain, func(t *testing.T) {
+			assert.NoError(t, validate.Struct(&GatewayConfig{Domain: domain}))
+		})
+	}
+	for _, domain := range []string{"", "http://192.168.1.103", "192.168.1.103:8080", "bad host", "192.168.1.999"} {
+		t.Run("invalid "+domain, func(t *testing.T) {
+			assert.Error(t, validate.Struct(&GatewayConfig{Domain: domain}))
+		})
+	}
+}
+
 // TestConfigNamesTheMissingACMEDNSAccountField guards the error an operator
 // reads when the acme-dns account is half set: the field left empty, before
 // Caddy reports a directive without its argument.

@@ -108,7 +108,7 @@ describe("bundled theme files", () => {
     const { useTerminalThemeStore } = await import("@/stores/terminalThemeStore");
 
     expect(useTerminalThemeStore.getState().theme.colors).toEqual(
-      readJson<TerminalThemeColors>("shellhub_dark.json"),
+      readJson<TerminalThemeColors>("cloudmatehub_dark.json"),
     );
   });
 

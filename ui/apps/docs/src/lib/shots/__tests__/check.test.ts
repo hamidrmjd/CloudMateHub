@@ -69,7 +69,7 @@ describe("unreferencedImages", () => {
   });
 
   it("ignores directories the docs do not own", () => {
-    image("img/logos", "shellhub.svg");
+    image("img/logos", "cloudmatehub.svg");
     page("<p>no images here</p>");
 
     expect(unreferencedImages(publicDir(), outDir())).toEqual([]);

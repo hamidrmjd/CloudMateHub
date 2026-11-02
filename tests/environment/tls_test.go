@@ -36,7 +36,7 @@ func TestUpRefusesASuppliedCertificateWithACME(t *testing.T) {
 	certificate, err := SelfSignedCertificate("localhost")
 	require.NoError(t, err)
 
-	_, err = Up(t.Context(), Config{Edition: EditionCommunity, Name: "shellhub-e2e-a", Run: &Run{}, SuppliedCertificate: &certificate, ACME: true})
+	_, err = Up(t.Context(), Config{Edition: EditionCommunity, Name: "cloudmatehub-e2e-a", Run: &Run{}, SuppliedCertificate: &certificate, ACME: true})
 	require.ErrorIs(t, err, errSuppliedCertificateAndACME)
 
 	_, err = os.Stat(stackArtifactsDir)

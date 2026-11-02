@@ -353,7 +353,7 @@ func TestSessionPrincipalNamesWhoOpenedIt(t *testing.T) {
 	}
 
 	t.Run("a person", func(t *testing.T) {
-		owner := compose.AuthUser(t, ShellHubUsername, ShellHubPassword)
+		owner := compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword)
 
 		signer, data := newSigner(t)
 		compose.EnrollIdentity(t, "person", data)
@@ -379,7 +379,7 @@ func TestSessionPrincipalNamesWhoOpenedIt(t *testing.T) {
 			Name:    "automation",
 			Subject: requests.AccessPolicySubject{Type: string(models.PolicySubjectAPIKey), Value: key.ID},
 			Filter:  requests.AccessPolicyFilter{All: true},
-			Logins:  []string{ShellHubAgentUsername},
+			Logins:  []string{CloudMateHubAgentUsername},
 			Action:  string(models.PolicyActionAllow),
 		})
 

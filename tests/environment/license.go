@@ -85,9 +85,9 @@ func FullLicense() License {
 		StartsAt: now.Add(-24 * time.Hour).Unix(),
 		Customer: &LicenseCustomer{
 			ID:      uuid.Generate(),
-			Name:    "ShellHub E2E",
+			Name:    "CloudMateHub E2E",
 			Email:   "e2e@shellhub.io",
-			Company: "ShellHub",
+			Company: "CloudMateHub",
 		},
 		Features: &LicenseFeatures{
 			Devices:          UnlimitedDevices,

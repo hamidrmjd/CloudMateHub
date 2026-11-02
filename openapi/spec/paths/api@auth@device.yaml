@@ -4,7 +4,7 @@ post:
   description: |
     Auth a device.
 
-    Every 30 seconds, this route is hit by internal ShellHub to check device
+    Every 30 seconds, this route is hit by internal CloudMateHub to check device
     availability.
   tags:
     - device

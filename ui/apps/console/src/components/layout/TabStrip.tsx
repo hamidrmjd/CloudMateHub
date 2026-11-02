@@ -9,8 +9,8 @@ import {
   XMarkIcon,
   AdjustmentsHorizontalIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
-import { IconButton } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
 import {
   useOrderedWindows,
   useTerminalStore,

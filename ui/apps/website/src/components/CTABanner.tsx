@@ -1,4 +1,4 @@
-import { Reveal, ConnectionGrid } from "@shellhub/design-system/components";
+import { Reveal, ConnectionGrid } from "@cloudmatehub/design-system/components";
 import {
   Section,
   SectionHeader,

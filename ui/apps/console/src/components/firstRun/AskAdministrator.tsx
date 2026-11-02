@@ -1,4 +1,4 @@
-import { Button, Spinner } from "@shellhub/design-system/primitives";
+import { Button, Spinner } from "@cloudmatehub/design-system/primitives";
 import { useAuthStore } from "@/stores/authStore";
 import { useNamespaceArrival } from "@/hooks/useNamespaceArrival";
 

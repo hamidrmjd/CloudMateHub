@@ -1,6 +1,6 @@
 import { ComponentProps, useState } from "react";
-import { cn } from "@shellhub/design-system/cn";
-import { IconButton } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
 import NumericInput from "@/components/common/fields/NumericInput";
 
 type StepperFieldProps = Pick<

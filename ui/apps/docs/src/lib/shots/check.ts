@@ -72,7 +72,7 @@ export function removeImages(publicDir: string, files: string[]): void {
  * served: resolving it relative to the component would resolve against this app
  * even when another one is building.
  */
-const DEV: unique symbol = Symbol.for("@shellhub/docs:shots:dev");
+const DEV: unique symbol = Symbol.for("@cloudmatehub/docs:shots:dev");
 
 type Host = typeof globalThis & { [DEV]?: { publicDir: string } };
 

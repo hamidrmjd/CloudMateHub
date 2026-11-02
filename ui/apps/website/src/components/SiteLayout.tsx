@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { SiteHeader } from "@/components/SiteHeader";
 import { docsUrl, websiteUrl } from "@/links";
-import { Footer } from "@shellhub/design-system/components";
+import { Footer } from "@cloudmatehub/design-system/components";
 
 function RouterLink({
   href,

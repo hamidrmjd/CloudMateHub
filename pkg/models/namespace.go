@@ -32,7 +32,7 @@ type NamespaceDeviceLimit struct {
 
 // HasMax reports whether the namespace has a finite device ceiling.
 //
-// Generally, a namespace has a MaxDevices value greater than 0 when the ShellHub is either in community version or
+// Generally, a namespace has a MaxDevices value greater than 0 when the CloudMateHub is either in community version or
 // the namespace does not have a billing plan enabled, because, in this case, we set this value to -1.
 func (l NamespaceDeviceLimit) HasMax() bool {
 	return l.MaxDevices > 0

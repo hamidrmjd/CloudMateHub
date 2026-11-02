@@ -61,7 +61,7 @@ func TestPullOrBuild(t *testing.T) {
 	newRemote := func(t *testing.T) string {
 		t.Helper()
 
-		remote := registry.Address + "/shellhub-e2e-cache:gateway-" + newRunID()
+		remote := registry.Address + "/cloudmatehub-e2e-cache:gateway-" + newRunID()
 		t.Cleanup(func() { _, _ = cli.ImageRemove(context.Background(), remote, client.ImageRemoveOptions{}) })
 
 		return remote
@@ -69,8 +69,8 @@ func TestPullOrBuild(t *testing.T) {
 
 	images := func(run *Run, remote string) []stackImage {
 		return []stackImage{
-			{service: "gateway", local: "shellhub-e2e/cache-test-gateway:" + run.ID(), remote: remote},
-			{service: "ui", local: "shellhub-e2e/cache-test-ui:" + run.ID()},
+			{service: "gateway", local: "cloudmatehub-e2e/cache-test-gateway:" + run.ID(), remote: remote},
+			{service: "ui", local: "cloudmatehub-e2e/cache-test-ui:" + run.ID()},
 		}
 	}
 

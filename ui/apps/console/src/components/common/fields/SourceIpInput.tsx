@@ -3,8 +3,8 @@ import {
   XMarkIcon,
   ExclamationTriangleIcon,
 } from "@heroicons/react/24/outline";
-import { IconButton } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { LABEL, LABEL_BASE } from "@/utils/styles";
 import { parseSourceIp, sourceIpKind } from "@/utils/sourceIp";
 

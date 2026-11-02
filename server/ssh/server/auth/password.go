@@ -6,7 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// PasswordHandler handles ShellHub client's connection using the password authentication method.
+// PasswordHandler handles CloudMateHub client's connection using the password authentication method.
 func PasswordHandler(ctx gliderssh.Context, passwd string) bool {
 	logger := log.WithFields(
 		log.Fields{

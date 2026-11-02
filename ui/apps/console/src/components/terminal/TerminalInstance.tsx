@@ -29,7 +29,7 @@ import {
   resolveError,
 } from "./terminalErrors";
 import SSHApproval from "@/pages/SSHApproval";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { attempt } from "@/utils/failure";
 
 const FIT_SETTLE_MS = 100;

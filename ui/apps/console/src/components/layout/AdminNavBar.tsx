@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import { Dropdown } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Dropdown } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { adminNavLinks, useAdminNav, type AdminNavSection } from "./adminNav";
 import { navDisabled } from "./SidebarShell";
 

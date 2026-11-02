@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Callout, Spinner } from "@shellhub/design-system/primitives";
+import { Callout, Spinner } from "@cloudmatehub/design-system/primitives";
 import { useSignUpStore } from "@/stores/signUpStore";
 import AuthActions from "@/components/auth/AuthActions";
 import ScreenIntro from "@/components/layout/ScreenIntro";

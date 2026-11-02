@@ -37,7 +37,7 @@ import {
   Button,
   Callout,
   IconButton,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import RestrictedAction from "@/components/common/RestrictedAction";
 import RenameableName from "@/components/common/RenameableName";
 import { apiErrorMessage } from "@/api/errors";

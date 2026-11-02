@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/24/solid";
-import { GithubIcon } from "@shellhub/design-system/primitives";
+import { GithubIcon } from "@cloudmatehub/design-system/primitives";
 import { ActionButton, Section, SectionHeader } from "@/components";
-import { Reveal } from "@shellhub/design-system/components";
-import { C } from "@shellhub/design-system/constants";
+import { Reveal } from "@cloudmatehub/design-system/components";
+import { C } from "@cloudmatehub/design-system/constants";
 import { githubUrl, signupUrl } from "@/links";
 
 function formatStars(count: number) {
@@ -36,7 +36,7 @@ export function OpenSource() {
       />
       <Reveal>
         <p className="text-sm text-text-secondary max-w-md mx-auto mb-8 leading-relaxed">
-          ShellHub is open source. Self-host it, customize it, or use our
+          CloudMateHub is open source. Self-host it, customize it, or use our
           managed cloud.
         </p>
       </Reveal>

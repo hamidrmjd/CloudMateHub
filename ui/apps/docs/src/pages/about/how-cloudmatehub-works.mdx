@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/DocsLayout.astro
-title: How ShellHub Works
+title: How CloudMateHub Works
 description: Concepts, architecture, and the path an SSH connection takes from your terminal to a device.
 ---
 
@@ -9,9 +9,9 @@ import Callout from "../../components/Callout.astro";
 import DiagramReverseConnectivity from '../../components/DiagramReverseConnectivity.astro';
 import DiagramConnectionFlow from '../../components/DiagramConnectionFlow.astro';
 
-# How ShellHub Works
+# How CloudMateHub Works
 
-ShellHub has two moving parts. A **server**, which every device and every user talks to, and an
+CloudMateHub has two moving parts. A **server**, which every device and every user talks to, and an
 **agent**, which runs on each device you want to reach. Everything else in this documentation is
 a consequence of how those two behave.
 
@@ -22,16 +22,16 @@ address, an open inbound port, or a tunnel you built in advance. That works when
 network. It stops working the moment the device sits behind carrier-grade NAT, on a customer's
 LAN, or on a mobile link.
 
-ShellHub turns the direction around. The agent opens the connection outbound, to the server, and
+CloudMateHub turns the direction around. The agent opens the connection outbound, to the server, and
 holds it open. When you want to reach the device, your session is routed through the connection
 that already exists.
 
 <DiagramReverseConnectivity />
 
 The practical consequence is that the device needs exactly one thing from its network: the
-ability to reach the ShellHub server's HTTP(S) address. No inbound port, no public IP, no static
+ability to reach the CloudMateHub server's HTTP(S) address. No inbound port, no public IP, no static
 address, and no change to the network it happens to be plugged into. If the device can load a web
-page, ShellHub can reach it.
+page, CloudMateHub can reach it.
 
 ## The server
 
@@ -40,7 +40,7 @@ registers devices, tracks which ones are online, works out who is connecting, de
 that person is allowed, bridges the session down the agent's connection, and records it when
 recording is switched on.
 
-You can run it yourself or use the managed [ShellHub Cloud](https://cloud.shellhub.io). Which
+You can run it yourself or use the managed [CloudMateHub Cloud](https://cloud.shellhub.io). Which
 components it is made of and how to operate them belong to
 [Self-Hosted](/selfhosted/quickstart) — from the outside it is one address.
 
@@ -82,7 +82,7 @@ refuses to create another. Cloud and Enterprise allow as many as you need.
 ## SSHID
 
 One server address fronts every device, so the address you type has to say which device you mean.
-ShellHub encodes that into the SSH username, the same way web servers used the `Host` header to
+CloudMateHub encodes that into the SSH username, the same way web servers used the `Host` header to
 put many sites on one IP:
 
 ```
@@ -100,7 +100,7 @@ $ ssh root@mycompany.raspberrypi@cloud.shellhub.io
 | `root` | SSH username | The unix user on the device |
 | `mycompany` | Namespace | Which workspace |
 | `raspberrypi` | Device hostname | Which device in that namespace |
-| `cloud.shellhub.io` | Server | The ShellHub server address |
+| `cloud.shellhub.io` | Server | The CloudMateHub server address |
 
 The server splits the string on the **first** `@` to get the username, then splits what remains on
 the **first** `.` to get the namespace and hostname. Because the whole thing is just an SSH
@@ -111,7 +111,7 @@ username, every client understands it with no plugin: OpenSSH, PuTTY, `scp`, `sf
 <DiagramConnectionFlow />
 
 1. You run `ssh root@mycompany.raspberrypi@cloud.shellhub.io`.
-2. The connection reaches the ShellHub server.
+2. The connection reaches the CloudMateHub server.
 3. The server parses the SSHID and resolves the namespace and the device.
 4. It works out **who you are** — from the key you presented, a password, or an approval you
    confirm in the browser.

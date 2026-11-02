@@ -112,8 +112,8 @@ func dialWebTerminal(t *testing.T, ctx context.Context, compose *environment.Doc
 	resp, err := compose.R(ctx).
 		SetBody(map[string]string{
 			"device":   device.UID,
-			"username": ShellHubAgentUsername,
-			"password": ShellHubAgentPassword,
+			"username": CloudMateHubAgentUsername,
+			"password": CloudMateHubAgentPassword,
 		}).
 		SetResult(&issued).
 		Post("/ws/ssh/session")
@@ -241,7 +241,7 @@ func TestSessionLifecycle(t *testing.T) {
 
 		_, opened := openSession(t, ctx, compose, device, signer, "")
 
-		assert.Equal(t, ShellHubNamespace, getSession(t, ctx, compose, opened.UID).TenantID)
+		assert.Equal(t, CloudMateHubNamespace, getSession(t, ctx, compose, opened.UID).TenantID)
 
 		resp, err := compose.Anonymous(ctx).SetAuthToken(outsider.Token).Get("/api/sessions/" + opened.UID)
 		require.NoError(t, err)

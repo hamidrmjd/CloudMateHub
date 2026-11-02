@@ -23,8 +23,8 @@ func TestReadAllowlist(t *testing.T) {
 			description: "reads path, symbol and reason",
 			content:     "pkg/a.go KindInvalid zero value\n\npkg/b.go Backend mocked\n",
 			expected: map[string]string{
-				"shellhub/pkg/a.go KindInvalid": "shellhub/.deadcode-allow:1",
-				"shellhub/pkg/b.go Backend":     "shellhub/.deadcode-allow:3",
+				"cloudmatehub/pkg/a.go KindInvalid": "cloudmatehub/.deadcode-allow:1",
+				"cloudmatehub/pkg/b.go Backend":     "cloudmatehub/.deadcode-allow:3",
 			},
 		},
 		{
@@ -73,7 +73,7 @@ func TestReport(t *testing.T) {
 		{
 			description: "passes when every dead symbol is allowed",
 			dead:        map[string]finding{dead.key(): dead},
-			allowed:     map[string]string{dead.key(): "shellhub/.deadcode-allow:1"},
+			allowed:     map[string]string{dead.key(): "cloudmatehub/.deadcode-allow:1"},
 			wantLines:   []string{"no dead code"},
 		},
 		{
@@ -81,14 +81,14 @@ func TestReport(t *testing.T) {
 			dead:        map[string]finding{dead.key(): dead},
 			allowed:     map[string]string{},
 			wantErr:     true,
-			wantLines:   []string{"shellhub/pkg/a.go:3: unused var Unused"},
+			wantLines:   []string{"cloudmatehub/pkg/a.go:3: unused var Unused"},
 		},
 		{
 			description: "fails on an allowlist entry that is no longer dead, naming the entry",
 			dead:        map[string]finding{},
-			allowed:     map[string]string{dead.key(): "shellhub/.deadcode-allow:1"},
+			allowed:     map[string]string{dead.key(): "cloudmatehub/.deadcode-allow:1"},
 			wantErr:     true,
-			wantLines:   []string{"shellhub/.deadcode-allow:1: shellhub/pkg/a.go Unused is used now, or gone; drop the entry"},
+			wantLines:   []string{"cloudmatehub/.deadcode-allow:1: cloudmatehub/pkg/a.go Unused is used now, or gone; drop the entry"},
 		},
 	}
 
@@ -117,12 +117,12 @@ func TestSince(t *testing.T) {
 
 	base := problems{
 		dead:  map[string]finding{pending.key(): pending},
-		stale: map[string]string{"shellhub/pkg/c.go Adopted": "shellhub/.deadcode-allow:1"},
+		stale: map[string]string{"cloudmatehub/pkg/c.go Adopted": "cloudmatehub/.deadcode-allow:1"},
 	}
 	head := problems{
 		dead: map[string]finding{moved.key(): moved, orphaned.key(): orphaned},
 		stale: map[string]string{
-			"shellhub/pkg/c.go Adopted": "shellhub/.deadcode-allow:1",
+			"cloudmatehub/pkg/c.go Adopted": "cloudmatehub/.deadcode-allow:1",
 			"cloud/pkg/d.go Revived":    "cloud/.deadcode-allow:2",
 		},
 	}
@@ -220,9 +220,9 @@ func TestMainCheckout(t *testing.T) {
 			description: "follows a linked worktree to its main checkout",
 			dotGit: func(t *testing.T, root string) {
 				t.Helper()
-				require.NoError(t, os.WriteFile(filepath.Join(root, ".git"), []byte("gitdir: /src/shellhub/.git/worktrees/x\n"), 0o600))
+				require.NoError(t, os.WriteFile(filepath.Join(root, ".git"), []byte("gitdir: /src/cloudmatehub/.git/worktrees/x\n"), 0o600))
 			},
-			expected: func(string) string { return "/src/shellhub" },
+			expected: func(string) string { return "/src/cloudmatehub" },
 		},
 		{
 			description: "resolves a relative gitdir against the worktree",
@@ -236,7 +236,7 @@ func TestMainCheckout(t *testing.T) {
 			description: "returns a submodule checkout itself",
 			dotGit: func(t *testing.T, root string) {
 				t.Helper()
-				require.NoError(t, os.WriteFile(filepath.Join(root, ".git"), []byte("gitdir: ../.git/modules/shellhub\n"), 0o600))
+				require.NoError(t, os.WriteFile(filepath.Join(root, ".git"), []byte("gitdir: ../.git/modules/cloudmatehub\n"), 0o600))
 			},
 			expected: func(root string) string { return root },
 		},

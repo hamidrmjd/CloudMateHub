@@ -9,7 +9,7 @@ import {
   ClockIcon,
   KeyIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useAdminUser } from "@/hooks/useAdminUsers";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import { useLoginAsUser } from "@/hooks/useLoginAsUser";
@@ -26,7 +26,7 @@ import {
   Button,
   Card,
   IconButton,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 
 const ZERO_DATE = "0001-01-01T00:00:00Z";
 

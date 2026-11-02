@@ -62,7 +62,7 @@ func mcpToolResult(t *testing.T, rec *httptest.ResponseRecorder) (string, bool) 
 	return env.Result.Content[0].Text, env.Result.IsError
 }
 
-// TestMCPGetNamespaceDefaultsToCaller ensures shellhub_get_namespace reads the
+// TestMCPGetNamespaceDefaultsToCaller ensures cloudmatehub_get_namespace reads the
 // caller's own namespace when no tenant_id argument is supplied -- the MCP
 // credential is scoped to a single namespace.
 func TestMCPGetNamespaceDefaultsToCaller(t *testing.T) {
@@ -73,7 +73,7 @@ func TestMCPGetNamespaceDefaultsToCaller(t *testing.T) {
 		Once()
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		`{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"shellhub_get_namespace","arguments":{}}}`)
+		`{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"cloudmatehub_get_namespace","arguments":{}}}`)
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.False(t, isErr)
@@ -88,7 +88,7 @@ func TestMCPGetNamespaceRejectsOtherTenant(t *testing.T) {
 	mock := mocks.NewMockService(t)
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		`{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"shellhub_get_namespace","arguments":{"tenant_id":"11111111-1111-4000-0000-000000000000"}}}`)
+		`{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"cloudmatehub_get_namespace","arguments":{"tenant_id":"11111111-1111-4000-0000-000000000000"}}}`)
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.True(t, isErr)
@@ -118,7 +118,7 @@ func TestMCPDoesNotExposeListNamespaces(t *testing.T) {
 	require.NotEmpty(t, env.Result.Tools)
 
 	for _, tool := range env.Result.Tools {
-		assert.NotEqual(t, "shellhub_list_namespaces", tool.Name)
+		assert.NotEqual(t, "cloudmatehub_list_namespaces", tool.Name)
 	}
 }
 
@@ -136,7 +136,7 @@ func TestMCPListDevices(t *testing.T) {
 		Once()
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		mcpToolCall("shellhub_list_devices", `{"status":"accepted","page":2,"per_page":50}`))
+		mcpToolCall("cloudmatehub_list_devices", `{"status":"accepted","page":2,"per_page":50}`))
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.False(t, isErr)
@@ -154,7 +154,7 @@ func TestMCPGetDevice(t *testing.T) {
 		Once()
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		mcpToolCall("shellhub_get_device", `{"uid":"uid1"}`))
+		mcpToolCall("cloudmatehub_get_device", `{"uid":"uid1"}`))
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.False(t, isErr)
@@ -174,7 +174,7 @@ func TestMCPUpdateDeviceStatus(t *testing.T) {
 		Once()
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		mcpToolCall("shellhub_update_device_status", `{"uid":"uid1","status":"accepted"}`))
+		mcpToolCall("cloudmatehub_update_device_status", `{"uid":"uid1","status":"accepted"}`))
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.False(t, isErr)
@@ -190,7 +190,7 @@ func TestMCPUpdateDeviceStatusForbidden(t *testing.T) {
 	mock := mocks.NewMockService(t)
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleObserver.String(),
-		mcpToolCall("shellhub_update_device_status", `{"uid":"uid1","status":"accepted"}`))
+		mcpToolCall("cloudmatehub_update_device_status", `{"uid":"uid1","status":"accepted"}`))
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.True(t, isErr)
@@ -207,7 +207,7 @@ func TestMCPDeleteDevice(t *testing.T) {
 		Once()
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		mcpToolCall("shellhub_delete_device", `{"uid":"uid1"}`))
+		mcpToolCall("cloudmatehub_delete_device", `{"uid":"uid1"}`))
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.False(t, isErr)
@@ -224,7 +224,7 @@ func TestMCPRenameDevice(t *testing.T) {
 		Once()
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		mcpToolCall("shellhub_rename_device", `{"uid":"uid1","name":"newname"}`))
+		mcpToolCall("cloudmatehub_rename_device", `{"uid":"uid1","name":"newname"}`))
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.False(t, isErr)
@@ -244,7 +244,7 @@ func TestMCPGetStats(t *testing.T) {
 		Once()
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		mcpToolCall("shellhub_get_stats", `{}`))
+		mcpToolCall("cloudmatehub_get_stats", `{}`))
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.False(t, isErr)
@@ -264,7 +264,7 @@ func TestMCPListSessions(t *testing.T) {
 		Once()
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		mcpToolCall("shellhub_list_sessions", `{}`))
+		mcpToolCall("cloudmatehub_list_sessions", `{}`))
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.False(t, isErr)
@@ -282,7 +282,7 @@ func TestMCPGetSession(t *testing.T) {
 		Once()
 
 	rec := mcpCall(t, newTestRouter(t, mock), mcpCallerTenant, authorizer.RoleOwner.String(),
-		mcpToolCall("shellhub_get_session", `{"uid":"sess1"}`))
+		mcpToolCall("cloudmatehub_get_session", `{"uid":"sess1"}`))
 
 	text, isErr := mcpToolResult(t, rec)
 	assert.False(t, isErr)

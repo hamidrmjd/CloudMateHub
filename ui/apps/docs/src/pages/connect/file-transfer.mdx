@@ -6,7 +6,7 @@ description: Move files to and from a device with scp and sftp.
 
 # File Transfer
 
-`scp` and `sftp` work through ShellHub with no special handling. The agent serves SFTP over the
+`scp` and `sftp` work through CloudMateHub with no special handling. The agent serves SFTP over the
 same connection that carries a shell.
 
 ## scp
@@ -51,8 +51,8 @@ device.
 ## Permissions
 
 Transfers happen as the unix user in the SSHID, with exactly that user's permissions. If you
-cannot write to `/opt` as `deploy`, ShellHub will not help — that is the device's decision, not
-ShellHub's.
+cannot write to `/opt` as `deploy`, CloudMateHub will not help — that is the device's decision, not
+CloudMateHub's.
 
 Which unix users you may connect as is decided by access policies. A policy granting only
 `deploy` means you transfer as `deploy` and nothing else, even on a device where `root` exists.

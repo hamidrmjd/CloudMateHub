@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useRadioGroupContext } from "@/components/common/fields/radioGroupContext";
 
 /**

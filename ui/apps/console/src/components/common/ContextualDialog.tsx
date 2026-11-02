@@ -10,8 +10,8 @@ import {
   Dropdown,
   IconBadge,
   type Palette,
-} from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+} from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 /**
  * The compact header of an anchored dialog: a small tinted icon, the title and one line under it.

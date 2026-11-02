@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import CopyButton from "@/components/common/CopyButton";
 import ConnectModal from "@/components/ConnectModal";
 import RestrictedAction from "@/components/common/RestrictedAction";

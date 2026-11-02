@@ -4,7 +4,7 @@ import type {
   SubmitHandler,
   UseFormReturn,
 } from "react-hook-form";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import Modal, { type ModalProps } from "@/components/common/Modal";
 import FormRootError from "@/components/common/fields/FormRootError";
 import { useDiscardGuard } from "@/hooks/useDiscardGuard";

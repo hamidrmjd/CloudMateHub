@@ -1,4 +1,4 @@
-import { GithubIcon, ShellHubLogo } from "../primitives/icons";
+import { GithubIcon, CloudMateHubLogo } from "../primitives/icons";
 
 const GITHUB_URL = "https://github.com/shellhub-io/shellhub";
 const CURRENT_YEAR = new Date().getFullYear();
@@ -54,7 +54,7 @@ export function Footer({
         <div className="flex flex-wrap gap-10 mb-10">
           <div className="w-full md:flex-[2]">
             <Link href={websiteUrl} className="inline-block mb-4">
-              <ShellHubLogo className="h-8" />
+              <CloudMateHubLogo className="h-8" />
             </Link>
             <p className="text-xs text-text-secondary max-w-[220px] leading-relaxed">
               The open source SSH gateway for remote access to Linux devices.
@@ -91,7 +91,7 @@ export function Footer({
 
         <div className="flex flex-col sm:flex-row justify-between items-center pt-6 border-t border-border gap-4">
           <span className="text-2xs font-mono text-text-secondary">
-            &copy; {CURRENT_YEAR} ShellHub. All rights reserved.
+            &copy; {CURRENT_YEAR} CloudMateHub. All rights reserved.
           </span>
           <div className="flex gap-3">
             <a

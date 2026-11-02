@@ -6,8 +6,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { addDays, differenceInCalendarDays, startOfMonth } from "date-fns";
 import { DayPicker } from "react-day-picker";
-import { Dropdown } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Dropdown } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { formatDateShort } from "@/utils/date";
 import { LABEL } from "@/utils/styles";
 

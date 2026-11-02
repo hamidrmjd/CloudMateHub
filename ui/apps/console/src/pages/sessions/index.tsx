@@ -6,8 +6,8 @@ import {
   Callout,
   IconButton,
   Spinner,
-} from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+} from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { usePagedList } from "@/hooks/usePagedList";
 import { useCloseSession } from "@/hooks/useSessionRequests";
 import { useSessionRecording } from "@/hooks/useSessionRecording";

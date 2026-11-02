@@ -4,7 +4,7 @@ import {
   CheckIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { IconButton } from "@shellhub/design-system/primitives";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
 import { renameErrorMessage, renameFieldLabel } from "@/utils/rename";
 
 /**

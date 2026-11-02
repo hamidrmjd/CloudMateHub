@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import FramedShell from "@/components/layout/FramedShell";
 import ScreenIntro from "@/components/layout/ScreenIntro";
 import AuthActions from "@/components/auth/AuthActions";

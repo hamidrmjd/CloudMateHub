@@ -1,4 +1,4 @@
-import { StatusDot } from "@shellhub/design-system/primitives";
+import { StatusDot } from "@cloudmatehub/design-system/primitives";
 
 /**
  * The online dot as a table cell — centred, since it is the whole content of its column.

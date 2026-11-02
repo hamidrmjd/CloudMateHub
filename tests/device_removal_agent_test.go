@@ -40,15 +40,15 @@ func TestRemovedPairedDeviceAgent(t *testing.T) {
 		execInAgent(t, agent, "test", "!", "-e", agentPairedTenantFile)
 
 		second := acceptPairing(t, compose.R(t.Context()), awaitNthAgentLog(t, agent, agentPairingLink, 2, "the agent has not printed a second pairing code"))
-		assert.Equal(t, ShellHubNamespace, awaitNthAgentLog(t, agent, agentConnectedLine, 2, "the agent has not connected again"))
+		assert.Equal(t, CloudMateHubNamespace, awaitNthAgentLog(t, agent, agentConnectedLine, 2, "the agent has not connected again"))
 
 		device := compose.AwaitDeviceOnline(t, second.UID)
 		assert.Equal(t, models.DeviceStatusAccepted, device.Status)
-		assert.Equal(t, ShellHubNamespace, readAgentFile(t, agent, agentPairedTenantFile), "the agent did not keep the tenant it paired with again")
+		assert.Equal(t, CloudMateHubNamespace, readAgentFile(t, agent, agentPairedTenantFile), "the agent did not keep the tenant it paired with again")
 
 		logs, err := agentLogs(t.Context(), agent)
 		require.NoError(t, err)
-		assert.Equal(t, 1, bytes.Count(logs, []byte(`msg="Starting ShellHub"`)), "the agent restarted to pair again")
+		assert.Equal(t, 1, bytes.Count(logs, []byte(`msg="Starting CloudMateHub"`)), "the agent restarted to pair again")
 	})
 
 	t.Run("an agent given its tenant in the environment exits", func(t *testing.T) {
@@ -66,8 +66,8 @@ func TestRemovedPairedDeviceAgent(t *testing.T) {
 		require.NoError(t, pairing.Stop(t.Context(), nil))
 		compose.AwaitDeviceOffline(t, paired.UID)
 
-		configured := startCustomAgent(t, t.Context(), compose, withKey, append(sameDevice, NewAgentContainerWithTenantOnly(ShellHubNamespace))...)
-		require.Equal(t, ShellHubNamespace, awaitAgentConnected(t, configured))
+		configured := startCustomAgent(t, t.Context(), compose, withKey, append(sameDevice, NewAgentContainerWithTenantOnly(CloudMateHubNamespace))...)
+		require.Equal(t, CloudMateHubNamespace, awaitAgentConnected(t, configured))
 		compose.AwaitDeviceOnline(t, paired.UID)
 
 		compose.DeleteDevice(t, paired.UID)

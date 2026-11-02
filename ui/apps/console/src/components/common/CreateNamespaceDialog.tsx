@@ -1,6 +1,6 @@
 import { useId } from "react";
 import { BookOpenIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import Modal from "./Modal";
 import NamespaceNameField from "./fields/NamespaceNameField";
 import { NAMESPACE_NAME_MIN_LENGTH } from "@/utils/validation";

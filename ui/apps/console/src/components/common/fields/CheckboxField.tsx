@@ -1,6 +1,6 @@
 import { InputHTMLAttributes, ReactNode } from "react";
-import { Checkbox } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Checkbox } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import FieldError from "@/components/common/fields/FieldError";
 import FieldHint from "@/components/common/fields/FieldHint";
 

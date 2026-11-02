@@ -1,6 +1,6 @@
 // Package webendpoints provides helpers for composing web-endpoint hostnames.
 //
-// A web endpoint is a named HTTP tunnel that ShellHub exposes on behalf of a
+// A web endpoint is a named HTTP tunnel that CloudMateHub exposes on behalf of a
 // device.  Each endpoint is reachable at an address that is formed by joining
 // an address token (typically a short random slug) and a domain:
 //

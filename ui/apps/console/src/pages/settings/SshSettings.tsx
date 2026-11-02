@@ -12,8 +12,8 @@ import {
   ShieldCheckIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Button } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import {
   type Namespace,
   useEditNamespace,

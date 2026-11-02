@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { NavItemLink } from "./SidebarShell";
 import type { NavSection } from "./navSections";
 

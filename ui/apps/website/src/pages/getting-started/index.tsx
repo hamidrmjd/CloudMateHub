@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { cn } from "@shellhub/design-system/cn";
-import { ConnectionGrid, GlowOrbs } from "@shellhub/design-system/components";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { ConnectionGrid, GlowOrbs } from "@cloudmatehub/design-system/components";
 import { SiteLayout } from "@/components";
 import { StepPath } from "./StepPath";
 import { StepSetup } from "./StepSetup";
@@ -55,13 +55,13 @@ export default function GettingStarted() {
             style={{ animationDelay: "100ms" }}
           >
             <h1 className="text-[clamp(1.75rem,4vw,2.75rem)] font-bold tracking-[-0.03em] leading-tight mb-3">
-              {currentStep === 0 && "Get started with ShellHub"}
+              {currentStep === 0 && "Get started with CloudMateHub"}
               {currentStep === 1 && "Set up self-hosted"}
             </h1>
             <p className="text-sm text-text-secondary max-w-md mx-auto leading-relaxed">
-              {currentStep === 0 && "Choose how you want to run ShellHub."}
+              {currentStep === 0 && "Choose how you want to run CloudMateHub."}
               {currentStep === 1 &&
-                "Run ShellHub on your own infrastructure with Docker."}
+                "Run CloudMateHub on your own infrastructure with Docker."}
             </p>
           </div>
 

@@ -1,7 +1,7 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
-import { WindowChrome } from "@shellhub/design-system/primitives";
+import { WindowChrome } from "@cloudmatehub/design-system/primitives";
 import { Section, SectionHeader } from "@/components";
-import { Reveal, ShimmerCard } from "@shellhub/design-system/components";
+import { Reveal, ShimmerCard } from "@cloudmatehub/design-system/components";
 
 const capabilities = [
   {

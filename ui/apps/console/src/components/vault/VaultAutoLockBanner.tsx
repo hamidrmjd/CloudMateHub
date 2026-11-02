@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useVaultStore } from "@/stores/vaultStore";
-import { Callout } from "@shellhub/design-system/primitives";
+import { Callout } from "@cloudmatehub/design-system/primitives";
 
 const AUTO_DISMISS_MS = 6000;
 

@@ -1,6 +1,6 @@
 import { ReactNode, RefObject, useEffect, useEffectEvent, useRef } from "react";
 import { createPortal } from "react-dom";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { useBackdropClose } from "@/hooks/useBackdropClose";
 import { desktopWindow } from "@/utils/desktopWindow";

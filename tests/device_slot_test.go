@@ -47,7 +47,7 @@ func fillNamespaceLimit(t *testing.T, compose *environment.DockerCompose, prefix
 	compose.UpdateDeviceStatus(t, held, environment.DeviceActionAccept)
 	waiting := enrollDevice(t, compose, prefix+"waiting", waitingMAC)
 
-	compose.LimitNamespaceToItsAcceptedDevices(t, ShellHubNamespace)
+	compose.LimitNamespaceToItsAcceptedDevices(t, CloudMateHubNamespace)
 	require.False(t, pendingDevice(t, compose, waiting).Acceptable, "a namespace at its limit offered a pending device as acceptable")
 
 	return held, waiting

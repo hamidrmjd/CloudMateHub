@@ -35,7 +35,7 @@ func TestSetup(t *testing.T) {
 			Name:      username,
 			Username:  username,
 			Email:     username + "@ossystems.com.br",
-			Password:  ShellHubPassword,
+			Password:  CloudMateHubPassword,
 			Namespace: username,
 		}
 	}
@@ -67,7 +67,7 @@ func TestSetup(t *testing.T) {
 		assert.Equal(t, http.StatusConflict, resp.StatusCode(), resp.String())
 
 		resp, err = compose.Anonymous(t.Context()).
-			SetBody(map[string]string{"username": "second", "password": ShellHubPassword}).
+			SetBody(map[string]string{"username": "second", "password": CloudMateHubPassword}).
 			Post("/api/login")
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusUnauthorized, resp.StatusCode(), "the refused setup created no user: %s", resp.String())

@@ -28,7 +28,7 @@ func NewReverser(host string) *Reverser {
 	}
 }
 
-// Auth creates a initial connection to the ShellHub SSH's server and authenticate it with the token received.
+// Auth creates a initial connection to the CloudMateHub SSH's server and authenticate it with the token received.
 func (r *Reverser) Auth(ctx context.Context, token string, connPath string) error {
 	uri, err := url.JoinPath(r.host, connPath)
 	if err != nil {
@@ -49,10 +49,10 @@ func (r *Reverser) Auth(ctx context.Context, token string, connPath string) erro
 	return nil
 }
 
-// NewListener creates a new reverse listener to be used by the Agent to receive connections from the ShellHub's server.
+// NewListener creates a new reverse listener to be used by the Agent to receive connections from the CloudMateHub's server.
 //
 // It uses the authenticated connection generate by the [Auth] method to create a new reverse listener. Through this
-// connection, the Agent will be able to receive connections from the ShellHub's server. This connections are,
+// connection, the Agent will be able to receive connections from the CloudMateHub's server. This connections are,
 // essentially, the SSH operations requested by the user.
 func (r *Reverser) NewListener() (*revdial.Listener, error) {
 	if r.conn == nil {

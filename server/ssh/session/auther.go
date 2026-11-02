@@ -342,7 +342,7 @@ func sendBanner(ctx gliderssh.Context, msg string) {
 	}
 }
 
-// ResolveKeyAuth resolves the presented key to a ShellHub identity (identity
+// ResolveKeyAuth resolves the presented key to a CloudMateHub identity (identity
 // mode) and returns the auth to run: a hit yields the identity auth (authorize +
 // mint, no browser); a miss yields the approval auth, which arranges the browser
 // approval once the client has proven it holds the key.

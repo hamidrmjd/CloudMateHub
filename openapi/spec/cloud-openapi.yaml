@@ -1,14 +1,14 @@
 openapi: 3.0.3
 info:
-  title: ShellHub Cloud OpenAPI
+  title: CloudMateHub Cloud OpenAPI
   description: |
-    Full reference for the ShellHub Cloud API, covering public, internal, and
+    Full reference for the CloudMateHub Cloud API, covering public, internal, and
     service-to-service routes. This is the internal source of truth used for
     client generation and response validation; the customer-facing documentation
     is a filtered build that exposes only the namespace-scoped, API-key usable
     surface.
   contact:
-    name: ShellHub
+    name: CloudMateHub
     email: contact@shellhub.io
   license:
     name: Apache License 2.0
@@ -16,7 +16,7 @@ info:
   version: 0.20.0
 servers:
   - url: /
-    description: ShellHub server as a Cloud instance.
+    description: CloudMateHub server as a Cloud instance.
 components:
   securitySchemes:
     $ref: ./components/schemas/security.yaml
@@ -55,7 +55,7 @@ tags:
     x-displayName: Users
     description: User-scoped namespace security settings.
   - name: cloud
-    description: Routes provided by ShellHub Cloud API.
+    description: Routes provided by CloudMateHub Cloud API.
   - name: vault
     description: Routes related to the user's encrypted SSH key vault.
   - name: mfa

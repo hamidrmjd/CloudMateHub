@@ -8,8 +8,8 @@ import {
   ArrowPathIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
-import { Button, IconButton } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Button, IconButton } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import {
   approveUserMutation,
   cancelMembershipInvitationMutation,

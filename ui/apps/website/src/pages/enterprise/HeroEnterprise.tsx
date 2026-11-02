@@ -1,9 +1,9 @@
-import { Badge } from "@shellhub/design-system/primitives";
+import { Badge } from "@cloudmatehub/design-system/primitives";
 import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import { ActionButtonGroup } from "@/components";
 
 /**

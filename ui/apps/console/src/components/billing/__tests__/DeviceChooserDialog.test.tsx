@@ -100,13 +100,13 @@ describe("DeviceChooserDialog", () => {
 
     it("dialog has aria-describedby pointing to the description", async () => {
       renderDialog();
-      await screen.findByText(/subscribe to shellhub cloud/i);
+      await screen.findByText(/subscribe to cloudmatehub cloud/i);
       const dialog = screen.getByRole("dialog");
       const descId = dialog.getAttribute("aria-describedby");
       expect(descId).toBeTruthy();
       const descEl = document.getElementById(descId!);
       expect(descEl).not.toBeNull();
-      expect(descEl!.textContent).toMatch(/subscribe to shellhub cloud/i);
+      expect(descEl!.textContent).toMatch(/subscribe to cloudmatehub cloud/i);
     });
   });
 

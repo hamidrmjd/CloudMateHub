@@ -13,7 +13,7 @@ import {
 } from "react-hook-form";
 import RadioCard from "@/components/common/fields/RadioCard";
 import RadioGroupField from "@/components/common/fields/RadioGroupField";
-import { Badge, type BadgeColor } from "@shellhub/design-system/primitives";
+import { Badge, type BadgeColor } from "@cloudmatehub/design-system/primitives";
 import { ROLES, ROLE_SUMMARY, type AssignableRole } from "./helpers";
 
 /** Roles that map directly to a Badge palette color. */

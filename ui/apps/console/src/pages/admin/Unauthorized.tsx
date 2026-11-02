@@ -11,7 +11,7 @@ import { useAuthStore } from "@/stores/authStore";
 import EmptyState, {
   type EmptyStateFeature,
 } from "@/components/common/EmptyState";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 
 const highlights: EmptyStateFeature[] = [
   {

@@ -9,9 +9,9 @@ import {
   ServerStackIcon,
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
-import { DockerIcon } from "@shellhub/design-system/primitives";
+import { DockerIcon } from "@cloudmatehub/design-system/primitives";
 import { Section, SectionHeader } from "@/components";
-import { Reveal } from "@shellhub/design-system/components";
+import { Reveal } from "@cloudmatehub/design-system/components";
 import { docsUrl } from "@/links";
 
 /**
@@ -31,7 +31,7 @@ export function SupportedPlatforms() {
           }
           subtitle={
             <>
-              The ShellHub agent runs on{" "}
+              The CloudMateHub agent runs on{" "}
               <span className="inline-block px-1.5 py-0.5 bg-border/40 rounded text-2xs font-mono font-medium text-text-primary/90">
                 x86
               </span>{" "}

@@ -8,7 +8,7 @@ import Shot from '../../components/Shot.astro';
 
 # Container Access
 
-The Connector exposes containers running on a host as ShellHub devices in their own right. Each
+The Connector exposes containers running on a host as CloudMateHub devices in their own right. Each
 container gets its own entry, its own SSHID, and its own place in your access policies.
 
 ## What it changes
@@ -23,7 +23,7 @@ not the machine underneath it.
 
 From the console's **Containers** page, click **Add Docker Host**:
 
-<Shot id="add-docker-host" route="/containers" of={{ role: "dialog" }} before={[{ click: { role: "button", name: "Add Docker Host" } }]} alt="ShellHub Containers page with the Add Docker Host dialog open" />
+<Shot id="add-docker-host" route="/containers" of={{ role: "dialog" }} before={[{ click: { role: "button", name: "Add Docker Host" } }]} alt="CloudMateHub Containers page with the Add Docker Host dialog open" />
 
 In a new namespace the dialog sends you to **Fleet**. Open a provisioning key there and pick its
 **Docker connector** method: the one-line command it shows enrolls every container with that key.

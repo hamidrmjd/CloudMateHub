@@ -26,7 +26,7 @@ case "$*" in
     esac
     ;;
 *"cmd/stack up"*)
-    echo "export E2E_COMPOSE_PROJECT='shellhub-e2e-stub'"
+    echo "export E2E_COMPOSE_PROJECT='cloudmatehub-e2e-stub'"
     echo "export E2E_EDITION='community'"
     echo "export E2E_BASE_URL='http://localhost:1'"
     echo "export E2E_STACK_EXPIRES='2026-10-20T12:00:00Z'"

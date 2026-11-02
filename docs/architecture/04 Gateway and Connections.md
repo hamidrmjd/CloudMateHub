@@ -11,7 +11,7 @@ The `gateway` container is **Go + Caddy**, configured from environment variables
 | Database | No host port published | `postgres:5432` inside Compose |
 | Redis protocol | No host port published | `redis:6379` inside Compose (Valkey image) |
 
-Use the configured hostname `localhost`; an unconfigured Host such as `127.0.0.1` was observed returning 404. The `redis` service name is a compatibility name, not a separate Redis installation.
+The table shows the loopback defaults. For LAN deployment, set `SHELLHUB_BIND_ADDRESS` and `SHELLHUB_DOMAIN` in the ignored `.env.override` to the host’s LAN IPv4 address and recreate services with `./deployments/cloudmatehub start`. HTTP and SSH then bind to that interface on ports 8080 and 2222. Use the configured IP in browser and agent URLs; update both values when it changes. The gateway rejects unconfigured Host headers. The `redis` service name is a compatibility name, not a separate Redis installation.
 
 ## Typical browser request
 
@@ -42,3 +42,11 @@ Supported transport paths include legacy `/ssh/connection` and newer `/agent/con
 TLS is supported by the gateway, but automatic TLS is **disabled in the current localhost setup**. Local HTTP is not a production Internet deployment. Remote Ubuntu deployment needs an intentional hostname/interface, TLS and firewall configuration.
 
 Related: [05 Device Agent](05%20Device%20Agent.md), [06 Data and Trust](06%20Data%20and%20Trust.md), [07 Development and Deployment](07%20Development%20and%20Deployment.md).
+
+## Native SSH → browser approval
+
+The server receives the public HTTP and HTTPS ports from Compose. `Server.consoleHost` adds the active nonstandard port before configuring the SSH session banners, while `instanceIssuer` keeps its established value. Unknown-key and reauthentication links therefore point to the browser’s actual listener rather than silently using port 80. Signed-out users and expired sessions retain the complete approval destination through login; the existing safe redirect validation still limits navigation to this app. No authorization rule is bypassed, and approval codes remain short-lived.
+
+The keyboard-interactive challenge titles visible in native SSH are `cloudmatehub-approval` and `cloudmatehub-approval-denied`. The web terminal bridge reads the same constants within the server binary, so rebuilding the server updates both paths together. This changes prompt titles, not the device authentication signing format.
+
+Post-login welcome text comes from `Namespace.Settings.ConnectionAnnouncement` in PostgreSQL, read by `Session.Announce`. `envs.AnnouncementFor` supplies the default only when creating namespaces. Rebranding an existing installation therefore requires an explicit, scoped saved-announcement update as well as changing the default. Custom announcements must be preserved unless their replacement is requested.

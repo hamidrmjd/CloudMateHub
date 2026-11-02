@@ -35,7 +35,7 @@ func TestHTTPServerReadHeaderTimeout(t *testing.T) {
 		require.NoError(t, err)
 		t.Cleanup(func() { conn.Close() }) //nolint:errcheck // the test is over, so a failed close changes nothing
 
-		_, err = conn.Write([]byte("GET / HTTP/1.1\r\nHost: shellhub\r\n"))
+		_, err = conn.Write([]byte("GET / HTTP/1.1\r\nHost: cloudmatehub\r\n"))
 		require.NoError(t, err)
 
 		require.NoError(t, conn.SetReadDeadline(time.Now().Add(5*time.Second))) //nolint:forbidigo // a socket deadline, which a clock.Clock cannot drive

@@ -5,8 +5,8 @@ import {
   NoSymbolIcon,
   UserMinusIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Callout } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { apiErrorMessage } from "@/api/errors";
 import { type MemberView, removeNamespaceMemberMutation } from "@/client";
 import { useHasPermission } from "@/hooks/useHasPermission";

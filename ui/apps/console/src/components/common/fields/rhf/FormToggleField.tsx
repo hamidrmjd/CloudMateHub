@@ -4,8 +4,8 @@ import {
   type FieldValues,
   type Path,
 } from "react-hook-form";
-import { Toggle } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Toggle } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { LABEL } from "@/utils/styles";
 import FieldError from "@/components/common/fields/FieldError";
 

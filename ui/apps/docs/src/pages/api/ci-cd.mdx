@@ -6,7 +6,7 @@ description: Deploy to devices from a pipeline, without giving it a person's cre
 
 # CI/CD Pipelines
 
-A pipeline reaching devices through ShellHub is an SSH client like any other. What makes it worth
+A pipeline reaching devices through CloudMateHub is an SSH client like any other. What makes it worth
 its own page is the credential question — get that wrong and the pipeline either breaks
 unpredictably or is over-privileged.
 
@@ -59,7 +59,7 @@ deploy:
         'systemctl restart myservice'
 ```
 
-`StrictHostKeyChecking=accept-new` accepts the ShellHub server's host key on first use. Pinning it
+`StrictHostKeyChecking=accept-new` accepts the CloudMateHub server's host key on first use. Pinning it
 properly is better if your runner has persistent state — and be aware that regenerating the
 server's SSH host key changes it.
 

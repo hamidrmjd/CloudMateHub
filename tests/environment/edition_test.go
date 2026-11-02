@@ -13,7 +13,7 @@ import (
 
 func TestEdition(t *testing.T) {
 	cloudDir := t.TempDir()
-	require.NoError(t, os.WriteFile(filepath.Join(cloudDir, "docker-compose.yml"), []byte("name: shellhub\n"), 0o600))
+	require.NoError(t, os.WriteFile(filepath.Join(cloudDir, "docker-compose.yml"), []byte("name: cloudmatehub\n"), 0o600))
 	require.NoError(t, os.WriteFile(filepath.Join(cloudDir, "go.mod"), []byte("module github.com/shellhub-io/cloud\n"), 0o600))
 	require.NoError(t, os.WriteFile(filepath.Join(cloudDir, ".env"), []byte("SHELLHUB_BILLING=stripe\n"), 0o600))
 

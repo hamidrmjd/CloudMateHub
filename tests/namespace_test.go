@@ -38,18 +38,18 @@ func TestLeaveNamespace(t *testing.T) {
 	compose := environment.New(t, run).Up(ctx)
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-	compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
-	compose.NewNamespace(t, ShellHubUsername, leftBehindNamespaceName, leftBehindNamespace)
-	compose.NewNamespace(t, ShellHubUsername, neverLeftNamespaceName, neverLeftNamespace)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+	compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
+	compose.NewNamespace(t, CloudMateHubUsername, leftBehindNamespaceName, leftBehindNamespace)
+	compose.NewNamespace(t, CloudMateHubUsername, neverLeftNamespaceName, neverLeftNamespace)
 	compose.NewUser(t, leaverUsername, leaverEmail, leaverPassword)
-	compose.NewMember(t, leaverUsername, ShellHubNamespaceName, string(authorizer.RoleObserver))
+	compose.NewMember(t, leaverUsername, CloudMateHubNamespaceName, string(authorizer.RoleObserver))
 	compose.NewMember(t, leaverUsername, leftBehindNamespaceName, string(authorizer.RoleObserver))
 	compose.NewMember(t, leaverUsername, neverLeftNamespaceName, string(authorizer.RoleObserver))
 
 	signedInto := signInto(t, compose, leaverUsername, leaverPassword)
 	require.NotNil(t, signedInto.Tenant)
-	require.Equal(t, ShellHubNamespace, *signedInto.Tenant)
+	require.Equal(t, CloudMateHubNamespace, *signedInto.Tenant)
 
 	t.Run("leaving another namespace answers no content", func(t *testing.T) {
 		resp, err := compose.Anonymous(ctx).
@@ -67,7 +67,7 @@ func TestLeaveNamespace(t *testing.T) {
 		resp, err := compose.Anonymous(ctx).
 			SetAuthToken(signedInto.Token).
 			SetResult(&replacement).
-			Delete("/api/namespaces/" + ShellHubNamespace + "/members")
+			Delete("/api/namespaces/" + CloudMateHubNamespace + "/members")
 
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode())
@@ -87,7 +87,7 @@ func TestLeaveNamespace(t *testing.T) {
 func TestDeleteNamespaceClosesItsTunnels(t *testing.T) {
 	t.Parallel()
 
-	const evictedTunnels = "shellhub_ssh_dialer_connections_evicted_total"
+	const evictedTunnels = "cloudmatehub_ssh_dialer_connections_evicted_total"
 
 	cases := []struct {
 		description     string
@@ -99,7 +99,7 @@ func TestDeleteNamespaceClosesItsTunnels(t *testing.T) {
 			deleteNamespace: func(t *testing.T, compose *environment.DockerCompose) {
 				t.Helper()
 
-				resp, err := compose.R(t.Context()).Delete("/api/namespaces/" + ShellHubNamespace)
+				resp, err := compose.R(t.Context()).Delete("/api/namespaces/" + CloudMateHubNamespace)
 				require.NoError(t, err)
 				require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 			},
@@ -109,7 +109,7 @@ func TestDeleteNamespaceClosesItsTunnels(t *testing.T) {
 			deleteNamespace: func(t *testing.T, compose *environment.DockerCompose) {
 				t.Helper()
 
-				compose.DeleteNamespace(t, ShellHubNamespaceName)
+				compose.DeleteNamespace(t, CloudMateHubNamespaceName)
 			},
 			onHeartbeat: true,
 		},
@@ -145,7 +145,7 @@ func TestDeleteNamespaceClosesItsTunnels(t *testing.T) {
 				assert.InDelta(t, 1, evicted, 0)
 			}
 
-			compose.NewLegacyNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
+			compose.NewLegacyNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
 
 			authDevice(t, compose, cached)
 
@@ -165,9 +165,9 @@ func TestDeleteNamespaceRefusesItsAPIKeys(t *testing.T) {
 	compose := environment.New(t, run).Up(t.Context())
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-	compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
-	compose.JWT(compose.AuthUser(t, ShellHubUsername, ShellHubPassword).Token)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+	compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
+	compose.JWT(compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword).Token)
 
 	key := compose.CreateAPIKey(t, &requests.CreateAPIKey{
 		Name:      "automation",
@@ -179,7 +179,7 @@ func TestDeleteNamespaceRefusesItsAPIKeys(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
-	resp, err = compose.R(t.Context()).Delete("/api/namespaces/" + ShellHubNamespace)
+	resp, err = compose.R(t.Context()).Delete("/api/namespaces/" + CloudMateHubNamespace)
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 

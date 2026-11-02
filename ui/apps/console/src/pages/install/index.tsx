@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
-import { WindowChrome } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { WindowChrome } from "@cloudmatehub/design-system/primitives";
 import CopyButton from "@/components/common/CopyButton";
 import ScreenIntro from "@/components/layout/ScreenIntro";
 import AuthActions from "@/components/auth/AuthActions";

@@ -132,8 +132,8 @@ beforeEach(() => {
         mockInfo({
           version: "v0.27.0",
           endpoints: {
-            ssh: "shellhub.example:22",
-            api: "shellhub.example:443",
+            ssh: "cloudmatehub.example:22",
+            api: "cloudmatehub.example:443",
           },
           authentication: { local: true, saml: true },
         }),
@@ -488,7 +488,7 @@ describe("AdminInstance", () => {
           await within(serverPanel).findByText("v0.27.0"),
         ).toBeInTheDocument();
         expect(
-          within(serverPanel).getByText("shellhub.example:22"),
+          within(serverPanel).getByText("cloudmatehub.example:22"),
         ).toBeInTheDocument();
       });
 

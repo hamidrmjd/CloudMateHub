@@ -29,7 +29,7 @@ func TestConnectionAnnouncement(t *testing.T) {
 	signer := registerDeviceKey(t, ctx, compose)
 	_, device := startAcceptedAgent(t, ctx, compose)
 
-	connected := "Connected to " + deviceSSHID(device) + " via ShellHub.\n"
+	connected := "Connected to " + deviceSSHID(device) + " via CloudMateHub.\n"
 
 	t.Run("a namespace starts with its edition's announcement", func(t *testing.T) {
 		greeting := shellGreeting(t, ctx, compose, device, signer)
@@ -43,14 +43,14 @@ func TestConnectionAnnouncement(t *testing.T) {
 
 		resp, err := compose.R(t.Context()).
 			SetBody(map[string]any{"settings": map[string]string{"connection_announcement": announcement}}).
-			Put("/api/namespaces/" + ShellHubNamespace)
+			Put("/api/namespaces/" + CloudMateHubNamespace)
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
 		greeting := shellGreeting(t, ctx, compose, device, signer)
 
 		assert.Contains(t, greeting, connected+announcement+"\n")
-		assert.NotContains(t, greeting, "Welcome to ShellHub")
+		assert.NotContains(t, greeting, "Welcome to CloudMateHub")
 	})
 
 	t.Run("a command without a terminal gets no announcement", func(t *testing.T) {

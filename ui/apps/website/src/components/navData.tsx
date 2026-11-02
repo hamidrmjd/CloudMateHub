@@ -12,8 +12,8 @@ import {
   UsersIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
-import { GithubIcon } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { GithubIcon } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { docsUrl, githubUrl } from "@/links";
 
 const ICON_SIZE = "size-4";

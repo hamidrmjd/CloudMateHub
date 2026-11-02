@@ -3,7 +3,7 @@ import { useController, type Control, type FieldValues, type Path } from "react-
 import { INPUT } from "@/utils/styles";
 import FieldLabel from "@/components/common/fields/FieldLabel";
 import FieldError from "@/components/common/fields/FieldError";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 type TextareaProps = Omit<
   TextareaHTMLAttributes<HTMLTextAreaElement>,

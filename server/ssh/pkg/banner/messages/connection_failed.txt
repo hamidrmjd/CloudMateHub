@@ -6,6 +6,6 @@ The target device is offline or cannot be reached.
 Troubleshooting steps:
   - Check if the device is powered on
   - Verify network connectivity
-  - Ensure the device is properly connected to ShellHub
+  - Ensure the device is properly connected to CloudMateHub
 
 Please try again once the device is online.

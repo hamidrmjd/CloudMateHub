@@ -2,9 +2,9 @@ post:
   operationId: authDevice
   summary: Auth device
   description: |
-    Authenticate a ShellHub agent into the ShellHub server.
+    Authenticate a CloudMateHub agent into the CloudMateHub server.
 
-    Every 30 seconds, this route is hit by ShellHub agent to inform device availability.
+    Every 30 seconds, this route is hit by CloudMateHub agent to inform device availability.
   tags:
     - internal
     - devices

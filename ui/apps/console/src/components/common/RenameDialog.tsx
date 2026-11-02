@@ -1,6 +1,6 @@
 import { useId, useState, type ReactNode } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { IconButton } from "@shellhub/design-system/primitives";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
 import ContextualDialog from "@/components/common/ContextualDialog";
 import type { RenameSectionProps } from "@/components/common/RenameSection";
 import InputField from "@/components/common/fields/InputField";

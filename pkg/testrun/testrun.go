@@ -27,15 +27,15 @@ import (
 
 const (
 	// RunLabel names the run an object belongs to.
-	RunLabel = "io.shellhub.e2e.run"
+	RunLabel = "io.cloudmatehub.e2e.run"
 	// LeaseLabel marks the containers that keep a run alive.
-	LeaseLabel = "io.shellhub.e2e.lease"
+	LeaseLabel = "io.cloudmatehub.e2e.lease"
 	// KindLabel says how a lease container keeps its run alive: KindProcess or KindStack.
-	KindLabel = "io.shellhub.e2e.kind"
+	KindLabel = "io.cloudmatehub.e2e.kind"
 	// ExpiresLabel holds, in RFC 3339, the time a stack run's leases stop keeping it alive.
-	ExpiresLabel = "io.shellhub.e2e.expires"
+	ExpiresLabel = "io.cloudmatehub.e2e.expires"
 	// CheckoutLabel holds the absolute path of the repository checkout that started a stack run.
-	CheckoutLabel = "io.shellhub.e2e.checkout"
+	CheckoutLabel = "io.cloudmatehub.e2e.checkout"
 
 	// KindProcess is the kind of a lease a process holds open for as long as it lives.
 	KindProcess = "process"

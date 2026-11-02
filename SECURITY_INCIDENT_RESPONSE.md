@@ -1,6 +1,6 @@
 # Security Incident Response
 
-This document describes ShellHub's internal process for handling security vulnerabilities, aligned with [CRA Article 14][cra] reporting obligations to [ENISA][enisa].
+This document describes CloudMateHub's internal process for handling security vulnerabilities, aligned with [CRA Article 14][cra] reporting obligations to [ENISA][enisa].
 
 ## Workflow
 

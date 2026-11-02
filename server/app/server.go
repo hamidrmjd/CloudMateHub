@@ -73,7 +73,9 @@ type Env struct {
 
 	// Domain is the instance's base domain, used to build the browser approval
 	// URL shown in the terminal when a namespace requires SSH login approval.
-	Domain string `env:"SHELLHUB_DOMAIN,default=localhost"`
+	Domain    string `env:"SHELLHUB_DOMAIN,default=localhost"`
+	HTTPPort  string `env:"SHELLHUB_HTTP_PORT,default=80"`
+	HTTPSPort string `env:"SHELLHUB_HTTPS_PORT,default=443"`
 
 	// AutoSSL reports whether the console is served over HTTPS; it selects the
 	// scheme of that approval URL.
@@ -427,7 +429,7 @@ func (s *Server) setupSSH(service services.Service) error {
 		ConnectTimeout:               env.ConnectTimeout,
 		AllowPublickeyAccessBelow060: env.AllowPublickeyAccessBelow060,
 		HostKeyFile:                  env.HostKeyFile,
-		Domain:                       s.env.Domain,
+		Domain:                       s.consoleHost(),
 		AutoSSL:                      s.env.AutoSSL,
 		Edition:                      s.env.Edition,
 		Clock:                        s.clock,
@@ -650,4 +652,20 @@ func (s *Server) routerOptions(ctx context.Context) ([]routes.Option, error) {
 
 func (s *Server) instanceIssuer() string {
 	return session.ConsoleURL(s.env.Domain, s.env.AutoSSL, "")
+}
+
+// consoleHost includes the published browser port in native SSH approval links.
+// Keep this separate from the token issuer so a port correction does not revoke sessions.
+func (s *Server) consoleHost() string {
+	port, standard := s.env.HTTPPort, "80"
+	if s.env.AutoSSL {
+		port, standard = s.env.HTTPSPort, "443"
+	}
+	if port == "" || port == standard {
+		return s.env.Domain
+	}
+	if _, _, err := net.SplitHostPort(s.env.Domain); err == nil {
+		return s.env.Domain
+	}
+	return net.JoinHostPort(s.env.Domain, port)
 }

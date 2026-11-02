@@ -27,7 +27,7 @@ type Authenticator struct {
 }
 
 // NewAuthenticator creates a new instance of Authenticator for the host mode.
-// It receives the api client to perform requests to the ShellHub's API, the authentication data received by the agent
+// It receives the api client to perform requests to the CloudMateHub's API, the authentication data received by the agent
 // when started the communication between it and the agent, the singleUserPassword, what indicates is is running at
 // this mode and the deviceName.
 //

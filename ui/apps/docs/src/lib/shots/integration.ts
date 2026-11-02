@@ -24,7 +24,7 @@ export function shots(): AstroIntegration {
   let command = "";
 
   return {
-    name: "@shellhub/docs:shots",
+    name: "@cloudmatehub/docs:shots",
     hooks: {
       "astro:config:setup": (options) => {
         command = options.command;

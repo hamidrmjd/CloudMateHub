@@ -22,11 +22,11 @@ keygen: api_private_key api_public_key ssh_private_key
 .PHONY: start
 start: keygen
 ifeq ($(SHELLHUB_ENV),development)
-	@echo Starting ShellHub in development mode...
+	@echo Starting CloudMateHub in development mode...
 	@echo
 	@$(DOCKER_COMPOSE) up
 else
-	@echo Starting ShellHub in production mode...
+	@echo Starting CloudMateHub in production mode...
 	@echo
 
 	@$(DOCKER_COMPOSE) up -d

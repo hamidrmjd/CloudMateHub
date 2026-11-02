@@ -46,7 +46,7 @@ func SameDomainRedirectPolicy() resty.RedirectPolicyFunc {
 	}
 }
 
-// DialContext creates a websocket connection to ShellHub's SSH server.
+// DialContext creates a websocket connection to CloudMateHub's SSH server.
 //
 // It receivees the endpoint to connect and the necessary headers for authentication on the server. If the server
 // redirect the connection with status [http.StatusTemporaryRedirect] or [http.StatusPermanentRedirect], the DialContext

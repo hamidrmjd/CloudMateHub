@@ -11,7 +11,7 @@ import { attempt } from "@/utils/failure";
  * so the UI can surface "unavailable" instead of spinning forever.
  */
 
-const SCRIPT_ID = "shellhub-chatwoot-sdk";
+const SCRIPT_ID = "cloudmatehub-chatwoot-sdk";
 const BOOTSTRAP_TIMEOUT_MS = 15_000;
 
 // CSS selectors for Chatwoot's own injected DOM (the floating launcher,

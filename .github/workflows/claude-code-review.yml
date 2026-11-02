@@ -72,7 +72,7 @@ jobs:
             echo "sha=$SHA" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Checkout shellhub (PR branch)
+      - name: Checkout cloudmatehub (PR branch)
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ steps.pr-ref.outputs.sha }}
@@ -184,7 +184,7 @@ jobs:
           app-id: ${{ secrets.CLOUD_DISPATCH_APP_ID }}
           private-key: ${{ secrets.CLOUD_DISPATCH_APP_PRIVATE_KEY }}
           owner: shellhub-io
-          repositories: shellhub,team
+          repositories: cloudmatehub,team
           permission-issues: read
           permission-pull-requests: read
 
@@ -227,7 +227,7 @@ jobs:
         if: steps.gate.outputs.proceed == 'true'
         uses: ./claude/.github/actions/pr-review
         with:
-          project: shellhub
+          project: cloudmatehub
           repo: ${{ github.repository }}
           pr-number: ${{ github.event.pull_request.number || github.event.issue.number }}
           author-can-request-review: ${{ steps.author-check.outputs.can_request_review }}

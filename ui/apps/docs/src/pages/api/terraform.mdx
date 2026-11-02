@@ -1,18 +1,18 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: Terraform
-description: Reach ShellHub devices from Terraform provisioners, and manage ShellHub from the API.
+description: Reach CloudMateHub devices from Terraform provisioners, and manage CloudMateHub from the API.
 ---
 
 import Callout from "../../components/Callout.astro";
 
 # Terraform
 
-Two different things people mean by "Terraform and ShellHub", and they are worth separating.
+Two different things people mean by "Terraform and CloudMateHub", and they are worth separating.
 
 ## Reaching a device from a provisioner
 
-Terraform's `remote-exec` and `file` provisioners connect over SSH, and ShellHub's SSHID is an
+Terraform's `remote-exec` and `file` provisioners connect over SSH, and CloudMateHub's SSHID is an
 ordinary SSH username:
 
 ```hcl
@@ -30,7 +30,7 @@ provisioner "remote-exec" {
 }
 ```
 
-The host is always the ShellHub server; the device is identified by `user`.
+The host is always the CloudMateHub server; the device is identified by `user`.
 
 **The key must already be enrolled.** If it is not, the connection parks waiting for a browser
 approval and Terraform hangs until it times out. Enroll it ahead of time through the API key's
@@ -38,25 +38,25 @@ approval and Terraform hangs until it times out. Enroll it ahead of time through
 
 <Callout variant="warning">
 Provisioners are a last resort in Terraform's own guidance, and that applies here.
-Configuring a device that ShellHub reaches is usually better done with
+Configuring a device that CloudMateHub reaches is usually better done with
 [Ansible](/api/ansible) or a configuration tool, with Terraform doing infrastructure.
 </Callout>
 
-## Managing ShellHub itself
+## Managing CloudMateHub itself
 
-ShellHub's HTTP API is what you would target to manage devices, tags or access policies as code.
+CloudMateHub's HTTP API is what you would target to manage devices, tags or access policies as code.
 An API key cannot create a namespace or manage API keys, so those stay a person's job in the
 console. See [What a key cannot do](/api#what-a-key-cannot-do).
 
-There is no official ShellHub Terraform provider. The options are the generic HTTP provider for
+There is no official CloudMateHub Terraform provider. The options are the generic HTTP provider for
 simple cases, or `null_resource` with a `local-exec` calling the API:
 
 ```hcl
-resource "null_resource" "shellhub_tag" {
+resource "null_resource" "cloudmatehub_tag" {
   provisioner "local-exec" {
     command = <<-EOT
       curl -sf -X POST https://cloud.shellhub.io/api/... \
-        -H "X-API-Key: ${var.shellhub_api_key}" \
+        -H "X-API-Key: ${var.cloudmatehub_api_key}" \
         -H "Content-Type: application/json" \
         -d '{ ... }'
     EOT
@@ -73,14 +73,14 @@ See [API Authentication](/api) and the
 
 ## Enrolling devices Terraform creates
 
-If Terraform is creating machines that should appear in ShellHub, put the agent in at creation
+If Terraform is creating machines that should appear in CloudMateHub, put the agent in at creation
 with a [provisioning key](/manage/devices/provisioning-keys), through cloud-init or user data:
 
 ```hcl
 user_data = <<-EOT
   #!/bin/sh
   curl -sSf https://cloud.shellhub.io/install.sh | \
-    PROVISIONING_KEY=${var.shellhub_provisioning_key} \
+    PROVISIONING_KEY=${var.cloudmatehub_provisioning_key} \
     sh
 EOT
 ```

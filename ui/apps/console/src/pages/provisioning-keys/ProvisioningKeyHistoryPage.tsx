@@ -6,8 +6,8 @@ import {
   PauseCircleIcon,
   TicketIcon,
 } from "@heroicons/react/24/outline";
-import { IconBadge } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { IconBadge } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { type ProvisioningKey } from "@/client";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import CopyButton from "@/components/common/CopyButton";

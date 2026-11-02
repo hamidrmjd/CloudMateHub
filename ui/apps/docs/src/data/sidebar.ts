@@ -75,9 +75,9 @@ export function flattenItems(
  */
 export const sidebar: SidebarSection[] = [
   {
-    label: "About ShellHub",
+    label: "About CloudMateHub",
     description:
-      "What ShellHub is, how it reaches your devices, and which deployment fits you.",
+      "What CloudMateHub is, how it reaches your devices, and which deployment fits you.",
     icon: BookOpenIcon,
     items: [
       {
@@ -85,13 +85,13 @@ export const sidebar: SidebarSection[] = [
         href: "/introduction",
       },
       {
-        label: "How ShellHub Works",
-        href: "/about/how-shellhub-works",
+        label: "How CloudMateHub Works",
+        href: "/about/how-cloudmatehub-works",
         featured: true,
       },
       {
-        label: "ShellHub vs. Jump Hosts and VPNs",
-        href: "/about/shellhub-vs-jump-hosts",
+        label: "CloudMateHub vs. Jump Hosts and VPNs",
+        href: "/about/cloudmatehub-vs-jump-hosts",
       },
       {
         label: "Self-Hosted vs. Cloud",
@@ -274,7 +274,7 @@ export const sidebar: SidebarSection[] = [
   },
   {
     label: "Self-Hosted",
-    description: "Run your own ShellHub server.",
+    description: "Run your own CloudMateHub server.",
     icon: ServerStackIcon,
     items: [
       {
@@ -303,7 +303,7 @@ export const sidebar: SidebarSection[] = [
   {
     label: "API and Automation",
     description:
-      "Drive ShellHub from a script, a pipeline, a config tool, or an AI agent.",
+      "Drive CloudMateHub from a script, a pipeline, a config tool, or an AI agent.",
     icon: PuzzlePieceIcon,
     items: [
       {

@@ -4,21 +4,21 @@ import { buildSshid, parseSshid, sshUrl } from "../sshid";
 describe("buildSshid", () => {
   beforeEach(() => {
     Object.defineProperty(window, "location", {
-      value: { hostname: "shellhub.example.com" },
+      value: { hostname: "cloudmatehub.example.com" },
       writable: true,
     });
   });
 
   it("returns namespace.deviceName@hostname", () => {
     expect(buildSshid("myns", "mydevice")).toBe(
-      "myns.mydevice@shellhub.example.com",
+      "myns.mydevice@cloudmatehub.example.com",
     );
   });
 
   it("uses window.location.hostname as the server part, not the namespace", () => {
     const result = buildSshid("myns", "mydevice");
     expect(result).not.toContain("@myns");
-    expect(result).toContain("@shellhub.example.com");
+    expect(result).toContain("@cloudmatehub.example.com");
   });
 
   it("reflects changes in window.location.hostname", () => {
@@ -40,10 +40,10 @@ describe("parseSshid", () => {
   });
 
   it("keeps the dots of a device name after the namespace", () => {
-    expect(parseSshid("acme.web.eu-1@shellhub.example.com")).toEqual({
+    expect(parseSshid("acme.web.eu-1@cloudmatehub.example.com")).toEqual({
       namespace: "acme",
       device: "web.eu-1",
-      host: "shellhub.example.com",
+      host: "cloudmatehub.example.com",
     });
   });
 

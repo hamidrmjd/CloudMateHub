@@ -1,5 +1,5 @@
 -- The identity SSH access mode: instead of a namespace-wide key ACL plus
--- firewall rules, every SSH login resolves to a ShellHub account and is
+-- firewall rules, every SSH login resolves to a CloudMateHub account and is
 -- authorized by Access Policies. A key the namespace already knows connects
 -- straight through; an unknown one is held at the gateway until a member
 -- approves it in the console.
@@ -21,7 +21,7 @@ ALTER TABLE namespaces
 
 --bun:split
 
--- Bind a session to the ShellHub user who authorized it via browser approval.
+-- Bind a session to the CloudMateHub user who authorized it via browser approval.
 -- NULL for password/public-key logins and web-terminal sessions, which have no
 -- approver. ON DELETE SET NULL so removing a user never deletes session history.
 ALTER TABLE sessions ADD COLUMN user_id uuid;
@@ -84,7 +84,7 @@ CREATE INDEX access_policy_tags_tag_id ON access_policy_tags USING btree (tag_id
 
 --bun:split
 
--- SSH Identities: bindings of an SSH public key to a ShellHub account within a
+-- SSH Identities: bindings of an SSH public key to a CloudMateHub account within a
 -- namespace. A connection whose presented key's fingerprint resolves here is
 -- recognized as the bound account, with no browser step. Distinct from
 -- public_keys (the legacy namespace-scoped key ACL), which is untouched.

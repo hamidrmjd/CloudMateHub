@@ -1,6 +1,6 @@
 import { ReactNode, useId } from "react";
-import type { Palette } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import type { Palette } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import BaseDialog, { type DialogSize } from "@/components/common/BaseDialog";
 import ScrollFades from "@/components/common/ScrollFades";
 import { useScrollEdges } from "@/hooks/useScrollEdges";

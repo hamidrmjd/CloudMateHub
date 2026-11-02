@@ -40,7 +40,7 @@ export async function signDeviceAuth<T extends SignableDeviceAuth>(body: T) {
   }
 
   const statement = Buffer.concat([
-    sshString("shellhub-device-auth-v1"),
+    sshString("cloudmatehub-device-auth-v1"),
     sshString(data.challenge),
     sshString(body.tenant_id ?? ""),
     sshString(body.provisioning_key ?? ""),

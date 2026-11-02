@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import { isCloud, isCommunity } from "@/env";
 import { useAuthStore } from "@/stores/authStore";
 import { useUserInfo } from "@/hooks/useUserRequests";

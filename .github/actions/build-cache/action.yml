@@ -29,7 +29,7 @@ runs:
       shell: bash
       env:
         PREFIX: build-${{ runner.os }}-
-        SUMS: ${{ hashFiles('shellhub/**/go.sum', 'shellhub/ui/package-lock.json') }}
+        SUMS: ${{ hashFiles('cloudmatehub/**/go.sum', 'cloudmatehub/ui/package-lock.json') }}
         SAVE: ${{ inputs.save == 'true' && github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && github.event_name != 'pull_request_target' }}
       run: |
         echo "prefix=$PREFIX" >> "$GITHUB_OUTPUT"
@@ -79,7 +79,7 @@ runs:
       id: versions
       shell: bash
       run: |
-        VERSION=$(sed -n 's/^ALPINE_VERSION=//p' shellhub/versions.env)
+        VERSION=$(sed -n 's/^ALPINE_VERSION=//p' cloudmatehub/versions.env)
         if [ -z "$VERSION" ]; then
             echo "could not read ALPINE_VERSION from versions.env"
             exit 1
@@ -94,9 +94,9 @@ runs:
         skip-extraction: ${{ steps.extract.outputs.extract != 'true' }}
         cache-map: |
           {
-            "${{ steps.key.outputs.dir }}/go-build": {"id": "shellhub-go-build", "target": "/var/cache-target"},
-            "${{ steps.key.outputs.dir }}/go-mod": {"id": "shellhub-go-mod", "target": "/var/cache-target"},
-            "${{ steps.key.outputs.dir }}/npm": {"id": "shellhub-npm", "target": "/var/cache-target"}
+            "${{ steps.key.outputs.dir }}/go-build": {"id": "cloudmatehub-go-build", "target": "/var/cache-target"},
+            "${{ steps.key.outputs.dir }}/go-mod": {"id": "cloudmatehub-go-mod", "target": "/var/cache-target"},
+            "${{ steps.key.outputs.dir }}/npm": {"id": "cloudmatehub-npm", "target": "/var/cache-target"}
           }
 
     - name: Drop the Go build cache entries this job did not use
@@ -113,7 +113,7 @@ runs:
         ARG IMAGE
         FROM ${IMAGE}
         ARG RESTORED
-        RUN --mount=type=cache,id=shellhub-go-build,target=/go-build,sharing=shared \
+        RUN --mount=type=cache,id=cloudmatehub-go-build,target=/go-build,sharing=shared \
             touch -d "@${RESTORED}" /restored && \
             find /go-build -type f ! -newer /restored -delete
         EOF

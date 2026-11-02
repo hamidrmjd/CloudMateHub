@@ -60,15 +60,15 @@ func TestSSHPublicKeyRules(t *testing.T) {
 	})
 
 	t.Run("a username restriction lets the key log in as the user it matches", func(t *testing.T) {
-		signer := registerPublicKey(t, compose, ShellHubAgentUsername, requests.PublicKeyFilter{Hostname: ".*"})
+		signer := registerPublicKey(t, compose, CloudMateHubAgentUsername, requests.PublicKeyFilter{Hostname: ".*"})
 
 		requireKeyLogsIn(t, compose, deviceSSHID(named), signer)
 	})
 
 	t.Run("a username restriction refuses the key as a user it does not match", func(t *testing.T) {
-		signer := registerPublicKey(t, compose, ShellHubAgentUsername, requests.PublicKeyFilter{Hostname: ".*"})
+		signer := registerPublicKey(t, compose, CloudMateHubAgentUsername, requests.PublicKeyFilter{Hostname: ".*"})
 
-		requireKeyRefused(t, compose, "daemon@"+ShellHubNamespaceName+"."+named.Name, signer, errPublicKeyNotEvaluated)
+		requireKeyRefused(t, compose, "daemon@"+CloudMateHubNamespaceName+"."+named.Name, signer, errPublicKeyNotEvaluated)
 	})
 }
 
@@ -104,7 +104,7 @@ func TestSSHPublicKeyRefusedBelowAgent060(t *testing.T) {
 
 		conn := dialClient(t, t.Context(), compose.SSHAddress(), &ssh.ClientConfig{
 			User:            deviceSSHID(&device),
-			Auth:            []ssh.AuthMethod{ssh.Password(ShellHubAgentPassword)},
+			Auth:            []ssh.AuthMethod{ssh.Password(CloudMateHubAgentPassword)},
 			HostKeyCallback: ssh.InsecureIgnoreHostKey(), //nolint:gosec // the test stack's host key is ephemeral
 		})
 		require.NoError(t, conn.Close())

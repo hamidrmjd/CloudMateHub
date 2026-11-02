@@ -26,19 +26,19 @@ open_url() {
   echo "🚀 Open this URL in your browser to complete setup: $url"
 }
 
-echo "🌟 Welcome to the ShellHub Setup Script"
+echo "🌟 Welcome to the CloudMateHub Setup Script"
 echo ""
 
 SERVICES=$(docker compose ps -q | grep -v INFO: | xargs docker inspect -f '{{.State.Running}}' 2>/dev/null | grep -c 'true' || true)
-[ "$SERVICES" -le 0 ] && { echo "🚫 ERROR: ShellHub is not running. Exiting."; exit 1; }
+[ "$SERVICES" -le 0 ] && { echo "🚫 ERROR: CloudMateHub is not running. Exiting."; exit 1; }
 
 if curl -s http://localhost/info | grep -q '"setup":true'; then
   echo "✅ Setup has already been completed. No further action is required."
   exit 0
 fi
 
-echo "📋 This script will open the setup URL for your ShellHub instance."
-echo "❗ Important: The ShellHub instance cannot be on localhost. Please ensure you provide a valid public IP address or hostname."
+echo "📋 This script will open the setup URL for your CloudMateHub instance."
+echo "❗ Important: The CloudMateHub instance cannot be on localhost. Please ensure you provide a valid public IP address or hostname."
 echo ""
 
 URL="http://localhost/setup"
@@ -47,4 +47,4 @@ echo "🔗 Generated Setup URL: $URL"
 open_url "$URL"
 
 echo ""
-echo "✅ Please ensure your ShellHub server is running and accessible from an external address."
+echo "✅ Please ensure your CloudMateHub server is running and accessible from an external address."

@@ -28,7 +28,7 @@ import { useTerminalThemeStore } from "@/stores/terminalThemeStore";
 import { useScrollEdges } from "@/hooks/useScrollEdges";
 import ScrollFades from "@/components/common/ScrollFades";
 import VaultAutoLockBanner from "@/components/vault/VaultAutoLockBanner";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import LogoMark from "./LogoMark";
 import { isEnterprise } from "@/env";
 import { isAdminPath } from "@/utils/adminRoute";

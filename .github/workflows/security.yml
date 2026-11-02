@@ -217,7 +217,7 @@ jobs:
         with:
           context: .
           file: server/Dockerfile
-          tags: shellhub/server:scan
+          tags: cloudmatehub/server:scan
           push: false
           load: true
           build-args: ${{ steps.versions.outputs.build-args }}
@@ -228,7 +228,7 @@ jobs:
         with:
           context: .
           file: gateway/Dockerfile
-          tags: shellhub/gateway:scan
+          tags: cloudmatehub/gateway:scan
           push: false
           load: true
           build-args: ${{ steps.versions.outputs.build-args }}
@@ -239,7 +239,7 @@ jobs:
         with:
           context: .
           file: ui/Dockerfile
-          tags: shellhub/ui:scan
+          tags: cloudmatehub/ui:scan
           push: false
           load: true
           build-args: ${{ steps.versions.outputs.build-args }}
@@ -250,7 +250,7 @@ jobs:
         with:
           context: .
           file: agent/Dockerfile
-          tags: shellhub/agent:scan
+          tags: cloudmatehub/agent:scan
           push: false
           load: true
           build-args: ${{ steps.versions.outputs.build-args }}
@@ -275,19 +275,19 @@ jobs:
 
           failed=0
           for image in server gateway ui agent; do
-              if ! docker image inspect "shellhub/$image:scan" >/dev/null 2>&1; then
+              if ! docker image inspect "cloudmatehub/$image:scan" >/dev/null 2>&1; then
                   echo "::error title=trivy ($image)::the image did not build"
                   failed=1
                   continue
               fi
 
               echo "::group::trivy ($image)"
-              if ! trivy --format sarif --output "/work/trivy-$image.sarif" "shellhub/$image:scan"; then
+              if ! trivy --format sarif --output "/work/trivy-$image.sarif" "cloudmatehub/$image:scan"; then
                   rm -f "trivy-$image.sarif"
                   echo "::error title=trivy ($image)::trivy could not scan the image"
                   failed=1
               fi
-              trivy --exit-code 1 "shellhub/$image:scan" || { echo "::error title=trivy ($image)::vulnerabilities found"; failed=1; }
+              trivy --exit-code 1 "cloudmatehub/$image:scan" || { echo "::error title=trivy ($image)::vulnerabilities found"; failed=1; }
               echo "::endgroup::"
           done
 

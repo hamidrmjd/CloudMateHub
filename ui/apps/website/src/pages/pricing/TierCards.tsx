@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { cn } from "@shellhub/design-system/cn";
-import { Button } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import {
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import { FeatureListItem, HighlightCard, Section } from "@/components";
 
 const tiers = [

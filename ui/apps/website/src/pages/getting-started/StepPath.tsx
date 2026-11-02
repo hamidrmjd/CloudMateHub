@@ -8,14 +8,14 @@ import {
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import {
   Badge,
   Button,
   Card,
   IconBadge,
-  ShellHubCloudIcon,
-} from "@shellhub/design-system/primitives";
+  CloudMateHubCloudIcon,
+} from "@cloudmatehub/design-system/primitives";
 import { FeatureListItem, HighlightCard } from "@/components";
 import { signupUrl } from "@/links";
 
@@ -41,14 +41,14 @@ export function StepPath({ onSelectSelfHosted }: StepPathProps) {
                   color="primary"
                   className="shadow-[0_0_12px_rgba(102,122,204,0.15)]"
                 >
-                  <ShellHubCloudIcon className="h-5" />
+                  <CloudMateHubCloudIcon className="h-5" />
                 </IconBadge>
                 <Badge shape="pill" color="green">
                   Recommended
                 </Badge>
               </div>
 
-              <h3 className="text-lg font-bold mb-2">ShellHub Cloud</h3>
+              <h3 className="text-lg font-bold mb-2">CloudMateHub Cloud</h3>
               <p className="text-sm text-text-secondary leading-relaxed mb-6">
                 Start in seconds. No infrastructure to manage.
               </p>

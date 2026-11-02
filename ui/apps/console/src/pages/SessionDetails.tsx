@@ -27,8 +27,8 @@ import {
   Button,
   Card,
   IconButton,
-} from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+} from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import SessionPrincipal from "@/components/sessions/SessionPrincipal";
 import { usePrincipalName } from "@/hooks/usePrincipalName";

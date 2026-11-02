@@ -18,12 +18,12 @@ func TestDefaultStackName(t *testing.T) {
 	}{
 		{
 			name:  "the same checkout gets the same name",
-			roots: []string{"/home/dev/src/shellhub-io/shellhub", "/home/dev/src/shellhub-io/shellhub"},
+			roots: []string{"/home/dev/src/shellhub-io/cloudmatehub", "/home/dev/src/shellhub-io/cloudmatehub"},
 			same:  true,
 		},
 		{
 			name:  "two worktrees get different names",
-			roots: []string{"/home/dev/.t3/worktrees/a/shellhub", "/home/dev/.t3/worktrees/b/shellhub"},
+			roots: []string{"/home/dev/.t3/worktrees/a/cloudmatehub", "/home/dev/.t3/worktrees/b/cloudmatehub"},
 			same:  false,
 		},
 		{
@@ -47,7 +47,7 @@ func TestDefaultStackName(t *testing.T) {
 
 func TestPrintExportsSurvivesEval(t *testing.T) {
 	state := &stateFile{
-		Name:       "shellhub-e2e-a",
+		Name:       "cloudmatehub-e2e-a",
 		Edition:    "enterprise",
 		AgentImage: "agent:a b",
 		Envs:       map[string]string{"SHELLHUB_ACCOUNT_LOCKOUT_BASE": "5s"},

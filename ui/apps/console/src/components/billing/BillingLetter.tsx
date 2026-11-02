@@ -1,5 +1,5 @@
 import { SparklesIcon } from "@heroicons/react/24/outline";
-import { IconBadge } from "@shellhub/design-system/primitives";
+import { IconBadge } from "@cloudmatehub/design-system/primitives";
 
 /**
  * The explanation shown before subscribing: what the plan covers and how it is billed.

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { InfoCard, type InfoCardProps } from "@/components";
-import { C } from "@shellhub/design-system/constants";
+import { C } from "@cloudmatehub/design-system/constants";
 
 const color = C.primary;
 

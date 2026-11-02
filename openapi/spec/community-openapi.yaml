@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: ShellHub OpenAPI
+  title: CloudMateHub OpenAPI
   description: |
     Full reference for the ShellHub Community API, covering public, internal,
     and service-to-service routes. This is the internal source of truth used for
@@ -8,7 +8,7 @@ info:
     is a filtered build that exposes only the namespace-scoped, API-key usable
     surface.
   contact:
-    name: ShellHub
+    name: CloudMateHub
     email: contact@shellhub.io
   license:
     name: Apache License 2.0
@@ -16,7 +16,7 @@ info:
   version: 0.20.0
 servers:
   - url: /
-    description: ShellHub server.
+    description: CloudMateHub server.
 components:
   securitySchemes:
     jwt:
@@ -55,9 +55,9 @@ tags:
     x-displayName: Users
     description: User-scoped namespace security settings.
   - name: internal
-    description: Requests executed internally by ShellHub server.
+    description: Requests executed internally by CloudMateHub server.
   - name: external
-    description: Requests executed by the ShellHub user.
+    description: Requests executed by the CloudMateHub user.
   - name: system
     description: Routes related to running instance.
   - name: provisioning-keys

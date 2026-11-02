@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import { IconBadge, type Palette } from "@shellhub/design-system/primitives";
-import { GlowOrbs } from "@shellhub/design-system/components";
-import { cn } from "@shellhub/design-system/cn";
+import { IconBadge, type Palette } from "@cloudmatehub/design-system/primitives";
+import { GlowOrbs } from "@cloudmatehub/design-system/components";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 interface PageHeaderProps {
   icon: ReactNode;

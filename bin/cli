@@ -6,7 +6,7 @@ SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd -P)
 cd "$SCRIPT_DIR/.."
 
 if ! ./bin/docker-compose ps --status running --services 2>/dev/null | grep -qx server; then
-    echo "🚫 ERROR: ShellHub is not running. Exiting."
+    echo "🚫 ERROR: CloudMateHub is not running. Exiting."
     exit 1
 fi
 

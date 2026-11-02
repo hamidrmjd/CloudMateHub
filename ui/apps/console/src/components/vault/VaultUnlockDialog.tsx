@@ -3,7 +3,7 @@ import { LockClosedIcon } from "@heroicons/react/24/outline";
 import { useVaultStore } from "@/stores/vaultStore";
 import BaseDialog from "@/components/common/BaseDialog";
 import PasswordField from "@/components/common/fields/PasswordField";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import DialogHeader from "@/components/common/DialogHeader";
 
 interface Props {

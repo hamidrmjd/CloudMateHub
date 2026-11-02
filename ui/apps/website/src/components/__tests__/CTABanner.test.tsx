@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { CTABanner } from "@/components";
 
-vi.mock("@shellhub/design-system/components", () => ({
+vi.mock("@cloudmatehub/design-system/components", () => ({
   Reveal: ({
     children,
     className,

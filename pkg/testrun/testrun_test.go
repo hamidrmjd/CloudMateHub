@@ -83,7 +83,7 @@ func newRunImage(ctx context.Context, cli *client.Client, id string) (string, er
 		_, _ = cli.ContainerRemove(context.WithoutCancel(ctx), source.ID, client.ContainerRemoveOptions{Force: true})
 	}()
 
-	ref := "shellhub-testrun/run-test:" + id
+	ref := "cloudmatehub-testrun/run-test:" + id
 	if _, err := cli.ContainerCommit(ctx, source.ID, client.ContainerCommitOptions{
 		Reference: ref,
 		Changes:   []string{"LABEL " + testrun.RunLabel + "=" + id},
@@ -108,7 +108,7 @@ func newRunObjects(ctx context.Context, cli *client.Client, id string, labels ma
 		return runObjects{}, err
 	}
 
-	network, err := cli.NetworkCreate(ctx, "shellhub-testrun-"+id, client.NetworkCreateOptions{
+	network, err := cli.NetworkCreate(ctx, "cloudmatehub-testrun-"+id, client.NetworkCreateOptions{
 		Labels: map[string]string{testrun.RunLabel: id},
 	})
 	if err != nil {
@@ -340,7 +340,7 @@ func TestStackRunLivesWhileItsContainersExist(t *testing.T) {
 	ctx := t.Context()
 	cli := dockerClient(t)
 
-	project := "shellhub-testrun-" + newID()
+	project := "cloudmatehub-testrun-" + newID()
 
 	helper, objects := startHelper(t, "stack", "", helperProject+"="+project)
 	require.NoError(t, helper.Wait())
@@ -502,14 +502,14 @@ func TestCloseUntagsOnlyItsOwnImages(t *testing.T) {
 }
 
 func TestStartStackRefusesNonPositiveTTL(t *testing.T) {
-	_, err := testrun.StartStack(t.Context(), "shellhub-testrun-ttl", testrun.StackOptions{})
+	_, err := testrun.StartStack(t.Context(), "cloudmatehub-testrun-ttl", testrun.StackOptions{})
 	require.ErrorContains(t, err, "TTL")
 }
 
 func TestStackRunLabelsCarryItsExpiryAndCheckout(t *testing.T) {
 	before := wallClock.Now().Add(2 * time.Hour).Truncate(time.Second)
 
-	run, err := testrun.StartStack(t.Context(), "shellhub-testrun-"+newID(), testrun.StackOptions{TTL: 2 * time.Hour, Checkout: "/src/shellhub"})
+	run, err := testrun.StartStack(t.Context(), "cloudmatehub-testrun-"+newID(), testrun.StackOptions{TTL: 2 * time.Hour, Checkout: "/src/cloudmatehub"})
 	require.NoError(t, err)
 
 	t.Cleanup(func() { _ = run.Close(context.Background()) })
@@ -517,7 +517,7 @@ func TestStackRunLabelsCarryItsExpiryAndCheckout(t *testing.T) {
 	labels := run.Labels()
 	assert.Equal(t, testrun.KindStack, labels[testrun.KindLabel])
 	assert.Equal(t, run.ID(), labels[testrun.LeaseLabel])
-	assert.Equal(t, "/src/shellhub", labels[testrun.CheckoutLabel])
+	assert.Equal(t, "/src/cloudmatehub", labels[testrun.CheckoutLabel])
 
 	expires, err := time.Parse(time.RFC3339, labels[testrun.ExpiresLabel])
 	require.NoError(t, err)
@@ -562,12 +562,12 @@ func TestLeaseAlive(t *testing.T) {
 		},
 		{
 			name:  "a legacy compose lease younger than a day",
-			lease: container.Summary{State: container.StateRunning, Created: ago(time.Hour), Labels: map[string]string{"com.docker.compose.project": "shellhub-e2e-x"}},
+			lease: container.Summary{State: container.StateRunning, Created: ago(time.Hour), Labels: map[string]string{"com.docker.compose.project": "cloudmatehub-e2e-x"}},
 			want:  true,
 		},
 		{
 			name:  "a legacy compose lease older than a day",
-			lease: container.Summary{State: container.StateRunning, Created: ago(25 * time.Hour), Labels: map[string]string{"com.docker.compose.project": "shellhub-e2e-x"}},
+			lease: container.Summary{State: container.StateRunning, Created: ago(25 * time.Hour), Labels: map[string]string{"com.docker.compose.project": "cloudmatehub-e2e-x"}},
 		},
 		{
 			name:  "a legacy process lease that is running",

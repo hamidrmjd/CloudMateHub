@@ -46,18 +46,18 @@ The agent's own log shows the refusal as `status_code=403`.
 Depends on how it was installed:
 
 ```bash
-$ docker ps | grep shellhub        # Docker
-$ podman ps | grep shellhub        # Podman
-$ snap services shellhub           # Snap
+$ docker ps | grep cloudmatehub        # Docker
+$ podman ps | grep cloudmatehub        # Podman
+$ snap services cloudmatehub           # Snap
 $ systemctl status shellhub-agent  # standalone
-$ service shellhub status          # FreeBSD
+$ service cloudmatehub status          # FreeBSD
 ```
 
 If it is not running, the logs say why:
 
 ```bash
 $ docker logs <container>
-$ sudo snap logs shellhub
+$ sudo snap logs cloudmatehub
 $ journalctl -u shellhub-agent -n 50
 ```
 
@@ -65,8 +65,8 @@ $ journalctl -u shellhub-agent -n 50
 
 Two variables are required, and a mistake in either produces a device that never appears.
 
-**`SHELLHUB_SERVER_ADDRESS`** — must include the scheme. `https://shellhub.example.com`, not
-`shellhub.example.com`. Self-hosted deployments often have this pointing at the default Cloud
+**`SHELLHUB_SERVER_ADDRESS`** — must include the scheme. `https://cloudmatehub.example.com`, not
+`cloudmatehub.example.com`. Self-hosted deployments often have this pointing at the default Cloud
 address by accident.
 
 **`SHELLHUB_TENANT_ID`** is deprecated. A device that enrolls with it lands in **Pending** and
@@ -83,7 +83,7 @@ spelling against [Agent Configuration](/get-started/agent-configuration).
 From the device:
 
 ```bash
-$ curl -sS -o /dev/null -w '%{http_code}\n' https://shellhub.example.com/info
+$ curl -sS -o /dev/null -w '%{http_code}\n' https://cloudmatehub.example.com/info
 ```
 
 A `200` means the path is fine and the problem is elsewhere. Anything else is network or DNS, and
@@ -108,7 +108,7 @@ is the reason.
 
 `SHELLHUB_PRIVATE_KEY` **is** the device's identity. The consequences:
 
-- **Same key, new machine** → it is the same device to ShellHub.
+- **Same key, new machine** → it is the same device to CloudMateHub.
 - **Key lost** — reflashed, container recreated, volume wiped — → a **new** device, with the old
   entry left behind.
 

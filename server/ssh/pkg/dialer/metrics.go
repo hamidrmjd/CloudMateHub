@@ -6,25 +6,25 @@ const perProcess = "Counted per server process; sum() across replicas for a flee
 
 var (
 	connectionsDesc = prometheus.NewDesc(
-		"shellhub_ssh_dialer_connections",
+		"cloudmatehub_ssh_dialer_connections",
 		"Reverse connections currently held, across every device. "+perProcess,
 		nil, nil,
 	)
 
 	devicesDesc = prometheus.NewDesc(
-		"shellhub_ssh_dialer_devices",
+		"cloudmatehub_ssh_dialer_devices",
 		"Devices holding at least one reverse connection. "+perProcess,
 		nil, nil,
 	)
 
 	displacedDesc = prometheus.NewDesc(
-		"shellhub_ssh_dialer_connections_displaced_total",
+		"cloudmatehub_ssh_dialer_connections_displaced_total",
 		"Reverse connections displaced by a newer registration for the same device. "+perProcess,
 		nil, nil,
 	)
 
 	evictedDesc = prometheus.NewDesc(
-		"shellhub_ssh_dialer_connections_evicted_total",
+		"cloudmatehub_ssh_dialer_connections_evicted_total",
 		"Reverse connections closed because their device was removed. "+perProcess,
 		nil, nil,
 	)

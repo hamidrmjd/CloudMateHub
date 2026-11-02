@@ -1,5 +1,5 @@
 import { useState, useId } from "react";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import {
   ServerStackIcon,
   GlobeAltIcon,

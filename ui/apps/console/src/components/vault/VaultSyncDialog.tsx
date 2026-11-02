@@ -12,7 +12,7 @@ import {
   migrateServerToLocal,
 } from "@/utils/vault-migrate";
 import BaseDialog from "@/components/common/BaseDialog";
-import { Button, Callout, Spinner } from "@shellhub/design-system/primitives";
+import { Button, Callout, Spinner } from "@cloudmatehub/design-system/primitives";
 import DialogHeader from "@/components/common/DialogHeader";
 
 type Direction = "to-server" | "to-local";

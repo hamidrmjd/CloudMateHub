@@ -2,7 +2,7 @@ put:
   operationId: configureSAMLAuthentication
   summary: Configure SAML Authentication
   description: |
-    Configure SAML authentication settings for the ShellHub instance.
+    Configure SAML authentication settings for the CloudMateHub instance.
 
     The NameID in the SAML assertion from the IdP must be configured to use
     a format that provides a unique and persistent identifier for each user. This could be
@@ -30,8 +30,8 @@ put:
             idp:
               type: object
               description: |
-                Configuration for the Identity Provider (IdP) that ShellHub will use for authentication. 
-                You can provide either a metadata URL to fetch all necessary information automatically 
+                Configuration for the Identity Provider (IdP) that CloudMateHub will use for authentication.
+                You can provide either a metadata URL to fetch all necessary information automatically
                 or specify the `SignOn URL`, `Entity ID`, and `X509 certificate` explicitly.
               properties:
                 metadata_url:
@@ -46,50 +46,50 @@ put:
                 certificate:
                   type: string
                   description: |
-                    The public X509 certificate of the IdP. It can be provided with or without 
+                    The public X509 certificate of the IdP. It can be provided with or without
                     the PEM delimiters (`-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`).
                 binding:
                   type: object
                   description: |
-                    Configuration for SAML binding methods that define how authentication requests 
-                    and responses are transmitted between ShellHub and the IdP. SAML supports 
+                    Configuration for SAML binding methods that define how authentication requests
+                    and responses are transmitted between CloudMateHub and the IdP. SAML supports
                     different binding protocols for flexibility in deployment scenarios.
                   properties:
                     post:
                       type: string
                       format: url
                       description: |
-                        The Single Sign-On URL for HTTP-POST binding. This URL is where ShellHub 
-                        will redirect users for authentication using the HTTP-POST method, which 
-                        sends SAML data in the body of an HTTP POST request. This binding is more 
+                        The Single Sign-On URL for HTTP-POST binding. This URL is where CloudMateHub
+                        will redirect users for authentication using the HTTP-POST method, which
+                        sends SAML data in the body of an HTTP POST request. This binding is more
                         secure as it doesn't expose SAML data in URL parameters.
                     redirect:
                       type: string
                       format: url
                       description: |
-                        The Single Sign-On URL for HTTP-Redirect binding. This URL is where ShellHub 
-                        will redirect users for authentication using the HTTP-Redirect method, which 
-                        sends SAML data as URL parameters. This binding is simpler but has URL length 
+                        The Single Sign-On URL for HTTP-Redirect binding. This URL is where CloudMateHub
+                        will redirect users for authentication using the HTTP-Redirect method, which
+                        sends SAML data as URL parameters. This binding is simpler but has URL length
                         limitations and exposes SAML data in browser history and server logs.
                     preferred:
                       type: string
                       enum: [post, redirect]
                       description: |
-                        Specifies which binding method ShellHub should prefer when both POST and 
-                        Redirect bindings are available. If only one binding URL is provided, 
+                        Specifies which binding method CloudMateHub should prefer when both POST and
+                        Redirect bindings are available. If only one binding URL is provided,
                         that binding will be used regardless of this preference setting. If left
                         blank or empty, POST binding is preferred by default.
                 mappings:
                   type: object
                   description: |
                     Defines how SAML attributes from the IdP should be mapped
-                    to ShellHub user attributes.
+                    to CloudMateHub user attributes.
                   properties:
                     email:
                       type: string
                       description: |
                         The name of the SAML attribute that contains the user's email address.
-                        This attribute will be used to identify and authenticate users in ShellHub.
+                        This attribute will be used to identify and authenticate users in CloudMateHub.
                         For example, if your IdP sends the email in a SAML attribute named "mail",
                         set this value to "mail".
                       default: emailAddress
@@ -97,19 +97,19 @@ put:
                       type: string
                       description: |
                         The name of the SAML attribute that contains the user's display name.
-                        This attribute will be used as the user's name in ShellHub.
-                        For example, if your IdP sends the user's name in a SAML attribute 
+                        This attribute will be used as the user's name in CloudMateHub.
+                        For example, if your IdP sends the user's name in a SAML attribute
                         named "displayName", set this value to "displayName".
                       default: displayName
             sp:
               type: object
-              description: Configuration settings for how ShellHub will function as a Service Provider (SP).
+              description: Configuration settings for how CloudMateHub will function as a Service Provider (SP).
               properties:
                 sign_requests:
                   type: boolean
                   description: |
-                    Indicates whether ShellHub should sign authentication requests. 
-                    If `true`, ShellHub will generate a public X509 certificate that must be deployed on the IdP for validation. 
+                    Indicates whether CloudMateHub should sign authentication requests.
+                    If `true`, CloudMateHub will generate a public X509 certificate that must be deployed on the IdP for validation.
                     The IdP-initiated workflow is not supported when this option is enabled.
   responses:
     '200':

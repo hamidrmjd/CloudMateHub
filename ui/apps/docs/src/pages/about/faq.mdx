@@ -23,24 +23,24 @@ are self-hosting, the server is the thing that has to be reachable.
 ## Which operating systems does the agent run on?
 
 Linux, on `amd64`, `armv6`, `armv7`, `arm64` and `386`. FreeBSD is supported through the
-[ShellHub ports tree](https://github.com/shellhub-io/ports) rather than the installer.
+[CloudMateHub ports tree](https://github.com/shellhub-io/ports) rather than the installer.
 
 ## Do I need a special SSH client?
 
 No. The SSHID is encoded as an ordinary SSH username, so OpenSSH, PuTTY, `scp`, `sftp` and
 Ansible all work with nothing installed. See [SSH Client Configuration](/connect/ssh-clients).
 
-## Can I use ShellHub without installing anything on my own machine?
+## Can I use CloudMateHub without installing anything on my own machine?
 
 Yes — the web terminal runs in the browser. See [Connecting to a Device](/connect).
 
-## Is ShellHub a VPN?
+## Is CloudMateHub a VPN?
 
 No. Nothing joins a network. A device is a destination, not a participant, and devices cannot
-reach each other through ShellHub. See
-[ShellHub vs. Jump Hosts and VPNs](/about/shellhub-vs-jump-hosts).
+reach each other through CloudMateHub. See
+[CloudMateHub vs. Jump Hosts and VPNs](/about/cloudmatehub-vs-jump-hosts).
 
-## Can two devices talk to each other through ShellHub?
+## Can two devices talk to each other through CloudMateHub?
 
 No. There is no path between two devices.
 
@@ -88,7 +88,7 @@ No. Routes that act for a person refuse an API key whatever its role. Managing k
 namespace, and anything to do with MFA are all refused; see
 [What a key cannot do](/api#what-a-key-cannot-do) for the full list.
 
-## Which database does ShellHub use?
+## Which database does CloudMateHub use?
 
 PostgreSQL. Earlier releases used MongoDB; that is gone.
 

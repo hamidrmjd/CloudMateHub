@@ -19,7 +19,7 @@ func testPairingDeviceLimit(t *testing.T, compose *environment.DockerCompose) {
 		req := newPairingRequest(t, "pairing-over-limit", "02:00:00:00:93:02")
 		pairing := startPairing(t, compose, req)
 
-		compose.LimitNamespaceToItsAcceptedDevices(t, ShellHubNamespace)
+		compose.LimitNamespaceToItsAcceptedDevices(t, CloudMateHubNamespace)
 
 		_, resp, err := postPairingAccept(compose.R(t.Context()), pairing.Code)
 		require.NoError(t, err)
@@ -33,7 +33,7 @@ func testPairingDeviceLimit(t *testing.T, compose *environment.DockerCompose) {
 
 		assert.NotContains(t, deviceNames(compose.ListDevices(t, models.DeviceStatusAccepted)), req.Hostname, "a namespace at its limit accepted the paired device")
 
-		require.NoError(t, compose.SetNamespaceMaxDevices(t.Context(), ShellHubNamespace, -1))
+		require.NoError(t, compose.SetNamespaceMaxDevices(t.Context(), CloudMateHubNamespace, -1))
 
 		accepted := acceptPairing(t, compose.R(t.Context()), pairing.Code)
 		assert.Equal(t, models.DeviceStatusAccepted, requireDevice(t, compose, accepted.UID).Status)

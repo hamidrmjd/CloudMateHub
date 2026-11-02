@@ -48,7 +48,7 @@ func TestRemoveMemberThroughTheAdminCLI(t *testing.T) {
 			require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 		}
 
-		compose.RemoveMember(t, departingUsername, ShellHubNamespaceName)
+		compose.RemoveMember(t, departingUsername, CloudMateHubNamespaceName)
 
 		for _, request := range []func() *resty.Request{withToken, withKey} {
 			resp, err := request().Get("/api/devices")
@@ -66,7 +66,7 @@ func TestRemoveMemberThroughTheAdminCLI(t *testing.T) {
 		awaitAgentConnected(t, agent)
 		compose.AwaitDeviceOnline(t, uid)
 
-		compose.RemoveMember(t, departingUsername, ShellHubNamespaceName)
+		compose.RemoveMember(t, departingUsername, CloudMateHubNamespaceName)
 
 		require.EventuallyWithT(t, func(tt *assert.CollectT) {
 			current, resp, err := compose.GetDevice(t.Context(), uid)
@@ -88,7 +88,7 @@ func signInDepartingMember(t *testing.T, compose *environment.DockerCompose) *mo
 	t.Helper()
 
 	compose.NewUser(t, departingUsername, departingEmail, departingPassword)
-	compose.NewMember(t, departingUsername, ShellHubNamespaceName, string(authorizer.RoleAdministrator))
+	compose.NewMember(t, departingUsername, CloudMateHubNamespaceName, string(authorizer.RoleAdministrator))
 
 	return signInto(t, compose, departingUsername, departingPassword)
 }

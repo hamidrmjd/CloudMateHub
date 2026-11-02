@@ -1,5 +1,5 @@
-import { WindowChrome } from "@shellhub/design-system/primitives";
-import { CopyButton } from "@shellhub/design-system/components";
+import { WindowChrome } from "@cloudmatehub/design-system/primitives";
+import { CopyButton } from "@cloudmatehub/design-system/components";
 
 /**
  * Props of CommandBlock. command is rendered verbatim after the prompt and is what the copy

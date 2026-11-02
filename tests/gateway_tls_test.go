@@ -18,7 +18,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const acmeDomain = "shellhub.example.com"
+const acmeDomain = "cloudmatehub.example.com"
 
 func upGatewayStack(t *testing.T, ctx context.Context, cfg environment.Config) (*environment.Stack, string) {
 	t.Helper()

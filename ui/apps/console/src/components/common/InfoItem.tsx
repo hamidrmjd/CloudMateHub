@@ -1,5 +1,5 @@
 import { type ReactNode, useId } from "react";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import CopyButton from "@/components/common/CopyButton";
 import { LABEL_BASE } from "@/utils/styles";
 

@@ -123,7 +123,7 @@ func dialTerminal(t *testing.T, handler websocket.Handler) *websocket.Conn {
 
 	go serveTerminal(serverEnd, handler)
 
-	config, err := websocket.NewConfig("ws://shellhub.test/ws/ssh", "http://shellhub.test")
+	config, err := websocket.NewConfig("ws://cloudmatehub.test/ws/ssh", "http://cloudmatehub.test")
 	require.NoError(t, err)
 
 	browser, err := websocket.NewClient(config, browserEnd)

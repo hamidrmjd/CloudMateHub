@@ -16,7 +16,7 @@ import {
   ArrowRightIcon,
   ArrowLeftIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Spinner } from "@shellhub/design-system/primitives";
+import { Button, Spinner } from "@cloudmatehub/design-system/primitives";
 import BaseDialog from "@/components/common/BaseDialog";
 import InputField from "@/components/common/fields/InputField";
 import { isSdkError } from "@/api/errors";

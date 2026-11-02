@@ -158,7 +158,7 @@ func TestSSHConnectionBehaviour(t *testing.T) {
 
 			require.ErrorAs(t, err, &exit, "the shell ended without the client being told how")
 			assert.Equal(t, "HUP", exit.Signal())
-			assert.Equal(t, "shellhub: the session was ended on the device", exit.Msg())
+			assert.Equal(t, "cloudmatehub: the session was ended on the device", exit.Msg())
 		case <-time.After(30 * time.Second):
 			t.Fatal("the session the server was asked to close is still open on the client")
 		}

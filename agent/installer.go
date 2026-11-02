@@ -21,7 +21,7 @@ const (
 )
 
 var agentServiceTemplate = `[Unit]
-Description=ShellHub Agent
+Description=CloudMateHub Agent
 After=local-fs.target network-online.target time-sync.target
 Wants=network-online.target
 Requires=local-fs.target
@@ -49,7 +49,7 @@ type installerConfig struct {
 func registerInstallerCommands(rootCmd *cobra.Command) {
 	installCmd := &cobra.Command{ //nolint:exhaustruct
 		Use:          "install",
-		Short:        "Install ShellHub agent as a systemd service",
+		Short:        "Install CloudMateHub agent as a systemd service",
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			flags := cmd.Flags()
@@ -84,7 +84,7 @@ func registerInstallerCommands(rootCmd *cobra.Command) {
 				return fmt.Errorf("installation failed: %w", err)
 			}
 
-			fmt.Println("ShellHub agent installed successfully.")
+			fmt.Println("CloudMateHub agent installed successfully.")
 			fmt.Println("Check status: systemctl status shellhub-agent")
 			fmt.Println("View logs:    journalctl -u shellhub-agent -f")
 
@@ -92,7 +92,7 @@ func registerInstallerCommands(rootCmd *cobra.Command) {
 		},
 	}
 
-	installCmd.Flags().String("server-address", "", "ShellHub server address")
+	installCmd.Flags().String("server-address", "", "CloudMateHub server address")
 	installCmd.Flags().String("tenant-id", "", "Namespace tenant ID")
 	installCmd.Flags().String("private-key", "/etc/shellhub.key", "Path to the agent private key file")
 	installCmd.Flags().String("provisioning-key", "", "Provisioning key used to enroll the device")
@@ -106,13 +106,13 @@ func registerInstallerCommands(rootCmd *cobra.Command) {
 
 	rootCmd.AddCommand(&cobra.Command{ //nolint:exhaustruct
 		Use:   "uninstall",
-		Short: "Uninstall ShellHub agent systemd service",
+		Short: "Uninstall CloudMateHub agent systemd service",
 		RunE: func(_ *cobra.Command, _ []string) error {
 			if err := agentUninstall(); err != nil {
 				return fmt.Errorf("uninstallation failed: %w", err)
 			}
 
-			fmt.Println("ShellHub agent uninstalled successfully.")
+			fmt.Println("CloudMateHub agent uninstalled successfully.")
 			fmt.Println("Note: the binary and private key were not removed.")
 
 			return nil

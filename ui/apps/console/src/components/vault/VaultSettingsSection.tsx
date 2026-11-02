@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from "react";
-import { Button, Dropdown, Toggle } from "@shellhub/design-system/primitives";
+import { Button, Dropdown, Toggle } from "@cloudmatehub/design-system/primitives";
 import {
   KeyIcon,
   LockClosedIcon,
@@ -7,7 +7,7 @@ import {
   ChevronDownIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useVaultStore } from "@/stores/vaultStore";
 import { isVaultServerEnabled } from "@/utils/vault-backend-factory";
 import VaultSyncDialog from "@/components/vault/VaultSyncDialog";

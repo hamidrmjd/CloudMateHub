@@ -2,14 +2,14 @@ import {
   ChatBubbleLeftRightIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
-import { Card, IconBadge } from "@shellhub/design-system/primitives";
+import { Card, IconBadge } from "@cloudmatehub/design-system/primitives";
 import {
   FeatureListItem,
   HighlightCard,
   Section,
   SectionHeader,
 } from "@/components";
-import { Reveal, ShimmerCard } from "@shellhub/design-system/components";
+import { Reveal, ShimmerCard } from "@cloudmatehub/design-system/components";
 
 /**
  * Enterprise section describing the support tiers.

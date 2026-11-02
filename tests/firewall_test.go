@@ -47,7 +47,7 @@ func TestEnterpriseFirewall(t *testing.T) {
 
 	t.Run("an allow rule matching the source address, the user and the hostname lets the connection through", func(t *testing.T) {
 		addFirewallRule(t, compose, denyAll)
-		addFirewallRule(t, compose, allow(1, matching(source, ShellHubAgentUsername, hostname)))
+		addFirewallRule(t, compose, allow(1, matching(source, CloudMateHubAgentUsername, hostname)))
 
 		requireKeyLogsIn(t, compose, sshid, signer)
 	})
@@ -57,7 +57,7 @@ func TestEnterpriseFirewall(t *testing.T) {
 		rule        environment.FirewallRule
 	}{
 		{description: "source address", rule: matching(source, anyValue, anyDevice)},
-		{description: "user", rule: matching(anyValue, ShellHubAgentUsername, anyDevice)},
+		{description: "user", rule: matching(anyValue, CloudMateHubAgentUsername, anyDevice)},
 		{description: "hostname", rule: matching(anyValue, anyValue, hostname)},
 		{description: "tag", rule: matching(anyValue, anyValue, environment.FirewallRuleFilter{Tags: []string{"firewalled"}})},
 	}
@@ -123,7 +123,7 @@ func TestEnterpriseFirewall(t *testing.T) {
 	})
 
 	t.Run("an upgraded namespace is not held to its firewall rules", func(t *testing.T) {
-		compose.UpgradeNamespace(t, ShellHubNamespace)
+		compose.UpgradeNamespace(t, CloudMateHubNamespace)
 
 		owner, _ := enrollOwnerKey(t, compose)
 		addFirewallRule(t, compose, denyAll)

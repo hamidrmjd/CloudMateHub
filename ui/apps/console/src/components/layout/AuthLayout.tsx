@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { isCommunity } from "@/env";
 import AuthFooterLinks from "@/components/common/AuthFooterLinks";
 import { columnWidths, type ColumnWidth } from "./columnWidths";

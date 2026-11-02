@@ -118,7 +118,7 @@ async function openBilling(page: Page, owner: Owner) {
 }
 
 function subscribeDialog(page: Page) {
-  return page.getByRole("dialog", { name: "Subscribe to ShellHub Cloud" });
+  return page.getByRole("dialog", { name: "Subscribe to CloudMateHub Cloud" });
 }
 
 function planGroup(page: Page) {

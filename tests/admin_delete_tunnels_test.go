@@ -23,7 +23,7 @@ import (
 func TestAdminDeletesCloseTunnels(t *testing.T) {
 	t.Parallel()
 
-	const evictedTunnels = "shellhub_ssh_dialer_connections_evicted_total"
+	const evictedTunnels = "cloudmatehub_ssh_dialer_connections_evicted_total"
 
 	cases := []struct {
 		description string
@@ -38,7 +38,7 @@ func TestAdminDeletesCloseTunnels(t *testing.T) {
 			delete: func(t *testing.T, compose *environment.DockerCompose, admin *models.UserAuthResponse) {
 				t.Helper()
 
-				resp, err := asBearer(t, compose, admin.Token).Delete("/admin/api/namespaces/" + ShellHubNamespace)
+				resp, err := asBearer(t, compose, admin.Token).Delete("/admin/api/namespaces/" + CloudMateHubNamespace)
 				require.NoError(t, err)
 				require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 			},
@@ -49,7 +49,7 @@ func TestAdminDeletesCloseTunnels(t *testing.T) {
 			delete: func(t *testing.T, compose *environment.DockerCompose, admin *models.UserAuthResponse) {
 				t.Helper()
 
-				owner := compose.AuthUser(t, ShellHubUsername, ShellHubPassword)
+				owner := compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword)
 
 				resp, err := asBearer(t, compose, admin.Token).Delete("/admin/api/users/" + owner.ID)
 				require.NoError(t, err)
@@ -63,7 +63,7 @@ func TestAdminDeletesCloseTunnels(t *testing.T) {
 			delete: func(t *testing.T, compose *environment.DockerCompose, _ *models.UserAuthResponse) {
 				t.Helper()
 
-				compose.DeleteUser(t, ShellHubUsername)
+				compose.DeleteUser(t, CloudMateHubUsername)
 			},
 			ownerGone:   true,
 			onHeartbeat: true,
@@ -101,7 +101,7 @@ func TestAdminDeletesCloseTunnels(t *testing.T) {
 			}
 
 			if tc.ownerGone {
-				compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
+				compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
 			}
 
 			ownNamespace(t, t.Context(), compose, legacyNamespace)
@@ -126,11 +126,11 @@ func newAdministeredTunnelEnvironment(t *testing.T, ctx context.Context, edition
 	t.Cleanup(compose.Down)
 
 	const adminUsername = "root"
-	compose.NewUser(t, adminUsername, "root@ossystems.com.br", ShellHubPassword)
-	admin := compose.AuthUser(t, adminUsername, ShellHubPassword)
+	compose.NewUser(t, adminUsername, "root@ossystems.com.br", CloudMateHubPassword)
+	admin := compose.AuthUser(t, adminUsername, CloudMateHubPassword)
 	require.True(t, admin.Admin, "the first user is the instance's administrator")
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
 	ownNamespace(t, ctx, compose, legacyNamespace)
 
 	return compose, admin

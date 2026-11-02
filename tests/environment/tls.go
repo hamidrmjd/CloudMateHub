@@ -21,7 +21,7 @@ const (
 	tlsDirEnv  = "SHELLHUB_TEST_TLS_DIR"
 	acmeDirEnv = "SHELLHUB_TEST_ACME_DIR"
 
-	gatewayTLSDir = "/etc/shellhub/tls"
+	gatewayTLSDir = "/etc/cloudmatehub/tls"
 	pebbleDir     = "/etc/pebble"
 	pebbleName    = "pebble"
 

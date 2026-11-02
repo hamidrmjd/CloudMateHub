@@ -7,7 +7,7 @@ type FirewallConnection struct {
 	Namespace string `json:"namespace"`
 	// Hostname is the device name within the namespace.
 	Hostname string `json:"hostname"`
-	// Username is the user being requested on the device, not the ShellHub user.
+	// Username is the user being requested on the device, not the CloudMateHub user.
 	Username  string `json:"username"`
 	IPAddress string `json:"ip_address"`
 }

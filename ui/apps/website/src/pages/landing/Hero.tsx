@@ -1,5 +1,5 @@
-import { ShellHubCloudIcon } from "@shellhub/design-system/primitives";
-import { ConnectionGrid, GlowOrbs } from "@shellhub/design-system/components";
+import { CloudMateHubCloudIcon } from "@cloudmatehub/design-system/primitives";
+import { ConnectionGrid, GlowOrbs } from "@cloudmatehub/design-system/components";
 import { ActionButton } from "@/components";
 
 /**
@@ -13,7 +13,7 @@ export function Hero() {
 
       <div className="relative z-raised max-w-4xl flex flex-col items-center">
         <div className="animate-float mb-8 inline-block">
-          <ShellHubCloudIcon className="h-16 drop-shadow-[0_0_24px_rgba(102,122,204,0.35)]" />
+          <CloudMateHubCloudIcon className="h-16 drop-shadow-[0_0_24px_rgba(102,122,204,0.35)]" />
         </div>
 
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/[0.06] border border-primary/20 mb-8 animate-fade-in">
@@ -37,7 +37,7 @@ export function Hero() {
           className="text-base sm:text-lg text-text-secondary max-w-xl mx-auto mb-10 leading-relaxed animate-fade-in"
           style={{ animationDelay: "200ms" }}
         >
-          ShellHub is a centralized SSH gateway for remote access to Linux and
+          CloudMateHub is a centralized SSH gateway for remote access to Linux and
           FreeBSD devices. No public IPs, no VPNs, no firewall changes.
         </p>
 

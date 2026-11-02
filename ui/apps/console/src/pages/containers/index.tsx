@@ -42,8 +42,8 @@ import {
   Button,
   Callout,
   IconButton,
-} from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+} from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import RestrictedAction from "@/components/common/RestrictedAction";
 import { apiErrorMessage } from "@/api/errors";
 import { PER_PAGE } from "@/utils/pagination";

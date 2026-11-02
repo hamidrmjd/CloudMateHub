@@ -5,7 +5,7 @@ import {
   PlusIcon,
   PencilIcon,
 } from "@heroicons/react/24/outline";
-import { Dropdown } from "@shellhub/design-system/primitives";
+import { Dropdown } from "@cloudmatehub/design-system/primitives";
 import { isSdkError } from "@/api/errors";
 import { useTags } from "@/hooks/useTagRequests";
 import { useHasPermission } from "@/hooks/useHasPermission";

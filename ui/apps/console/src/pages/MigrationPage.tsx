@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Callout, Spinner } from "@shellhub/design-system/primitives";
+import { Callout, Spinner } from "@cloudmatehub/design-system/primitives";
 import FramedShell from "@/components/layout/FramedShell";
 import ScreenIntro from "@/components/layout/ScreenIntro";
 

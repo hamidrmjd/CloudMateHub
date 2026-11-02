@@ -95,7 +95,7 @@ services:
       - tools
     entrypoint: []
     network_mode: host
-    working_dir: ${SHELLHUB_WORKSPACE}/shellhub
+    working_dir: ${SHELLHUB_WORKSPACE}/cloudmatehub
     volumes:
       - ${SHELLHUB_WORKSPACE}:${SHELLHUB_WORKSPACE}
       - ${SHELLHUB_DEV_DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
@@ -110,7 +110,7 @@ services:
       - TESTCONTAINERS_HOST_OVERRIDE=localhost
       - TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=${SHELLHUB_DEV_DOCKER_SOCKET:-/var/run/docker.sock}
   e2e:
-    image: shellhub-e2e:${E2E_PLAYWRIGHT_VERSION:-latest}
+    image: cloudmatehub-e2e:${E2E_PLAYWRIGHT_VERSION:-latest}
     build:
       context: ui
       dockerfile: e2e.Dockerfile
@@ -120,7 +120,7 @@ services:
     profiles:
       - tools
     network_mode: host
-    working_dir: ${SHELLHUB_WORKSPACE}/shellhub/ui/apps/console
+    working_dir: ${SHELLHUB_WORKSPACE}/cloudmatehub/ui/apps/console
     volumes:
       - ${SHELLHUB_WORKSPACE}:${SHELLHUB_WORKSPACE}
       - ${SHELLHUB_DEV_DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
@@ -130,4 +130,4 @@ services:
 
 volumes:
   tools-cache:
-    name: shellhub-tools-cache
+    name: cloudmatehub-tools-cache

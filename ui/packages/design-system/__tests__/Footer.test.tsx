@@ -71,7 +71,7 @@ describe("Footer", () => {
     render(<Footer />);
     const year = new Date().getFullYear();
     expect(
-      screen.getByText(new RegExp(`${year}.*ShellHub.*All rights reserved`)),
+      screen.getByText(new RegExp(`${year}.*CloudMateHub.*All rights reserved`)),
     ).toBeInTheDocument();
   });
 });

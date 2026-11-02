@@ -1,4 +1,4 @@
-// Package magickey provides RSA key generation for ShellHub SSH service.
+// Package magickey provides RSA key generation for CloudMateHub SSH service.
 package magickey
 
 import (
@@ -9,7 +9,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// GetReference returns a singleton RSA private key for ShellHub SSH service.
+// GetReference returns a singleton RSA private key for CloudMateHub SSH service.
 // The key is generated once and reused across all subsequent calls.
 var GetReference = sync.OnceValue(func() *rsa.PrivateKey {
 	key, err := rsa.GenerateKey(rand.Reader, 2048)

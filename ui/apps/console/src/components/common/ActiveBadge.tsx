@@ -1,4 +1,4 @@
-import { Badge } from "@shellhub/design-system/primitives";
+import { Badge } from "@cloudmatehub/design-system/primitives";
 
 /**
  * The active/inactive badge. Inactive is yellow rather than red: it is a state, not a fault.

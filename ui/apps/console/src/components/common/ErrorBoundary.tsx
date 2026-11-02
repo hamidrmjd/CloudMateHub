@@ -1,6 +1,6 @@
 import { Component, type ReactNode } from "react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 
 interface Props {
   children: ReactNode;

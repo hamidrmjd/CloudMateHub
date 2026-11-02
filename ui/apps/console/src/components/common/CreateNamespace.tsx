@@ -4,7 +4,7 @@ import { SparklesIcon } from "@heroicons/react/24/outline";
 import CopyButton from "@/components/common/CopyButton";
 import NamespaceNameField from "@/components/common/fields/NamespaceNameField";
 import { NAMESPACE_NAME_MIN_LENGTH } from "@/utils/validation";
-import { Button, Spinner } from "@shellhub/design-system/primitives";
+import { Button, Spinner } from "@cloudmatehub/design-system/primitives";
 
 /**
  * The namespace name form. Validates as the user types against the same rules the server holds,

@@ -85,7 +85,7 @@ func TestAgentSingleUserMode(t *testing.T) {
 	})
 
 	t.Run("a password other than the configured one is refused", func(t *testing.T) {
-		err := handshakeWith(t.Context(), compose.SSHAddress(), passwordConfig(ShellHubAgentPassword))
+		err := handshakeWith(t.Context(), compose.SSHAddress(), passwordConfig(CloudMateHubAgentPassword))
 		require.ErrorContains(t, err, "ssh: unable to authenticate")
 	})
 }

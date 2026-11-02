@@ -1,4 +1,4 @@
-// Package testimage gives a test that builds a ShellHub Dockerfile the build arguments the
+// Package testimage gives a test that builds a CloudMateHub Dockerfile the build arguments the
 // Dockerfile declares without defaults: the versions pinned in versions.env at the repository
 // root, the same file the compose wrapper and CI pass to their builds.
 package testimage

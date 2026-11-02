@@ -11,8 +11,8 @@ import BillingLetter from "./BillingLetter";
 import BillingPayment from "./BillingPayment";
 import BillingCheckout from "./BillingCheckout";
 import BillingSuccessful from "./BillingSuccessful";
-import { cn } from "@shellhub/design-system/cn";
-import { Button, IconButton } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { Button, IconButton } from "@cloudmatehub/design-system/primitives";
 
 const STEPS = ["Overview", "Payment method", "Review", "Success"] as const;
 const TOTAL_STEPS = STEPS.length;

@@ -22,17 +22,17 @@ func TestRenameNamespace(t *testing.T) {
 	signer := registerDeviceKey(t, t.Context(), compose)
 
 	const takenName = "takenspace"
-	compose.NewNamespace(t, ShellHubUsername, takenName, uuid.Generate())
+	compose.NewNamespace(t, CloudMateHubUsername, takenName, uuid.Generate())
 
 	sshTo := func(namespace string) *ssh.ClientConfig {
 		return &ssh.ClientConfig{
-			User:            ShellHubAgentUsername + "@" + namespace + "." + device.Name,
+			User:            CloudMateHubAgentUsername + "@" + namespace + "." + device.Name,
 			Auth:            []ssh.AuthMethod{ssh.PublicKeys(signer)},
 			HostKeyCallback: ssh.InsecureIgnoreHostKey(), //nolint:gosec // the test stack's host key is ephemeral
 		}
 	}
 
-	require.NoError(t, dialClient(t, t.Context(), compose.SSHAddress(), sshTo(ShellHubNamespaceName)).Close())
+	require.NoError(t, dialClient(t, t.Context(), compose.SSHAddress(), sshTo(CloudMateHubNamespaceName)).Close())
 
 	rename := func(t *testing.T, name string) (*models.Namespace, *resty.Response) {
 		t.Helper()
@@ -41,7 +41,7 @@ func TestRenameNamespace(t *testing.T) {
 		resp, err := compose.R(t.Context()).
 			SetBody(map[string]string{"name": name}).
 			SetResult(renamed).
-			Put("/api/namespaces/" + ShellHubNamespace)
+			Put("/api/namespaces/" + CloudMateHubNamespace)
 		require.NoError(t, err)
 
 		return renamed, resp
@@ -52,10 +52,10 @@ func TestRenameNamespace(t *testing.T) {
 		require.Equal(t, http.StatusConflict, resp.StatusCode(), resp.String())
 
 		current := new(models.Namespace)
-		got, err := compose.R(t.Context()).SetResult(current).Get("/api/namespaces/" + ShellHubNamespace)
+		got, err := compose.R(t.Context()).SetResult(current).Get("/api/namespaces/" + CloudMateHubNamespace)
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, got.StatusCode(), got.String())
-		assert.Equal(t, ShellHubNamespaceName, current.Name)
+		assert.Equal(t, CloudMateHubNamespaceName, current.Name)
 	})
 
 	t.Run("the new name is stored lowercased", func(t *testing.T) {
@@ -69,7 +69,7 @@ func TestRenameNamespace(t *testing.T) {
 		require.NoError(t, conn.Close())
 
 		mark := compose.ServerLogMark(t)
-		oldAddress := sshTo(ShellHubNamespaceName)
+		oldAddress := sshTo(CloudMateHubNamespaceName)
 
 		require.Error(t, handshakeWith(t.Context(), compose.SSHAddress(), oldAddress))
 		compose.AwaitServerLogLine(t, mark, "failed to create the session", oldAddress.User)

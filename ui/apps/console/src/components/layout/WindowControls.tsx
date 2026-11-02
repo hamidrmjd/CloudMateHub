@@ -1,5 +1,5 @@
 import { MinusIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { IconButton } from "@shellhub/design-system/primitives";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
 import { desktopWindow } from "@/utils/desktopWindow";
 
 function report(action: Promise<void>) {

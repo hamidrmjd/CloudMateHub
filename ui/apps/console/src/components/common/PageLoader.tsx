@@ -1,5 +1,5 @@
-import { Spinner, type SpinnerSize } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Spinner, type SpinnerSize } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 type Padding = "none" | "sm" | "md" | "lg" | "fill";
 

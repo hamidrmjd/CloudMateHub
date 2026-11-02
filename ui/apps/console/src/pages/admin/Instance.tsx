@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ServerIcon, UserPlusIcon } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import { isEnterprise } from "@/env";
 import { useAdminStats } from "@/hooks/useAdminRequests";
 import { useAdminNamespaces } from "@/hooks/useAdminNamespaces";

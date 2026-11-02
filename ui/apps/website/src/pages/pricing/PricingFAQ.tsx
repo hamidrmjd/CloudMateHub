@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { Section, SectionHeader } from "@/components";
-import { Reveal } from "@shellhub/design-system/components";
+import { Reveal } from "@cloudmatehub/design-system/components";
 
 const faqs = [
   {
@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: "What counts as a device?",
-    a: "A device is any endpoint running the ShellHub agent that has connected to your namespace. Devices that are removed from your namespace no longer count toward your limit.",
+    a: "A device is any endpoint running the CloudMateHub agent that has connected to your namespace. Devices that are removed from your namespace no longer count toward your limit.",
   },
   {
     q: "Is there a free trial for Cloud?",

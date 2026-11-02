@@ -8,13 +8,13 @@ import {
   ShieldCheckIcon,
   TagIcon,
 } from "@heroicons/react/24/outline";
-import { Badge, WindowChrome } from "@shellhub/design-system/primitives";
+import { Badge, WindowChrome } from "@cloudmatehub/design-system/primitives";
 import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import {
   ActionButtonGroup,
   CTABanner,
@@ -25,7 +25,7 @@ import {
   type CTAAction,
 } from "@/components";
 import { docsUrl } from "@/links";
-import { C } from "@shellhub/design-system/constants";
+import { C } from "@cloudmatehub/design-system/constants";
 
 const primaryAction: CTAAction = {
   label: "Get Started Free",
@@ -65,7 +65,7 @@ const features = [
     icon: CommandLineIcon,
     color: C.primary,
     title: "Standard SSH Transport",
-    desc: "Ansible, Terraform, and CI/CD tools connect through ShellHub using standard SSH -- no custom plugins or connectors required.",
+    desc: "Ansible, Terraform, and CI/CD tools connect through CloudMateHub using standard SSH -- no custom plugins or connectors required.",
   },
   {
     icon: DocumentTextIcon,
@@ -175,7 +175,7 @@ const terraformLines: { text: string; color?: string; dim?: boolean }[] = [
 const pipelineSteps = [
   { label: "Build", status: "done" as const },
   { label: "Test", status: "done" as const },
-  { label: "Deploy via ShellHub", status: "done" as const },
+  { label: "Deploy via CloudMateHub", status: "done" as const },
 ];
 
 const pipelineDeployLines: { text: string; color?: string; dim?: boolean }[] = [
@@ -222,7 +222,7 @@ function CodeLine({
 }
 
 /**
- * Use-case page: ShellHub in a CI/CD pipeline.
+ * Use-case page: CloudMateHub in a CI/CD pipeline.
  */
 export default function DevopsCiCd() {
   return (
@@ -249,7 +249,7 @@ export default function DevopsCiCd() {
             <p className="text-sm text-text-secondary max-w-lg mx-auto leading-relaxed mb-10">
               Automate deployments to remote and edge devices with Ansible,
               Terraform, and CI/CD pipelines -- using standard SSH through
-              ShellHub.
+              CloudMateHub.
             </p>
           </Reveal>
           <Reveal>
@@ -269,8 +269,8 @@ export default function DevopsCiCd() {
               size="sub"
               className="mb-8"
               eyebrow="Ansible Integration"
-              title="Use ShellHub as your SSH transport for Ansible"
-              subtitle="Point your Ansible inventory at ShellHub device identifiers and run playbooks against devices behind NAT, CGNAT, or firewalls -- no VPN required. ShellHub acts as a transparent SSH gateway so existing playbooks work without modification."
+              title="Use CloudMateHub as your SSH transport for Ansible"
+              subtitle="Point your Ansible inventory at CloudMateHub device identifiers and run playbooks against devices behind NAT, CGNAT, or firewalls -- no VPN required. CloudMateHub acts as a transparent SSH gateway so existing playbooks work without modification."
             />
 
             <div className="space-y-3">
@@ -285,7 +285,7 @@ export default function DevopsCiCd() {
                 },
                 {
                   label: "Fleet targeting with tags",
-                  desc: "Build dynamic inventories based on ShellHub device tags",
+                  desc: "Build dynamic inventories based on CloudMateHub device tags",
                 },
                 {
                   label: "Session-level audit trail",
@@ -395,7 +395,7 @@ export default function DevopsCiCd() {
         <SectionHeader
           eyebrow="CI/CD Pipeline"
           title="Deploy to remote devices from any CI system"
-          subtitle="GitHub Actions, GitLab CI, Jenkins -- any pipeline that can run SSH can deploy through ShellHub."
+          subtitle="GitHub Actions, GitLab CI, Jenkins -- any pipeline that can run SSH can deploy through CloudMateHub."
         />
 
         <Reveal delay={0.1}>
@@ -473,7 +473,7 @@ export default function DevopsCiCd() {
       <Section>
         <SectionHeader
           eyebrow="Capabilities"
-          title="ShellHub features for DevOps teams"
+          title="CloudMateHub features for DevOps teams"
           subtitle="Everything your automation toolchain needs to securely deploy to remote and edge devices at scale."
         />
 
@@ -494,7 +494,7 @@ export default function DevopsCiCd() {
       <CTABanner
         eyebrow="Ready to automate?"
         title="Automate your device deployments today"
-        subtitle="Connect ShellHub to your CI/CD pipeline and start deploying to remote devices in minutes -- no VPN, no static IPs, no hassle."
+        subtitle="Connect CloudMateHub to your CI/CD pipeline and start deploying to remote devices in minutes -- no VPN, no static IPs, no hassle."
         primaryAction={primaryAction}
         secondaryAction={secondaryAction}
       />

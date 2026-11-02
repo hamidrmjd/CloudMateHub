@@ -6,8 +6,8 @@ import {
   AdjustmentsHorizontalIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
-import { Spinner } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { Spinner } from "@cloudmatehub/design-system/primitives";
 import { ChatwootContext, type ChatwootHandle } from "@/hooks/useChatwoot";
 import { useAuthStore } from "@/stores/authStore";
 import { useWorkspaceTabs } from "@/hooks/useWorkspaceTabs";

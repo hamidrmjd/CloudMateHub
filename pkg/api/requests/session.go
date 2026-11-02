@@ -27,7 +27,7 @@ type SessionCreate struct {
 	Username  string `json:"username" validate:"required"`
 	IPAddress string `json:"ip_address" validate:"required"`
 	Web       bool   `json:"web" validate:""`
-	// UserID is the ShellHub account that authorized the session via browser
+	// UserID is the CloudMateHub account that authorized the session via browser
 	// approval. Empty for password/public-key and web-terminal sessions.
 	UserID string `json:"user_id" validate:""`
 	// APIKeyID is the API key the session acts as, when an automation opened it. It is

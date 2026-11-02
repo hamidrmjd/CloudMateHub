@@ -19,7 +19,7 @@ const (
 )
 
 // Server is the agent's SSH server. It does not listen on a public port: the connections it
-// serves arrive over the tunnel the agent holds open to the ShellHub server.
+// serves arrive over the tunnel the agent holds open to the CloudMateHub server.
 type Server struct {
 	sshd              *gliderssh.Server
 	ContainerID       string

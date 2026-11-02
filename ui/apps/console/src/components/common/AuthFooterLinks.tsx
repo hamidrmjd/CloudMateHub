@@ -1,6 +1,6 @@
 import { getConfig } from "@/env";
 import { BookOpenIcon, TagIcon } from "@heroicons/react/24/outline";
-import { GithubIcon } from "@shellhub/design-system/primitives";
+import { GithubIcon } from "@cloudmatehub/design-system/primitives";
 
 /**
  * The line under every public screen of the community edition: the docs, the running version,

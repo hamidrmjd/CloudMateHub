@@ -6,7 +6,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
-import { Button, Callout, Spinner } from "@shellhub/design-system/primitives";
+import { Button, Callout, Spinner } from "@cloudmatehub/design-system/primitives";
 import { useAuthStore } from "../stores/authStore";
 import { isCloud, isEnterprise } from "../env";
 import { getSafeRedirect } from "@/utils/navigation";

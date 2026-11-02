@@ -19,8 +19,8 @@ import {
   Button,
   Dropdown,
   IconButton,
-} from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+} from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import {
   useDeleteSSHIdentity,
   useSSHIdentities,

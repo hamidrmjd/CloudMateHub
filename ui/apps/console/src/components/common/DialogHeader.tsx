@@ -4,8 +4,8 @@ import {
   IconBadge,
   IconButton,
   type Palette,
-} from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+} from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 /**
  * How a dialog lays out its parts: default puts the icon beside the text, center stacks a larger

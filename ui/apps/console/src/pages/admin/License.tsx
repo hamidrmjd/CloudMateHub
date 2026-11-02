@@ -13,7 +13,7 @@ import {
   DocumentIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import PageHeader from "@/components/common/PageHeader";
 import { adminNavSectionTitle } from "@/components/layout/adminNav";
 import CopyButton from "@/components/common/CopyButton";
@@ -29,7 +29,7 @@ import {
 } from "@/utils/license";
 import { sendLicenseMutation, type GetLicenseResponse } from "@/client";
 import PageLoader from "@/components/common/PageLoader";
-import { Button, Card, IconButton } from "@shellhub/design-system/primitives";
+import { Button, Card, IconButton } from "@cloudmatehub/design-system/primitives";
 
 type HeroIcon = ComponentType<SVGProps<SVGSVGElement>>;
 

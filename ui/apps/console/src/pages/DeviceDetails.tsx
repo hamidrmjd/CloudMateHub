@@ -45,8 +45,8 @@ import TagsSection from "@/components/common/TagsSection";
 import RenameSection from "@/components/common/RenameSection";
 import { useHasPermission } from "@/hooks/useHasPermission";
 import CustomFieldsSection from "./devices/CustomFieldsSection";
-import { Button, Card, IconButton } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Button, Card, IconButton } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import ResourceNotFound from "@/components/common/ResourceNotFound";
 
 /**

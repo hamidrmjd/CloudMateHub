@@ -1,5 +1,5 @@
 import type { KeyboardEvent } from "react";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 /**
  * One choice in a FilterTabs row. value must be unique within the row: it is both the React key

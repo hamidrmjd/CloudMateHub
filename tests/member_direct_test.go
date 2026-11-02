@@ -23,13 +23,13 @@ func TestEnterpriseAddsMembersDirectly(t *testing.T) {
 		existingEmail    = "existing@ossystems.com.br"
 	)
 
-	compose.NewUser(t, existingUsername, existingEmail, ShellHubPassword)
+	compose.NewUser(t, existingUsername, existingEmail, CloudMateHubPassword)
 
 	t.Run("an existing user becomes a member with no invitation", func(t *testing.T) {
 		resp := addMember(t, compose, existingEmail, authorizer.RoleOperator)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
-		existing := signInto(t, compose, existingUsername, ShellHubPassword)
+		existing := signInto(t, compose, existingUsername, CloudMateHubPassword)
 		assert.Equal(t, authorizer.RoleOperator, memberRoles(t, compose)[existing.ID])
 		require.NotNil(t, existing.Role)
 		assert.Equal(t, authorizer.RoleOperator, *existing.Role)

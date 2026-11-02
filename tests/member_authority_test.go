@@ -22,12 +22,12 @@ func TestMemberAuthority(t *testing.T) {
 	compose := newMembershipEnvironment(t)
 
 	const seniorUsername = "senior"
-	compose.NewUser(t, seniorUsername, "senior@ossystems.com.br", ShellHubPassword)
-	compose.NewMember(t, seniorUsername, ShellHubNamespaceName, string(authorizer.RoleAdministrator))
+	compose.NewUser(t, seniorUsername, "senior@ossystems.com.br", CloudMateHubPassword)
+	compose.NewMember(t, seniorUsername, CloudMateHubNamespaceName, string(authorizer.RoleAdministrator))
 
-	owner := signInto(t, compose, ShellHubUsername, ShellHubPassword)
-	senior := signInto(t, compose, seniorUsername, ShellHubPassword)
-	membersPath := "/api/namespaces/" + ShellHubNamespace + "/members"
+	owner := signInto(t, compose, CloudMateHubUsername, CloudMateHubPassword)
+	senior := signInto(t, compose, seniorUsername, CloudMateHubPassword)
+	membersPath := "/api/namespaces/" + CloudMateHubNamespace + "/members"
 
 	refusals := []struct {
 		description string
@@ -115,7 +115,7 @@ func TestReinviteMember(t *testing.T) {
 	})
 
 	t.Run("inviting again once the invitation expired resends the same invitation", func(t *testing.T) {
-		compose.ExpireMembershipInvitation(t, ShellHubNamespace)
+		compose.ExpireMembershipInvitation(t, CloudMateHubNamespace)
 
 		resp := addMember(t, compose, invitee, authorizer.RoleOperator)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
@@ -135,9 +135,9 @@ func newMembershipEnvironment(t *testing.T) *environment.DockerCompose {
 	compose := environment.New(t, run).Up(t.Context())
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-	compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
-	compose.JWT(compose.AuthUser(t, ShellHubUsername, ShellHubPassword).Token)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+	compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
+	compose.JWT(compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword).Token)
 
 	return compose
 }
@@ -147,7 +147,7 @@ func addMember(t *testing.T, compose *environment.DockerCompose, email string, r
 
 	resp, err := compose.R(t.Context()).
 		SetBody(map[string]string{"email": email, "role": string(role)}).
-		Post("/api/namespaces/" + ShellHubNamespace + "/members")
+		Post("/api/namespaces/" + CloudMateHubNamespace + "/members")
 	require.NoError(t, err)
 
 	return resp
@@ -157,7 +157,7 @@ func memberRoles(t *testing.T, compose *environment.DockerCompose) map[string]au
 	t.Helper()
 
 	members := []models.MemberView{}
-	resp, err := compose.R(t.Context()).SetResult(&members).Get("/api/namespaces/" + ShellHubNamespace + "/members")
+	resp, err := compose.R(t.Context()).SetResult(&members).Get("/api/namespaces/" + CloudMateHubNamespace + "/members")
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
@@ -173,7 +173,7 @@ func namespaceInvitations(t *testing.T, compose *environment.DockerCompose) []mo
 	t.Helper()
 
 	invitations := []models.MembershipInvitation{}
-	resp, err := compose.R(t.Context()).SetResult(&invitations).Get("/api/namespaces/" + ShellHubNamespace + "/invitations")
+	resp, err := compose.R(t.Context()).SetResult(&invitations).Get("/api/namespaces/" + CloudMateHubNamespace + "/invitations")
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 

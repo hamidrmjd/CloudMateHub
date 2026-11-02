@@ -34,7 +34,7 @@ func testEnrollmentEvents(t *testing.T, compose *environment.DockerCompose) {
 
 		assert.NotEmpty(t, event.ID)
 		assert.Equal(t, key.ID, event.ProvisioningKeyID)
-		assert.Equal(t, ShellHubNamespace, event.TenantID)
+		assert.Equal(t, CloudMateHubNamespace, event.TenantID)
 		assert.Equal(t, "evented", event.Hostname)
 		assert.Equal(t, "02:00:00:00:70:01", event.Identity)
 		assert.Equal(t, &models.DeviceInfo{

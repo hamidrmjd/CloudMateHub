@@ -1,12 +1,12 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: How Authorization Works
-description: How ShellHub decides who may reach which device, as which unix login.
+description: How CloudMateHub decides who may reach which device, as which unix login.
 ---
 
 # How Authorization Works
 
-Every connection is authorized before the device is contacted. ShellHub refuses at the server,
+Every connection is authorized before the device is contacted. CloudMateHub refuses at the server,
 before it mints anything for the agent, so a denied login never reaches the device at all.
 
 How the decision is made depends on which model your namespace uses.
@@ -51,7 +51,7 @@ See [Access Policies](/manage/access-control/access-policies) for writing them, 
 
 ## How a decision is made
 
-When a connection arrives, ShellHub resolves the presented key to an identity, then evaluates the
+When a connection arrives, CloudMateHub resolves the presented key to an identity, then evaluates the
 namespace's policies against that identity, the target device, and the requested unix login.
 
 The order:
@@ -66,14 +66,14 @@ The order:
 Three properties fall out of that, and they are the ones worth remembering:
 
 **Default deny.** A device is unreachable until some policy says otherwise. A namespace with no
-policies at all refuses every connection — and ShellHub short-circuits that case, refusing
+policies at all refuses every connection — and CloudMateHub short-circuits that case, refusing
 immediately rather than proceeding toward a login that could never be authorized.
 
 **Deny wins.** Deny is a subtractive blocklist carved out of broad grants, not a base layer.
 Default deny already blocks everything a policy does not grant, so deny exists to carve exceptions
 *out of* your allows.
 
-**Deny fails closed.** If a deny's filter or source IP cannot be evaluated, ShellHub assumes it
+**Deny fails closed.** If a deny's filter or source IP cannot be evaluated, CloudMateHub assumes it
 applies. An allow that cannot be evaluated is treated as a non-match instead — the asymmetry is
 deliberate, and it always errs toward refusing.
 

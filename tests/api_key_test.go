@@ -25,10 +25,10 @@ func TestRoutesThatRefuseAPIKeys(t *testing.T) {
 	compose := environment.New(t, run).Up(t.Context())
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-	compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+	compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
 
-	auth := compose.AuthUser(t, ShellHubUsername, ShellHubPassword)
+	auth := compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword)
 	compose.JWT(auth.Token)
 
 	key := compose.CreateAPIKey(t, &requests.CreateAPIKey{
@@ -51,7 +51,7 @@ func TestRoutesThatRefuseAPIKeys(t *testing.T) {
 		{
 			description: "switching to a namespace token",
 			method:      http.MethodGet,
-			path:        "/api/auth/token/" + ShellHubNamespace,
+			path:        "/api/auth/token/" + CloudMateHubNamespace,
 		},
 		{
 			description: "listing the namespaces",
@@ -86,7 +86,7 @@ func TestRoutesThatRefuseAPIKeys(t *testing.T) {
 		{
 			description: "upgrading the namespace",
 			method:      http.MethodPost,
-			path:        "/api/namespaces/" + ShellHubNamespace + "/upgrade",
+			path:        "/api/namespaces/" + CloudMateHubNamespace + "/upgrade",
 		},
 		{
 			description: "creating a provisioning key",
@@ -116,12 +116,12 @@ func TestRoutesThatRefuseAPIKeys(t *testing.T) {
 		{
 			description: "generating an invitation link",
 			method:      http.MethodPost,
-			path:        "/api/namespaces/" + ShellHubNamespace + "/invitations/links",
+			path:        "/api/namespaces/" + CloudMateHubNamespace + "/invitations/links",
 		},
 		{
 			description: "accepting an invitation",
 			method:      http.MethodPatch,
-			path:        "/api/namespaces/" + ShellHubNamespace + "/invitations/accept",
+			path:        "/api/namespaces/" + CloudMateHubNamespace + "/invitations/accept",
 		},
 		{
 			description: "resolving a device login code",
@@ -166,7 +166,7 @@ func TestRoutesThatRefuseAPIKeys(t *testing.T) {
 		{
 			description: "leaving the namespace",
 			method:      http.MethodDelete,
-			path:        "/api/namespaces/" + ShellHubNamespace + "/members",
+			path:        "/api/namespaces/" + CloudMateHubNamespace + "/members",
 		},
 	}
 
@@ -233,9 +233,9 @@ func TestEditionRoutesThatRefuseAPIKeys(t *testing.T) {
 			compose := environment.New(t, run).WithEdition(tc.edition).Up(t.Context())
 			t.Cleanup(compose.Down)
 
-			compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-			compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
-			compose.JWT(compose.AuthUser(t, ShellHubUsername, ShellHubPassword).Token)
+			compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+			compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
+			compose.JWT(compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword).Token)
 
 			key := compose.CreateAPIKey(t, &requests.CreateAPIKey{
 				Name:      "automation",
@@ -266,10 +266,10 @@ func TestNamespaceAPIKeyAuthentication(t *testing.T) {
 	compose := environment.New(t, run).Up(t.Context())
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-	compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+	compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
 
-	compose.JWT(compose.AuthUser(t, ShellHubUsername, ShellHubPassword).Token)
+	compose.JWT(compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword).Token)
 	useManualProvisioningKey(t, compose)
 
 	_, device := startAcceptedAgent(t, t.Context(), compose)
@@ -317,7 +317,7 @@ func TestNamespaceAPIKeyAuthentication(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 		assert.Equal(t, "production", renamed.Name)
-		assert.Equal(t, ShellHubNamespace, renamed.TenantID)
+		assert.Equal(t, CloudMateHubNamespace, renamed.TenantID)
 		assert.True(t, renamed.UpdatedAt.After(renamed.CreatedAt))
 
 		tagsAfterRename := namespaceTags(t, withAPIKey(t, compose, key.Key))
@@ -470,10 +470,10 @@ func TestAPIKeyRoleCap(t *testing.T) {
 	compose := environment.New(t, run).Up(t.Context())
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
-	compose.NewNamespace(t, ShellHubUsername, ShellHubNamespaceName, ShellHubNamespace)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
+	compose.NewNamespace(t, CloudMateHubUsername, CloudMateHubNamespaceName, CloudMateHubNamespace)
 
-	compose.JWT(compose.AuthUser(t, ShellHubUsername, ShellHubPassword).Token)
+	compose.JWT(compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword).Token)
 
 	requestKey := func(t *testing.T, req *resty.Request, name string, role authorizer.Role) *resty.Response {
 		t.Helper()
@@ -489,7 +489,7 @@ func TestAPIKeyRoleCap(t *testing.T) {
 		assert.Equal(t, authorizer.RoleAdministrator, key.Role)
 		assert.Equal(t, authorizer.RoleAdministrator, listedAPIKey(t, compose, key.Name).Role)
 
-		resp, err := withAPIKey(t, compose, key.Key).Delete("/api/namespaces/" + ShellHubNamespace)
+		resp, err := withAPIKey(t, compose, key.Key).Delete("/api/namespaces/" + CloudMateHubNamespace)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusForbidden, resp.StatusCode(), resp.String())
 	})
@@ -550,7 +550,7 @@ func TestAPIKeyRoleCap(t *testing.T) {
 
 		resp, err := compose.R(t.Context()).
 			SetBody(map[string]string{"role": authorizer.RoleOperator.String()}).
-			Patch("/api/namespaces/" + ShellHubNamespace + "/members/" + creator.ID)
+			Patch("/api/namespaces/" + CloudMateHubNamespace + "/members/" + creator.ID)
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 

@@ -1,7 +1,7 @@
 import { ReactNode, useId } from "react";
-import { IconBadge } from "@shellhub/design-system/primitives";
-import { GlowOrbs } from "@shellhub/design-system/components";
-import { cn } from "@shellhub/design-system/cn";
+import { IconBadge } from "@cloudmatehub/design-system/primitives";
+import { GlowOrbs } from "@cloudmatehub/design-system/components";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 /**
  * The tone of an empty state: primary for nothing-here-yet, yellow for something-is-gated.

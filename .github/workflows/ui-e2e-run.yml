@@ -28,7 +28,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          path: shellhub
+          path: cloudmatehub
 
       - name: Decide which editions can run
         id: editions
@@ -89,37 +89,37 @@ jobs:
         id: node-modules
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: shellhub/ui/node_modules
-          key: ${{ runner.OS }}-ui-${{ hashFiles('shellhub/ui/package-lock.json') }}
+          path: cloudmatehub/ui/node_modules
+          key: ${{ runner.OS }}-ui-${{ hashFiles('cloudmatehub/ui/package-lock.json') }}
 
       - name: Install Node dependencies
-        working-directory: shellhub/ui
+        working-directory: cloudmatehub/ui
         run: npm install
 
       - name: Generate OpenAPI client
-        working-directory: shellhub/ui
+        working-directory: cloudmatehub/ui
         run: |
           VERSION=$(sed -n 's/^REDOCLY_VERSION=//p' ../versions.env)
           [ -n "$VERSION" ] || { echo "could not read REDOCLY_VERSION from versions.env"; exit 1; }
           npx "@redocly/cli@$VERSION" bundle ../openapi/spec/openapi.yaml -o /tmp/openapi.json --force
-          OPENAPI_SPEC_PATH=/tmp/openapi.json npm run generate -w @shellhub/console
+          OPENAPI_SPEC_PATH=/tmp/openapi.json npm run generate -w @cloudmatehub/console
 
       - name: Restore Playwright browser
         id: playwright-browser
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.OS }}-playwright-${{ hashFiles('shellhub/ui/package-lock.json') }}
+          key: ${{ runner.OS }}-playwright-${{ hashFiles('cloudmatehub/ui/package-lock.json') }}
 
       - name: Install Playwright browser
-        working-directory: shellhub/ui
-        run: npm run e2e:browsers -w @shellhub/console
+        working-directory: cloudmatehub/ui
+        run: npm run e2e:browsers -w @cloudmatehub/console
 
       - name: Save node modules
         if: steps.node-modules.outputs.cache-hit != 'true'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
-          path: shellhub/ui/node_modules
+          path: cloudmatehub/ui/node_modules
           key: ${{ steps.node-modules.outputs.cache-primary-key }}
 
       - name: Save Playwright browser
@@ -132,20 +132,20 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
         with:
-          go-version-file: shellhub/tests/go.mod
+          go-version-file: cloudmatehub/tests/go.mod
           cache: false
 
       - name: Restore the Go caches
-        uses: ./shellhub/.github/actions/go-cache
+        uses: ./cloudmatehub/.github/actions/go-cache
         with:
           name: ui-e2e
-          sum-files: shellhub/tests/go.sum
+          sum-files: cloudmatehub/tests/go.sum
 
       - name: Set up a BuildKit builder that exports its cache
         uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
 
       - name: Restore the image build cache
-        uses: ./shellhub/.github/actions/build-cache
+        uses: ./cloudmatehub/.github/actions/build-cache
 
       - name: Log in to the e2e image repository
         continue-on-error: true
@@ -156,7 +156,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run E2E tests
-        working-directory: shellhub/ui
+        working-directory: cloudmatehub/ui
         timeout-minutes: 60
         env:
           EDITIONS: ${{ steps.editions.outputs.list }}
@@ -171,7 +171,7 @@ jobs:
           # shellcheck disable=SC2329 # the EXIT trap below invokes it
           tear_down_stacks() {
               for edition in $EDITIONS; do
-                  E2E_STACK_NAME=e2e-$edition npm run e2e:down -w @shellhub/console || true
+                  E2E_STACK_NAME=e2e-$edition npm run e2e:down -w @cloudmatehub/console || true
               done
           }
           trap tear_down_stacks EXIT
@@ -189,7 +189,7 @@ jobs:
                       fi
                       unset CLOUD_STRIPE_SECRET_KEY CLOUD_STRIPE_PRICE_ID CLOUD_STRIPE_PUBLISHABLE_KEY
                       E2E_EDITION=$edition E2E_STACK_NAME=e2e-$edition \
-                          exec npm run e2e:test -w @shellhub/console
+                          exec npm run e2e:test -w @cloudmatehub/console
                   ) 2>&1 | tee "$RUNNER_TEMP/e2e-$edition.log" | sed -u "s/^/$prefix /"
               ) &
               pids[$edition]=$!
@@ -218,10 +218,10 @@ jobs:
 
       - name: Save the Go caches
         if: ${{ !cancelled() }}
-        uses: ./shellhub/.github/actions/go-cache
+        uses: ./cloudmatehub/.github/actions/go-cache
         with:
           name: ui-e2e
-          sum-files: shellhub/tests/go.sum
+          sum-files: cloudmatehub/tests/go.sum
           save: true
 
       - name: Upload Playwright report
@@ -230,8 +230,8 @@ jobs:
         with:
           name: playwright-report
           path: |
-            shellhub/ui/apps/console/e2e/tmp
-            shellhub/tests/.stack/*.log
+            cloudmatehub/ui/apps/console/e2e/tmp
+            cloudmatehub/tests/.stack/*.log
             ${{ runner.temp }}/e2e-*.log
           include-hidden-files: true
           retention-days: 14

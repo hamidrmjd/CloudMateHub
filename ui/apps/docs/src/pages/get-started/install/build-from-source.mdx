@@ -1,12 +1,12 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: Building from Source
-description: Compile the ShellHub agent yourself, including for a target architecture.
+description: Compile the CloudMateHub agent yourself, including for a target architecture.
 ---
 
 # Building the Agent from Source
 
-The agent is a single Go program in the ShellHub repository. Build it when you need an
+The agent is a single Go program in the CloudMateHub repository. Build it when you need an
 architecture we do not publish, a patched build, or reproducibility you control.
 
 ## Requirements
@@ -21,7 +21,7 @@ $ head -3 agent/go.mod
 
 ```bash
 $ git clone https://github.com/shellhub-io/shellhub.git
-$ cd shellhub/agent
+$ cd cloudmatehub/agent
 $ CGO_ENABLED=0 go build \
     -ldflags "-X main.AgentVersion=$(git describe --tags --abbrev=0)" \
     -o shellhub-agent .
@@ -49,7 +49,7 @@ The published builds cover `amd64`, `armv6`, `armv7`, `arm64` and `386`.
 The binary reads its configuration from the environment:
 
 ```bash
-$ SHELLHUB_SERVER_ADDRESS=https://shellhub.example.com \
+$ SHELLHUB_SERVER_ADDRESS=https://cloudmatehub.example.com \
   SHELLHUB_PROVISIONING_KEY=<your-provisioning-key> \
   SHELLHUB_PRIVATE_KEY=/etc/shellhub.key \
   sudo -E ./shellhub-agent

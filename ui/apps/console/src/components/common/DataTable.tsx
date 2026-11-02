@@ -4,8 +4,8 @@ import {
   ChevronDownIcon,
   ChevronUpDownIcon,
 } from "@heroicons/react/24/outline";
-import { Card } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Card } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import Pagination from "./Pagination";
 import PageLoader from "@/components/common/PageLoader";
 

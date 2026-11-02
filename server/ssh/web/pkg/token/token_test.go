@@ -12,7 +12,7 @@ import (
 )
 
 func TestNewTokenCarriesTheIssuer(t *testing.T) {
-	const issuer = "https://shellhub.example.com"
+	const issuer = "https://cloudmatehub.example.com"
 
 	created, err := token.NewToken(issuer)
 	require.NoError(t, err)

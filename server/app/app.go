@@ -1,4 +1,4 @@
-// Package app provides the ShellHub server as an importable library.
+// Package app provides the CloudMateHub server as an importable library.
 //
 // Community Edition builds use this package directly via server/main.go.
 // Enterprise builds use a separate main in the cloud repo that blank-imports

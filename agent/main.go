@@ -41,7 +41,7 @@ func main() {
 			cfg.Platform = AgentPlatform
 
 			if os.Geteuid() == 0 && cfg.SingleUserPassword != "" {
-				log.Error("ShellHub agent cannot run as root when single-user mode is enabled.")
+				log.Error("CloudMateHub agent cannot run as root when single-user mode is enabled.")
 				log.Error("To disable single-user mode unset SHELLHUB_SINGLE_USER_PASSWORD env.")
 				os.Exit(1)
 			}
@@ -84,7 +84,7 @@ func main() {
 			log.WithFields(log.Fields{
 				"version": AgentVersion,
 				"mode":    mode,
-			}).Info("Starting ShellHub")
+			}).Info("Starting CloudMateHub")
 
 			ag, err := agentd.NewAgentWithConfig(cfg, new(agentd.HostMode))
 			if err != nil {
@@ -175,7 +175,7 @@ func main() {
 
 	rootCmd.AddCommand(&cobra.Command{
 		Use:   "connector",
-		Short: "Starts the ShellHub Agent in Connector mode",
+		Short: "Starts the CloudMateHub Agent in Connector mode",
 		Run: func(cmd *cobra.Command, _ []string) {
 			updater, err := selfupdater.NewUpdater(AgentVersion)
 			if err != nil {
@@ -213,12 +213,12 @@ func main() {
 
 			cfg.PrivateKeys = path.Dir(cfg.PrivateKeys)
 
-			logger.Info("Starting ShellHub Agent Connector")
+			logger.Info("Starting CloudMateHub Agent Connector")
 
 			connector.ConnectorVersion = AgentVersion
 			connector, err := NewDockerConnector(cfg)
 			if err != nil {
-				logger.Fatal("Failed to create ShellHub Agent Connector")
+				logger.Fatal("Failed to create CloudMateHub Agent Connector")
 			}
 
 			updateTicker := time.NewTicker(24 * time.Hour)
@@ -230,7 +230,7 @@ func main() {
 				logger.Fatal("Failed to listen for connections")
 			}
 
-			logger.Info("ShellHub Agent Connector stopped")
+			logger.Info("CloudMateHub Agent Connector stopped")
 		},
 	})
 
@@ -260,7 +260,7 @@ func main() {
 				"version": info.Version,
 				"api":     info.Endpoints.API,
 				"ssh":     info.Endpoints.SSH,
-			}).Info("ShellHub agent information")
+			}).Info("CloudMateHub agent information")
 
 			data, err := json.Marshal(info)
 			if err != nil {
@@ -303,7 +303,7 @@ waits until the device is accepted, rejected, or the code expires.`,
 			}
 
 			if err := ag.Initialize(cmd.Context()); err != nil {
-				log.WithError(err).Fatal("Failed to authenticate with the ShellHub server")
+				log.WithError(err).Fatal("Failed to authenticate with the CloudMateHub server")
 			}
 
 			status, err := ag.DeviceStatus()
@@ -465,7 +465,7 @@ func pairingLogin(cmd *cobra.Command, cfg *agentd.Config) {
 	}
 
 	if err := ag.Setup(); err != nil {
-		log.WithError(err).Fatal("Failed to reach the ShellHub server")
+		log.WithError(err).Fatal("Failed to reach the CloudMateHub server")
 	}
 
 	pairing, err := ag.CreatePairing()
@@ -534,7 +534,7 @@ func printPairingInstructions(cmd *cobra.Command, serverAddress, code string, ex
 	opened := openBrowser(url)
 
 	cmd.Println()
-	cmd.Println("To accept this device, open the ShellHub console and enter this code:")
+	cmd.Println("To accept this device, open the CloudMateHub console and enter this code:")
 	cmd.Println()
 	cmd.Printf("      %s\n", formatPairingCode(code))
 	cmd.Println()

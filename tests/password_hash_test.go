@@ -23,9 +23,9 @@ func TestLegacyPasswordDigest(t *testing.T) {
 
 	const username = "legacy"
 
-	compose.NewUser(t, username, username+"@ossystems.com.br", ShellHubPassword)
+	compose.NewUser(t, username, username+"@ossystems.com.br", CloudMateHubPassword)
 
-	sum := sha256.Sum256([]byte(ShellHubPassword))
+	sum := sha256.Sum256([]byte(CloudMateHubPassword))
 	legacy := hex.EncodeToString(sum[:])
 	compose.SetUserPasswordDigest(t, username, legacy)
 
@@ -41,17 +41,17 @@ func TestLegacyPasswordDigest(t *testing.T) {
 	}
 
 	t.Run("a wrong password is refused and leaves the digest alone", func(t *testing.T) {
-		assert.Equal(t, http.StatusUnauthorized, login(t, "not-"+ShellHubPassword))
+		assert.Equal(t, http.StatusUnauthorized, login(t, "not-"+CloudMateHubPassword))
 		assert.Equal(t, legacy, compose.UserPasswordDigest(t, username))
 	})
 
 	t.Run("the right password logs in and rehashes the digest with bcrypt", func(t *testing.T) {
-		require.Equal(t, http.StatusOK, login(t, ShellHubPassword))
+		require.Equal(t, http.StatusOK, login(t, CloudMateHubPassword))
 
 		upgraded := compose.UserPasswordDigest(t, username)
-		require.NoError(t, bcrypt.CompareHashAndPassword([]byte(upgraded), []byte(ShellHubPassword)),
+		require.NoError(t, bcrypt.CompareHashAndPassword([]byte(upgraded), []byte(CloudMateHubPassword)),
 			"the stored digest should be a bcrypt hash of the password")
 
-		assert.Equal(t, http.StatusOK, login(t, ShellHubPassword), "the password should keep working against the bcrypt digest")
+		assert.Equal(t, http.StatusOK, login(t, CloudMateHubPassword), "the password should keep working against the bcrypt digest")
 	})
 }

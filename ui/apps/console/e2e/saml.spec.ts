@@ -258,7 +258,7 @@ test.describe("Admin configuration", () => {
     });
   });
 
-  test("ShellHub signs its authentication requests when asked to", async ({
+  test("CloudMateHub signs its authentication requests when asked to", async ({
     page,
   }) => {
     const admin = await openAuthenticationSettings(page);

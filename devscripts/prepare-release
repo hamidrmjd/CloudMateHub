@@ -8,7 +8,7 @@ prepare_go_dir() {
     )
 }
 
-echo "ShellHub release script"
+echo "CloudMateHub release script"
 
 go_dirs=$(git ls-files | grep 'go.mod' | xargs dirname)
 

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 /**
  * Props of NoticeBanner. visible is a prop rather than a mount condition so the banner can

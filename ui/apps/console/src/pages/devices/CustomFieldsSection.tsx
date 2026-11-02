@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { IconButton } from "@shellhub/design-system/primitives";
+import { IconButton } from "@cloudmatehub/design-system/primitives";
 import { useHasPermission } from "@/hooks/useHasPermission";
 import { setDeviceCustomFieldMutation, deleteDeviceCustomFieldMutation } from "@/client";
 import { useInvalidateByIds } from "@/hooks/useInvalidateQueries";

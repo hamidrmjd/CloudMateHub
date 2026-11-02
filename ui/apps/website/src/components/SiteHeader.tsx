@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { cn } from "@shellhub/design-system/cn";
-import { ShellHubLogo } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { CloudMateHubLogo } from "@cloudmatehub/design-system/primitives";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ActionButton } from "@/components";
 import { loginUrl, signupUrl } from "@/links";
@@ -62,7 +62,7 @@ export function SiteHeader() {
     >
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-8">
         <Link to="/" className="shrink-0">
-          <ShellHubLogo className="h-8" />
+          <CloudMateHubLogo className="h-8" />
         </Link>
 
         <button

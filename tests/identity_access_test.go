@@ -237,12 +237,12 @@ func TestIdentityAccessPolicy(t *testing.T) {
 			refuse: func(t *testing.T, compose *environment.DockerCompose) ssh.Signer {
 				t.Helper()
 
-				compose.NewUser(t, "member", "member@ossystems.com.br", ShellHubPassword)
-				compose.NewMember(t, "member", ShellHubNamespaceName, string(authorizer.RoleOperator))
+				compose.NewUser(t, "member", "member@ossystems.com.br", CloudMateHubPassword)
+				compose.NewMember(t, "member", CloudMateHubNamespaceName, string(authorizer.RoleOperator))
 
-				auth := compose.AuthUser(t, "member", ShellHubPassword)
+				auth := compose.AuthUser(t, "member", CloudMateHubPassword)
 				require.NotNil(t, auth.Tenant)
-				require.Equal(t, ShellHubNamespace, *auth.Tenant)
+				require.Equal(t, CloudMateHubNamespace, *auth.Tenant)
 
 				signer, data := newSigner(t)
 				compose.EnrollIdentityAs(t, auth.Token, "member", data)
@@ -263,7 +263,7 @@ func TestIdentityAccessPolicy(t *testing.T) {
 					Name:    "no root",
 					Subject: requests.AccessPolicySubject{Type: string(models.PolicySubjectAllMembers)},
 					Filter:  requests.AccessPolicyFilter{All: true},
-					Logins:  []string{ShellHubAgentUsername},
+					Logins:  []string{CloudMateHubAgentUsername},
 					Action:  string(models.PolicyActionDeny),
 				})
 

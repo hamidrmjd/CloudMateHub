@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	defaultAgentRepository = "shellhub-e2e/agent"
+	defaultAgentRepository = "cloudmatehub-e2e/agent"
 	defaultAgentDockerfile = "agent/Dockerfile.test"
 
 	// AgentUsername is the user the agent built by [BuildAgentImage] accepts logins for.
@@ -26,7 +26,7 @@ const (
 )
 
 // AgentBuild describes the agent image [BuildAgentImage] builds. Context is the build context
-// and is required. Repository defaults to shellhub-e2e/agent and Dockerfile, relative to
+// and is required. Repository defaults to cloudmatehub-e2e/agent and Dockerfile, relative to
 // Context, to agent/Dockerfile.test. Version, when set, is the version the agent reports instead
 // of latest. Tags are the Go build tags the agent is compiled with, such as docker for an agent
 // that runs as a container and replaces itself on update. Output receives BuildKit's plain
@@ -193,7 +193,7 @@ func composeBuildAgent(ctx context.Context, run *Run, build AgentBuild, image st
 	}
 
 	project := &types.Project{
-		Name:       "shellhub-e2e-agent-" + run.ID(),
+		Name:       "cloudmatehub-e2e-agent-" + run.ID(),
 		WorkingDir: contextDir,
 		Services: types.Services{"agent": {
 			Name:          "agent",

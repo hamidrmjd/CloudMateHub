@@ -33,7 +33,7 @@ func runSuite(m *testing.M) int {
 	}
 
 	if err := environment.GenerateKeys(".."); err != nil {
-		log.WithError(err).Error("failed to generate the ShellHub keys")
+		log.WithError(err).Error("failed to generate the CloudMateHub keys")
 
 		return 1
 	}

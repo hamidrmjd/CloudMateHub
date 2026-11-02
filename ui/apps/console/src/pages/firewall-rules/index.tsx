@@ -15,7 +15,7 @@ import {
   Button,
   Callout,
   IconButton,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import { apiErrorMessage } from "@/api/errors";
 import {
   deleteFirewallRuleMutation,

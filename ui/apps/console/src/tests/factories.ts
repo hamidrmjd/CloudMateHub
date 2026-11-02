@@ -452,7 +452,7 @@ export function mockMembershipInvitation(
     status: "pending",
     status_updated_at: "2024-01-01T00:00:00Z",
     role: "observer",
-    invite_url: `https://shellhub.test/accept-invite?invite=${user.id}`,
+    invite_url: `https://cloudmatehub.test/accept-invite?invite=${user.id}`,
     ...overrides,
   };
 }

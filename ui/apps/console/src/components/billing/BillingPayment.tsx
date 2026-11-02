@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Card, IconButton } from "@shellhub/design-system/primitives";
+import { Button, Card, IconButton } from "@cloudmatehub/design-system/primitives";
 import { isSdkError } from "@/api/errors";
 import {
   Elements,

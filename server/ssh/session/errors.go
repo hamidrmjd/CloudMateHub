@@ -7,7 +7,7 @@ import (
 
 // Errors returned by the NewSession to the client.
 var (
-	ErrBillingBlock            = fmt.Errorf("Connection to this device is not available as your current namespace doesn't qualify for the free plan. To gain access, you'll need to contact the namespace owner to initiate an upgrade.\n\nFor a detailed estimate of costs based on your use-cases with ShellHub Cloud, visit our pricing page at https://www.shellhub.io/pricing. If you wish to upgrade immediately, navigate to https://cloud.shellhub.io/settings/billing. Your cooperation is appreciated.") //nolint:all
+	ErrBillingBlock            = fmt.Errorf("Connection to this device is not available as your current namespace doesn't qualify for the free plan. To gain access, you'll need to contact the namespace owner to initiate an upgrade.\n\nFor a detailed estimate of costs based on your use-cases with CloudMateHub Cloud, visit our pricing page at https://www.shellhub.io/pricing. If you wish to upgrade immediately, navigate to https://cloud.shellhub.io/settings/billing. Your cooperation is appreciated.") //nolint:all
 	ErrFirewallBlock           = errors.New("you cannot connect to this device because a firewall rule block your connection")
 	ErrFirewallUnknown         = errors.New("failed to evaluate the firewall rule")
 	ErrHost                    = errors.New("failed to get the device address")
@@ -20,7 +20,7 @@ var (
 	ErrSeatNotFound            = errors.New("this seat has no agent channel")
 	ErrClientClosing           = errors.New("the client connection is closing")
 	ErrWebData                 = errors.New("failed to parse the web session data")
-	ErrLicenseBlock            = fmt.Errorf("Connection blocked: your ShellHub instance has exceeded the maximum number of devices allowed by your license. Please contact support or remove unused devices.") //nolint:all
+	ErrLicenseBlock            = fmt.Errorf("Connection blocked: your CloudMateHub instance has exceeded the maximum number of devices allowed by your license. Please contact support or remove unused devices.") //nolint:all
 
-	ErrLicenseNotAuthorized = fmt.Errorf("Connection blocked: this ShellHub instance's license does not authorize this service. Please contact support.") //nolint:staticcheck,perfsprint // shown verbatim to the SSH client as a full sentence
+	ErrLicenseNotAuthorized = fmt.Errorf("Connection blocked: this CloudMateHub instance's license does not authorize this service. Please contact support.") //nolint:staticcheck,perfsprint // shown verbatim to the SSH client as a full sentence
 )

@@ -18,7 +18,7 @@ import {
   NoSymbolIcon,
   ShieldExclamationIcon,
 } from "@heroicons/react/24/outline";
-import { DevicesIcon as DevicesIconComponent } from "@shellhub/design-system/primitives";
+import { DevicesIcon as DevicesIconComponent } from "@cloudmatehub/design-system/primitives";
 import FormModal from "@/components/common/FormModal";
 import {
   FormInputField,

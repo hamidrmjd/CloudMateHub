@@ -1,10 +1,10 @@
-import { Badge, Card, WindowChrome } from "@shellhub/design-system/primitives";
+import { Badge, Card, WindowChrome } from "@cloudmatehub/design-system/primitives";
 import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import {
   CheckIcon,
   PlayCircleIcon,
@@ -30,7 +30,7 @@ import {
   SiteLayout,
   type CTAAction,
 } from "@/components";
-import { C } from "@shellhub/design-system/constants";
+import { C } from "@cloudmatehub/design-system/constants";
 
 const primaryAction: CTAAction = {
   label: "Get Started Free",
@@ -117,7 +117,7 @@ function NativeSSH() {
             className="mb-8"
             eyebrow="Core Feature"
             title="Native SSH access with your existing tools"
-            subtitle="Connect to any device using your existing SSH client. ShellHub works transparently with OpenSSH, PuTTY, and any SSH-compatible client. No proprietary plugins, no VPNs, no port forwarding."
+            subtitle="Connect to any device using your existing SSH client. CloudMateHub works transparently with OpenSSH, PuTTY, and any SSH-compatible client. No proprietary plugins, no VPNs, no port forwarding."
           />
 
           <div className="space-y-3">
@@ -132,7 +132,7 @@ function NativeSSH() {
               },
               {
                 label: "Use your existing SSH client",
-                desc: "Connect from OpenSSH, PuTTY, or any SSH client — the ShellHub agent runs on the device side",
+                desc: "Connect from OpenSSH, PuTTY, or any SSH client — the CloudMateHub agent runs on the device side",
               },
               {
                 label: "Works behind NAT",
@@ -183,7 +183,7 @@ function NativeSSH() {
               <div className="mt-2 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse" />
                 <span className="text-text-muted text-2xs">
-                  Connecting via ShellHub gateway...
+                  Connecting via CloudMateHub gateway...
                 </span>
               </div>
             </WindowChrome>
@@ -379,7 +379,7 @@ function WebTerminal() {
             className="mb-8"
             eyebrow="Zero Install"
             title="Terminal in your browser"
-            subtitle="Access any device directly from the ShellHub web UI. No SSH client needed. Perfect for quick troubleshooting from a tablet, a shared workstation, or when your usual tools are not available."
+            subtitle="Access any device directly from the CloudMateHub web UI. No SSH client needed. Perfect for quick troubleshooting from a tablet, a shared workstation, or when your usual tools are not available."
           />
 
           <div className="space-y-3">
@@ -607,7 +607,7 @@ function FileTransfer() {
             className="mb-8"
             eyebrow="File Transfer"
             title="SCP and SFTP, built right in"
-            subtitle="Transfer files to and from remote devices using the same SCP and SFTP commands you already know. Push firmware updates, pull log files, manage configurations — all through the ShellHub gateway with no extra setup."
+            subtitle="Transfer files to and from remote devices using the same SCP and SFTP commands you already know. Push firmware updates, pull log files, manage configurations — all through the CloudMateHub gateway with no extra setup."
           />
 
           <div className="space-y-3">
@@ -626,7 +626,7 @@ function FileTransfer() {
               },
               {
                 label: "Secure by default",
-                desc: "Files are encrypted in transit through the ShellHub tunnel",
+                desc: "Files are encrypted in transit through the CloudMateHub tunnel",
               },
             ].map((item, i) => (
               <Reveal key={i} delay={i * 0.04}>
@@ -740,7 +740,7 @@ function DockerAccess() {
                       fontSize="9"
                       fontFamily="monospace"
                     >
-                      ShellHub
+                      CloudMateHub
                     </text>
                     <text
                       x="230"
@@ -804,7 +804,7 @@ function DockerAccess() {
                       fontWeight="600"
                       fontFamily="monospace"
                     >
-                      ShellHub Agent
+                      CloudMateHub Agent
                     </text>
 
                     <rect
@@ -1228,7 +1228,7 @@ function FeaturesCTA() {
   return (
     <CTABanner
       eyebrow="Ready to get started?"
-      title="Deploy ShellHub in minutes"
+      title="Deploy CloudMateHub in minutes"
       subtitle="Open-source and free to start. Run a single command and manage your first device in under five minutes."
       primaryAction={primaryAction}
       secondaryAction={secondaryAction}

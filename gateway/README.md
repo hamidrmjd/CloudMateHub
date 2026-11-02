@@ -1,6 +1,6 @@
 # Gateway
 
-The `gateway` is ShellHub's entry point. It terminates TLS and routes inbound HTTP requests and
+The `gateway` is CloudMateHub's entry point. It terminates TLS and routes inbound HTTP requests and
 WebSocket connections to the server and the console.
 
 Routing is all it does. Authentication, the root aliases and the per-device tunnel subdomains are

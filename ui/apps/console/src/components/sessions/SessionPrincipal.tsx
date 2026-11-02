@@ -1,5 +1,5 @@
 import { KeyIcon, UserIcon } from "@heroicons/react/24/outline";
-import { Badge } from "@shellhub/design-system/primitives";
+import { Badge } from "@cloudmatehub/design-system/primitives";
 
 import type { SessionPrincipal as Principal } from "@/client";
 

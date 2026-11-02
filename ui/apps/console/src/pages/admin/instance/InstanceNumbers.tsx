@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Card } from "@shellhub/design-system/primitives";
+import { Card } from "@cloudmatehub/design-system/primitives";
 import { useAdminStats } from "@/hooks/useAdminRequests";
 import { useAdminNamespaces } from "@/hooks/useAdminNamespaces";
 import { useAdminUsers } from "@/hooks/useAdminUsers";

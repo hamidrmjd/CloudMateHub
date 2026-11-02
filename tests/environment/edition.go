@@ -12,7 +12,7 @@ import (
 	"github.com/shellhub-io/shellhub/pkg/testimage"
 )
 
-// Edition selects which ShellHub compose overlays and environment a stack runs.
+// Edition selects which CloudMateHub compose overlays and environment a stack runs.
 type Edition string
 
 const (

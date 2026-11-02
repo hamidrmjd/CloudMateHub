@@ -3,7 +3,7 @@ import { Outlet, Navigate, useLocation } from "react-router-dom";
 import { getInfo } from "@/client";
 import { isCloud } from "@/env";
 import { useAuthStore } from "@/stores/authStore";
-import { Spinner } from "@shellhub/design-system/primitives";
+import { Spinner } from "@cloudmatehub/design-system/primitives";
 
 /**
  * Holds the app until the instance has been set up, sending an unconfigured one to the setup

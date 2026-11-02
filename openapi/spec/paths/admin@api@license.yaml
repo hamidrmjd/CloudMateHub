@@ -326,7 +326,7 @@ get:
                   name:
                     description: Customer's name
                     type: string
-                    example: ShellHub Full Perpetual License
+                    example: CloudMateHub Full Perpetual License
                   email:
                     description: Customer's email
                     type: string

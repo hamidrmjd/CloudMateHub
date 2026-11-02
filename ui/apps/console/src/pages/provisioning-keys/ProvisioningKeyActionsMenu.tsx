@@ -7,7 +7,7 @@ import {
   PencilIcon,
   PlayIcon,
 } from "@heroicons/react/24/outline";
-import { Dropdown, IconButton } from "@shellhub/design-system/primitives";
+import { Dropdown, IconButton } from "@cloudmatehub/design-system/primitives";
 import { type ProvisioningKey } from "@/client";
 import RestrictedAction from "@/components/common/RestrictedAction";
 import { type Action } from "@/utils/permission";

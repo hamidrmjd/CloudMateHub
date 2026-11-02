@@ -10,8 +10,8 @@ import {
 import { create, type Player } from "asciinema-player";
 import "asciinema-player/dist/bundle/asciinema-player.css";
 import { PlayIcon, PauseIcon } from "@heroicons/react/24/solid";
-import { cn } from "@shellhub/design-system/cn";
-import { Dropdown, IconButton } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { Dropdown, IconButton } from "@cloudmatehub/design-system/primitives";
 import {
   ansiPalette,
   useTerminalThemeStore,

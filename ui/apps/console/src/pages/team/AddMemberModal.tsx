@@ -2,7 +2,7 @@ import { useState } from "react";
 import { isSdkError } from "@/api/errors";
 import { useResetOnOpen } from "@/hooks/useResetOnOpen";
 import { useWatch } from "react-hook-form";
-import { Card, Button } from "@shellhub/design-system/primitives";
+import { Card, Button } from "@cloudmatehub/design-system/primitives";
 import {
   CheckCircleIcon,
   UserPlusIcon,

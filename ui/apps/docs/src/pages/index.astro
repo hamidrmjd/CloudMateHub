@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
-import { Footer } from "@shellhub/design-system/components";
-import { GithubIcon, ShellHubLogo } from "@shellhub/design-system/primitives";
+import { Footer } from "@cloudmatehub/design-system/components";
+import { GithubIcon, CloudMateHubLogo } from "@cloudmatehub/design-system/primitives";
 import {
   DocumentTextIcon,
   MagnifyingGlassIcon,
@@ -23,8 +23,8 @@ const sections = sidebar.map(section => ({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ShellHub Documentation</title>
-    <meta name="description" content="Official documentation for ShellHub — centralized SSH access to Linux devices over the internet." />
+    <title>CloudMateHub Documentation</title>
+    <meta name="description" content="Official documentation for CloudMateHub — centralized SSH access to Linux devices over the internet." />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   </head>
   <body class="bg-background text-text-primary font-sans antialiased">
@@ -33,7 +33,7 @@ const sections = sidebar.map(section => ({
       <div class="flex items-center justify-between h-full max-w-7xl mx-auto px-8">
         <div class="flex items-center gap-3">
           <a href={websiteUrl} class="flex items-center shrink-0">
-            <ShellHubLogo className="h-9" />
+            <CloudMateHubLogo className="h-9" />
           </a>
           <a href="/" class="font-mono text-[10px] font-semibold uppercase tracking-widest text-primary bg-primary-50 border border-primary-100 rounded px-2 py-0.5 no-underline hover:bg-primary-100 transition-colors">
             Docs
@@ -49,7 +49,7 @@ const sections = sidebar.map(section => ({
             <span class="text-[13px]">Search</span>
             <kbd class="font-mono text-[10px] text-text-muted bg-white/[0.04] border border-border rounded px-1.5 py-px">&#8984;K</kbd>
           </button>
-          <a href="https://github.com/shellhub-io/shellhub" target="_blank" rel="noopener noreferrer" aria-label="View ShellHub on GitHub" class="text-text-muted hover:text-text-secondary transition-colors flex items-center">
+          <a href="https://github.com/shellhub-io/shellhub" target="_blank" rel="noopener noreferrer" aria-label="View CloudMateHub on GitHub" class="text-text-muted hover:text-text-secondary transition-colors flex items-center">
             <GithubIcon className="w-4 h-4 fill-current" />
           </a>
         </div>
@@ -71,7 +71,7 @@ const sections = sidebar.map(section => ({
 
       <div class="relative max-w-7xl mx-auto px-8 text-center animate-slide-up">
           <h1 class="text-[2.5rem] font-bold tracking-tight text-text-primary mb-4 leading-[1.15]">
-            ShellHub Documentation
+            CloudMateHub Documentation
           </h1>
           <p class="text-[17px] leading-relaxed text-text-secondary mb-8 mx-auto max-w-lg">
             Everything you need to set up, manage, and connect to your remote Linux devices.

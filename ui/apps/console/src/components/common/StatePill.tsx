@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 /**
  * A small pill that shows whether something is on: tinted with onClassName while on, a muted

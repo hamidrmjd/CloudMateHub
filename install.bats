@@ -599,7 +599,7 @@ LOG
 
     [ "$status" -eq 0 ]
     assert_called "--label shellhub.role=agent"
-    assert_output_contains "Starting ShellHub container in Agent mode"
+    assert_output_contains "Starting CloudMateHub container in Agent mode"
 }
 
 @test "podman_install labels the agent container so the wrapper can find it" {
@@ -616,7 +616,7 @@ LOG
 
     [ "$status" -eq 0 ]
     assert_called "--label shellhub.role=agent"
-    assert_output_contains "Starting ShellHub container in Agent mode"
+    assert_output_contains "Starting CloudMateHub container in Agent mode"
 }
 
 @test "podman_install treats an explicit agent mode as the default mode" {
@@ -770,7 +770,7 @@ LOG
 
     [ "$status" -eq 0 ]
     assert_called "docker pull -q $AGENT_IMAGE"
-    assert_output_contains "Downloading ShellHub container image"
+    assert_output_contains "Downloading CloudMateHub container image"
 }
 
 @test "podman_install pulls the agent image by default" {
@@ -780,7 +780,7 @@ LOG
 
     [ "$status" -eq 0 ]
     assert_called "podman pull -q $AGENT_IMAGE"
-    assert_output_contains "Downloading ShellHub container image"
+    assert_output_contains "Downloading CloudMateHub container image"
 }
 
 @test "docker_install skips the pull when the image was overridden" {
@@ -810,7 +810,7 @@ LOG
     container_install
 
     [ "$status" -eq 1 ]
-    assert_output_contains "Failed to download shellhub container image"
+    assert_output_contains "Failed to download CloudMateHub container image"
     refute_called "docker run"
 }
 
@@ -821,7 +821,7 @@ LOG
     container_install
 
     [ "$status" -eq 1 ]
-    assert_output_contains "Failed to download shellhub container image"
+    assert_output_contains "Failed to download CloudMateHub container image"
     refute_called "podman run"
 }
 
@@ -993,7 +993,7 @@ LOG
     call_install standalone_install
 
     [ "$status" -eq 1 ]
-    assert_output_contains "Failed to install ShellHub agent service"
+    assert_output_contains "Failed to install CloudMateHub agent service"
     [ ! -e "$INSTALL_DIR/shellhub-agent" ]
     [ ! -e "$TMP_DIR" ]
 }
@@ -1302,7 +1302,7 @@ esac"
     call_install docker_uninstall
 
     [ "$status" -eq 0 ]
-    assert_output_contains "ShellHub agent uninstalled."
+    assert_output_contains "CloudMateHub agent uninstalled."
     refute_output_contains ".tenant"
 }
 
@@ -1310,7 +1310,7 @@ esac"
     call_install standalone_uninstall
 
     [ "$status" -eq 1 ]
-    assert_output_contains "ShellHub agent binary not found"
+    assert_output_contains "CloudMateHub agent binary not found"
 }
 
 @test "standalone_uninstall looks in the default install dir when the environment names none" {
@@ -1381,7 +1381,7 @@ esac"
     run_install
 
     [ "$status" -eq 0 ]
-    assert_output_contains "Installing ShellHub using docker method"
+    assert_output_contains "Installing CloudMateHub using docker method"
     assert_called "docker run -d"
     refute_called "podman run"
 }
@@ -1393,7 +1393,7 @@ esac"
     run_install
 
     [ "$status" -eq 0 ]
-    assert_output_contains "Installing ShellHub using podman method"
+    assert_output_contains "Installing CloudMateHub using podman method"
     assert_called "podman run -d"
 }
 
@@ -1434,7 +1434,7 @@ esac"
     run_install
 
     [ "$status" -eq 0 ]
-    assert_output_contains "Installing ShellHub using snap method"
+    assert_output_contains "Installing CloudMateHub using snap method"
     assert_called "snap install --classic --channel=latest/stable shellhub"
 }
 
@@ -1444,7 +1444,7 @@ esac"
     run_install
 
     [ "$status" -eq 0 ]
-    assert_output_contains "Installing ShellHub using standalone method"
+    assert_output_contains "Installing CloudMateHub using standalone method"
     assert_called "agent install --server-address=$SERVER_ADDRESS"
 }
 
@@ -1456,7 +1456,7 @@ esac"
     run_install
 
     [ "$status" -eq 0 ]
-    assert_output_contains "Installing ShellHub using standalone method"
+    assert_output_contains "Installing CloudMateHub using standalone method"
     refute_called "docker info"
 }
 
@@ -1479,7 +1479,7 @@ esac"
 
     [ "$status" -eq 0 ]
     assert_output_contains "Detected WSL environment"
-    assert_output_contains "Installing ShellHub using WSL method"
+    assert_output_contains "Installing CloudMateHub using WSL method"
     assert_called "agent install --server-address=$SERVER_ADDRESS"
 }
 
@@ -1512,7 +1512,7 @@ esac"
     run_install
 
     [ "$status" -eq 0 ]
-    assert_output_contains "Installing ShellHub using WSL method"
+    assert_output_contains "Installing CloudMateHub using WSL method"
 }
 
 @test "the installer reports the enrollment credential before installing anything" {
@@ -1557,7 +1557,7 @@ esac"
     run_install
 
     [ "$status" -eq 1 ]
-    assert_output_contains "not a ShellHub release tag"
+    assert_output_contains "not a CloudMateHub release tag"
     refute_called "releases/download"
 }
 
@@ -1569,7 +1569,7 @@ esac"
     run_install
 
     [ "$status" -eq 1 ]
-    assert_output_contains "not a ShellHub release tag"
+    assert_output_contains "not a CloudMateHub release tag"
     refute_called "docker pull"
 }
 
@@ -1585,7 +1585,7 @@ esac"
         if [ -z "$version" ]; then
             assert_output_contains "did not report an agent version"
         else
-            assert_output_contains "not a ShellHub release tag"
+            assert_output_contains "not a CloudMateHub release tag"
             refute_output_contains "certificate"
         fi
     done
@@ -1700,7 +1700,7 @@ LOG
     run_install
 
     [ "$status" -eq 1 ]
-    assert_output_contains "Failed to start the ShellHub container"
+    assert_output_contains "Failed to start the CloudMateHub container"
 }
 
 @test "the installer fails when podman cannot start the agent container" {
@@ -1711,7 +1711,7 @@ LOG
     run_install
 
     [ "$status" -eq 1 ]
-    assert_output_contains "Failed to start the ShellHub container"
+    assert_output_contains "Failed to start the CloudMateHub container"
 }
 
 @test "the installer fails when the server refuses a device installed with podman" {
@@ -1789,7 +1789,7 @@ LOG
     run_install uninstall
 
     [ "$status" -eq 0 ]
-    assert_output_contains "Uninstalling ShellHub using docker method"
+    assert_output_contains "Uninstalling CloudMateHub using docker method"
     assert_called "docker rm -f shellhub"
 }
 
@@ -1804,7 +1804,7 @@ LOG
     refute_called "curl"
     refute_called "wget"
     [[ "$output" != *"Detected settings"* ]]
-    [[ "$output" != *"ShellHub Agent Installer"* ]]
+    [[ "$output" != *"CloudMateHub Agent Installer"* ]]
 }
 
 @test "uninstall is refused for install methods that do not support it" {

@@ -41,7 +41,7 @@ jobs:
             await github.rest.repos.createDispatchEvent({
               owner: 'shellhub-io',
               repo: 'cloud',
-              event_type: 'shellhub-pr',
+              event_type: 'cloudmatehub-pr',
               client_payload: {
                 sha: context.sha,
                 head_sha: context.payload.pull_request.head.sha,

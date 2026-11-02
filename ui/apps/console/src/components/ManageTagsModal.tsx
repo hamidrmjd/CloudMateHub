@@ -19,8 +19,8 @@ import {
   TrashIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
-import { Button, IconButton } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { Button, IconButton } from "@cloudmatehub/design-system/primitives";
 import PageLoader from "@/components/common/PageLoader";
 import ObjectName from "@/components/common/ObjectName";
 

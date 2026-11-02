@@ -85,7 +85,7 @@ const releasedAgentVersion = "v0.26.0"
 
 func buildReleasedAgentImage(ctx context.Context) (string, error) {
 	return cachedAgentImage(ctx, "released-"+releasedAgentVersion, environment.AgentBuild{
-		Repository: "shellhub-e2e/agent-released",
+		Repository: "cloudmatehub-e2e/agent-released",
 		Context:    "../agent",
 		Dockerfile: "Dockerfile.released",
 		Version:    releasedAgentVersion,
@@ -108,7 +108,7 @@ func startReleasedAgent(t *testing.T, ctx context.Context, compose *environment.
 func reachDevice(ctx context.Context, addr string, device *models.Device) error {
 	client, err := dialClientOnce(ctx, addr, &ssh.ClientConfig{
 		User:            deviceSSHID(device),
-		Auth:            []ssh.AuthMethod{ssh.Password(ShellHubAgentPassword)},
+		Auth:            []ssh.AuthMethod{ssh.Password(CloudMateHubAgentPassword)},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(), //nolint:gosec // the gateway's own host key is not what these tests are about
 		Timeout:         10 * time.Second,
 	})
@@ -136,7 +136,7 @@ func requireVerifiedDeviceKeys(t *testing.T, compose *environment.DockerCompose,
 
 	resp, err := compose.R(t.Context()).
 		SetBody(map[string]any{"settings": map[string]bool{"require_verified_device_key": required}}).
-		Put("/api/namespaces/" + ShellHubNamespace)
+		Put("/api/namespaces/" + CloudMateHubNamespace)
 	require.NoError(t, err)
 	require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 }

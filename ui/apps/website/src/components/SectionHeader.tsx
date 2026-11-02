@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { Reveal } from "@shellhub/design-system/components";
-import { cn } from "@shellhub/design-system/cn";
+import { Reveal } from "@cloudmatehub/design-system/components";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 type Size = "section" | "sub" | "cta";
 type Align = "center" | "left";

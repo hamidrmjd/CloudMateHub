@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useWatch } from "react-hook-form";
 import { KeyIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import { Callout } from "@shellhub/design-system/primitives";
+import { Callout } from "@cloudmatehub/design-system/primitives";
 import { configureSamlAuthentication } from "@/client";
 import { useResetOnOpen } from "@/hooks/useResetOnOpen";
 import { useDrawerForm } from "@/hooks/useDrawerForm";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import FormModal from "@/components/common/FormModal";
 import { FormCheckboxField, FormInputField, FormTextareaField } from "@/components/common/fields/rhf";
 import {

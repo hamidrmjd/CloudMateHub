@@ -1,4 +1,4 @@
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import {
   CheckIcon,
   ComputerDesktopIcon,
@@ -9,13 +9,13 @@ import {
   UsersIcon,
 } from "@heroicons/react/24/outline";
 import { PlayIcon } from "@heroicons/react/24/solid";
-import { Badge, Card, WindowChrome } from "@shellhub/design-system/primitives";
+import { Badge, Card, WindowChrome } from "@cloudmatehub/design-system/primitives";
 import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import {
   ActionButtonGroup,
   CTABanner,
@@ -25,7 +25,7 @@ import {
   SiteLayout,
   type CTAAction,
 } from "@/components";
-import { C } from "@shellhub/design-system/constants";
+import { C } from "@cloudmatehub/design-system/constants";
 
 const primaryAction: CTAAction = {
   label: "Get Started Free",
@@ -143,7 +143,7 @@ const workflowSteps = [
   },
   {
     num: "02",
-    title: "Engineer Connects via ShellHub",
+    title: "Engineer Connects via CloudMateHub",
     desc: "The engineer opens a browser-based terminal and connects to the device instantly — no VPN, no key sharing.",
     color: C.primary,
   },

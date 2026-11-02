@@ -4,8 +4,8 @@ import {
   BookOpenIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Card, WindowChrome } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Button, Card, WindowChrome } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import CopyButton from "@/components/common/CopyButton";
 import InputField from "@/components/common/fields/InputField";
 import NumericInput from "@/components/common/fields/NumericInput";

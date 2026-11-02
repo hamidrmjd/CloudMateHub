@@ -59,13 +59,13 @@ func TestConnectorSSH(t *testing.T) {
 		conn := dialDevice(t, ctx, compose, &device, registerDeviceKey(t, ctx, compose))
 		defer conn.Close() //nolint:errcheck // the test is over once the command answered
 
-		assert.Equal(t, ShellHubAgentUsername, strings.TrimSpace(runOnDevice(t, conn, "id -un")))
+		assert.Equal(t, CloudMateHubAgentUsername, strings.TrimSpace(runOnDevice(t, conn, "id -un")))
 	})
 }
 
 func connectorShadowLogin(device *models.Device, password string) *ssh.ClientConfig {
 	return &ssh.ClientConfig{ //nolint:exhaustruct // the remaining fields keep their defaults
-		User:            connectorShadowUser + "@" + ShellHubNamespaceName + "." + device.Name,
+		User:            connectorShadowUser + "@" + CloudMateHubNamespaceName + "." + device.Name,
 		Auth:            []ssh.AuthMethod{ssh.Password(password)},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(), //nolint:gosec // the test stack's host key is ephemeral
 	}

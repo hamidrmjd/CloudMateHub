@@ -5,8 +5,8 @@ import {
   PlusIcon,
   TicketIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Button } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { type ProvisioningKey } from "@/client";
 import DataTable, { type Column } from "@/components/common/DataTable";
 import { capitalize } from "@/utils/string";

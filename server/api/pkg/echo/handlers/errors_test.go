@@ -359,7 +359,7 @@ func TestNewErrorsRedactsCredentialsInTheReportedQuery(t *testing.T) {
 	handler := NewErrors(client)
 
 	req := httptest.NewRequestWithContext(t.Context(), http.MethodGet, "/api/invitations/resolve?invite=secret&email=user%40example.com&page=1", nil)
-	req.Header.Set("Referer", "https://shellhub.example.com/accept-invite?invite=secret")
+	req.Header.Set("Referer", "https://cloudmatehub.example.com/accept-invite?invite=secret")
 	ctx := echo.New().NewContext(req, httptest.NewRecorder())
 
 	handler(ctx, errors.Wrap(store.ErrInternal, errors.New("some internal detail", store.ErrLayer, store.ErrCodeInternal)))
@@ -372,5 +372,5 @@ func TestNewErrorsRedactsCredentialsInTheReportedQuery(t *testing.T) {
 	assert.Equal(t, url.Values{"invite": {"REDACTED"}, "email": {"REDACTED"}, "page": {"1"}}, reported)
 	assert.NotContains(t, spy.firstRequest().Headers, "Referer", "the page URL can carry the same secrets")
 	assert.Equal(t, "invite=secret&email=user%40example.com&page=1", req.URL.RawQuery, "the request being served must not change")
-	assert.Equal(t, "https://shellhub.example.com/accept-invite?invite=secret", req.Header.Get("Referer"), "the request being served must not change")
+	assert.Equal(t, "https://cloudmatehub.example.com/accept-invite?invite=secret", req.Header.Get("Referer"), "the request being served must not change")
 }

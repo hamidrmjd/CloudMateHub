@@ -15,13 +15,13 @@ import {
   Badge,
   IconBadge,
   WindowChrome,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import {
   ActionButtonGroup,
   ArrowMarker,
@@ -33,7 +33,7 @@ import {
   SectionHeader,
   SiteLayout,
 } from "@/components";
-import { C } from "@shellhub/design-system/constants";
+import { C } from "@cloudmatehub/design-system/constants";
 
 const painPoints = [
   {
@@ -336,7 +336,7 @@ export default function IotEmbedded() {
           eyebrow="Built for IoT"
           eyebrowColor="green"
           title="Features designed for embedded fleets"
-          subtitle="Every feature in ShellHub was designed with constrained, distributed devices in mind."
+          subtitle="Every feature in CloudMateHub was designed with constrained, distributed devices in mind."
         />
 
         <Reveal>
@@ -357,7 +357,7 @@ export default function IotEmbedded() {
                   </div>
                   <h3 className="text-lg font-bold mb-3">NAT Traversal</h3>
                   <p className="text-sm text-text-secondary leading-relaxed mb-4">
-                    The ShellHub agent makes an outbound connection from the
+                    The CloudMateHub agent makes an outbound connection from the
                     device, so it works behind any NAT, CGNAT, or firewall
                     without opening inbound ports.
                   </p>
@@ -494,7 +494,7 @@ export default function IotEmbedded() {
                         fontFamily="monospace"
                         fontWeight="600"
                       >
-                        ShellHub
+                        CloudMateHub
                       </text>
                       <text
                         x="325"
@@ -601,7 +601,7 @@ export default function IotEmbedded() {
                       Lightweight Agent
                     </h3>
                     <p className="text-sm text-text-secondary leading-relaxed">
-                      The ShellHub agent is a single static binary with minimal
+                      The CloudMateHub agent is a single static binary with minimal
                       resource footprint. It runs on anything from a Raspberry
                       Pi Zero to an industrial gateway — no runtime dependencies
                       needed.
@@ -665,7 +665,7 @@ export default function IotEmbedded() {
           eyebrow="Compatibility"
           title="Runs on the platforms you use"
           size="sub"
-          subtitle="The ShellHub agent supports any Linux-based system with an ARM or x86 processor. Here are some of the most popular platforms."
+          subtitle="The CloudMateHub agent supports any Linux-based system with an ARM or x86 processor. Here are some of the most popular platforms."
           className="mb-12"
         />
 
@@ -693,7 +693,7 @@ export default function IotEmbedded() {
       <CTABanner
         eyebrow="Ready to get started?"
         title="Start managing your IoT fleet today"
-        subtitle="Deploy the ShellHub agent on your devices and get instant remote access — no network changes, no VPNs, no exposed ports."
+        subtitle="Deploy the CloudMateHub agent on your devices and get instant remote access — no network changes, no VPNs, no exposed ports."
         primaryAction={{ label: "Get Started Free", to: "/getting-started" }}
         secondaryAction={{
           label: "Contact Sales",

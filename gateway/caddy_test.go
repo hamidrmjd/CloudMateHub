@@ -14,7 +14,7 @@ import (
 func configurations() map[string]*GatewayConfig {
 	base := func() *GatewayConfig {
 		return &GatewayConfig{ //nolint:exhaustruct
-			Domain:          "shellhub.example",
+			Domain:          "cloudmatehub.example",
 			APIBackend:      "server:8080",
 			ProxyTrustedIPs: "0.0.0.0/0 ::/0",
 		}
@@ -52,8 +52,8 @@ func configurations() map[string]*GatewayConfig {
 		"no access logs": with(func(c *GatewayConfig) { c.EnableAccessLogs = false }),
 		"supplied certificate": with(func(c *GatewayConfig) {
 			c.EnableAutoSSL = true
-			c.TLSCertFile = "/etc/shellhub/certs/fullchain.pem"
-			c.TLSKeyFile = "/etc/shellhub/certs/privkey.pem"
+			c.TLSCertFile = "/etc/cloudmatehub/certs/fullchain.pem"
+			c.TLSKeyFile = "/etc/cloudmatehub/certs/privkey.pem"
 		}),
 	}
 }
@@ -87,13 +87,13 @@ func TestCaddyfileServesTheEditionsRoutes(t *testing.T) {
 
 	assert.NotContains(t, string(community), "/admin/api",
 		"the admin API is enterprise-only")
-	assert.NotContains(t, string(community), "*.shellhub.example",
+	assert.NotContains(t, string(community), "*.cloudmatehub.example",
 		"web endpoints are not served unless the feature is on")
 
 	endpoints, err := Caddyfile(configs["web endpoints"])
 	require.NoError(t, err)
 
-	assert.Contains(t, string(endpoints), "*.shellhub.example")
+	assert.Contains(t, string(endpoints), "*.cloudmatehub.example")
 	assert.Contains(t, string(endpoints), "/admin/api")
 }
 
@@ -106,18 +106,18 @@ func TestCaddyfileServesTheDevelopmentMailInbox(t *testing.T) {
 	development, err := Caddyfile(configs["development"])
 	require.NoError(t, err)
 
-	assert.Contains(t, string(development), "http://mail.shellhub.example")
+	assert.Contains(t, string(development), "http://mail.cloudmatehub.example")
 
 	devCommunity, err := Caddyfile(configs["dev community"])
 	require.NoError(t, err)
 
-	assert.NotContains(t, string(devCommunity), "mail.shellhub.example",
+	assert.NotContains(t, string(devCommunity), "mail.cloudmatehub.example",
 		"the mail inbox is enterprise-only")
 
 	enterprise, err := Caddyfile(configs["enterprise"])
 	require.NoError(t, err)
 
-	assert.NotContains(t, string(enterprise), "mail.shellhub.example",
+	assert.NotContains(t, string(enterprise), "mail.cloudmatehub.example",
 		"the mail inbox is development-only")
 }
 
@@ -181,7 +181,7 @@ func TestCaddyfileTLSFollowsTheFlagAlone(t *testing.T) {
 	rendered, err := Caddyfile(cfg)
 	require.NoError(t, err)
 
-	assert.Contains(t, string(rendered), "https://shellhub.example")
+	assert.Contains(t, string(rendered), "https://cloudmatehub.example")
 	assert.NotContains(t, string(rendered), "auto_https off")
 }
 
@@ -222,7 +222,7 @@ func TestHealthcheckAnswersOnEveryConfiguration(t *testing.T) {
 
 // TestCaddyfileRefusesAHostItDoesNotServe pins the fallback site. Without it a
 // request arriving with any other Host reaches Caddy's own default, which
-// answers 200 with an empty body -- indistinguishable from a healthy ShellHub
+// answers 200 with an empty body -- indistinguishable from a healthy CloudMateHub
 // until whatever asked tries to read the reply.
 func TestCaddyfileRefusesAHostItDoesNotServe(t *testing.T) {
 	for description, cfg := range configurations() {
@@ -277,7 +277,7 @@ func TestCaddyfileRedirectsItsOwnNameToHTTPS(t *testing.T) {
 	rendered, err := Caddyfile(configurations()["supplied certificate"])
 	require.NoError(t, err)
 
-	assert.Contains(t, string(rendered), "http://shellhub.example {")
+	assert.Contains(t, string(rendered), "http://cloudmatehub.example {")
 	assert.Contains(t, string(rendered), "redir https://{host}{uri} 308")
 
 	withoutTLS, err := Caddyfile(configurations()["community"])

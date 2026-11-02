@@ -84,7 +84,7 @@ describe("NamespaceGuard", () => {
     renderGuard();
     expect(await screen.findByText("dashboard content")).toBeInTheDocument();
     expect(
-      screen.queryByRole("heading", { name: /get your first shell/i }),
+      screen.queryByRole("heading", { name: /build your connected workspace/i }),
     ).not.toBeInTheDocument();
   });
 
@@ -104,7 +104,7 @@ describe("NamespaceGuard", () => {
       await screen.findByRole("button", { name: /^create$/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /get your first shell/i }),
+      screen.getByRole("heading", { name: /build your connected workspace/i }),
     ).toBeInTheDocument();
     expect(screen.getByText(/install the agent/i)).toBeInTheDocument();
   });

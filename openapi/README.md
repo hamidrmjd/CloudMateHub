@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/logo.png" alt="shellhub OpenAPI spec" />
+  <img src="assets/logo.png" alt="cloudmatehub OpenAPI spec" />
 </p>
 
-<p align="center"><strong>ShellHub OpenAPI for Community, Cloud and Enterprise</strong></p>
+<p align="center"><strong>CloudMateHub OpenAPI for Community, Cloud and Enterprise</strong></p>
 
 <p align="center">
 <img src="https://img.shields.io/badge/openapi-6BA539?style=for-the-badge&logo=OpenAPI Initiative&logoColor=white" />
@@ -11,7 +11,7 @@
 
 ## How it works?
 
-It is simples; When ShellHub is in developement mode (with the `SHELLHUB_ENV`
+It is simples; When CloudMateHub is in developement mode (with the `SHELLHUB_ENV`
 set to `development`), it will enable, through the `gateway`, a [URL to preview the
 OpenAPI](http://localhost/openapi/) in any OpenAPI file after a page reload.
 
@@ -19,7 +19,7 @@ OpenAPI](http://localhost/openapi/) in any OpenAPI file after a page reload.
 
 ### Preview
 
-Its usage is simple too, you just need `up` the `shellhub-io/shellhub` containers in development
+Its usage is simple too, you just need `up` the `shellhub-io/cloudmatehub` containers in development
 mode and access the URL.
 
 - Access the URL [http://localhost/openapi/](http://localhost/openapi/) to check the preview.
@@ -64,7 +64,7 @@ Options:
 
 ### Mock
 
-If you need to mock a ShellHub instance, the `scripts` folder has another one called `mock`,
+If you need to mock a CloudMateHub instance, the `scripts` folder has another one called `mock`,
 what will to make available a full service to you test the API based on instance you chose in
 [http://localhost/openapi/mock](http://localhost/openapi/mock).
 
@@ -120,19 +120,19 @@ Options:
     --help  Display this help message
 ```
 
-For example, to generate a client in the `../shellhub/ui/src/api/client/` directory, you would run:
+For example, to generate a client in the `../cloudmatehub/ui/src/api/client/` directory, you would run:
 
 ```bash
-./scripts/generate ../shellhub/ui/src/api/client/
+./scripts/generate ../cloudmatehub/ui/src/api/client/
 ```
 
-The TypeScript client will be generated in the specified folder and can be used to interact with the ShellHub API.
+The TypeScript client will be generated in the specified folder and can be used to interact with the CloudMateHub API.
 
 ## Integrations
 
 ### Community
 
 Today, the Community has a script called `openapi` to execute commands against the OpenAPI
-spec provided by ShellHub `gateway` and this repository.
+spec provided by CloudMateHub `gateway` and this repository.
 
 <p align="center">. . .</p>

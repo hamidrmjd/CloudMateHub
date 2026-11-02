@@ -156,7 +156,7 @@ func TestRouterRefusesAnOversizedBodyTheClientWaitsToSend(t *testing.T) {
 	require.NoError(t, err)
 	t.Cleanup(func() { conn.Close() }) //nolint:errcheck // the test is over, so a failed close changes nothing
 
-	_, err = conn.Write([]byte("POST " + bodyLimitProbe + " HTTP/1.1\r\nHost: shellhub\r\n" +
+	_, err = conn.Write([]byte("POST " + bodyLimitProbe + " HTTP/1.1\r\nHost: cloudmatehub\r\n" +
 		"Content-Type: application/json\r\nContent-Length: 2097152\r\nExpect: 100-continue\r\n\r\n"))
 	require.NoError(t, err)
 

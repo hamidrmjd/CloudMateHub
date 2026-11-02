@@ -26,7 +26,7 @@ const (
 	//
 	// https://www.rfc-editor.org/rfc/rfc4254#section-6.5
 	ExecRequestType = "exec"
-	// SubsystemRequestType asks the device to start a named subsystem, which for ShellHub means
+	// SubsystemRequestType asks the device to start a named subsystem, which for CloudMateHub means
 	// SFTP.
 	//
 	// This last form executes a predefined subsystem.  It is expected that these will include a general file transfer
@@ -412,7 +412,7 @@ func sessionChannel(ctx gliderssh.Context, sess Session, newChan gossh.NewChanne
 	logger.Debug("session done after waiting")
 }
 
-const endedOnTheDeviceMessage = "shellhub: the session was ended on the device"
+const endedOnTheDeviceMessage = "cloudmatehub: the session was ended on the device"
 
 type exitSignal struct {
 	Signal     string

@@ -14,13 +14,13 @@ import {
   Badge,
   IconBadge,
   WindowChrome,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import {
   ActionButtonGroup,
   CTABanner,
@@ -31,7 +31,7 @@ import {
   SiteLayout,
   type CTAAction,
 } from "@/components";
-import { C } from "@shellhub/design-system/constants";
+import { C } from "@cloudmatehub/design-system/constants";
 
 const primaryAction: CTAAction = {
   label: "Get Started Free",
@@ -218,7 +218,7 @@ export default function EdgeComputing() {
         <SectionHeader
           eyebrow="Network Topology"
           title="One platform, every edge location"
-          subtitle="ShellHub connects to all your distributed edge infrastructure through a single control plane — no matter where your devices are."
+          subtitle="CloudMateHub connects to all your distributed edge infrastructure through a single control plane — no matter where your devices are."
         />
 
         <Reveal delay={0.1}>
@@ -295,7 +295,7 @@ export default function EdgeComputing() {
                     fontWeight="600"
                     fontFamily="monospace"
                   >
-                    ShellHub Cloud
+                    CloudMateHub Cloud
                   </text>
                 </g>
 
@@ -420,7 +420,7 @@ export default function EdgeComputing() {
         <SectionHeader
           eyebrow="Features"
           title="Built for the edge"
-          subtitle="ShellHub eliminates the complexity of edge access with NAT traversal, browser-based terminals, and fleet-wide management."
+          subtitle="CloudMateHub eliminates the complexity of edge access with NAT traversal, browser-based terminals, and fleet-wide management."
         />
 
         <Reveal>
@@ -461,7 +461,7 @@ export default function EdgeComputing() {
                     </span>
                   </div>
                   <div style={{ color: C.textMuted }}>
-                    Connecting via ShellHub tunnel...
+                    Connecting via CloudMateHub tunnel...
                   </div>
                   <div style={{ color: C.green }}>
                     Connection established (NAT traversal)
@@ -728,8 +728,8 @@ export default function EdgeComputing() {
       <Section>
         <SectionHeader
           eyebrow="Real-World Scenarios"
-          title="How teams use ShellHub at the edge"
-          subtitle="From retail to telecom to logistics, ShellHub powers remote access for edge infrastructure across industries."
+          title="How teams use CloudMateHub at the edge"
+          subtitle="From retail to telecom to logistics, CloudMateHub powers remote access for edge infrastructure across industries."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

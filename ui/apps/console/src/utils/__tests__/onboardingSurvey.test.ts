@@ -195,14 +195,14 @@ describe("responseData", () => {
 
     expect(
       responseData(survey, answers, {
-        instance_domain: "shellhub.example.com",
+        instance_domain: "cloudmatehub.example.com",
         not_declared: "x",
       }),
     ).toEqual({
       role: "Developer",
       contact: ["Ana", "", "ana@example.com", "", ""],
       consent: "accepted",
-      instance_domain: "shellhub.example.com",
+      instance_domain: "cloudmatehub.example.com",
     });
   });
 

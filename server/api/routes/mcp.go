@@ -167,8 +167,8 @@ func toJSON(v any) string {
 
 func addDeviceTools(s *mcpserver.MCPServer, router http.Handler) {
 	s.AddTool(
-		mcp.NewTool("shellhub_list_devices",
-			mcp.WithDescription("List devices in the ShellHub namespace. Filter by status and paginate results."),
+		mcp.NewTool("cloudmatehub_list_devices",
+			mcp.WithDescription("List devices in the CloudMateHub namespace. Filter by status and paginate results."),
 			mcp.WithString("status", mcp.Description("Device status filter: accepted, pending, rejected, removed, unused.")),
 			mcp.WithInteger("page", mcp.Description("Page number (1-based). Default: 1.")),
 			mcp.WithInteger("per_page", mcp.Description("Results per page (max 100). Default: 20.")),
@@ -190,8 +190,8 @@ func addDeviceTools(s *mcpserver.MCPServer, router http.Handler) {
 	)
 
 	s.AddTool(
-		mcp.NewTool("shellhub_get_device",
-			mcp.WithDescription("Get details of a ShellHub device by its UID."),
+		mcp.NewTool("cloudmatehub_get_device",
+			mcp.WithDescription("Get details of a CloudMateHub device by its UID."),
 			mcp.WithString("uid", mcp.Required(), mcp.Description("Device UID.")),
 		),
 		func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -204,7 +204,7 @@ func addDeviceTools(s *mcpserver.MCPServer, router http.Handler) {
 	)
 
 	s.AddTool(
-		mcp.NewTool("shellhub_update_device_status",
+		mcp.NewTool("cloudmatehub_update_device_status",
 			mcp.WithDescription("Accept or reject a device. status must be 'accepted' or 'rejected'."),
 			mcp.WithString("uid", mcp.Required(), mcp.Description("Device UID.")),
 			mcp.WithString("status", mcp.Required(), mcp.Description("New status: accepted or rejected.")),
@@ -227,8 +227,8 @@ func addDeviceTools(s *mcpserver.MCPServer, router http.Handler) {
 	)
 
 	s.AddTool(
-		mcp.NewTool("shellhub_delete_device",
-			mcp.WithDescription("Permanently delete a ShellHub device. This action is irreversible."),
+		mcp.NewTool("cloudmatehub_delete_device",
+			mcp.WithDescription("Permanently delete a CloudMateHub device. This action is irreversible."),
 			mcp.WithString("uid", mcp.Required(), mcp.Description("Device UID.")),
 		),
 		func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -241,8 +241,8 @@ func addDeviceTools(s *mcpserver.MCPServer, router http.Handler) {
 	)
 
 	s.AddTool(
-		mcp.NewTool("shellhub_rename_device",
-			mcp.WithDescription("Rename a ShellHub device."),
+		mcp.NewTool("cloudmatehub_rename_device",
+			mcp.WithDescription("Rename a CloudMateHub device."),
 			mcp.WithString("uid", mcp.Required(), mcp.Description("Device UID.")),
 			mcp.WithString("name", mcp.Required(), mcp.Description("New device name (hostname format).")),
 		),
@@ -260,8 +260,8 @@ func addDeviceTools(s *mcpserver.MCPServer, router http.Handler) {
 	)
 
 	s.AddTool(
-		mcp.NewTool("shellhub_get_stats",
-			mcp.WithDescription("Get ShellHub instance statistics: registered/online/pending/rejected devices and active sessions."),
+		mcp.NewTool("cloudmatehub_get_stats",
+			mcp.WithDescription("Get CloudMateHub instance statistics: registered/online/pending/rejected devices and active sessions."),
 		),
 		func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			rec := mcpAPICall(ctx, router, http.MethodGet, "/api/stats", nil)
@@ -273,7 +273,7 @@ func addDeviceTools(s *mcpserver.MCPServer, router http.Handler) {
 
 func addSessionTools(s *mcpserver.MCPServer, router http.Handler) {
 	s.AddTool(
-		mcp.NewTool("shellhub_list_sessions",
+		mcp.NewTool("cloudmatehub_list_sessions",
 			mcp.WithDescription("List SSH sessions in the namespace. Returns active and historical sessions."),
 			mcp.WithInteger("page", mcp.Description("Page number (1-based). Default: 1.")),
 			mcp.WithInteger("per_page", mcp.Description("Results per page (max 100). Default: 20.")),
@@ -292,7 +292,7 @@ func addSessionTools(s *mcpserver.MCPServer, router http.Handler) {
 	)
 
 	s.AddTool(
-		mcp.NewTool("shellhub_get_session",
+		mcp.NewTool("cloudmatehub_get_session",
 			mcp.WithDescription("Get details of a specific SSH session by its UID."),
 			mcp.WithString("uid", mcp.Required(), mcp.Description("Session UID.")),
 		),
@@ -308,8 +308,8 @@ func addSessionTools(s *mcpserver.MCPServer, router http.Handler) {
 
 func addNamespaceTools(s *mcpserver.MCPServer, router http.Handler) {
 	s.AddTool(
-		mcp.NewTool("shellhub_get_namespace",
-			mcp.WithDescription("Get details and settings of the caller's ShellHub namespace."),
+		mcp.NewTool("cloudmatehub_get_namespace",
+			mcp.WithDescription("Get details and settings of the caller's CloudMateHub namespace."),
 			mcp.WithString("tenant_id", mcp.Description("Namespace tenant ID (UUID). Defaults to the caller's own namespace; any other value is rejected.")),
 		),
 		func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {

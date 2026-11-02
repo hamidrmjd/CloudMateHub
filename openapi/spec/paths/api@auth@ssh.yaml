@@ -1,7 +1,7 @@
 post:
   operationId: authSSHPublicKey
   summary: Auth SSH public key
-  description: Authenticate a SSH public key to ShellHub server.
+  description: Authenticate a SSH public key to CloudMateHub server.
   security:
     - jwt: []
   tags:

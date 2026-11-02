@@ -34,7 +34,7 @@ type publicAPI interface {
 	NewReverseListenerV2(ctx context.Context, token string, path string, cfg *ReverseListenerV2Config) (net.Listener, error)
 }
 
-// Client is the agent's view of the ShellHub API: the routes an agent calls, plus the reverse
+// Client is the agent's view of the CloudMateHub API: the routes an agent calls, plus the reverse
 // listener it serves SSH on. Build one with NewClient.
 type Client interface {
 	publicAPI
@@ -53,7 +53,7 @@ type client struct {
 // host and port.
 var ErrParseAddress = errors.New("could not parse the address to the required format")
 
-// NewClient creates a new ShellHub HTTP client.
+// NewClient creates a new CloudMateHub HTTP client.
 //
 // Server address must contain the scheme, the host and the port. For instance: `https://cloud.shellhub.io:443/`.
 //

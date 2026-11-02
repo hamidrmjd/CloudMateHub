@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { CheckIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { isSdkError } from "@/api/errors";
 import { useResetOnOpen } from "@/hooks/useResetOnOpen";
 import { useUpdateProvisioningKey } from "@/hooks/useProvisioningKeyRequests";

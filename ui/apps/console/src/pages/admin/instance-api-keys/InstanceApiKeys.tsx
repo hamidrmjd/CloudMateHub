@@ -5,8 +5,8 @@ import {
   TrashIcon,
   NoSymbolIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Callout, IconButton } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Button, Callout, IconButton } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { apiErrorMessage } from "@/api/errors";
 import { useInvalidateByIds } from "@/hooks/useInvalidateQueries";
 import { useRowAction } from "@/hooks/useRowAction";

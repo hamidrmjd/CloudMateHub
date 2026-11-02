@@ -18,7 +18,7 @@ func TestEncodedClaimsCarryTheIssuer(t *testing.T) {
 	key, err := rsa.GenerateKey(rand.Reader, 2048)
 	require.NoError(t, err)
 
-	const issuer = "https://shellhub.example.com"
+	const issuer = "https://cloudmatehub.example.com"
 
 	issuerOf := func(t *testing.T, raw string) string {
 		t.Helper()

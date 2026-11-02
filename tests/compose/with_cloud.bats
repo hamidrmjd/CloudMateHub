@@ -19,7 +19,7 @@ load helpers
     [[ "$out" == *"COMPOSE_PROFILES=other"* ]]
 }
 
-@test "prod-cloud: COMPOSE_FILE includes cloud/base and shellhub/enterprise (no dev overlays)" {
+@test "prod-cloud: COMPOSE_FILE includes cloud/base and cloudmatehub/enterprise (no dev overlays)" {
     require_cloud
     out=$(capture_with SHELLHUB_EDITION=cloud)
     [[ "$out" == *"docker-compose.enterprise.yml"* ]]

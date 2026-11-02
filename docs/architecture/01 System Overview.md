@@ -44,3 +44,5 @@ These notes describe the source and the checked-in Compose configuration as of *
 The public Community source is the baseline. Cloud/Enterprise-only backend extensions are not included merely because their UI labels or extension hooks exist.
 
 Continue with [02 Console and Design](02%20Console%20and%20Design.md), [03 Server and Domain](03%20Server%20and%20Domain.md), [04 Gateway and Connections](04%20Gateway%20and%20Connections.md), [05 Device Agent](05%20Device%20Agent.md), [06 Data and Trust](06%20Data%20and%20Trust.md), and [07 Development and Deployment](07%20Development%20and%20Deployment.md).
+
+Follow-up verification on 2026-11-03: the enrolled device agent reauthenticated using its unchanged key, a native SSH command completed successfully, and the unknown-key terminal link reached the browser with its approval destination retained. See [branding/SSH verification](../verification/2026-11-03-branding-ssh-approval.md) for test coverage and fixture cleanup.

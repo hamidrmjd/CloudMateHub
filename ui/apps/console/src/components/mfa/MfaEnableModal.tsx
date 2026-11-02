@@ -4,7 +4,7 @@ import {
   CheckCircleIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Callout, IconBadge } from "@shellhub/design-system/primitives";
+import { Button, Callout, IconBadge } from "@cloudmatehub/design-system/primitives";
 import Modal from "../common/Modal";
 import CheckboxField from "@/components/common/fields/CheckboxField";
 import { QRCodeDisplay } from "./QRCodeDisplay";

@@ -34,7 +34,7 @@ beforeEach(() => {
       "*/api/namespaces/:tenant/invitations/links",
       async ({ request }) => {
         regenerated.push(await request.json());
-        return HttpResponse.json({ link: "https://shellhub.test/new" });
+        return HttpResponse.json({ link: "https://cloudmatehub.test/new" });
       },
     ),
   );

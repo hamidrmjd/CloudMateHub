@@ -117,7 +117,9 @@ describe("request interceptor", () => {
         client.get({ url: "/test", throwOnError: true }),
       ).rejects.toThrow("Token expired");
 
-      expect(fetchMock).not.toHaveBeenCalled();
+      expect(fetchMock.mock.calls.some(([request]) =>
+        request instanceof Request && new URL(request.url).pathname === "/test",
+      )).toBe(false);
       expect(useAuthStore.getState().token).toBeNull();
       expect(window.location.href).toBe("/login");
     },
@@ -295,3 +297,15 @@ describe("error interceptor", () => {
     ).toBe("60");
   });
 });
+
+it.each(["expired", "unauthorized"])(
+  "preserves the SSH approval link when the session is %s",
+  async (failure) => {
+    const destination = "/ssh-identities/new/ABCDEFGH";
+    Object.assign(window.location, { pathname: destination, search: "", hash: "" });
+    useAuthStore.setState({ token: makeJwt(failure === "expired" ? pastExp() : futureExp()) });
+    respondWith(failure === "expired" ? 200 : 401);
+    await client.get({ url: "/test" });
+    expect(window.location.href).toBe(`/login?redirect=${encodeURIComponent(destination)}`);
+  },
+);

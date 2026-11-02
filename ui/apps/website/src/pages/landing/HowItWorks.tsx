@@ -1,7 +1,7 @@
-import { Card } from "@shellhub/design-system/primitives";
+import { Card } from "@cloudmatehub/design-system/primitives";
 import { ArrowMarker, Section, SectionHeader } from "@/components";
-import { Reveal, ShimmerCard } from "@shellhub/design-system/components";
-import { C, FONT_SANS, FONT_MONO } from "@shellhub/design-system/constants";
+import { Reveal, ShimmerCard } from "@cloudmatehub/design-system/components";
+import { C, FONT_SANS, FONT_MONO } from "@cloudmatehub/design-system/constants";
 
 /**
  * Landing section summarising how a connection is made. The how-it-works page is the long form
@@ -190,7 +190,7 @@ export function HowItWorks() {
                   textAnchor="middle"
                   fontWeight="600"
                 >
-                  ShellHub
+                  CloudMateHub
                 </text>
                 <text
                   x="344"
@@ -415,7 +415,7 @@ export function HowItWorks() {
                   textAnchor="middle"
                   fontWeight="600"
                 >
-                  ShellHub
+                  CloudMateHub
                 </text>
                 <text
                   x="220"
@@ -1041,7 +1041,7 @@ export function HowItWorks() {
                   textAnchor="middle"
                   fontWeight="600"
                 >
-                  ShellHub
+                  CloudMateHub
                 </text>
                 <text
                   x="231"

@@ -8,7 +8,7 @@ RUN ln -sf /bin/bash /bin/sh
 
 COPY ./tests/cmd/signal-reporter/main.go /tmp/signal-reporter/main.go
 
-RUN --mount=type=cache,id=shellhub-go-build,target=/root/.cache/go-build,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-go-build,target=/root/.cache/go-build,sharing=shared \
     cd /tmp/signal-reporter && go build -o /usr/local/bin/signal-reporter main.go && rm -rf /tmp/signal-reporter
 
 WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub
@@ -19,7 +19,7 @@ WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub/agent
 
 COPY ./agent/go.mod ./agent/go.sum ./
 
-RUN --mount=type=cache,id=shellhub-go-mod,target=/go/pkg/mod,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-go-mod,target=/go/pkg/mod,sharing=shared \
     go mod download
 
 ARG SHELLHUB_VERSION=latest
@@ -30,13 +30,13 @@ COPY ./agent .
 
 WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub
 
-RUN --mount=type=cache,id=shellhub-go-mod,target=/go/pkg/mod,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-go-mod,target=/go/pkg/mod,sharing=shared \
     go mod download
 
 WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub/agent
 
-RUN --mount=type=cache,id=shellhub-go-mod,target=/go/pkg/mod,sharing=shared \
-    --mount=type=cache,id=shellhub-go-build,target=/root/.cache/go-build,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-go-mod,target=/go/pkg/mod,sharing=shared \
+    --mount=type=cache,id=cloudmatehub-go-build,target=/root/.cache/go-build,sharing=shared \
     go build -tags "${GO_TAGS}" -ldflags "-X main.AgentVersion=${SHELLHUB_VERSION}"
 
 ARG USERNAME

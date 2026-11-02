@@ -40,19 +40,19 @@ func TestDeviceAuth(t *testing.T) {
 	t.Parallel()
 
 	compose := newSSHEnvironment(t, t.Context(), legacyNamespace)
-	compose.NewLegacyNamespace(t, ShellHubUsername, otherNamespaceName, otherNamespace)
+	compose.NewLegacyNamespace(t, CloudMateHubUsername, otherNamespaceName, otherNamespace)
 
 	t.Run("a tenant id earns a token signed for the device", func(t *testing.T) {
 		res := authDevice(t, compose, newDeviceAuthRequest(t, "token", "02:00:00:00:01:00"))
 
 		assert.NotEmpty(t, res.UID)
-		assert.Equal(t, ShellHubNamespace, res.TenantID)
-		assert.Equal(t, ShellHubNamespaceName, res.Namespace)
+		assert.Equal(t, CloudMateHubNamespace, res.TenantID)
+		assert.Equal(t, CloudMateHubNamespaceName, res.Namespace)
 		assert.Equal(t, models.DeviceStatusPending, res.Status)
 
 		claims, err := jwttoken.ClaimsFromBearerToken(compose.APIPublicKey(t), res.Token)
 		require.NoError(t, err)
-		assert.Equal(t, &authorizer.DeviceClaims{UID: res.UID, TenantID: ShellHubNamespace, KeyVerified: true}, claims)
+		assert.Equal(t, &authorizer.DeviceClaims{UID: res.UID, TenantID: CloudMateHubNamespace, KeyVerified: true}, claims)
 	})
 
 	t.Run("authenticating alone leaves the device offline", func(t *testing.T) {
@@ -260,7 +260,7 @@ func newDeviceAuthRequest(t *testing.T, hostname, mac string) requests.DeviceAut
 		Hostname:  hostname,
 		Identity:  &requests.DeviceIdentity{MAC: mac},
 		PublicKey: newDevicePublicKey(t),
-		TenantID:  ShellHubNamespace,
+		TenantID:  CloudMateHubNamespace,
 	}
 }
 

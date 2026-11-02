@@ -16,7 +16,7 @@ import {
   Button,
   IconBadge,
   IconButton,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import Modal from "@/components/common/Modal";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import IdentityModal from "@/pages/ssh-identities/IdentityModal";

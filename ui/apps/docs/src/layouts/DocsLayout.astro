@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { GithubIcon, ShellHubLogo } from "@shellhub/design-system/primitives";
+import { GithubIcon, CloudMateHubLogo } from "@cloudmatehub/design-system/primitives";
 import {
   Bars3Icon,
   ChevronRightIcon,
@@ -38,7 +38,7 @@ const nextPage = currentIndex < allPages.length - 1 ? allPages[currentIndex + 1]
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} - ShellHub Docs</title>
+    <title>{title} - CloudMateHub Docs</title>
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   </head>
@@ -48,7 +48,7 @@ const nextPage = currentIndex < allPages.length - 1 ? allPages[currentIndex + 1]
       <div class="flex items-center justify-between h-full max-w-7xl mx-auto px-8">
         <div class="flex items-center gap-3">
           <a href={websiteUrl} class="flex items-center shrink-0">
-            <ShellHubLogo className="h-9" />
+            <CloudMateHubLogo className="h-9" />
           </a>
           <a href="/" class="font-mono text-[10px] font-semibold uppercase tracking-widest text-primary bg-primary-50 border border-primary-100 rounded px-2 py-0.5 no-underline hover:bg-primary-100 transition-colors">
             Docs
@@ -73,7 +73,7 @@ const nextPage = currentIndex < allPages.length - 1 ? allPages[currentIndex + 1]
             <span class="text-[13px]">Search</span>
             <kbd class="font-mono text-[10px] text-text-muted bg-white/[0.04] border border-border rounded px-1.5 py-px">&#8984;K</kbd>
           </button>
-          <a href="https://github.com/shellhub-io/shellhub" target="_blank" rel="noopener noreferrer" aria-label="View ShellHub on GitHub" class="text-text-muted hover:text-text-secondary transition-colors flex items-center">
+          <a href="https://github.com/shellhub-io/shellhub" target="_blank" rel="noopener noreferrer" aria-label="View CloudMateHub on GitHub" class="text-text-muted hover:text-text-secondary transition-colors flex items-center">
             <GithubIcon className="w-4 h-4 fill-current" />
           </a>
         </div>

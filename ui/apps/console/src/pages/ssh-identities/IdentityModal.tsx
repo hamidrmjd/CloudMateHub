@@ -5,7 +5,7 @@ import {
   PencilSquareIcon,
   FingerPrintIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import { useResetOnOpen } from "@/hooks/useResetOnOpen";
 import { useCreateSSHIdentity } from "@/hooks/useSSHIdentityRequests";
 import { useInvalidateByIds } from "@/hooks/useInvalidateQueries";

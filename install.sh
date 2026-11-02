@@ -280,12 +280,12 @@ podman_install() {
   else
     require_release_version
 
-    echo "📥 Downloading ShellHub container image..."
+    echo "📥 Downloading CloudMateHub container image..."
 
     {
       $SUDO podman pull -q "$AGENT_IMAGE"
     } || {
-      echo "❌ Failed to download shellhub container image."
+      echo "❌ Failed to download CloudMateHub container image."
       exit 1
     }
   fi
@@ -305,7 +305,7 @@ podman_install() {
     ARGS="$ARGS -e SHELLHUB_PRIVATE_KEYS=${PRIVATE_KEYS:-/host/etc/shellhub/connector/keys}"
     ARGS="$ARGS -e SHELLHUB_CONNECTOR_LABEL=${CONNECTOR_LABEL}"
 
-    echo "🚀 Starting ShellHub container in Docker Connector mode..."
+    echo "🚀 Starting CloudMateHub container in Docker Connector mode..."
     shift 1
     ;;
   *)
@@ -317,7 +317,7 @@ podman_install() {
   if [ -z "$MODE" ]; then
     ARGS="$ARGS -e SHELLHUB_PRIVATE_KEY=${PRIVATE_KEY:-/host/etc/shellhub.key}"
 
-    echo "🚀 Starting ShellHub container in Agent mode..."
+    echo "🚀 Starting CloudMateHub container in Agent mode..."
   fi
 
   CONTAINER_NAME="${CONTAINER_NAME:-$DEFAULT_CONTAINER_NAME}"
@@ -345,7 +345,7 @@ podman_install() {
     $LABEL_ARGS \
     "$AGENT_IMAGE" \
     $MODE || {
-    echo "❌ Failed to start the ShellHub container."
+    echo "❌ Failed to start the CloudMateHub container."
     exit 1
   }
 
@@ -368,12 +368,12 @@ docker_install() {
   else
     require_release_version
 
-    echo "📥 Downloading ShellHub container image..."
+    echo "📥 Downloading CloudMateHub container image..."
 
     {
       $SUDO docker pull -q "$AGENT_IMAGE"
     } || {
-      echo "❌ Failed to download shellhub container image."
+      echo "❌ Failed to download CloudMateHub container image."
       exit 1
     }
   fi
@@ -393,7 +393,7 @@ docker_install() {
     ARGS="$ARGS -e SHELLHUB_PRIVATE_KEYS=${PRIVATE_KEYS:-/host/etc/shellhub/connector/keys}"
     ARGS="$ARGS -e SHELLHUB_CONNECTOR_LABEL=${CONNECTOR_LABEL}"
 
-    echo "🚀 Starting ShellHub container in Docker Connector mode..."
+    echo "🚀 Starting CloudMateHub container in Docker Connector mode..."
     shift 1
     ;;
   *)
@@ -405,7 +405,7 @@ docker_install() {
   if [ -z "$MODE" ]; then
     ARGS="$ARGS -e SHELLHUB_PRIVATE_KEY=${PRIVATE_KEY:-/host/etc/shellhub.key}"
 
-    echo "🚀 Starting ShellHub container in Agent mode..."
+    echo "🚀 Starting CloudMateHub container in Agent mode..."
   fi
 
   CONTAINER_NAME="${CONTAINER_NAME:-$DEFAULT_CONTAINER_NAME}"
@@ -433,7 +433,7 @@ docker_install() {
     $LABEL_ARGS \
     "$AGENT_IMAGE" \
     $MODE || {
-    echo "❌ Failed to start the ShellHub container."
+    echo "❌ Failed to start the CloudMateHub container."
     exit 1
   }
 
@@ -458,16 +458,16 @@ snap_install() {
     exit 1
   fi
 
-  echo "📥 Downloading ShellHub snap package..."
+  echo "📥 Downloading CloudMateHub snap package..."
 
   {
     sudo snap install --classic --channel=latest/stable shellhub
   } || {
-    echo "❌ Failed to download and install ShellHub snap package."
+    echo "❌ Failed to download and install CloudMateHub snap package."
     exit 1
   }
 
-  echo "🚀 Starting ShellHub snap service..."
+  echo "🚀 Starting CloudMateHub snap service..."
 
   {
     if [ -n "${PREFERRED_HOSTNAME}" ]; then
@@ -488,7 +488,7 @@ snap_install() {
 
     sudo snap start shellhub
   } || {
-    echo "❌ Failed to start ShellHub snap service."
+    echo "❌ Failed to start CloudMateHub snap service."
     exit 1
   }
 }
@@ -509,7 +509,7 @@ standalone_install() {
   else
     require_release_version
 
-    echo "📥 Downloading ShellHub agent binary..."
+    echo "📥 Downloading CloudMateHub agent binary..."
 
     RELEASE_URL="https://github.com/shellhub-io/shellhub/releases/download/$AGENT_VERSION"
     RELEASE_ASSET="shellhub-agent-linux-$BINARY_ARCH.gz"
@@ -544,7 +544,7 @@ standalone_install() {
 
   promote_staged_agent_binary
 
-  echo "🚀 Installing ShellHub system service..."
+  echo "🚀 Installing CloudMateHub system service..."
 
   INSTALL_ARGS="--server-address=$SERVER_ADDRESS"
   [ -n "${TENANT_ID}" ] && INSTALL_ARGS="$INSTALL_ARGS --tenant-id=$TENANT_ID"
@@ -555,7 +555,7 @@ standalone_install() {
 
   replace_agent_service
 
-  echo "✅ ShellHub agent installed and started."
+  echo "✅ CloudMateHub agent installed and started."
 
   AGENT_LOG_CMD=""
   command -v journalctl >/dev/null 2>&1 && AGENT_LOG_CMD="$SUDO journalctl -u shellhub-agent --no-pager -n 50 --since @$_SERVICE_STARTED"
@@ -592,7 +592,7 @@ replace_agent_service() {
   _SERVICE_STARTED=$(date +%s)
 
   $SUDO "$INSTALL_BIN" install $INSTALL_ARGS || {
-    echo "❌ Failed to install ShellHub agent service."
+    echo "❌ Failed to install CloudMateHub agent service."
 
     if [ -n "$_AGENT_WAS_RUNNING" ]; then
       $SUDO systemctl enable --now shellhub-agent >/dev/null 2>&1
@@ -625,7 +625,7 @@ remove_agent_container() {
   if [ -z "$_CONTAINER" ]; then
     echo "⚠️ Container '$CONTAINER_NAME' not found (may already be removed)."
   else
-    echo "🗑️ Stopping and removing ShellHub container..."
+    echo "🗑️ Stopping and removing CloudMateHub container..."
     $SUDO $_RUNTIME rm -f "$CONTAINER_NAME" >/dev/null || {
       echo "❌ Failed to remove container '$CONTAINER_NAME'."
       exit 1
@@ -649,7 +649,7 @@ docker_uninstall() {
     $_FSUDO rm -f "$WRAPPER_PATH"
   fi
 
-  echo "✅ ShellHub agent uninstalled."
+  echo "✅ CloudMateHub agent uninstalled."
   report_files_left_behind
 }
 
@@ -669,7 +669,7 @@ podman_uninstall() {
     $_FSUDO rm -f "$WRAPPER_PATH"
   fi
 
-  echo "✅ ShellHub agent uninstalled."
+  echo "✅ CloudMateHub agent uninstalled."
   report_files_left_behind
 }
 
@@ -682,20 +682,20 @@ standalone_uninstall() {
   INSTALL_BIN="${INSTALL_DIR:-/usr/local/bin}/shellhub-agent"
 
   if [ ! -f "$INSTALL_BIN" ]; then
-    echo "❌ ShellHub agent binary not found at $INSTALL_BIN."
+    echo "❌ CloudMateHub agent binary not found at $INSTALL_BIN."
     exit 1
   fi
 
-  echo "🗑️ Stopping and removing ShellHub agent service..."
+  echo "🗑️ Stopping and removing CloudMateHub agent service..."
 
   $SUDO "$INSTALL_BIN" uninstall || {
     echo "⚠️ Service uninstall reported an error (it may already be removed)."
   }
 
-  echo "🗑️ Removing ShellHub agent binary..."
+  echo "🗑️ Removing CloudMateHub agent binary..."
   $SUDO rm -f "$INSTALL_BIN"
 
-  echo "✅ ShellHub agent uninstalled."
+  echo "✅ CloudMateHub agent uninstalled."
   report_files_left_behind
 }
 
@@ -763,7 +763,7 @@ require_release_version() {
     echo "❌ ERROR: $SERVER_ADDRESS did not report an agent version."
     echo "Set AGENT_VERSION to a release tag (such as v0.27.0), or make this system trust the certificate of $SERVER_ADDRESS."
   else
-    echo "❌ ERROR: The agent version is not a ShellHub release tag (such as v0.27.0)."
+    echo "❌ ERROR: The agent version is not a CloudMateHub release tag (such as v0.27.0)."
     echo "Set AGENT_VERSION to a release tag."
   fi
   exit 1
@@ -816,7 +816,7 @@ detect_install_method() {
     WSL_VERSION=$($WSL_EXE -v | tr -d '\0' | grep "WSL version" | awk -F'[ .:]+' '{print $3}')
 
     if [ -z "$WSL_VERSION" ] || [ "$WSL_VERSION" -lt 2 ]; then
-      echo "❌ ERROR: WSL version 2 is required to run ShellHub."
+      echo "❌ ERROR: WSL version 2 is required to run CloudMateHub."
       exit 1
     fi
 
@@ -846,15 +846,15 @@ recommend_container_runtime() {
 uninstall_agent() {
   case "$INSTALL_METHOD" in
   standalone|wsl)
-    echo "🗑️ Uninstalling ShellHub using standalone method..."
+    echo "🗑️ Uninstalling CloudMateHub using standalone method..."
     standalone_uninstall
     ;;
   docker)
-    echo "🐳 Uninstalling ShellHub using docker method..."
+    echo "🐳 Uninstalling CloudMateHub using docker method..."
     docker_uninstall
     ;;
   podman)
-    echo "🐳 Uninstalling ShellHub using podman method..."
+    echo "🐳 Uninstalling CloudMateHub using podman method..."
     podman_uninstall
     ;;
   *)
@@ -867,23 +867,23 @@ uninstall_agent() {
 install_agent() {
   case "$INSTALL_METHOD" in
   podman)
-    echo "🐳 Installing ShellHub using podman method..."
+    echo "🐳 Installing CloudMateHub using podman method..."
     podman_install "$@"
     ;;
   docker)
-    echo "🐳 Installing ShellHub using docker method..."
+    echo "🐳 Installing CloudMateHub using docker method..."
     docker_install "$@"
     ;;
   snap)
-    echo "📦 Installing ShellHub using snap method..."
+    echo "📦 Installing CloudMateHub using snap method..."
     snap_install
     ;;
   standalone)
-    echo "🐧 Installing ShellHub using standalone method..."
+    echo "🐧 Installing CloudMateHub using standalone method..."
     standalone_install
     ;;
   wsl)
-    echo "🪟 Installing ShellHub using WSL method..."
+    echo "🪟 Installing CloudMateHub using WSL method..."
     wsl_install
     ;;
   *)
@@ -898,7 +898,7 @@ main() {
     echo "👹 This system is running FreeBSD."
     echo "❌ ERROR: Automatic installation is not supported on FreeBSD."
     echo
-    echo "Please refer to the ShellHub port at https://github.com/shellhub-io/ports"
+    echo "Please refer to the CloudMateHub port at https://github.com/shellhub-io/ports"
     exit 1
   fi
 
@@ -939,10 +939,10 @@ main() {
     esac
   fi
 
-  echo "🛠️ ShellHub Agent Installer"
+  echo "🛠️ CloudMateHub Agent Installer"
   echo
   if [ -z "$INSTALL_METHOD" ]; then
-    echo "This script will install the ShellHub agent on your system."
+    echo "This script will install the CloudMateHub agent on your system."
     echo "It will auto-detect the best available installation method."
     echo
     echo "Installation methods (priority order):"

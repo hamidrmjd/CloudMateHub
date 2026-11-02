@@ -20,18 +20,18 @@
 
 Node/npm build the React application; the runtime UI container serves static files. Go compiles the server and gateway. OpenAPI is bundled and generates the console client during the UI build; no standalone OpenAPI container is active in the local production stack.
 
-`bin/docker-compose` combines `.env`, `versions.env`, private `.env.override`, PostgreSQL configuration and `deployments/compose.yml`. The project remains named `shellhub-custom` and the source folder `shellhub` for continuity; the product interface is CloudMateHub.
+`bin/docker-compose` combines `.env`, `versions.env`, private `.env.override`, PostgreSQL configuration and `deployments/compose.yml`. The project remains named `shellhub-custom` and the source folder `cloudmatehub` for continuity; the product interface is CloudMateHub.
 
 ```sh
-./deployments/shellhub build
-./deployments/shellhub start
-./deployments/shellhub status
-./deployments/shellhub stop
+./deployments/cloudmatehub build
+./deployments/cloudmatehub start
+./deployments/cloudmatehub status
+./deployments/cloudmatehub stop
 ```
 
 `start` generates missing keys and waits for health checks. `stop` preserves data. Do not use `down -v` for ordinary updates or test cleanup.
 
-Our Go Dockerfile copies add a build-time dependency-download fallback for the network's proxy restrictions. This does not change API contracts or turn off Go dependency checksums. UI compatibility imports and protocol environment names intentionally retain `shellhub` identifiers.
+Our Go Dockerfile copies add a build-time dependency-download fallback for the network's proxy restrictions. This does not change API contracts or turn off Go dependency checksums. UI compatibility imports and protocol environment names intentionally retain `cloudmatehub` identifiers.
 
 ## Feature workflow
 

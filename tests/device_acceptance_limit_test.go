@@ -25,7 +25,7 @@ func TestDeviceAcceptanceLimit(t *testing.T) {
 
 		over := enrollDevice(t, compose, "accept-over-limit", "02:00:00:00:a2:02")
 
-		compose.LimitNamespaceToItsAcceptedDevices(t, ShellHubNamespace)
+		compose.LimitNamespaceToItsAcceptedDevices(t, CloudMateHubNamespace)
 
 		resp, err := compose.PatchDeviceStatus(t.Context(), over, environment.DeviceActionAccept)
 		require.NoError(t, err)
@@ -33,7 +33,7 @@ func TestDeviceAcceptanceLimit(t *testing.T) {
 
 		assert.Equal(t, models.DeviceStatusPending, requireDevice(t, compose, over).Status)
 
-		require.NoError(t, compose.SetNamespaceMaxDevices(t.Context(), ShellHubNamespace, -1))
+		require.NoError(t, compose.SetNamespaceMaxDevices(t.Context(), CloudMateHubNamespace, -1))
 
 		compose.UpdateDeviceStatus(t, over, environment.DeviceActionAccept)
 		assert.Equal(t, models.DeviceStatusAccepted, requireDevice(t, compose, over).Status)

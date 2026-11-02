@@ -4,6 +4,12 @@
  */
 export const PENDING_DEVICE_CODE_KEY = "shellhub:pending-device-code";
 
+/** Carry the destination across sign-in, including an interrupted SSH approval. */
+export function loginPathFor(pathname: string, search = "", hash = ""): string {
+  if (!pathname || pathname === "/login") return "/login";
+  return `/login?redirect=${encodeURIComponent(`${pathname}${search}${hash}`)}`;
+}
+
 /**
  * Remembers an enrolment code across a sign-in, for a user who followed an accept-device link
  * while signed out.

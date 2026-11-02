@@ -1,4 +1,4 @@
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import type { ResolveDeviceLoginCodeResponse } from "@/client";
 import DeviceCard from "./DeviceCard";
 

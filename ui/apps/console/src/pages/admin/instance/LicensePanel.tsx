@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useDeviceCapacity } from "@/hooks/useDeviceCapacity";
 import { formatCount } from "@/utils/count";
 import { formatLicenseTimestamp, type DeviceCapacity } from "@/utils/license";

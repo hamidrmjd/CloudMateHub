@@ -43,8 +43,8 @@ import FieldHint from "@/components/common/fields/FieldHint";
 import RadioGroupField from "@/components/common/fields/RadioGroupField";
 import RadioSegment from "@/components/common/fields/RadioSegment";
 import { INPUT } from "../utils/styles";
-import { cn } from "@shellhub/design-system/cn";
-import { Button, Callout, StatusDot } from "@shellhub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
+import { Button, Callout, StatusDot } from "@cloudmatehub/design-system/primitives";
 import DistroIcon from "@/components/common/DistroIcon";
 import { useDevice } from "@/hooks/useDeviceRequests";
 import {

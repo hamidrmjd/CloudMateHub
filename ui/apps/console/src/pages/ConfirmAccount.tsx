@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { useSignUpStore } from "../stores/signUpStore";
 import { useResendEmail } from "../hooks/useResendEmail";
 import AuthActions from "@/components/auth/AuthActions";

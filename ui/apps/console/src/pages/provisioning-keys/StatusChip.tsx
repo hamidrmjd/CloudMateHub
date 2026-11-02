@@ -1,5 +1,5 @@
 import { type ComponentType, type SVGProps } from "react";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 
 type ChipTone = "green" | "red" | "yellow" | "muted" | "primary";
 

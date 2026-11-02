@@ -6,7 +6,7 @@ import {
   ServerStackIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useVaultStore } from "@/stores/vaultStore";
 import { loadLegacyKeysFromStorage } from "@/utils/vault-backend-local";
 import {
@@ -15,7 +15,7 @@ import {
 } from "@/utils/vault-backend-factory";
 import BaseDialog from "@/components/common/BaseDialog";
 import PasswordField from "@/components/common/fields/PasswordField";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import DialogHeader from "@/components/common/DialogHeader";
 
 interface Props {

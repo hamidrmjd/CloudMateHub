@@ -72,7 +72,7 @@ func newInvitingNamespace(t *testing.T, compose *environment.DockerCompose, name
 	t.Helper()
 
 	tenant := uuid.Generate()
-	compose.NewNamespace(t, ShellHubUsername, name, tenant)
+	compose.NewNamespace(t, CloudMateHubUsername, name, tenant)
 
 	return tenant
 }

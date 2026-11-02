@@ -22,10 +22,10 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout shellhub source
+      - name: Checkout cloudmatehub source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          path: shellhub
+          path: cloudmatehub
 
       - name: Generate cloud repo token (server-enterprise only)
         id: cloud-token
@@ -53,7 +53,7 @@ jobs:
 
       - name: Check if tag is the latest release
         id: latest-check
-        uses: ./shellhub/.github/actions/is-latest-tag
+        uses: ./cloudmatehub/.github/actions/is-latest-tag
         with:
           tag: ${{ env.RELEASE_VERSION }}
 
@@ -61,7 +61,7 @@ jobs:
         id: image
         run: |
           if [[ "${{ matrix.project }}" == "server-enterprise" ]]; then
-            echo "name=registry.infra.ossystems.io/shellhub/server-enterprise" >> "$GITHUB_OUTPUT"
+            echo "name=registry.infra.ossystems.io/cloudmatehub/server-enterprise" >> "$GITHUB_OUTPUT"
           else
             echo "name=shellhubio/${{ matrix.project }}" >> "$GITHUB_OUTPUT"
           fi
@@ -74,7 +74,7 @@ jobs:
         run: |
           {
             echo 'build-args<<EOF'
-            cat shellhub/versions.env
+            cat cloudmatehub/versions.env
             echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
@@ -100,8 +100,8 @@ jobs:
           push: false
           load: true
           tags: ${{ steps.image.outputs.name }}:${{ env.RELEASE_VERSION }}
-          file: shellhub/${{ matrix.project }}/Dockerfile
-          context: shellhub
+          file: cloudmatehub/${{ matrix.project }}/Dockerfile
+          context: cloudmatehub
           build-args: ${{ steps.versions.outputs.build-args }}
           cache-from: type=gha,scope=${{ matrix.project }}
           cache-to: type=gha,scope=${{ matrix.project }},mode=max
@@ -113,8 +113,8 @@ jobs:
           push: false
           load: true
           tags: ${{ steps.image.outputs.name }}:${{ env.RELEASE_VERSION }}
-          file: shellhub/server/Dockerfile
-          context: shellhub
+          file: cloudmatehub/server/Dockerfile
+          context: cloudmatehub
           build-args: |
             ${{ steps.versions.outputs.build-args }}
             EDITION=enterprise
@@ -132,7 +132,7 @@ jobs:
               --ignore-unfixed \
               --scanners vuln \
               --exit-code 1 \
-              --ignorefile /work/shellhub/.trivyignore \
+              --ignorefile /work/cloudmatehub/.trivyignore \
               ${{ steps.image.outputs.name }}:${{ env.RELEASE_VERSION }}
 
       - name: Push '${{ matrix.project }}' image (same digest as scanned)
@@ -157,7 +157,7 @@ jobs:
         if: matrix.project != 'server-enterprise'
         uses: anchore/sbom-action@66cbf4bc1f1c0d2edc94016e65bc221b6bb0ad6c # v0.24.3
         with:
-          path: shellhub/${{ matrix.project }}
+          path: cloudmatehub/${{ matrix.project }}
           format: cyclonedx-json
           output-file: sbom-${{ matrix.project }}-source-${{ env.RELEASE_VERSION }}.cdx.json
           upload-artifact: false

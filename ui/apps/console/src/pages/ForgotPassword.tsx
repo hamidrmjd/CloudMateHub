@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
-import { Button, Callout } from "@shellhub/design-system/primitives";
+import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { recoverPassword } from "../client";
 import FormInputField from "@/components/common/fields/rhf/FormInputField";
 import {

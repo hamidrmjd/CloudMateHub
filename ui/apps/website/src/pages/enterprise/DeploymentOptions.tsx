@@ -1,12 +1,12 @@
 import { CloudIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
-import { Badge, Card, IconBadge } from "@shellhub/design-system/primitives";
+import { Badge, Card, IconBadge } from "@cloudmatehub/design-system/primitives";
 import {
   FeatureListItem,
   HighlightCard,
   Section,
   SectionHeader,
 } from "@/components";
-import { Reveal, ShimmerCard } from "@shellhub/design-system/components";
+import { Reveal, ShimmerCard } from "@cloudmatehub/design-system/components";
 
 /**
  * Enterprise section contrasting the managed and self-hosted deployment models.
@@ -67,7 +67,7 @@ export function DeploymentOptions() {
 
               <h3 className="text-lg font-bold mb-2">On-Premises</h3>
               <p className="text-sm text-text-secondary leading-relaxed mb-6">
-                Run ShellHub on your own infrastructure. Full data sovereignty
+                Run CloudMateHub on your own infrastructure. Full data sovereignty
                 and compliance control.
               </p>
 

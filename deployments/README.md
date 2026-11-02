@@ -2,17 +2,17 @@
 
 # Original ShellHub baseline
 
-This checkout is ShellHub Community v0.27.0 at commit fdcc51e4fdad55440b8cfa3061b2729a50deea7b. Original server, UI, gateway, and agent source is retained without feature changes, along with Apache-2.0 licensing and copyright notices. The customization branch is `custom/shellhub-baseline`.
+This checkout is ShellHub Community v0.27.0 at commit fdcc51e4fdad55440b8cfa3061b2729a50deea7b. Original server, UI, gateway, and agent source is retained without feature changes, along with Apache-2.0 licensing and copyright notices. The customization branch is `custom/cloudmatehub-baseline`.
 
 ## Local Mac
 
 From this checkout, with Docker Desktop running:
 
 ```sh
-./deployments/shellhub build
-./deployments/shellhub start
-./deployments/shellhub status
-./deployments/shellhub stop
+./deployments/cloudmatehub build
+./deployments/cloudmatehub start
+./deployments/cloudmatehub status
+./deployments/cloudmatehub stop
 ```
 
 Open http://localhost:8080/setup for the original initial admin setup. The SSH gateway uses localhost:2222. No administrator password is preconfigured. Create the initial account yourself. Device pairing and SSH require an actual Linux agent/device.

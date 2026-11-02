@@ -6,7 +6,7 @@ tags, firewall rules, and more.
 
 ## Base URL
 
-Endpoints are served under \`/api\` on your ShellHub server. On ShellHub Cloud
+Endpoints are served under \`/api\` on your CloudMateHub server. On CloudMateHub Cloud
 the base URL is \`https://cloud.shellhub.io/api\`.
 
 ## Authentication

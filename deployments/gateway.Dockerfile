@@ -23,7 +23,7 @@ WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub/gateway
 
 COPY ./gateway/go.mod ./gateway/go.sum ./
 
-RUN --mount=type=cache,id=shellhub-go-mod,target=/go/pkg/mod,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-go-mod,target=/go/pkg/mod,sharing=shared \
     go mod download
 
 FROM base AS builder
@@ -33,13 +33,13 @@ COPY ./gateway .
 
 WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub
 
-RUN --mount=type=cache,id=shellhub-go-mod,target=/go/pkg/mod,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-go-mod,target=/go/pkg/mod,sharing=shared \
     go mod download
 
 WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub/gateway
 
-RUN --mount=type=cache,id=shellhub-go-mod,target=/go/pkg/mod,sharing=shared \
-    --mount=type=cache,id=shellhub-go-build,target=/root/.cache/go-build,sharing=shared \
+RUN --mount=type=cache,id=cloudmatehub-go-mod,target=/go/pkg/mod,sharing=shared \
+    --mount=type=cache,id=cloudmatehub-go-build,target=/root/.cache/go-build,sharing=shared \
     go build
 
 FROM golang:${GOLANG_VERSION} AS tools

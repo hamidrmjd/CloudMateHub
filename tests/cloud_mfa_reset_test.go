@@ -88,10 +88,10 @@ func newMFAUser(t *testing.T, compose *environment.DockerCompose, username strin
 		recoveryEmail: username + "-recovery" + stripeTestEmailDomain,
 	}
 
-	compose.NewUser(t, username, user.email, ShellHubPassword)
+	compose.NewUser(t, username, user.email, CloudMateHubPassword)
 	compose.NewNamespace(t, username, username, uuid.Generate())
 
-	login := compose.AuthUser(t, username, ShellHubPassword)
+	login := compose.AuthUser(t, username, CloudMateHubPassword)
 	user.id, user.token = login.ID, login.Token
 
 	resp, err := asBearer(t, compose, user.token).

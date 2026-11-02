@@ -29,7 +29,7 @@ func TestSSHApprovalIdentity(t *testing.T) {
 	_, device := startAcceptedAgent(t, ctx, compose)
 
 	sshid := deviceSSHID(device)
-	owner := compose.AuthUser(t, ShellHubUsername, ShellHubPassword)
+	owner := compose.AuthUser(t, CloudMateHubUsername, CloudMateHubPassword)
 
 	t.Run("a rejected approval refuses the login and enrolls nothing", func(t *testing.T) {
 		signer, _ := newSigner(t)
@@ -173,9 +173,9 @@ func TestSSHApprovalIdentity(t *testing.T) {
 	})
 
 	t.Run("a person outside the namespace can neither see nor decide its approval", func(t *testing.T) {
-		compose.NewUser(t, "outsider", "outsider@ossystems.com.br", ShellHubPassword)
+		compose.NewUser(t, "outsider", "outsider@ossystems.com.br", CloudMateHubPassword)
 		compose.NewNamespace(t, "outsider", "elsewhere", uuid.Generate())
-		outsider := compose.AuthUser(t, "outsider", ShellHubPassword)
+		outsider := compose.AuthUser(t, "outsider", CloudMateHubPassword)
 
 		signer, _ := newSigner(t)
 		parked := startLogin(t, compose, sshid, signer)
@@ -215,8 +215,8 @@ func TestSSHApprovalIdentity(t *testing.T) {
 		assert.Equal(t, fingerprint, approval.Fingerprint)
 		assert.Equal(t, models.SSHApprovalIdentity, approval.Kind)
 		assert.Equal(t, sshid, approval.SSHID)
-		assert.Equal(t, ShellHubNamespaceName, approval.Namespace)
+		assert.Equal(t, CloudMateHubNamespaceName, approval.Namespace)
 		assert.Equal(t, device.Name, approval.DeviceName)
-		assert.Equal(t, ShellHubAgentUsername, approval.Username)
+		assert.Equal(t, CloudMateHubAgentUsername, approval.Username)
 	})
 }

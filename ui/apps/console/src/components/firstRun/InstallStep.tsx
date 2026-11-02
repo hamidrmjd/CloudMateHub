@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { WindowChrome } from "@shellhub/design-system/primitives";
+import { WindowChrome } from "@cloudmatehub/design-system/primitives";
 import CopyButton from "@/components/common/CopyButton";
 
 /**

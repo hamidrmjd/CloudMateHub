@@ -38,7 +38,7 @@ func TestAgentCLI(t *testing.T) {
 		compose.UpdateDeviceStatus(t, preview.UID, environment.DeviceActionAccept)
 
 		assert.Zero(t, awaitAgentExit(t, login))
-		awaitAgentLog(t, login, regexp.MustCompile(`(✓ Device accepted into namespace "`+ShellHubNamespaceName+`"\.)`), "login did not report the acceptance")
+		awaitAgentLog(t, login, regexp.MustCompile(`(✓ Device accepted into namespace "`+CloudMateHubNamespaceName+`"\.)`), "login did not report the acceptance")
 	})
 
 	t.Run("login on an accepted device says so and asks for no code", func(t *testing.T) {
@@ -46,7 +46,7 @@ func TestAgentCLI(t *testing.T) {
 
 		output := execInAgent(t, agent, "./agent", "login")
 
-		assert.Contains(t, output, `✓ Device is already accepted into namespace "`+ShellHubNamespaceName+`".`)
+		assert.Contains(t, output, `✓ Device is already accepted into namespace "`+CloudMateHubNamespaceName+`".`)
 		assert.NotRegexp(t, agentPairingLink, output)
 	})
 
@@ -57,7 +57,7 @@ func TestAgentCLI(t *testing.T) {
 
 		assert.Zero(t, awaitAgentExit(t, login))
 		awaitAgentLog(t, login, regexp.MustCompile(`(✓ Device accepted\. The agent will connect automatically\.)`), "login did not report the acceptance")
-		assert.Equal(t, ShellHubNamespace, readStoppedAgentFile(t, login, "/tmp/shellhub.key.tenant"), "login did not keep the tenant the device was accepted into")
+		assert.Equal(t, CloudMateHubNamespace, readStoppedAgentFile(t, login, "/tmp/shellhub.key.tenant"), "login did not keep the tenant the device was accepted into")
 	})
 
 	t.Run("info prints the server's version and the endpoints it reports for the agent's address", func(t *testing.T) {

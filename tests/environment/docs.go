@@ -1,4 +1,4 @@
-// Package environment provides an easy way to create, manage, and destroy ShellHub instances
+// Package environment provides an easy way to create, manage, and destroy CloudMateHub instances
 // with Docker Compose. Internally, it uses [github.com/testcontainers/testcontainers-go]
 // to manage services.
 //

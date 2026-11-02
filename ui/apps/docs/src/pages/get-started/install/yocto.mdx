@@ -1,14 +1,14 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: Yocto Project
-description: Add the agent to a product image with the ShellHub layer.
+description: Add the agent to a product image with the CloudMateHub layer.
 ---
 
 import Callout from "../../../components/Callout.astro";
 
 # Yocto Project
 
-ShellHub maintains an OpenEmbedded layer, so the agent ships with your firmware without
+CloudMateHub maintains an OpenEmbedded layer, so the agent ships with your firmware without
 you writing a recipe. Use it rather than packaging the agent yourself.
 
 ## Prerequisites
@@ -22,7 +22,7 @@ you writing a recipe. Use it rather than packaging the agent yourself.
 
 ```bash
 $ git clone https://github.com/shellhub-io/meta-shellhub.git
-$ bitbake-layers add-layer ../meta-shellhub
+$ bitbake-layers add-layer ../meta-cloudmatehub
 ```
 
 The layer depends only on `meta` from openembedded-core, so it drops into an existing
@@ -34,7 +34,7 @@ build without pulling anything else in.
 IMAGE_INSTALL:append = " shellhub-agent"
 ```
 
-There is also `packagegroup-shellhub-runtime`, which pulls the agent and its runtime
+There is also `packagegroup-cloudmatehub-runtime`, which pulls the agent and its runtime
 dependencies. Either works; the packagegroup is the one to prefer when your image is
 assembled from packagegroups already.
 
@@ -107,7 +107,7 @@ The recipe installs a systemd unit or a sysvinit script, following your image's
 
 ## Overriding the tenant per image
 
-The layer ships `shellhub-rootfs-postcommand.bbclass` for the case where one build feeds
+The layer ships `cloudmatehub-rootfs-postcommand.bbclass` for the case where one build feeds
 several namespaces. Inherit it and set `SHELLHUB_ROOTFS_TENANT_ID`, and the tenant in the
 generated configuration is rewritten as the rootfs is assembled, without a rebuild of the
 agent.

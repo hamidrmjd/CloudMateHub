@@ -4,7 +4,7 @@ import {
   Button,
   type ButtonVariant,
   type Palette,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import { useResetOnOpen } from "@/hooks/useResetOnOpen";
 import BaseDialog from "./BaseDialog";
 import DialogHeader from "./DialogHeader";

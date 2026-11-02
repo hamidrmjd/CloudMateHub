@@ -102,14 +102,14 @@ jobs:
 
       - name: Astro sync
         working-directory: ui
-        run: npm run sync -w @shellhub/docs
+        run: npm run sync -w @cloudmatehub/docs
 
       - name: Build
         working-directory: ui
         env:
           PUBLIC_DOCS_CHANNEL: ${{ needs.channel.outputs.channel }}
           PUBLIC_SHELLHUB_VERSION: ${{ needs.channel.outputs.version }}
-        run: npm run build -w @shellhub/docs
+        run: npm run build -w @cloudmatehub/docs
 
       - name: Deploy to Cloudflare Pages
         id: deploy
@@ -120,7 +120,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: >-
             pages deploy ui/apps/docs/dist
-            --project-name=shellhub-docs
+            --project-name=cloudmatehub-docs
             --branch=${{ needs.channel.outputs.branch }}
 
       - name: Comment the preview URL

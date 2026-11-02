@@ -18,7 +18,7 @@ const guardedPages = [
 let adminToken: string;
 
 const readMountedLicense = () =>
-  composeExec("server", ["cat", "/etc/shellhub/license.dat"]);
+  composeExec("server", ["cat", "/etc/cloudmatehub/license.dat"]);
 
 test.beforeEach(async ({ page }) => {
   const { owner } = await createTeam({ admin: true });

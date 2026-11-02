@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// Edition is the ShellHub edition an instance runs as. It decides which features the
+// Edition is the CloudMateHub edition an instance runs as. It decides which features the
 // server exposes, so it is read at startup and never per request.
 type Edition string
 

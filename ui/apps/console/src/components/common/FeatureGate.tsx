@@ -4,7 +4,7 @@ import {
   ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline";
 import { isEnterpriseOrCloud } from "@/env";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import EmptyState from "@/components/common/EmptyState";
 
 interface FeatureGateProps {

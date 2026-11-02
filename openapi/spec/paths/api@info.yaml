@@ -1,7 +1,7 @@
 get:
   operationId: getInfo
   summary: Get info
-  description: Get information about ShellHub instance like version, SSH and API addresses.
+  description: Get information about CloudMateHub instance like version, SSH and API addresses.
   security: []
   tags:
     - community
@@ -15,7 +15,7 @@ get:
       in: query
   responses:
     '200':
-      description: Success to get ShellHub instance info.
+      description: Success to get CloudMateHub instance info.
       content:
         application/json:
           schema:

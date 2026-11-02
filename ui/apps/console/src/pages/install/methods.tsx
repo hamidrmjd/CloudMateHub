@@ -9,7 +9,7 @@ import {
   SparklesIcon,
   WrenchIcon,
 } from "@heroicons/react/24/outline";
-import { DockerIcon } from "@shellhub/design-system/primitives";
+import { DockerIcon } from "@cloudmatehub/design-system/primitives";
 
 /** An installation method the installer knows how to run, or a platform that needs its own. */
 export type Method =

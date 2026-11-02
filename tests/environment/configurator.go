@@ -27,7 +27,7 @@ func New(t *testing.T, run *Run) *DockerComposeConfigurator {
 			Edition:  EditionCommunity,
 			HTTPPort: ReservePort(t),
 			SSHPort:  ReservePort(t),
-			Network:  "shellhub_network_" + uuid.Generate(),
+			Network:  "cloudmatehub_network_" + uuid.Generate(),
 			Run:      run,
 		},
 		t: t,
@@ -119,11 +119,11 @@ func (dcc *DockerComposeConfigurator) WithCronTrigger() *DockerComposeConfigurat
 	return dcc.WithEnv(redisPortEnv, ReservePort(dcc.t))
 }
 
-// Up initiates the ShellHub instance, blocking until all services are in the running or
+// Up initiates the CloudMateHub instance, blocking until all services are in the running or
 // healthy state. The first successful Up in a run builds the server, gateway and ui images;
 // every later Up starts from those images and fails if they were removed in between.
 //
-// It returns a [DockerCompose], which is a ShellHub Docker environment, calling
+// It returns a [DockerCompose], which is a CloudMateHub Docker environment, calling
 // [assert.FailNow] if an error arises. A stack that fails to come up leaves its containers' logs in
 // .stack/<test name>.log under the tests directory, as [DockerCompose.Down] does for a failed test.
 func (dcc *DockerComposeConfigurator) Up(ctx context.Context) *DockerCompose {

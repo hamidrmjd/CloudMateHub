@@ -40,9 +40,9 @@ func testKeylessEnrollment(t *testing.T, compose *environment.DockerCompose) {
 			{authorizer.RoleObserver, http.StatusForbidden},
 		} {
 			username := "registrations-" + string(tc.role)
-			compose.NewUser(t, username, username+"@ossystems.com.br", ShellHubPassword)
-			compose.NewMember(t, username, ShellHubNamespaceName, string(tc.role))
-			member := signInto(t, compose, username, ShellHubPassword)
+			compose.NewUser(t, username, username+"@ossystems.com.br", CloudMateHubPassword)
+			compose.NewMember(t, username, CloudMateHubNamespaceName, string(tc.role))
+			member := signInto(t, compose, username, CloudMateHubPassword)
 
 			events := []models.ProvisioningKeyEvent{}
 			resp, err := asBearer(t, compose, member.Token).SetResult(&events).Get("/api/devices/tenant-registrations")
@@ -59,7 +59,7 @@ func testKeylessEnrollment(t *testing.T, compose *environment.DockerCompose) {
 	})
 
 	t.Run("an agent given only the tenant lands pending and serves once accepted", func(t *testing.T) {
-		startAgent(t, t.Context(), compose, NewAgentContainerWithTenantOnly(ShellHubNamespace), NewAgentContainerWithHostname("keyless-agent"))
+		startAgent(t, t.Context(), compose, NewAgentContainerWithTenantOnly(CloudMateHubNamespace), NewAgentContainerWithHostname("keyless-agent"))
 
 		var pending models.Device
 		require.EventuallyWithT(t, func(tt *assert.CollectT) {
@@ -104,7 +104,7 @@ func testEnrollmentUID(t *testing.T, compose *environment.DockerCompose) {
 		device := enroll(t, compose, keyed)
 
 		withTenant := keyed
-		withTenant.TenantID = ShellHubNamespace
+		withTenant.TenantID = CloudMateHubNamespace
 		reauthDevice(t, compose, withTenant, device.UID)
 		require.Equal(t, device.UID, authDevice(t, compose, withTenant).UID)
 
@@ -121,7 +121,7 @@ func testProvisioningKeyRefusedInLegacy(t *testing.T, compose *environment.Docke
 
 	t.Run("a presented provisioning key is refused with 403 and enrolls nothing", func(t *testing.T) {
 		req := newKeyedDeviceAuthRequest(t, unissuedProvisioningKey, "legacy-keyed", "02:00:00:00:40:05")
-		req.TenantID = ShellHubNamespace
+		req.TenantID = CloudMateHubNamespace
 
 		requireAuthForbidden(t, compose, req)
 	})
@@ -172,8 +172,8 @@ func testSystemKeyPresented(t *testing.T, compose *environment.DockerCompose, al
 		plaintext string
 		mac       string
 	}{
-		{keyType: models.ProvisioningKeyTypeLegacy, plaintext: "system:" + ShellHubNamespace, mac: "02:00:00:00:40:03"},
-		{keyType: models.ProvisioningKeyTypePairing, plaintext: "system:pairing:" + ShellHubNamespace, mac: "02:00:00:00:40:04"},
+		{keyType: models.ProvisioningKeyTypeLegacy, plaintext: "system:" + CloudMateHubNamespace, mac: "02:00:00:00:40:03"},
+		{keyType: models.ProvisioningKeyTypePairing, plaintext: "system:pairing:" + CloudMateHubNamespace, mac: "02:00:00:00:40:04"},
 	}
 
 	for _, tc := range cases {
@@ -188,7 +188,7 @@ func testSystemKeyPresented(t *testing.T, compose *environment.DockerCompose, al
 
 			t.Run("enrolls nothing alongside the tenant id", func(t *testing.T) {
 				req := newKeyedDeviceAuthRequest(t, tc.plaintext, "system-"+string(tc.keyType)+"-tenant", tc.mac)
-				req.TenantID = ShellHubNamespace
+				req.TenantID = CloudMateHubNamespace
 
 				requireAuthAnswers(t, compose, req, alongsideTenantStatus)
 			})

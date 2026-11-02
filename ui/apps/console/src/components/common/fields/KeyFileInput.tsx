@@ -3,7 +3,7 @@ import {
   ArrowUpTrayIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { useKeyFileInput } from "@/hooks/useKeyFileInput";
 import { INPUT_MONO } from "@/utils/styles";
 import FieldLabel from "@/components/common/fields/FieldLabel";

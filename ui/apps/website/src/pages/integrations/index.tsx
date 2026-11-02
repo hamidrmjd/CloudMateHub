@@ -1,4 +1,4 @@
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import {
   ArrowDownIcon,
   ArrowsRightLeftIcon,
@@ -18,13 +18,13 @@ import {
   Card,
   IconBadge,
   WindowChrome,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import {
   ActionButtonGroup,
   CTABanner,
@@ -36,7 +36,7 @@ import {
   type CTAAction,
 } from "@/components";
 import { docsUrl } from "@/links";
-import { C } from "@shellhub/design-system/constants";
+import { C } from "@cloudmatehub/design-system/constants";
 
 const primaryAction: CTAAction = {
   label: "Get Started Free",
@@ -81,13 +81,13 @@ const sshFeatures = [
     icon: ArrowsRightLeftIcon,
     color: C.primary,
     title: "SSH as transport",
-    desc: "Any tool that uses SSH for remote execution works with ShellHub out of the box. Ansible, rsync, scp, Git over SSH.",
+    desc: "Any tool that uses SSH for remote execution works with CloudMateHub out of the box. Ansible, rsync, scp, Git over SSH.",
   },
   {
     icon: ShieldCheckIcon,
     color: C.cyan,
     title: "No agent changes",
-    desc: "The ShellHub agent runs independently on your devices. Install once and use it with every tool in your stack.",
+    desc: "The CloudMateHub agent runs independently on your devices. Install once and use it with every tool in your stack.",
   },
   {
     icon: CodeBracketIcon,
@@ -98,7 +98,7 @@ const sshFeatures = [
 ];
 
 /**
- * The integrations page, listing the platforms and tools ShellHub fits alongside.
+ * The integrations page, listing the platforms and tools CloudMateHub fits alongside.
  */
 export default function Integrations() {
   return (
@@ -123,7 +123,7 @@ export default function Integrations() {
           </Reveal>
           <Reveal>
             <p className="text-sm text-text-secondary max-w-lg mx-auto leading-relaxed mb-10">
-              ShellHub speaks standard SSH. Any tool that connects over SSH
+              CloudMateHub speaks standard SSH. Any tool that connects over SSH
               works out of the box &mdash; no plugins, no custom agents, no
               vendor lock-in.
             </p>
@@ -146,14 +146,14 @@ export default function Integrations() {
               className="mb-8"
               eyebrow="Automation & Infrastructure as Code"
               title="Ansible & Terraform, zero VPN"
-              subtitle="Use ShellHub as the SSH transport for your Ansible playbooks and Terraform provisioners. Manage devices behind NAT, firewalls, or cellular networks without VPN tunnels or bastion hosts."
+              subtitle="Use CloudMateHub as the SSH transport for your Ansible playbooks and Terraform provisioners. Manage devices behind NAT, firewalls, or cellular networks without VPN tunnels or bastion hosts."
             />
 
             <div className="space-y-3">
               {[
                 {
                   label: "Drop-in SSH replacement",
-                  desc: "Set ProxyCommand once and every tool uses ShellHub transparently",
+                  desc: "Set ProxyCommand once and every tool uses CloudMateHub transparently",
                 },
                 {
                   label: "NAT traversal built in",
@@ -165,7 +165,7 @@ export default function Integrations() {
                 },
                 {
                   label: "Terraform provisioner",
-                  desc: "Run remote-exec provisioners through ShellHub SSH",
+                  desc: "Run remote-exec provisioners through CloudMateHub SSH",
                 },
               ].map((cap, i) => (
                 <Reveal key={i} delay={i * 0.04}>
@@ -195,7 +195,7 @@ export default function Integrations() {
                 title="ansible-playbook"
                 bodyClassName="overflow-x-auto"
               >
-                <Comment># Deploy firmware update via ShellHub SSH</Comment>
+                <Comment># Deploy firmware update via CloudMateHub SSH</Comment>
                 <Ln>
                   <Val>$</Val> ansible-playbook -i inventory.yml deploy.yml
                 </Ln>
@@ -271,7 +271,7 @@ export default function Integrations() {
           subtitle={
             <>
               GitHub Actions, GitLab CI, Jenkins, CircleCI &mdash; if it can run
-              SSH, it can deploy through ShellHub. No custom plugins required.
+              SSH, it can deploy through CloudMateHub. No custom plugins required.
             </>
           }
         />
@@ -321,7 +321,7 @@ export default function Integrations() {
               </Ln>
               <Ln>
                 {" "}
-                - <Kw>name</Kw>: <Str>Configure ShellHub SSH</Str>
+                - <Kw>name</Kw>: <Str>Configure CloudMateHub SSH</Str>
               </Ln>
               <Ln>
                 {" "}
@@ -398,7 +398,7 @@ export default function Integrations() {
         <SectionHeader
           eyebrow="Development Tools"
           title="Develop directly on remote devices"
-          subtitle="Connect your favorite editor or build system to devices through ShellHub. Full IDE support with zero configuration changes."
+          subtitle="Connect your favorite editor or build system to devices through CloudMateHub. Full IDE support with zero configuration changes."
         />
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -576,7 +576,7 @@ export default function Integrations() {
                       </div>
                     </div>
                     <p className="text-xs text-text-secondary leading-relaxed">
-                      Include the ShellHub agent in your embedded Linux image.
+                      Include the CloudMateHub agent in your embedded Linux image.
                       Ship devices pre-configured for remote access from the
                       factory floor.
                     </p>
@@ -593,7 +593,7 @@ export default function Integrations() {
                         </span>
                       </div>
                       <div className="p-4 font-mono text-2xs leading-[1.7]">
-                        <Comment># Enable ShellHub agent in the image</Comment>
+                        <Comment># Enable CloudMateHub agent in the image</Comment>
                         <Ln>
                           <Kw>IMAGE_INSTALL</Kw>:append ={" "}
                           <Str>" shellhub-agent"</Str>
@@ -691,7 +691,7 @@ export default function Integrations() {
                     </div>
                     <div>
                       <p className="text-xs font-medium text-primary">
-                        ShellHub
+                        CloudMateHub
                       </p>
                       <p className="text-2xs text-text-muted font-mono">
                         SSH tunnel &amp; auth
@@ -753,7 +753,7 @@ export default function Integrations() {
               className="mb-8"
               eyebrow="Docker & Containers"
               title="SSH into containers, not just hosts"
-              subtitle="SSH directly into Docker containers without exposing ports or running docker exec. ShellHub routes connections to individual containers through the agent on the host."
+              subtitle="SSH directly into Docker containers without exposing ports or running docker exec. CloudMateHub routes connections to individual containers through the agent on the host."
             />
 
             <Reveal delay={0.05}>
@@ -788,7 +788,7 @@ export default function Integrations() {
         <SectionHeader
           eyebrow="API-First"
           title="Automate everything with the REST API"
-          subtitle="Every feature in ShellHub is accessible through a well-documented REST API. Build custom dashboards, automate workflows, or integrate with your internal tools."
+          subtitle="Every feature in CloudMateHub is accessible through a well-documented REST API. Build custom dashboards, automate workflows, or integrate with your internal tools."
         />
 
         <Reveal delay={0.1}>
@@ -953,7 +953,7 @@ export default function Integrations() {
             Standard SSH. Zero plugins.
           </h2>
           <p className="text-sm text-text-secondary max-w-lg mx-auto leading-relaxed">
-            ShellHub works with any tool that supports SSH. No proprietary
+            CloudMateHub works with any tool that supports SSH. No proprietary
             clients, no custom APIs, no vendor lock-in.
           </p>
         </Reveal>
@@ -975,7 +975,7 @@ export default function Integrations() {
       <CTABanner
         eyebrow="Ready to integrate?"
         title="Start integrating today"
-        subtitle="Get ShellHub running and connect it to your existing workflow in minutes. Standard SSH means zero learning curve."
+        subtitle="Get CloudMateHub running and connect it to your existing workflow in minutes. Standard SSH means zero learning curve."
         primaryAction={primaryAction}
         secondaryAction={secondaryAction}
         gradient={{ from: "accent-cyan", to: "primary" }}

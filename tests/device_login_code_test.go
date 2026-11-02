@@ -27,8 +27,8 @@ func testDeviceLoginCode(t *testing.T, compose *environment.DockerCompose) {
 		assert.Equal(t, models.DeviceLoginCodeKindDevice, preview.Kind)
 		assert.Equal(t, device.UID, preview.UID)
 		assert.Equal(t, "login-code", preview.Name)
-		assert.Equal(t, ShellHubNamespace, preview.TenantID)
-		assert.Equal(t, ShellHubNamespaceName, preview.Namespace)
+		assert.Equal(t, CloudMateHubNamespace, preview.TenantID)
+		assert.Equal(t, CloudMateHubNamespaceName, preview.Namespace)
 		assert.Equal(t, models.DeviceStatusPending, preview.Status)
 	})
 

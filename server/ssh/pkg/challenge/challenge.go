@@ -7,10 +7,10 @@ const (
 	// Approval asks the person to approve the login in the console. The bridge
 	// matches this name to know a challenge carries an approval code rather
 	// than prose meant for a terminal.
-	Approval = "shellhub-approval"
+	Approval = "cloudmatehub-approval"
 
 	// Denied carries the reason a login was refused. It is deliberately not
 	// Approval: the bridge must render a refusal as an error rather than open
 	// an approval dialog that can no longer be answered.
-	Denied = "shellhub-approval-denied"
+	Denied = "cloudmatehub-approval-denied"
 )

@@ -84,7 +84,7 @@ jobs:
           VERSION=$(sed -n 's/^REDOCLY_VERSION=//p' ../versions.env)
           [ -n "$VERSION" ] || { echo "could not read REDOCLY_VERSION from versions.env"; exit 1; }
           npx "@redocly/cli@$VERSION" bundle ../openapi/spec/openapi.yaml -o /tmp/openapi.json --force
-          OPENAPI_SPEC_PATH=/tmp/openapi.json npm run generate -w @shellhub/console
+          OPENAPI_SPEC_PATH=/tmp/openapi.json npm run generate -w @cloudmatehub/console
 
       - name: Unused files, exports and dependencies
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
@@ -94,22 +94,22 @@ jobs:
       - name: Unit test console
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.console == 'true' }}
         working-directory: ui
-        run: npm run test -w @shellhub/console
+        run: npm run test -w @cloudmatehub/console
 
       - name: Lint console
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.console == 'true' }}
         working-directory: ui
-        run: npm run lint -w @shellhub/console
+        run: npm run lint -w @cloudmatehub/console
 
       - name: Build console
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.console == 'true' }}
         working-directory: ui
-        run: npm run build -w @shellhub/console
+        run: npm run build -w @cloudmatehub/console
 
       - name: Astro sync docs
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.docs == 'true' }}
         working-directory: ui
-        run: npm run sync -w @shellhub/docs
+        run: npm run sync -w @cloudmatehub/docs
 
       - name: Install Vale
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.docs == 'true' }}
@@ -120,42 +120,42 @@ jobs:
       - name: Unit test docs
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.docs == 'true' }}
         working-directory: ui
-        run: npm run test -w @shellhub/docs
+        run: npm run test -w @cloudmatehub/docs
 
       - name: Lint docs
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.docs == 'true' }}
         working-directory: ui
-        run: npm run lint -w @shellhub/docs
+        run: npm run lint -w @cloudmatehub/docs
 
       - name: Build docs
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.docs == 'true' }}
         working-directory: ui
-        run: npm run build -w @shellhub/docs
+        run: npm run build -w @cloudmatehub/docs
 
       - name: Unit test website
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.website == 'true' }}
         working-directory: ui
-        run: npm run test -w @shellhub/website
+        run: npm run test -w @cloudmatehub/website
 
       - name: Lint website
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.website == 'true' }}
         working-directory: ui
-        run: npm run lint -w @shellhub/website
+        run: npm run lint -w @cloudmatehub/website
 
       - name: Build website
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.website == 'true' }}
         working-directory: ui
-        run: npm run build -w @shellhub/website
+        run: npm run build -w @cloudmatehub/website
 
       - name: Unit test design-system
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.design-system == 'true' }}
         working-directory: ui
-        run: npm run test -w @shellhub/design-system
+        run: npm run test -w @cloudmatehub/design-system
 
       - name: Lint design-system
         if: ${{ !cancelled() && steps.install.outcome == 'success' && steps.changes.outputs.design-system == 'true' }}
         working-directory: ui
-        run: npm run lint -w @shellhub/design-system
+        run: npm run lint -w @cloudmatehub/design-system
 
   ui:
     name: ui

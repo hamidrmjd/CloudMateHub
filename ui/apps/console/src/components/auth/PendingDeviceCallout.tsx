@@ -1,4 +1,4 @@
-import { Callout } from "@shellhub/design-system/primitives";
+import { Callout } from "@cloudmatehub/design-system/primitives";
 import { hasPendingDeviceCode } from "@/utils/navigation";
 
 /**

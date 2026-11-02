@@ -79,7 +79,7 @@ describe("useChatwoot", () => {
 
       renderHook(() => useChatwoot(), { wrapper: createTestWrapper() });
 
-      expect(document.getElementById("shellhub-chatwoot-sdk")).toBeNull();
+      expect(document.getElementById("cloudmatehub-chatwoot-sdk")).toBeNull();
     });
   });
 
@@ -204,7 +204,7 @@ describe("useChatwoot", () => {
       });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       act(() => {
@@ -222,7 +222,7 @@ describe("useChatwoot", () => {
       renderHook(() => useChatwoot(), { wrapper: createTestWrapper() });
 
       await waitFor(() => {
-        const script = document.getElementById("shellhub-chatwoot-sdk");
+        const script = document.getElementById("cloudmatehub-chatwoot-sdk");
         expect(script).not.toBeNull();
         expect(script!.getAttribute("src")).toBe(`${baseURL}/packs/js/sdk.js`);
       });
@@ -234,12 +234,12 @@ describe("useChatwoot", () => {
       });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       rerender();
 
-      const scripts = document.querySelectorAll("#shellhub-chatwoot-sdk");
+      const scripts = document.querySelectorAll("#cloudmatehub-chatwoot-sdk");
       expect(scripts.length).toBe(1);
     });
   });
@@ -249,7 +249,7 @@ describe("useChatwoot", () => {
       renderHook(() => useChatwoot(), { wrapper: createTestWrapper() });
 
       await waitFor(() =>
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull(),
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull(),
       );
 
       expect(window.chatwootSettings).toEqual({
@@ -266,7 +266,7 @@ describe("useChatwoot", () => {
       renderHook(() => useChatwoot(), { wrapper: createTestWrapper() });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       act(() => {
@@ -288,7 +288,7 @@ describe("useChatwoot", () => {
       });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       act(() => {
@@ -310,7 +310,7 @@ describe("useChatwoot", () => {
       renderHook(() => useChatwoot(), { wrapper: createTestWrapper() });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       act(() => {
@@ -340,7 +340,7 @@ describe("useChatwoot", () => {
       });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       act(() => {
@@ -396,7 +396,7 @@ describe("useChatwoot", () => {
       });
 
       await waitFor(() => expect(result.current.status).toBe("unavailable"));
-      expect(document.getElementById("shellhub-chatwoot-sdk")).toBeNull();
+      expect(document.getElementById("cloudmatehub-chatwoot-sdk")).toBeNull();
     });
   });
 
@@ -414,7 +414,7 @@ describe("useChatwoot", () => {
 
         expect(result.current.status).toBe("loading");
         const script = document.getElementById(
-          "shellhub-chatwoot-sdk",
+          "cloudmatehub-chatwoot-sdk",
         ) as HTMLScriptElement | null;
         expect(script).not.toBeNull();
 
@@ -427,7 +427,7 @@ describe("useChatwoot", () => {
         rerender();
 
         expect(result.current.status).toBe("unavailable");
-        expect(document.getElementById("shellhub-chatwoot-sdk")).toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).toBeNull();
       } finally {
         vi.useRealTimers();
       }
@@ -441,12 +441,12 @@ describe("useChatwoot", () => {
       });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       expect(result.current.status).toBe("loading");
       const script = document.getElementById(
-        "shellhub-chatwoot-sdk",
+        "cloudmatehub-chatwoot-sdk",
       ) as HTMLScriptElement | null;
 
       await act(async () => {
@@ -455,7 +455,7 @@ describe("useChatwoot", () => {
       rerender();
 
       expect(result.current.status).toBe("unavailable");
-      expect(document.getElementById("shellhub-chatwoot-sdk")).toBeNull();
+      expect(document.getElementById("cloudmatehub-chatwoot-sdk")).toBeNull();
     });
   });
 
@@ -464,7 +464,7 @@ describe("useChatwoot", () => {
       renderHook(() => useChatwoot(), { wrapper: createTestWrapper() });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       makeWidgetReady();
@@ -477,7 +477,7 @@ describe("useChatwoot", () => {
       expect(window.$chatwoot).toBeUndefined();
       expect(window.chatwootSDK).toBeUndefined();
       expect(window.chatwootSettings).toBeUndefined();
-      expect(document.getElementById("shellhub-chatwoot-sdk")).toBeNull();
+      expect(document.getElementById("cloudmatehub-chatwoot-sdk")).toBeNull();
     });
 
     it("after teardown, a re-mount cleanly re-injects the script", async () => {
@@ -486,18 +486,18 @@ describe("useChatwoot", () => {
       });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       first.unmount();
 
       tearDownChatwoot("logout");
-      expect(document.getElementById("shellhub-chatwoot-sdk")).toBeNull();
+      expect(document.getElementById("cloudmatehub-chatwoot-sdk")).toBeNull();
 
       renderHook(() => useChatwoot(), { wrapper: createTestWrapper() });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
     });
 
@@ -505,7 +505,7 @@ describe("useChatwoot", () => {
       renderHook(() => useChatwoot(), { wrapper: createTestWrapper() });
 
       await waitFor(() => {
-        expect(document.getElementById("shellhub-chatwoot-sdk")).not.toBeNull();
+        expect(document.getElementById("cloudmatehub-chatwoot-sdk")).not.toBeNull();
       });
 
       makeWidgetReady();
@@ -539,7 +539,7 @@ describe("useChatwoot", () => {
         });
 
         const script1 = document.getElementById(
-          "shellhub-chatwoot-sdk",
+          "cloudmatehub-chatwoot-sdk",
         ) as HTMLScriptElement | null;
         window.chatwootSDK = { run: vi.fn() };
         script1!.onload?.(new Event("load"));
@@ -559,7 +559,7 @@ describe("useChatwoot", () => {
         });
 
         const script2 = document.getElementById(
-          "shellhub-chatwoot-sdk",
+          "cloudmatehub-chatwoot-sdk",
         ) as HTMLScriptElement | null;
         expect(script2).not.toBeNull();
 

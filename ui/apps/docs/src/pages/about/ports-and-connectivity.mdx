@@ -12,7 +12,7 @@ This page exists so you can answer the network team's questions in one go.
 
 ## On the device
 
-**Outbound access to the ShellHub server's HTTP(S) address. That is the whole requirement.**
+**Outbound access to the CloudMateHub server's HTTP(S) address. That is the whole requirement.**
 
 The agent dials the address you gave it in `SHELLHUB_SERVER_ADDRESS` and holds that connection
 open. It does not listen. Nothing has to be forwarded to it, published for it, or arranged in
@@ -29,7 +29,7 @@ That means all of the following are fine, with no configuration:
 If a browser on that device could load a web page from your server, the agent can connect.
 
 <Callout variant="info">
-ShellHub does not require the device to be reachable, but the **server** does have to
+CloudMateHub does not require the device to be reachable, but the **server** does have to
 be. That is the asymmetry the whole design rests on: one reachable server, any number of
 unreachable devices.
 </Callout>
@@ -50,11 +50,11 @@ publishing HTTP and your proxy is doing the rest.
 
 **SSH does not go through the gateway.** The SSH port is published by the server process
 directly. The gateway handles web traffic only. If you are putting a load balancer in front of
-ShellHub, the SSH port needs its own path — it is not HTTP and it will not survive an HTTP proxy.
+CloudMateHub, the SSH port needs its own path — it is not HTTP and it will not survive an HTTP proxy.
 
 ## Behind a load balancer
 
-If a Layer 4 load balancer sits in front of the server, set `SHELLHUB_PROXY=true` so ShellHub
+If a Layer 4 load balancer sits in front of the server, set `SHELLHUB_PROXY=true` so CloudMateHub
 reads the client address from the PROXY protocol header rather than seeing the balancer's.
 
 `SHELLHUB_PROXY_TRUSTED_IPS` decides which peers are allowed to declare a client address. It

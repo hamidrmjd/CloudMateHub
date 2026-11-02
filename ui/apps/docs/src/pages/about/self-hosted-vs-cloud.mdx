@@ -1,14 +1,14 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: Self-Hosted vs. Cloud
-description: Compare running your own ShellHub server with the managed Cloud, and decide which one fits.
+description: Compare running your own CloudMateHub server with the managed Cloud, and decide which one fits.
 ---
 
 import EditionBanner from "../../components/EditionBanner.astro";
 
-# Self-Hosted vs. Cloud-Hosted ShellHub
+# Self-Hosted vs. Cloud-Hosted CloudMateHub
 
-ShellHub can be used in two ways: self-hosted and cloud-hosted. The self-hosted version runs on
+CloudMateHub can be used in two ways: self-hosted and cloud-hosted. The self-hosted version runs on
 your own servers, from the same source that is on GitHub. The cloud-hosted version is hosted by
 us at [cloud.shellhub.io](https://cloud.shellhub.io).
 
@@ -16,12 +16,12 @@ This page is the short answer to what differs.
 
 ## What self-hosting actually means
 
-We built ShellHub to remove work, not add it. The whole point is that an admin stops arranging
+We built CloudMateHub to remove work, not add it. The whole point is that an admin stops arranging
 public addresses, opening ports, maintaining a jump host and chasing SSH keys across machines,
 and instead installs one agent and gets on with the job. As is usually the case with things that
 feel simple from the outside, a fair amount happens behind them.
 
-Self-hosting means you own all of it. A ShellHub server is not one process: there is a gateway
+Self-hosting means you own all of it. A CloudMateHub server is not one process: there is a gateway
 terminating TLS, a server process carrying both the API and the SSH endpoint, a web console, a
 PostgreSQL database holding everything that matters, and a cache and task queue. You are
 responsible for keeping those running, for the certificates, for the backups, and for being the
@@ -40,7 +40,7 @@ rules out someone else holding your data, self-hosting is the right answer and t
 you there. If you want to reach some devices and would rather not think about any of the above,
 Cloud is the right answer and there is no shame in it.
 
-Read [How ShellHub Works](/about/how-shellhub-works) before deciding — it is a short page and it
+Read [How CloudMateHub Works](/about/how-cloudmatehub-works) before deciding — it is a short page and it
 explains what you would be operating.
 
 ## Installation and Maintenance

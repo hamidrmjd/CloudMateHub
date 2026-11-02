@@ -30,7 +30,7 @@ const (
 	adminPassword  = "e2e-password"
 	adminEmail     = "admin@e2e.test"
 	adminNamespace = "e2e"
-	projectPrefix  = "shellhub-e2e-"
+	projectPrefix  = "cloudmatehub-e2e-"
 
 	accountLockoutBase = 5 * time.Second
 	keptStackTTL       = 24 * time.Hour
@@ -313,7 +313,7 @@ func main() {
 
 	rootCmd := &cobra.Command{
 		Use:           "stack",
-		Short:         "Manage a ShellHub e2e stack",
+		Short:         "Manage a CloudMateHub e2e stack",
 		SilenceUsage:  true,
 		SilenceErrors: true,
 		PersistentPreRunE: func(_ *cobra.Command, _ []string) error {
@@ -417,7 +417,7 @@ func main() {
 		},
 	}
 
-	upCmd.Flags().StringVar(&editionFlag, "edition", "community", "ShellHub edition (community, enterprise, cloud)")
+	upCmd.Flags().StringVar(&editionFlag, "edition", "community", "CloudMateHub edition (community, enterprise, cloud)")
 	upCmd.Flags().StringVar(&httpPort, "http-port", "", "host HTTP port (random if empty)")
 	upCmd.Flags().DurationVar(&ttl, "ttl", keptStackTTL, "how long the kept stack lives before a later run sweeps it")
 

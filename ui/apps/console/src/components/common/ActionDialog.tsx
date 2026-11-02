@@ -7,7 +7,7 @@ import {
   NoSymbolIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import { isSdkError } from "@/api/errors";
 import { useHasPermission } from "@/hooks/useHasPermission";
 import BaseDialog from "@/components/common/BaseDialog";

@@ -32,8 +32,8 @@ import PageLoader from "@/components/common/PageLoader";
 import IdentityCard from "@/components/common/IdentityCard";
 import InfoItem from "@/components/common/InfoItem";
 import TimelineCard from "@/components/common/TimelineCard";
-import { Button, Card, IconButton } from "@shellhub/design-system/primitives";
-import { cn } from "@shellhub/design-system/cn";
+import { Button, Card, IconButton } from "@cloudmatehub/design-system/primitives";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { LABEL_BASE } from "@/utils/styles";
 import ResourceNotFound from "@/components/common/ResourceNotFound";
 

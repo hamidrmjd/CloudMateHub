@@ -23,7 +23,7 @@ vi.mock("@/utils/styles", () => ({
   INPUT_MONO_ERROR: "input-mono-error",
 }));
 
-const INVITE_LINK = "https://shellhub.example.com/invite/abc123";
+const INVITE_LINK = "https://cloudmatehub.example.com/invite/abc123";
 
 const mockGetConfig = vi.mocked(getConfig);
 

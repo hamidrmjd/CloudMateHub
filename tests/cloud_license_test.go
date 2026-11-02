@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const licenseNotAuthorizedConnection = "Connection blocked: this ShellHub instance's license does not authorize this service"
+const licenseNotAuthorizedConnection = "Connection blocked: this CloudMateHub instance's license does not authorize this service"
 
 // TestCloudLicensing runs a cloud instance, which needs a license that grants cloud authorization,
 // and reads what an installed license refuses once it no longer grants it: connecting to a device
@@ -25,7 +25,7 @@ func TestCloudLicensing(t *testing.T) {
 	compose := environment.New(t, run).WithEdition(environment.EditionCloud).WithLicense(cloudLicense()).Up(ctx)
 	t.Cleanup(compose.Down)
 
-	compose.NewUser(t, ShellHubUsername, ShellHubUsername+stripeTestEmailDomain, ShellHubPassword)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubUsername+stripeTestEmailDomain, CloudMateHubPassword)
 	ownNamespace(t, ctx, compose, legacyNamespace)
 
 	signer := registerDeviceKey(t, ctx, compose)

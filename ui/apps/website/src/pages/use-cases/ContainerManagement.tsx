@@ -13,13 +13,13 @@ import {
   Card,
   IconBadge,
   WindowChrome,
-} from "@shellhub/design-system/primitives";
+} from "@cloudmatehub/design-system/primitives";
 import {
   ConnectionGrid,
   GlowOrbs,
   Reveal,
   ShimmerCard,
-} from "@shellhub/design-system/components";
+} from "@cloudmatehub/design-system/components";
 import {
   ActionButtonGroup,
   CTABanner,
@@ -31,7 +31,7 @@ import {
   SiteLayout,
   type CTAAction,
 } from "@/components";
-import { C, FONT_SANS, FONT_MONO } from "@shellhub/design-system/constants";
+import { C, FONT_SANS, FONT_MONO } from "@cloudmatehub/design-system/constants";
 
 const primaryAction: CTAAction = {
   label: "Get Started Free",
@@ -124,7 +124,7 @@ const steps = [
   {
     num: "01",
     title: "Install agent on Docker host",
-    desc: "Deploy the lightweight ShellHub agent alongside your containers. One binary, one line of config.",
+    desc: "Deploy the lightweight CloudMateHub agent alongside your containers. One binary, one line of config.",
     color: C.primary,
   },
   {
@@ -281,7 +281,7 @@ function ArchitectureDiagram() {
         fontWeight="600"
         fontFamily={FONT_SANS}
       >
-        ShellHub Gateway
+        CloudMateHub Gateway
       </text>
       <text
         x="340"
@@ -370,7 +370,7 @@ function ArchitectureDiagram() {
         fontWeight="600"
         fontFamily={FONT_MONO}
       >
-        ShellHub Agent
+        CloudMateHub Agent
       </text>
 
       {[
@@ -506,7 +506,7 @@ export default function ContainerManagement() {
         <SectionHeader
           eyebrow="Before & After"
           title="From three steps to one"
-          subtitle="See how ShellHub eliminates the multi-step dance of connecting to containers on remote hosts."
+          subtitle="See how CloudMateHub eliminates the multi-step dance of connecting to containers on remote hosts."
         />
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -518,7 +518,7 @@ export default function ContainerManagement() {
                     <XMarkIcon className="w-5 h-5 text-text-secondary" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold">Without ShellHub</h3>
+                    <h3 className="text-sm font-bold">Without CloudMateHub</h3>
                     <p className="text-2xs text-text-muted">
                       Manual, multi-step
                     </p>
@@ -591,7 +591,7 @@ export default function ContainerManagement() {
                     </Badge>
                   </div>
 
-                  <h3 className="text-sm font-bold mb-1">With ShellHub</h3>
+                  <h3 className="text-sm font-bold mb-1">With CloudMateHub</h3>
                   <p className="text-2xs text-primary mb-6">
                     One command, fully recorded
                   </p>
@@ -663,7 +663,7 @@ export default function ContainerManagement() {
         <SectionHeader
           eyebrow="Architecture"
           title="How container SSH works"
-          subtitle="The ShellHub agent runs alongside your containers on the Docker host, routing SSH connections to individual containers through the gateway."
+          subtitle="The CloudMateHub agent runs alongside your containers on the Docker host, routing SSH connections to individual containers through the gateway."
         />
 
         <Reveal>
@@ -851,7 +851,7 @@ export default function ContainerManagement() {
       <CTABanner
         eyebrow="Ready to simplify container access?"
         title="Manage your containers remotely"
-        subtitle="Install the ShellHub agent and get instant SSH access to containers on any remote host. Free to start, no credit card required."
+        subtitle="Install the CloudMateHub agent and get instant SSH access to containers on any remote host. Free to start, no credit card required."
         primaryAction={primaryAction}
         secondaryAction={secondaryAction}
         eyebrowColor="cyan"

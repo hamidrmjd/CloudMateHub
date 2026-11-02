@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 )
 
-// GenerateKeys creates the RSA key files ShellHub needs (api_private_key, api_public_key,
+// GenerateKeys creates the RSA key files CloudMateHub needs (api_private_key, api_public_key,
 // ssh_private_key) under dir, skipping any that already exist.
 func GenerateKeys(dir string) error {
 	const privateKeyPerm = 0o600

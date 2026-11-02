@@ -42,7 +42,7 @@ func TestAgentSetup(t *testing.T) {
 	t.Run("the agent generates its private key on first run and keeps it", func(t *testing.T) {
 		compose := newSSHEnvironment(t, t.Context(), legacyNamespace)
 
-		const keyPath = "/var/lib/shellhub/device.key"
+		const keyPath = "/var/lib/cloudmatehub/device.key"
 
 		agent, device := startAcceptedAgent(t, t.Context(), compose, NewAgentContainerWithPrivateKey(keyPath))
 
@@ -56,7 +56,7 @@ func TestAgentSetup(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, encodeDevicePublicKey(&key.PublicKey), device.PublicKey, "the device enrolled with a key other than the one on disk")
 
-		assert.Equal(t, []string{"600", "700"}, strings.Fields(execInAgent(t, agent, "stat", "-c", "%a", keyPath, "/var/lib/shellhub")), "the key and the directory made for it are readable by others")
+		assert.Equal(t, []string{"600", "700"}, strings.Fields(execInAgent(t, agent, "stat", "-c", "%a", keyPath, "/var/lib/cloudmatehub")), "the key and the directory made for it are readable by others")
 
 		require.NoError(t, agent.Stop(t.Context(), nil))
 		compose.AwaitDeviceOffline(t, device.UID)

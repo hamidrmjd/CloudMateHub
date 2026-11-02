@@ -6,7 +6,7 @@ description: Make the SSHID less tedious with aliases, config entries, and clien
 
 # SSH Client Configuration
 
-An SSHID is correct but long. Nothing here changes how ShellHub works — it is about typing less.
+An SSHID is correct but long. Nothing here changes how CloudMateHub works — it is about typing less.
 
 ## OpenSSH
 
@@ -31,12 +31,12 @@ honor the alias.
 For a fleet, a wildcard saves writing one block per device:
 
 ```
-Host *.shellhub
+Host *.cloudmatehub
   HostName cloud.shellhub.io
   User root@mycompany.%h
 ```
 
-That is imperfect — `%h` includes the `.shellhub` suffix — so most people end up with explicit
+That is imperfect — `%h` includes the `.cloudmatehub` suffix — so most people end up with explicit
 blocks for the devices they touch often and the full SSHID for the rest.
 
 ## Keys
@@ -52,7 +52,7 @@ Host pi
 ```
 
 `IdentitiesOnly yes` is worth setting. Without it, OpenSSH offers every key it has, and the
-*first* one ShellHub recognizes is the identity your session is attributed to — which may not be
+*first* one CloudMateHub recognizes is the identity your session is attributed to — which may not be
 the one you meant.
 
 ## PuTTY
@@ -114,10 +114,10 @@ Host pi
   ControlPersist 10m
 ```
 
-Be aware of the interaction with authorization: ShellHub authorizes when the connection is made.
+Be aware of the interaction with authorization: CloudMateHub authorizes when the connection is made.
 A multiplexed connection held open for ten minutes was authorized once, at the start.
 
 ## Where to go next
 
 - [File Transfer](/connect/file-transfer) — Moving files over the same path.
-- [Port Forwarding](/connect/port-forwarding) — `-L` and `-R` through ShellHub.
+- [Port Forwarding](/connect/port-forwarding) — `-L` and `-R` through CloudMateHub.

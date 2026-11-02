@@ -1,4 +1,4 @@
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { LABEL } from "@/utils/styles";
 import type { useOtpInput } from "@/hooks/useOtpInput";
 

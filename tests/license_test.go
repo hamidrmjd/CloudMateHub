@@ -50,7 +50,7 @@ func newEnterpriseEnvironment(t *testing.T, ctx context.Context, configurator *e
 	compose := configurator.WithEdition(environment.EditionEnterprise).Up(ctx)
 	t.Cleanup(compose.Down)
 
-	compose.NewAdmin(t, ShellHubUsername, ShellHubEmail, ShellHubPassword)
+	compose.NewAdmin(t, CloudMateHubUsername, CloudMateHubEmail, CloudMateHubPassword)
 	ownNamespace(t, ctx, compose, legacyNamespace)
 
 	return compose
@@ -98,7 +98,7 @@ func licenseForDevices(devices int) environment.License {
 func acceptedDevices(t *testing.T, compose *environment.DockerCompose) int {
 	t.Helper()
 
-	return int(compose.Namespace(t, ShellHubNamespace).DevicesAcceptedCount)
+	return int(compose.Namespace(t, CloudMateHubNamespace).DevicesAcceptedCount)
 }
 
 func testLicenseFile(t *testing.T, compose *environment.DockerCompose, startup environment.License) {

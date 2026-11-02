@@ -4,10 +4,10 @@
   "useGitignore": true,
   "dictionaryDefinitions": [
     {
-      "name": "shellhub",
+      "name": "cloudmatehub",
       "path": "./config/spelling.txt",
       "addWords": true
     }
   ],
-  "dictionaries": ["shellhub"]
+  "dictionaries": ["cloudmatehub"]
 }

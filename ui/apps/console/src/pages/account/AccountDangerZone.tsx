@@ -14,7 +14,7 @@ import {
   ArrowTopRightOnSquareIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import SettingsSection from "@/components/settings/SettingsSection";
 import SettingsDangerCard from "@/components/settings/SettingsDangerCard";
 import DialogHeader from "@/components/common/DialogHeader";

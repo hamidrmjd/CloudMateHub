@@ -39,7 +39,7 @@ func TestPairedDevicesFollowTheirMember(t *testing.T) {
 
 		resp, err := compose.R(t.Context()).
 			SetBody(map[string]any{"role": authorizer.RoleObserver, "keep_devices": []string{kept.UID}}).
-			Patch("/api/namespaces/" + ShellHubNamespace + "/members/" + member.ID)
+			Patch("/api/namespaces/" + CloudMateHubNamespace + "/members/" + member.ID)
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
@@ -54,7 +54,7 @@ func TestPairedDevicesFollowTheirMember(t *testing.T) {
 
 		resp, err := compose.R(t.Context()).
 			SetQueryParam("keep_devices", kept.UID).
-			Delete("/api/namespaces/" + ShellHubNamespace + "/members/" + member.ID)
+			Delete("/api/namespaces/" + CloudMateHubNamespace + "/members/" + member.ID)
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
@@ -72,7 +72,7 @@ func TestPairedDevicesFollowTheirMember(t *testing.T) {
 
 		requireTeamDevice(t, compose, paired.UID)
 
-		resp, err = compose.R(t.Context()).Delete("/api/namespaces/" + ShellHubNamespace + "/members/" + member.ID)
+		resp, err = compose.R(t.Context()).Delete("/api/namespaces/" + CloudMateHubNamespace + "/members/" + member.ID)
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
@@ -94,7 +94,7 @@ func TestPairedDevicesFollowTheirMember(t *testing.T) {
 		member := signInPairingMember(t, compose, "leaving-pairer")
 		paired := pairDeviceAs(t, compose, member, "gone-on-leave", "02:00:00:00:a6:31")
 
-		resp, err := asBearer(t, compose, member.Token).Delete("/api/namespaces/" + ShellHubNamespace + "/members")
+		resp, err := asBearer(t, compose, member.Token).Delete("/api/namespaces/" + CloudMateHubNamespace + "/members")
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode(), resp.String())
 
@@ -105,10 +105,10 @@ func TestPairedDevicesFollowTheirMember(t *testing.T) {
 func signInPairingMember(t *testing.T, compose *environment.DockerCompose, username string) *models.UserAuthResponse {
 	t.Helper()
 
-	compose.NewUser(t, username, username+"@ossystems.com.br", ShellHubPassword)
-	compose.NewMember(t, username, ShellHubNamespaceName, string(authorizer.RoleOperator))
+	compose.NewUser(t, username, username+"@ossystems.com.br", CloudMateHubPassword)
+	compose.NewMember(t, username, CloudMateHubNamespaceName, string(authorizer.RoleOperator))
 
-	return signInto(t, compose, username, ShellHubPassword)
+	return signInto(t, compose, username, CloudMateHubPassword)
 }
 
 func pairDeviceAs(t *testing.T, compose *environment.DockerCompose, member *models.UserAuthResponse, hostname, mac string) *models.DevicePairingAccepted {

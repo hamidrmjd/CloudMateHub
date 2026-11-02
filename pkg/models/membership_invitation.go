@@ -66,7 +66,7 @@ func (m MembershipInvitation) IsPending() bool {
 // OnMembershipInvited hook and the internal client — to the worker that renders and sends the
 // invitation email, which reads it without a single store round-trip.
 //
-// It is the single contract across the shellhub↔cloud seam: JSON-encoded over the worker's
+// It is the single contract across the cloudmatehub↔cloud seam: JSON-encoded over the worker's
 // []byte transport, replacing the former positional colon-delimited string. It deliberately
 // carries only what the email template consumes — not the role or namespace name, which the
 // template uses neither of.

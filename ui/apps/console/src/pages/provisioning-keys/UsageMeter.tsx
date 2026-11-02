@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import { type ProvisioningKey } from "@/client";
 import {
   formatCount,

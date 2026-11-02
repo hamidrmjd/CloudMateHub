@@ -19,7 +19,7 @@ type Session struct {
 	Device    *Device `json:"device"`
 	TenantID  string  `json:"tenant_id"`
 	Username  string  `json:"username"`
-	// UserID is the ShellHub account that authorized this session via browser
+	// UserID is the CloudMateHub account that authorized this session via browser
 	// approval. Empty for password/public-key logins and web-terminal sessions.
 	// It is not serialized; readers get Principal.
 	UserID string `json:"-"`

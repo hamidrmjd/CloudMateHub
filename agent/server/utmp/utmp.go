@@ -13,7 +13,7 @@ import (
 	"golang.org/x/sys/unix"
 )
 
-// ExitStatus is the exit record of a utmp entry. ShellHub never populates it, but the field
+// ExitStatus is the exit record of a utmp entry. CloudMateHub never populates it, but the field
 // must be present for the record to have the layout the C library expects.
 type ExitStatus struct {
 	ETermination int16 // Process temination status - not used

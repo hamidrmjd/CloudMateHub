@@ -24,9 +24,9 @@ import (
 )
 
 const (
-	selfUpdateRepository   = "shellhub/agent"
+	selfUpdateRepository   = "cloudmatehub/agent"
 	selfUpdateFromVersion  = "v0.20.0"
-	selfUpdateKeyDirectory = "/var/lib/shellhub"
+	selfUpdateKeyDirectory = "/var/lib/cloudmatehub"
 	selfUpdateTimeout      = 3 * time.Minute
 )
 
@@ -65,7 +65,7 @@ func TestAgentDockerSelfUpdate(t *testing.T) {
 		acceptPendingDevice(t, compose)
 
 		logs := daemonContainerLogs(t, docker, replacement.ID)
-		assert.Regexp(t, `msg="Starting ShellHub".* version=`+regexp.QuoteMeta(next)+`\b`, logs, "the replacement does not run the server's version")
+		assert.Regexp(t, `msg="Starting CloudMateHub".* version=`+regexp.QuoteMeta(next)+`\b`, logs, "the replacement does not run the server's version")
 		assert.Regexp(t, agentConnectedLine, logs, "the replacement has not connected to the server")
 	})
 
@@ -160,7 +160,7 @@ func pushDockerAgent(t *testing.T, registry *environment.Registry, version strin
 func startDockerAgent(t *testing.T, compose *environment.DockerCompose, docker *client.Client, image string) container.InspectResponse {
 	t.Helper()
 
-	volume := "shellhub-e2e-agent-key-" + randomHex(t)
+	volume := "cloudmatehub-e2e-agent-key-" + randomHex(t)
 	t.Cleanup(func() {
 		ctx := context.WithoutCancel(t.Context())
 

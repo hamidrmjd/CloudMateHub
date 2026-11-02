@@ -1,11 +1,11 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import { CommandBlock } from "@/components";
 import { docsUrl } from "@/links";
-import { Reveal } from "@shellhub/design-system/components";
+import { Reveal } from "@cloudmatehub/design-system/components";
 
 const SETUP_CMD =
-  "git clone https://github.com/shellhub-io/shellhub.git && cd shellhub && make keygen && make start";
+  "git clone https://github.com/shellhub-io/shellhub.git && cd cloudmatehub && make keygen && make start";
 
 interface StepSetupProps {
   onBack: () => void;
@@ -25,7 +25,7 @@ export function StepSetup({ onBack }: StepSetupProps) {
       <Reveal delay={0.1}>
         <div className="space-y-3 mb-8">
           <p className="text-sm text-text-secondary leading-relaxed">
-            This clones the repository and starts all ShellHub services via
+            This clones the repository and starts all CloudMateHub services via
             Docker Compose. Run{" "}
             <code className="font-mono text-xs bg-surface px-1.5 py-0.5 rounded border border-border">
               ./bin/setup
@@ -33,7 +33,7 @@ export function StepSetup({ onBack }: StepSetupProps) {
             to get a URL where you can create your admin account.
           </p>
           <p className="text-sm text-text-secondary leading-relaxed">
-            Then install the ShellHub agent on each device you want to manage.
+            Then install the CloudMateHub agent on each device you want to manage.
           </p>
         </div>
       </Reveal>

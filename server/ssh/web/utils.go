@@ -28,7 +28,7 @@ type Credentials struct {
 	// and the gateway resolves it to the identity — no device credential and no
 	// legacy public-key ACL. Empty in legacy and keyless-fallback sessions.
 	PublicKey string `json:"public_key"`
-	// UserID is the ShellHub account driving the web terminal, taken from the
+	// UserID is the CloudMateHub account driving the web terminal, taken from the
 	// X-ID header the gateway injects after authenticating the request (never
 	// from the request body). It is the identity used in a new namespace, where
 	// no device credential is presented; empty in a legacy namespace.

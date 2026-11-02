@@ -6,7 +6,7 @@ export const masterPassword = "vault-master-password";
 
 const storageOptions = {
   local: "This device only",
-  server: "Sync to the ShellHub server",
+  server: "Sync to the CloudMateHub server",
 };
 
 export function buildPrivateKey({ passphrase = "" } = {}) {

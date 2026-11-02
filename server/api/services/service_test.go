@@ -2,6 +2,9 @@ package services
 
 import (
 	"context"
+	"crypto/hkdf"
+	"crypto/sha256"
+	"crypto/x509"
 	"testing"
 
 	cachemock "github.com/shellhub-io/shellhub/pkg/cache/mocks"
@@ -51,4 +54,10 @@ func TestWithLicenseEvaluator(t *testing.T) {
 		assert.NotNil(t, svc.licenseEvaluator)
 		assert.Equal(t, evaluator, svc.licenseEvaluator)
 	})
+}
+
+func TestDeviceChallengeKeyPreservesInstalledAgentPurpose(t *testing.T) {
+	expected, err := hkdf.Key(sha256.New, x509.MarshalPKCS1PrivateKey(privateKey), nil, "shellhub-device-auth-challenge-v1", sha256.Size)
+	require.NoError(t, err)
+	assert.Equal(t, expected, deviceAuthChallengeKey(privateKey))
 }

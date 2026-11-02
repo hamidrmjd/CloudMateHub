@@ -1,6 +1,6 @@
 import { ArrowMarker, Section, SectionHeader } from "@/components";
-import { Reveal } from "@shellhub/design-system/components";
-import { C, FONT_SANS, FONT_MONO } from "@shellhub/design-system/constants";
+import { Reveal } from "@cloudmatehub/design-system/components";
+import { C, FONT_SANS, FONT_MONO } from "@cloudmatehub/design-system/constants";
 
 /**
  * Landing section drawing the agent-to-gateway architecture. The diagram is an inline SVG using
@@ -13,7 +13,7 @@ export function Architecture() {
         className="mb-4"
         eyebrow="Architecture"
         title="Okay, but how does it actually work?"
-        subtitle="Install a lightweight agent on your devices. The agent connects outbound to ShellHub's gateway. SSH in from anywhere."
+        subtitle="Install a lightweight agent on your devices. The agent connects outbound to CloudMateHub's gateway. SSH in from anywhere."
       />
 
       <Reveal className="mt-12 bg-card border border-border rounded-xl p-6 lg:p-8 overflow-x-auto">
@@ -501,8 +501,8 @@ export function Architecture() {
 
       <Reveal className="flex gap-4 mt-8 justify-center flex-wrap">
         {[
-          { n: "1", t: "Install the ShellHub agent on your device" },
-          { n: "2", t: "Agent connects outbound to ShellHub Cloud" },
+          { n: "1", t: "Install the CloudMateHub agent on your device" },
+          { n: "2", t: "Agent connects outbound to CloudMateHub Cloud" },
           { n: "3", t: "Access your devices securely from anywhere" },
         ].map((s) => (
           <div

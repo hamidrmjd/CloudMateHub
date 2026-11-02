@@ -47,7 +47,7 @@ add_fake_device() {
     [ -z "$CHALLENGE" ] && echo "Error: the server issued no device auth challenge" && exit 1
 
     {
-        ssh_string "shellhub-device-auth-v1"
+        ssh_string "cloudmatehub-device-auth-v1"
         ssh_string "$CHALLENGE"
         ssh_string "$TENANT_ID"
         ssh_string ""
@@ -74,7 +74,7 @@ add_fake_device() {
 add_agent_device() {
     TENANT_ID=$1
     TIMESTAMP=$(date +%s)
-    CONTAINER_NAME="shellhub-test-${TIMESTAMP}"
+    CONTAINER_NAME="cloudmatehub-test-${TIMESTAMP}"
     HOSTNAME="test-${TIMESTAMP}"
 
     echo "Starting real agent container: ${CONTAINER_NAME}"

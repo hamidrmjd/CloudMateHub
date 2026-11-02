@@ -21,7 +21,7 @@ type HandlerConstraint interface {
 	echo.HandlerFunc | HandlerFunc
 }
 
-// Tunnel accepts the connections a ShellHub server opens back to the device and dispatches
+// Tunnel accepts the connections a CloudMateHub server opens back to the device and dispatches
 // each to the handler registered for its protocol.
 type Tunnel[H HandlerConstraint] interface {
 	Handle(protocol string, handler H)

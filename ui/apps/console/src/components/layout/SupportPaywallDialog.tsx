@@ -1,5 +1,5 @@
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
-import { Button } from "@shellhub/design-system/primitives";
+import { Button } from "@cloudmatehub/design-system/primitives";
 import Modal from "@/components/common/Modal";
 
 const PRICING_URL = "https://www.shellhub.io/pricing";

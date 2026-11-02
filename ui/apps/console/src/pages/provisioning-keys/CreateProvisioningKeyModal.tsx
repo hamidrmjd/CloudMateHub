@@ -4,7 +4,7 @@ import {
   CheckIcon,
   TicketIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Card, WindowChrome } from "@shellhub/design-system/primitives";
+import { Button, Card, WindowChrome } from "@cloudmatehub/design-system/primitives";
 import { isSdkError } from "@/api/errors";
 import { useResetOnOpen } from "@/hooks/useResetOnOpen";
 import { buildInstallCommand } from "@/utils/installCommand";

@@ -36,8 +36,8 @@ const (
 	testClockStep              = 30 * 24 * time.Hour
 	testClockSteps             = 5
 	testClockWaitFor           = 5 * time.Minute
-	stripeTestEmailDomain      = "@shellhub.test"
-	stripeTestClockName        = "shellhub-e2e"
+	stripeTestEmailDomain      = "@cloudmatehub.test"
+	stripeTestClockName        = "cloudmatehub-e2e"
 	stripeLeftoverAge          = 2 * time.Hour
 )
 
@@ -90,9 +90,9 @@ func newBillingOwner(t *testing.T, compose *environment.DockerCompose, name stri
 
 	owner := billingOwner{username: name, tenant: uuid.Generate()}
 
-	compose.NewUser(t, name, name+stripeTestEmailDomain, ShellHubPassword)
+	compose.NewUser(t, name, name+stripeTestEmailDomain, CloudMateHubPassword)
 	compose.NewNamespace(t, name, name, owner.tenant)
-	compose.JWT(compose.AuthUser(t, name, ShellHubPassword).Token)
+	compose.JWT(compose.AuthUser(t, name, CloudMateHubPassword).Token)
 	owner.key = compose.CreateProvisioningKey(t, &requests.CreateProvisioningKey{Name: name, Mode: string(models.ProvisioningKeyModeManual)}).Key
 
 	return owner
@@ -101,7 +101,7 @@ func newBillingOwner(t *testing.T, compose *environment.DockerCompose, name stri
 func (o billingOwner) maxNamespaces(t *testing.T, compose *environment.DockerCompose) int {
 	t.Helper()
 
-	return compose.AuthUser(t, o.username, ShellHubPassword).MaxNamespaces
+	return compose.AuthUser(t, o.username, CloudMateHubPassword).MaxNamespaces
 }
 
 func billedNamespace(t *testing.T, compose *environment.DockerCompose, tenant string) responses.Namespace {
@@ -481,10 +481,10 @@ func requireAcceptRefused(t *testing.T, compose *environment.DockerCompose, devi
 func testBilledDeviceConnection(t *testing.T, ctx context.Context, compose *environment.DockerCompose) {
 	t.Helper()
 
-	compose.NewUser(t, ShellHubUsername, ShellHubUsername+stripeTestEmailDomain, ShellHubPassword)
+	compose.NewUser(t, CloudMateHubUsername, CloudMateHubUsername+stripeTestEmailDomain, CloudMateHubPassword)
 	ownNamespace(t, ctx, compose, newNamespace)
 
-	subscription := subscribe(t, compose, ShellHubNamespace)
+	subscription := subscribe(t, compose, CloudMateHubNamespace)
 	acceptDevicesIn(t, compose, requireHarnessProvisioningKey(t, compose), "connection", freeTierDevices)
 
 	signer, _ := enrollOwnerKey(t, compose)

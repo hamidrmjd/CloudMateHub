@@ -1,4 +1,4 @@
-import { cn } from "@shellhub/design-system/cn";
+import { cn } from "@cloudmatehub/design-system/cn";
 import BrandLogo from "./BrandLogo";
 
 export default function LogoMark({ full, className }: { full: boolean; className?: string }) {
