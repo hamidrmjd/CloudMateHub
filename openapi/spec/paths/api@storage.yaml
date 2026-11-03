@@ -1,0 +1,71 @@
+get:
+  operationId: getRecordingStorage
+  summary: Read instance recording storage settings
+  description: Instance administrators only. Secrets are never returned. Completed recording archives use this destination; session metadata and a recovery copy of captured output remain in PostgreSQL.
+  security:
+    - jwt: []
+  tags: [community, storage]
+  responses:
+    '200':
+      description: Redacted recording storage settings and archive health.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              config:
+                $ref: ../components/schemas/recordingStorage.yaml
+              recording_required:
+                type: boolean
+              capture_buffer:
+                type: string
+              last_error:
+                type: string
+              last_success:
+                type: string
+                format: date-time
+              pending:
+                type: integer
+              scope:
+                type: string
+            required: [config, recording_required, capture_buffer, last_error, last_success, pending, scope]
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+put:
+  operationId: updateRecordingStorage
+  summary: Verify and save the recording archive destination
+  description: Instance administrators only. Performs an owned-object write/read/delete probe before switching. S3 credentials must be submitted over trusted HTTPS. Prior destinations are retained for reading existing archives. Existing recordings are neither moved nor deleted.
+  security:
+    - jwt: []
+  tags: [community, storage]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/recordingStorage.yaml
+  responses:
+    '200':
+      description: Storage verified and settings saved.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              ok:
+                type: boolean
+    '400':
+      description: Invalid settings, insecure credential submission, or failed storage probe. The previous configuration remains in use.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml

@@ -267,12 +267,13 @@ export default function SessionDetails() {
   useLocalRecordings();
   const permissions = useRecordingPermissions(uid!, session?.recorded ?? false);
 
+  const [recordingSeat, setRecordingSeat] = useState(0);
   const [showClose, setShowClose] = useState(false);
   const [showDeleteLogs, setShowDeleteLogs] = useState(false);
   const [closeError, setCloseError] = useState<string | null>(null);
 
   const handlePlayRecording = async () => {
-    if (session) await play(session);
+    if (session) await play(session, recordingSeat);
   };
 
   const handleClose = async () => {
@@ -383,6 +384,7 @@ export default function SessionDetails() {
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
+          {permissions.available && (session.events?.seats?.length ?? 0) > 1 && <select className="rounded border border-border bg-background p-2 text-sm" aria-label="Recording channel" value={recordingSeat} onChange={(e) => setRecordingSeat(Number(e.target.value))}>{session.events?.seats?.map((seat) => <option key={seat} value={seat}>Channel {seat + 1}</option>)}</select>}
           {permissions.available && (
             <>
               <RestrictedAction action={permissions.read}>
@@ -403,7 +405,7 @@ export default function SessionDetails() {
                   aria-label="Download recording"
                   className="border border-border"
                   disabled={isDownloading}
-                  onClick={() => void download(session)}
+                  onClick={() => void download(session, recordingSeat)}
                 >
                   <ArrowDownTrayIcon className="w-4 h-4" />
                 </IconButton>

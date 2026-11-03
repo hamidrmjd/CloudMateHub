@@ -13,7 +13,6 @@ import { useTerminalStore } from "../stores/terminalStore";
 import type { TerminalSession } from "../stores/terminalStore";
 import { useVaultStore } from "../stores/vaultStore";
 import { useAuthStore } from "../stores/authStore";
-import { useNamespace } from "@/hooks/useNamespaceRequests";
 import { useNamespaceLegacy } from "@/hooks/useNamespaceLegacy";
 import { getFingerprint, validatePrivateKey } from "../utils/sshKeys";
 import {
@@ -26,8 +25,6 @@ import {
   BROWSER_KEY_QUERY_KEY,
   useBrowserKeyFingerprint,
 } from "@/hooks/useBrowserKey";
-import { isRecordingSupported } from "../utils/recordings";
-import { isEnterpriseOrCloud } from "@/env";
 import { isAlreadyEnrolled } from "../utils/sshIdentity";
 import { listSshIdentitiesOptions } from "../client";
 import BrowserEnrollDialog from "./terminal/BrowserEnrollDialog";
@@ -75,7 +72,6 @@ interface FormState {
   manualKeyEncrypted: boolean;
   passphrase: string;
   keyError: string | null;
-  recordSession: boolean;
   keyUnavailable: string | null;
 }
 
@@ -90,7 +86,7 @@ type FormAction =
   | { type: "setPassphrase"; value: string }
   | { type: "setKeyError"; value: string | null }
   | { type: "setKeyUnavailable"; value: string | null }
-  | { type: "setRecordSession"; value: boolean };
+;
 
 const initialState: FormState = {
   username: "",
@@ -103,7 +99,6 @@ const initialState: FormState = {
   manualKeyEncrypted: false,
   passphrase: "",
   keyError: null,
-  recordSession: true,
   keyUnavailable: null,
 };
 
@@ -135,8 +130,6 @@ function formReducer(state: FormState, action: FormAction): FormState {
       return { ...state, keyError: action.value };
     case "setKeyUnavailable":
       return { ...state, keyUnavailable: action.value };
-    case "setRecordSession":
-      return { ...state, recordSession: action.value };
   }
 }
 
@@ -287,14 +280,12 @@ export default function ConnectModal({
   const refreshVault = useVaultStore((s) => s.refreshStatus);
 
   const [state, dispatch] = useReducer(formReducer, initialState);
-  const recordStateId = useId();
   const [unlockOpen, setUnlockOpen] = useState(false);
   const [pendingEnroll, setPendingEnroll] = useState<{
     key: BrowserKey;
     scope: string;
     params: ConnectParams;
   } | null>(null);
-  const recordingSupported = isRecordingSupported();
 
   const tenant = useAuthStore((s) => s.tenant);
   const userId = useAuthStore((s) => s.userId);
@@ -302,9 +293,6 @@ export default function ConnectModal({
   const accountEmail = useAuthStore((s) => s.email);
   const createIdentity = useCreateSSHIdentity();
   const queryClient = useQueryClient();
-  const { namespace } = useNamespace(tenant ?? "");
-  const namespaceRecords =
-    isEnterpriseOrCloud() && (namespace?.settings?.session_record ?? false);
 
   const newNamespace = useNamespaceLegacy() !== true;
   const browserKeyFingerprint = useBrowserKeyFingerprint();
@@ -360,11 +348,7 @@ export default function ConnectModal({
   };
 
   const finalizeConnect = (params: ConnectParams) => {
-    const withRecord =
-      !namespaceRecords && state.recordSession && isRecordingSupported()
-        ? { ...params, record: true }
-        : params;
-    openTerminal({ ...withRecord, tenant: tenant ?? undefined });
+    openTerminal({ ...params, tenant: tenant ?? undefined });
     onClose();
   };
 
@@ -412,7 +396,7 @@ export default function ConnectModal({
         dispatch({
           type: "setKeyUnavailable",
           value:
-            "This browser can't hold an SSH key, so it can't open the shell here. It needs Ed25519 in WebCrypto and IndexedDB, which private windows and older browsers often block. Open in external terminal still works.",
+            "This browser can't hold an SSH key, so it can't open the shell here. Use HTTPS or localhost and a browser with Ed25519 WebCrypto and IndexedDB support. Private windows and older browsers may block key storage. Open in external terminal still works.",
         });
         return;
       }
@@ -735,36 +719,17 @@ export default function ConnectModal({
             </>
           )}
 
-          {namespaceRecords && (
+          {(
             <div className="flex items-center gap-2.5 text-xs text-text-secondary">
               <RecBadge on />
               <span>
                 This session will be recorded and stored on the server by
-                namespace policy.
+                instance policy.
               </span>
             </div>
           )}
 
-          {!namespaceRecords && recordingSupported && (
-            <div className="flex items-center gap-2.5 text-xs text-text-secondary">
-              <RecBadge
-                on={state.recordSession}
-                onToggle={() =>
-                  dispatch({
-                    type: "setRecordSession",
-                    value: !state.recordSession,
-                  })
-                }
-                label="Record this session in this browser"
-                describedBy={recordStateId}
-              />
-              <span id={recordStateId}>
-                {state.recordSession
-                  ? "This session will be recorded and stored in this browser."
-                  : "This session won't be recorded. Press REC to record it and store it in this browser."}
-              </span>
-            </div>
-          )}
+
         </form>
       </Modal>
     </>

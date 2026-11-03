@@ -112,20 +112,18 @@ func TestRecorded(t *testing.T) {
 		expectSkipped bool
 	}{
 		{
-			description:   "recording disabled for the namespace",
-			record:        false,
-			pty:           true,
-			setupMock:     func(_ *servicemocks.MockService) {},
-			expectedErr:   ErrRecordingDisabled,
-			expectSkipped: true,
+			description: "namespace opt-out cannot disable instance recording",
+			record:      false, pty: true,
+			setupMock: func(m *servicemocks.MockService) {
+				m.EXPECT().UpdateSession(mock.Anything, tenantScope, models.UID("test-uid"), mock.Anything).Return(nil).Once()
+			},
 		},
 		{
-			description:   "seat has no pty to record",
-			record:        true,
-			pty:           false,
-			setupMock:     func(_ *servicemocks.MockService) {},
-			expectedErr:   ErrRecordingNoPty,
-			expectSkipped: true,
+			description: "non-PTY commands are recorded",
+			record:      true, pty: false,
+			setupMock: func(m *servicemocks.MockService) {
+				m.EXPECT().UpdateSession(mock.Anything, tenantScope, models.UID("test-uid"), mock.Anything).Return(nil).Once()
+			},
 		},
 		{
 			description: "marking the session as recorded fails",

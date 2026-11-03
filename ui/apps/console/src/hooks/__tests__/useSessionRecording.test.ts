@@ -194,3 +194,11 @@ describe("useSessionRecording", () => {
     expect(result.current.error).toBe("Failed to download recording");
   });
 });
+
+
+it("keeps recordings from separate SSH channels in separate tabs", async () => {
+  server.use(http.get("*/api/sessions/:uid/records/:seat", ({ params }) => HttpResponse.text(`channel-${params.seat}`)));
+  const { result } = renderHook(() => useSessionRecording());
+  await act(async () => { await result.current.play(session, 0); await result.current.play(session, 1); });
+  expect(useTerminalStore.getState().recordings.map((recording) => [recording.id, recording.logs])).toEqual([["session-1", "channel-0"], ["session-1:1", "channel-1"]]);
+});

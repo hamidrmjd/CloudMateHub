@@ -28,3 +28,5 @@ See `ubuntu/README.md`. This same Linux container stack can be built on Ubuntu f
 ## Scope
 
 This baseline matches the public Community repository. Cloud/Enterprise-only services are separate upstream components and are not recreated by this checkout. Feature changes can be added after this baseline is accepted.
+
+CloudMateHub deployment uses the `cloudmatehub` Compose project and locally built `cloudmatehub/server:local`, `cloudmatehub/ui:local`, and `cloudmatehub/gateway:local` images. Core application builds require no published ShellHub application images. Standard infrastructure and WGDashboard dependencies retain their upstream attribution. Existing installations may set `CLOUDMATEHUB_VOLUME_PREFIX` and `CLOUDMATEHUB_EXISTING_VOLUMES=true` to reuse their original data volumes; preserve signing keys and never reset volumes during migration.

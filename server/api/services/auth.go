@@ -1069,6 +1069,11 @@ func (s *service) AuthUserClaims(ctx context.Context, claims *authorizer.UserCla
 	if claims.TokenVersion != user.TokenVersion {
 		return nil, NewErrAuthUnathorized(nil)
 	}
+	if user.Origin == models.UserOriginActiveDirectory || user.Origin == models.UserOriginLDAP {
+		if s.directoryVerifier == nil || s.directoryVerifier.ValidateUser(ctx, user) != nil {
+			return nil, NewErrAuthUnathorized(nil)
+		}
+	}
 
 	return user, nil
 }

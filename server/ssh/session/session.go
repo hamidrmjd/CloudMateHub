@@ -589,7 +589,7 @@ func (s *Session) authenticate(ctx context.Context) error {
 var (
 	ErrRecordingSkipped  = errors.New("session recording skipped")
 	ErrRecordingDisabled = fmt.Errorf("%w: disabled for this namespace", ErrRecordingSkipped)
-	ErrRecordingNoPty    = fmt.Errorf("%w: session has no pty", ErrRecordingSkipped)
+	ErrRecordingNoPty    = fmt.Errorf("%w: seat is unavailable or carries a binary subsystem", ErrRecordingSkipped)
 )
 
 // Recorded marks the session as recorded on the API.
@@ -599,11 +599,9 @@ var (
 func (s *Session) Recorded(seat int) error {
 	value := true
 
-	if !s.Namespace.Settings.SessionRecord {
-		return ErrRecordingDisabled
-	}
+	// CloudMateHub records all shell and exec seats, including non-PTY commands.
 
-	if seat, ok := s.seats.Get(seat); !ok || !seat.HasPty {
+	if seat, ok := s.seats.Get(seat); !ok || seat.Type == "subsystem" {
 		return ErrRecordingNoPty
 	}
 

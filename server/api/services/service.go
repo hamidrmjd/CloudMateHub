@@ -1,10 +1,12 @@
 package services
 
 import (
+	"context"
 	"crypto/hkdf"
 	"crypto/rsa"
 	"crypto/sha256"
 	"crypto/x509"
+	"github.com/shellhub-io/shellhub/pkg/models"
 	"net/netip"
 
 	"github.com/shellhub-io/shellhub/pkg/cache"
@@ -35,6 +37,7 @@ type service struct {
 	firewallEvaluator FirewallEvaluator
 	tagHolder         TagHolder
 	recordingPruner   SessionRecordingPruner
+	directoryVerifier DirectoryVerifier
 	issuer            string
 	challengeKey      []byte
 	clock             clock.Clock
@@ -217,4 +220,14 @@ func deviceAuthChallengeKey(privKey *rsa.PrivateKey) []byte {
 	}
 
 	return key
+}
+
+// DirectoryVerifier checks the identity at its owning directory.
+type DirectoryVerifier interface {
+	VerifyUser(context.Context, *models.User, string) error
+	ValidateUser(context.Context, *models.User) error
+}
+
+func WithDirectoryVerifier(v DirectoryVerifier) Option {
+	return func(s *APIService) { s.directoryVerifier = v }
 }

@@ -40,6 +40,7 @@ beforeEach(() => {
 });
 
 describe("useNavSectionTitle", () => {
+  it.each([true,false])("includes the client console in SSH navigation (legacy=%s)",async (legacy) => {serveNamespace(legacy);expect(await sectionTitle("/console")).toBe("SSH");});
   it("places Sessions under Resources in a legacy namespace", async () => {
     serveNamespace(true);
     expect(await sectionTitle("/sessions")).toBe("Resources");

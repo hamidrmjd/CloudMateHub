@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"runtime"
 	"strings"
 	"time"
@@ -28,6 +29,8 @@ import (
 	"github.com/shellhub-io/shellhub/server/api/store"
 	"github.com/shellhub-io/shellhub/server/api/store/pg"
 	pgoptions "github.com/shellhub-io/shellhub/server/api/store/pg/options"
+	"github.com/shellhub-io/shellhub/server/directory"
+	"github.com/shellhub-io/shellhub/server/recordings"
 	sshhttp "github.com/shellhub-io/shellhub/server/ssh/http"
 	"github.com/shellhub-io/shellhub/server/ssh/pkg/dialer"
 	"github.com/shellhub-io/shellhub/server/ssh/pkg/webhandoff"
@@ -317,6 +320,24 @@ func (s *Server) Setup(ctx context.Context) error {
 
 	servicesOptions = append(servicesOptions, services.WithClock(s.clock))
 
+	recordingsDir := os.Getenv("CLOUDMATEHUB_RECORDING_STATE")
+	if recordingsDir == "" {
+		recordingsDir = "/var/lib/cloudmatehub/recordings"
+	}
+	recordingStore, err := recordings.New(recordingsDir, store)
+	if err != nil {
+		return fmt.Errorf("initialize recording storage: %w", err)
+	}
+	servicesOptions = append(servicesOptions, services.WithSessionRecordingPruner(recordingStore))
+	directoryDir := os.Getenv("CLOUDMATEHUB_DIRECTORY_STATE")
+	if directoryDir == "" {
+		directoryDir = "/var/lib/cloudmatehub/directory"
+	}
+	directories, err := directory.New(directoryDir, store, cache)
+	if err != nil {
+		return fmt.Errorf("initialize directory connections: %w", err)
+	}
+	servicesOptions = append(servicesOptions, services.WithDirectoryVerifier(directories))
 	service := services.NewService(store, privKey, pubKey, cache, servicesOptions...)
 
 	s.authn = middleware.NewAuthenticator(service)
@@ -327,7 +348,12 @@ func (s *Server) Setup(ctx context.Context) error {
 		return err
 	}
 
+	directories.Register(s.router, service)
+	s.authn.AllowAnonymous("GET", "/api/auth/directories")
+	s.authn.AllowAnonymous("POST", "/api/auth/directory")
 	vpn.RegisterDirectory(s.router, store)
+	recordingStore.Register(s.router)
+	go recordingStore.Run(ctx)
 
 	s.worker = asynq.NewServer(
 		s.env.RedisURI,

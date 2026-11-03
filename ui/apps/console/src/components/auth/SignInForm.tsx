@@ -20,6 +20,7 @@ import type { LoginFormValues } from "@/pages/setup/loginResolver";
 
 interface SignInFormProps {
   redirect: string;
+  provider?: "ad" | "openldap";
   submitLabel?: string;
   onSignedIn?: () => void;
   links?: AuthLink[];
@@ -36,6 +37,7 @@ interface SignInFormProps {
  */
 export default function SignInForm({
   redirect,
+  provider,
   submitLabel = "Sign In",
   onSignedIn,
   links = [],
@@ -49,7 +51,12 @@ export default function SignInForm({
     useLockoutCountdown(lockoutEndEpoch);
 
   const { control, handleSubmit, formState } = useForm<LoginFormValues>({
-    resolver: loginResolver,
+    resolver: provider ? async (values) => {
+      const errors: Record<string, {type: string; message: string}> = {};
+      if (!values.username.trim() || values.username.length > 320) errors.username = {type:"validate",message:"Enter your directory username"};
+      if (!values.password || values.password.length > 4096) errors.password = {type:"validate",message:"Enter your directory password"};
+      return Object.keys(errors).length ? {values:{},errors} : {values:{...values,username:values.username.trim()},errors:{}};
+    } : loginResolver,
     mode: "onTouched",
     defaultValues: { username: "", password: "" },
   });
@@ -58,7 +65,9 @@ export default function SignInForm({
     setError(null);
     setLockoutEndEpoch(null);
     try {
-      await login(values.username, values.password);
+      if (provider && window.location.protocol !== "https:") { setError("Use trusted HTTPS for directory sign-in."); return; }
+      if (provider) await login(values.username, values.password, provider);
+      else await login(values.username, values.password);
 
       if (useAuthStore.getState().mfaToken) {
         if (onSignedIn) {
@@ -180,7 +189,7 @@ export default function SignInForm({
             fullWidth
             type="submit"
             loading={loading}
-            disabled={!formState.isValid || loading}
+            disabled={!formState.isValid || loading || (!!provider && window.location.protocol !== "https:")}
           >
             {loading ? "Authenticating..." : submitLabel}
           </Button>

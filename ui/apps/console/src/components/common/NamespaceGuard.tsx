@@ -4,6 +4,7 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { Button, Spinner } from "@cloudmatehub/design-system/primitives";
 import { useInitRole, useNamespaces } from "@/hooks/useNamespaceRequests";
 import { useConnectivityStore } from "@/stores/connectivityStore";
+import { useAuthStore } from "@/stores/authStore";
 import { isAdminPath } from "@/utils/adminRoute";
 import { isAccountPath } from "@/utils/accountRoute";
 import { isPreferencesPath } from "@/utils/preferencesRoute";
@@ -54,6 +55,7 @@ export default function NamespaceGuard() {
   const { namespaces, isLoading, error, refetch } = useNamespaces();
   const apiReachable = useConnectivityStore((s) => s.apiReachable);
   const { pathname } = useLocation();
+  const isAdmin = useAuthStore((s) => s.isAdmin);
 
   useEffect(() => {
     if (apiReachable && error) {
@@ -61,7 +63,7 @@ export default function NamespaceGuard() {
     }
   }, [apiReachable, error, refetch]);
 
-  if (isAdminPath(pathname)) return <Outlet />;
+  if (isAdminPath(pathname) || (isAdmin && (pathname === "/users" || pathname === "/settings/directories"))) return <Outlet />;
 
   if (error && !isLoading) {
     const apiDown = !apiReachable;

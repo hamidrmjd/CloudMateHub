@@ -5,9 +5,9 @@ import { useTerminalStore } from "@/stores/terminalStore";
 import { sessionTitle } from "@/utils/session";
 import { castFilename, readRecording, saveRecording } from "@/utils/recordings";
 
-async function fetchRecording(uid: string): Promise<string> {
+async function fetchRecording(uid: string, seat = 0): Promise<string> {
   const { data } = await getSessionRecord({
-    path: { uid, seat: 0 },
+    path: { uid, seat },
     parseAs: "text",
     throwOnError: true,
   });
@@ -16,9 +16,9 @@ async function fetchRecording(uid: string): Promise<string> {
   return recording;
 }
 
-function readSessionRecording(uid: string): Promise<string> {
-  const local = heldByBrowser(uid)(useRecordingsStore.getState());
-  return local ? readRecording(local) : fetchRecording(uid);
+function readSessionRecording(uid: string, seat = 0): Promise<string> {
+  const local = seat === 0 ? heldByBrowser(uid)(useRecordingsStore.getState()) : undefined;
+  return local ? readRecording(local) : fetchRecording(uid, seat);
 }
 
 function recordingFilename(session: Session): string {
@@ -40,21 +40,22 @@ export function useSessionRecording() {
   const [isDownloading, setIsDownloading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const play = async (session: Session): Promise<boolean> => {
+  const play = async (session: Session, seat = 0): Promise<boolean> => {
     const terminals = useTerminalStore.getState();
-    if (terminals.recordings.some((r) => r.id === session.uid)) {
+    const recordingId = seat === 0 ? session.uid : `${session.uid}:${seat}`;
+    if (terminals.recordings.some((r) => r.id === recordingId)) {
       setError(null);
-      terminals.showRecording(session.uid);
+      terminals.showRecording(recordingId);
       return true;
     }
 
     setIsLoading(true);
     setError(null);
     try {
-      const logs = await readSessionRecording(session.uid);
+      const logs = await readSessionRecording(session.uid, seat);
       useTerminalStore.getState().openRecording({
-        id: session.uid,
-        title: sessionTitle(session),
+        id: recordingId,
+        title: seat === 0 ? sessionTitle(session) : `${sessionTitle(session)} · Channel ${seat + 1}`,
         tenant: session.tenant_id,
         logs,
         filename: recordingFilename(session),
@@ -69,12 +70,12 @@ export function useSessionRecording() {
     }
   };
 
-  const download = async (session: Session): Promise<void> => {
+  const download = async (session: Session, seat = 0): Promise<void> => {
     setIsDownloading(true);
     setError(null);
     try {
       saveRecording(
-        await readSessionRecording(session.uid),
+        await readSessionRecording(session.uid, seat),
         recordingFilename(session),
       );
     } catch {

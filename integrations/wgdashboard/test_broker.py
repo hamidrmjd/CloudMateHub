@@ -97,6 +97,45 @@ class BrokerTests(unittest.TestCase):
         self.get.side_effect = lambda *a, **k: Reply({'id': ADMIN, 'admin': False})
         self.assertEqual(self.client.get(url, headers={'Sec-Fetch-Site': 'same-origin'}).status_code, 403)
 
+    def test_embedded_requests_work_without_fetch_metadata(self):
+        self.client.post('/api/vpn/session', headers=self.admin)
+        response = self.client.get('/api/vpn/dashboard/', headers={
+            'Referer': 'http://localhost/vpn/wireguard'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers['Referrer-Policy'], 'same-origin')
+        # Embedded fetches have no Origin header in some browsers. The
+        # same-origin document referrer remains proof even without Sec-Fetch-Site.
+        headers = {'Referer': 'http://localhost/api/vpn/dashboard/'}
+        self.assertEqual(self.client.get('/api/vpn/dashboard/api/validateAuthentication',
+                                         headers=headers).json['status'], True)
+        self.assertEqual(self.client.post('/api/vpn/dashboard/api/addWireguardConfiguration',
+                                          headers=headers, json={'ConfigurationName': 'fixture'}).status_code, 200)
+        self.assertEqual(self.client.get('/api/vpn/dashboard/api/protocolsEnabled',
+                                         headers={'Referer': 'https://attacker.example/'}).status_code, 403)
+        self.assertEqual(self.client.post('/api/vpn/dashboard/api/addWireguardConfiguration',
+                                          headers={'Referer': 'http://localhost.attacker.example/'},
+                                          json={}).status_code, 403)
+        self.assertEqual(self.client.post('/api/vpn/dashboard/api/addWireguardConfiguration',
+                                          headers={'Referer': 'https://localhost/'}, json={}).status_code, 403)
+
+    def test_native_login_is_replaced_only_for_current_hub_admins(self):
+        path = '/api/vpn/dashboard/api/requireAuthentication'
+        self.assertEqual(self.client.get(path).status_code, 403)
+        self.assertEqual(self.client.get(path, headers=self.headers).status_code, 403)
+        self.assertEqual(self.client.get(path, headers=self.admin).json, {'status': True, 'data': False})
+        self.upstream.assert_not_called()
+
+    def test_embedded_navigation_styles_are_admin_only(self):
+        path = '/api/vpn/dashboard/embedded.css'
+        self.assertEqual(self.client.get(path, headers=self.headers).status_code, 403)
+        response = self.client.get(path, headers=self.admin)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'.sidebar', response.data)
+
+    def test_https_session_cookie_is_secure(self):
+        response = self.client.post('/api/vpn/session', headers={**self.admin, 'X-Forwarded-Proto': 'https'})
+        self.assertIn('Secure;', response.headers['Set-Cookie'])
+
     def test_expired_session_is_refused(self):
         self.app.config['SESSION_TTL'] = -1
         self.client.post('/api/vpn/session', headers=self.admin)

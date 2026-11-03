@@ -66,3 +66,13 @@ func NamespaceDeviceLimit(ctx context.Context, tenantID string) (models.Namespac
 
 	return held.limit, true
 }
+
+type userOriginKey struct{}
+
+func WithUserOrigin(ctx context.Context, origin models.UserOrigin) context.Context {
+	return context.WithValue(ctx, userOriginKey{}, origin)
+}
+func UserOrigin(ctx context.Context) models.UserOrigin {
+	origin, _ := ctx.Value(userOriginKey{}).(models.UserOrigin)
+	return origin
+}

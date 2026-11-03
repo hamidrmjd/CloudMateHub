@@ -10,7 +10,6 @@ import {
   LockClosedIcon,
   LockOpenIcon,
   ShieldCheckIcon,
-  VideoCameraIcon,
 } from "@heroicons/react/24/outline";
 import { Button } from "@cloudmatehub/design-system/primitives";
 import { cn } from "@cloudmatehub/design-system/cn";
@@ -32,14 +31,13 @@ import {
   useTerminalThemeStore,
   type AnsiColorName,
 } from "@/stores/terminalThemeStore";
-import { isEnterpriseOrCloud } from "@/env";
+
 import { readableOn } from "@/utils/color";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import InputField from "@/components/common/fields/InputField";
 import FormModal from "@/components/common/FormModal";
 import Modal from "@/components/common/Modal";
 import PageLoader from "@/components/common/PageLoader";
-import RecBadge from "@/components/sessions/RecBadge";
 import StatePill from "@/components/common/StatePill";
 import SettingsSection from "@/components/settings/SettingsSection";
 import SavedMark from "@/components/settings/SavedMark";
@@ -215,39 +213,6 @@ function NamespaceModelCard({ ns }: { ns: Namespace }) {
   );
 }
 
-function RecordingCard({ ns }: { ns: Namespace }) {
-  const editNs = useEditNamespace();
-  const canChange = useHasPermission("namespace:updateSessionRecording");
-  const { error, saved, run } = useSettingSave(
-    "Couldn't change session recording. Try again.",
-  );
-  const recording = ns.settings?.session_record ?? false;
-
-  return (
-    <SettingsSwitchCard
-      icon={<VideoCameraIcon />}
-      title="Session recording"
-      description="Record every SSH session on the server, for audit and playback."
-      error={error}
-      saved={saved}
-      control={
-        <RecBadge
-          on={recording}
-          label="Session recording"
-          disabled={!canChange || editNs.isPending}
-          onToggle={() =>
-            void run(() =>
-              editNs.mutateAsync({
-                path: { tenant: ns.tenant_id },
-                body: { settings: { session_record: !recording } },
-              }),
-            )
-          }
-        />
-      }
-    />
-  );
-}
 
 function UnsignedWarning({
   unsigned,
@@ -598,7 +563,7 @@ export default function SshSettings() {
       description="How logins to this namespace's devices are authorized and recorded."
     >
       <NamespaceModelCard ns={ns} />
-      {isEnterpriseOrCloud() && <RecordingCard ns={ns} />}
+      <p className="rounded border border-border p-4 text-sm">Every SSH shell and command connection is recorded on the server. Instance administrators manage the destination in Settings → Storage &amp; Recordings.</p>
       <EnforceSignaturesCard ns={ns} />
       <BannerCard ns={ns} />
     </SettingsSection>

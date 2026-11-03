@@ -37,6 +37,8 @@ export default function Login() {
     local?: boolean;
     saml?: boolean;
   } | null>(null);
+  const [directories, setDirectories] = useState<{kind: "ad" | "openldap"; label: string}[]>([]);
+  const [provider, setProvider] = useState<"local" | "ad" | "openldap">("local");
   const [ssoLoading, setSsoLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -53,6 +55,7 @@ export default function Login() {
   }, [signOut]);
 
   useEffect(() => {
+    void fetch("/api/auth/directories", { cache: "no-store" }).then((r) => r.ok ? r.json() : []).then(setDirectories).catch(() => setDirectories([]));
     void getInfo()
       .then(({ data }) => setAuthentication(data?.authentication ?? null))
       .catch(() => setAuthentication(null));
@@ -147,8 +150,12 @@ export default function Login() {
         </div>
       )}
 
-      {showLocalForm && (
+      {directories.length > 0 && <label className="block mb-5 text-sm">Account type<select aria-label="Account type" className="block mt-1 w-full rounded border border-border bg-background px-3 py-2" value={provider} onChange={(e) => setProvider(e.target.value as typeof provider)}><option value="local">Local</option>{directories.map((d) => <option key={d.kind} value={d.kind}>{d.label}</option>)}</select></label>}
+      {provider !== "local" && window.location.protocol !== "https:" && <Callout variant="warning">Use trusted HTTPS to sign in with a directory account.</Callout>}
+      {(showLocalForm || provider !== "local") && (
         <SignInForm
+          key={provider}
+          provider={provider === "local" ? undefined : provider}
           redirect={getSafeRedirect(new URLSearchParams(location.search))}
         />
       )}

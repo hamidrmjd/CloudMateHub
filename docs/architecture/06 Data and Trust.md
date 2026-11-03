@@ -5,6 +5,8 @@
 | State | Location | Persistence / handling |
 | --- | --- | --- |
 | Application records | PostgreSQL | Named `shellhub-custom_postgres-data` volume in the default project |
+| Recording archive settings and keys | Separate `recording-state` volume | Encrypted destinations plus master key and per-seat manifests; protected backups required |
+| Recording archives | `recording-files` local volume, mounted NFS, or S3 | Admin-selected destination; PostgreSQL retains captured output as a recovery copy |
 | Cache and queued jobs | Valkey (`redis` service) | Current Compose disables snapshot/AOF persistence; not the durable source of truth |
 | Active connection/session registry | Server memory | Runtime state; recreated after process restart |
 | Gateway certificates / state | Gateway `/data` | Named `shellhub-custom_gateway-data` volume; TLS currently disabled locally |
@@ -32,3 +34,9 @@ Never use volume deletion, database reset, key rotation or blanket browser-stora
 The durable project instruction is in repository `AGENTS.md`; the detailed rule is `docs/architecture/TEST-DATA-POLICY.md`.
 
 Related: [03 Server and Domain](03%20Server%20and%20Domain.md), [07 Development and Deployment](07%20Development%20and%20Deployment.md).
+
+HTTPS certificate revisions, encrypted TLS keys, the encryption master key, the private recovery key, and last-good configuration live in a separate `https-state` volume. Back up the whole volume privately; never put its keys or recovery links in Git or this vault. Certificate restore changes only HTTPS state, not the application database. See [09 HTTPS and Recovery](09%20HTTPS%20and%20Recovery.md).
+
+Server-side SSH recording and admin-selected local/NFS/S3 archive storage are described in [[10 Session Recording and Storage]]. PostgreSQL retains a recovery copy; destination changes preserve existing recordings.
+
+Local, Active Directory and OpenLDAP account trust and administrator user management are described in [[11 Directory Authentication and Users]]. Bind credentials are encrypted in the separate `directory-state` volume. User passwords are not persisted. Directory accounts use immutable external identifiers and are never merged into local accounts by email. Directory disabling invalidates token checks without deleting accounts or namespaces.

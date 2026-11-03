@@ -73,3 +73,17 @@ Do not disable upstream authentication/API keys, alter its mounted URL prefix, d
 `test_broker.py` covers anonymous/forged credentials, non-admin denials, per-user filtering and IDOR, assignment validation, duplicate ownership, cookie CSRF/expiry/logout, role revocation, credential stripping and identity-service failure. Its temporary SQLite/key fixtures are removed with TemporaryDirectory teardown.
 
 UI checks cover non-admin views, admin iframe initialization, and fetching private content only when requested. Real accounts/devices/settings/keys are retained. No persistent test users or demo peers should remain after feature checks. Removing real application data or Docker volumes is not the cleanup procedure.
+
+## Hub sign-in and integrated sections
+
+Hub instance-admin authentication is the only browser sign-in for WireGuard management. The broker still revalidates Hub credentials on every request; ordinary members can list/download only their own assigned configurations. The upstream service retains internal API-key authentication. Its embedded frontend removes its separate sign-in route and reports session/service failures to Hub instead. Native `requireAuthentication` is answered as false only after the broker has verified a current Hub admin.
+
+WireGuard exposes Interfaces, Add interface, Restore, WG clients, Peer defaults, Interface settings, Webhooks, and User assignments as Hub tabs. Native navigation is hidden in the embedded editor. Monitoring/system-status/diagnostic navigation is excluded from these tabs and remains outside this management view. Native WG clients remain separate from Hub member assignments. The pinned upstream frontend adaptation fails the image build if the expected login implementation changes.
+
+Validation: production builds, TypeScript checking, five role/navigation UI tests, 21 broker tests, and a syntax check of the patched native router passed. All deployed containers passed their existing health checks. No persistent test users, peers, assignments, or configurations were created; temporary broker fixture databases were removed by test teardown. No production cleanup was required. An authenticated native-browser visual check could not be completed because the browser retained a stale page during navigation; no claim of full browser end-to-end verification is made.
+
+## Embedded creation compatibility repair (2026-11-03)
+
+The broker uses `Referrer-Policy: same-origin` for the embedded editor. Its native fetches can therefore prove same-origin access using Referer in browsers that omit Origin and Fetch Metadata headers. A previous `no-referrer` policy caused authenticated administration to fail with Forbidden and prevented creation. Cross-origin referrers still receive no identifying URL; outside/lookalike/wrong-scheme origins remain refused. Current Hub administrator validation and per-user configuration ownership are unchanged.
+
+Twenty-three broker tests passed. The live signed-in in-app browser now loads Interfaces and Add interface without a separate login or session error. An isolated, network-disabled container with temporary filesystems verified actual interface creation, peer creation, client configuration download and supported API teardown. The explicitly owned test container and disposable key were removed. No production fixtures were created. Real tunnel reachability remains a separate deployment requirement.

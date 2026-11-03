@@ -15,6 +15,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { getConfig, isEnterpriseOrCloud } from "@/env";
 import { useNamespaceLegacy } from "@/hooks/useNamespaceLegacy";
+import { useAuthStore } from "@/stores/authStore";
 import { navIcon } from "./SidebarShell";
 
 /**
@@ -51,7 +52,7 @@ export function navSectionTitle(
   )?.title;
 }
 
-function buildSections(isNewNamespace: boolean): NavSection[] {
+function buildSections(isNewNamespace: boolean, isAdmin = false): NavSection[] {
   const config = getConfig();
 
   const resources: NavItem[] = [
@@ -121,6 +122,8 @@ function buildSections(isNewNamespace: boolean): NavSection[] {
         },
       ];
 
+  security.unshift({to:"/console",label:"Browser Console",icon:<CommandLineIcon className={navIcon} />});
+
   return [
     {
       items: [
@@ -146,6 +149,7 @@ function buildSections(isNewNamespace: boolean): NavSection[] {
     {
       title: "Management",
       items: [
+        ...(isAdmin ? [{to:"/users", label:"User Management",icon:<UsersIcon className={navIcon} />}] : []),
         {
           to: "/team",
           label: "Team",
@@ -166,7 +170,7 @@ function buildSections(isNewNamespace: boolean): NavSection[] {
  * pages exist, so the result depends on the namespace settings.
  */
 export function useNavSections(): NavSection[] {
-  return buildSections(useNamespaceLegacy() !== true);
+  return buildSections(useNamespaceLegacy() !== true, useAuthStore((s) => s.isAdmin));
 }
 
 /**

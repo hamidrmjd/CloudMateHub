@@ -60,9 +60,6 @@ function renderModal(sshid = "dev.rustagent@localhost") {
 const externalLink = () =>
   screen.queryByRole("link", { name: /open in external terminal/i });
 
-const recSwitch = () =>
-  screen.findByRole("switch", { name: /record this session in this browser/i });
-
 describe("ConnectModal", () => {
   beforeEach(() => {
     setEdition("community");
@@ -114,44 +111,10 @@ describe("ConnectModal", () => {
   });
 
   describe("recording", () => {
-    it("records in this browser by default", async () => {
-      renderModal();
-
-      expect(await recSwitch()).toHaveAttribute("aria-checked", "true");
-    });
-
-    it("stops recording in this browser when REC is switched off", async () => {
-      const user = userEvent.setup();
-      renderModal();
-      const rec = await recSwitch();
-
-      await user.click(rec);
-
-      expect(rec).toHaveAttribute("aria-checked", "false");
-      expect(screen.getByText(/won't be recorded/i)).toBeInTheDocument();
-    });
-
-    it("states the server recording and offers no switch when the namespace records", async () => {
-      setEdition("enterprise");
-      serveConnectApi(true, true);
-      server.use(
-        http.get("*/api/vault", () => new HttpResponse(null, { status: 404 })),
-      );
-      renderModal();
-
-      expect(
-        await screen.findByText(/recorded and stored on the server/i),
-      ).toBeInTheDocument();
-      expect(screen.queryByRole("switch")).not.toBeInTheDocument();
-    });
-
-    it("records in this browser on community, where the server never records", async () => {
-      serveConnectApi(false, true);
-      renderModal();
-
-      await screen.findByRole("group", { name: "Identity" });
-
-      expect(await recSwitch()).toHaveAttribute("aria-checked", "true");
+    it.each(["community", "enterprise"] as const)("requires server recording on %s", async (edition) => {
+      setEdition(edition); renderModal();
+      expect(await screen.findByText(/recorded and stored on the server/i)).toBeInTheDocument();
+      expect(screen.queryByRole("switch", { name: /record this session/i })).not.toBeInTheDocument();
     });
   });
 

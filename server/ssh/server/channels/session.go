@@ -313,7 +313,11 @@ func sessionChannel(ctx gliderssh.Context, sess Session, newChan gossh.NewChanne
 				case ExecRequestType, SubsystemRequestType:
 					session.Event[models.SSHCommand](sess, req.Type, req.Payload, seat)
 
-					sess.SetSeatType(seat, session.SeatTypeExec)
+					if req.Type == SubsystemRequestType {
+						sess.SetSeatType(seat, "subsystem")
+					} else {
+						sess.SetSeatType(seat, session.SeatTypeExec)
+					}
 				case PtyRequestType:
 					var pty models.SSHPty
 

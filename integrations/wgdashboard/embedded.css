@@ -1,0 +1,4 @@
+/* Hub supplies the management tabs; keep the native editor and dialogs. */
+.main > .row > :has(.sidebar) { display: none !important; }
+.main > .row > main { width: 100% !important; flex: 0 0 100% !important; }
+.main { padding: 0 !important; }

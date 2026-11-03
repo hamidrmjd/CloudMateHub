@@ -250,6 +250,10 @@ paths:
     $ref: paths/api@setup.yaml
   /api/sessions/{uid}/close:
     $ref: paths/api@sessions@{uid}@close.yaml
+  /api/storage:
+    $ref: paths/api@storage.yaml
+  /api/storage/test:
+    $ref: paths/api@storage@test.yaml
   /api/sessions/{uid}/records/{seat}:
     $ref: paths/api@sessions@{uid}@records@{seat}.yaml
   /api/firewall/rules:

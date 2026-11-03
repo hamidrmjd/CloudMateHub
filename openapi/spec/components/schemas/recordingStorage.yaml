@@ -1,0 +1,33 @@
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+  kind:
+    type: string
+    enum: [local, nfs, s3]
+  path:
+    type: string
+    description: Container path beneath /recordings for local storage or /mnt/recordings for an already-mounted NFS volume.
+  endpoint:
+    type: string
+    description: HTTPS origin for an S3-compatible service. Defaults to the regional Amazon S3 endpoint.
+  region:
+    type: string
+  bucket:
+    type: string
+  prefix:
+    type: string
+  access_key:
+    type: string
+    writeOnly: true
+  secret_key:
+    type: string
+    writeOnly: true
+  session_token:
+    type: string
+    writeOnly: true
+  credentials_set:
+    type: boolean
+    readOnly: true
+required: [kind]

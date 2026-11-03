@@ -30,6 +30,7 @@ type fakeSession struct {
 	clientChanErr error
 	recordedErr   error
 
+	outputs  []string
 	calls    []string
 	dropped  []int
 	forwards chan gossh.NewChannel
@@ -130,9 +131,18 @@ func (f *fakeSession) CloseAgentWrite(int) error {
 	return f.agentChannel.CloseWrite()
 }
 
-func (f *fakeSession) Recorded(int) error            { return f.recordedErr }
-func (f *fakeSession) Announce(gossh.Channel) error  { return nil }
-func (f *fakeSession) Event(string, any, int)        { f.record("Event") }
+func (f *fakeSession) Recorded(int) error           { return f.recordedErr }
+func (f *fakeSession) Announce(gossh.Channel) error { return nil }
+func (f *fakeSession) Event(kind string, data any, _ int) {
+	f.record("Event")
+	if kind == PtyOutputEventType {
+		if output, ok := data.(*models.SSHPtyOutput); ok {
+			f.mu.Lock()
+			f.outputs = append(f.outputs, output.Output)
+			f.mu.Unlock()
+		}
+	}
+}
 func (f *fakeSession) Seat(int) (session.Seat, bool) { return session.Seat{}, true }
 func (f *fakeSession) SetSeatPty(int, bool)          { f.record("SetSeatPty") }
 func (f *fakeSession) SetSeatType(int, string)       { f.record("SetSeatType") }

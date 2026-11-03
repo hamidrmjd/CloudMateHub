@@ -409,6 +409,7 @@ function ReauthFactor({
   const mfaEnabled = useAuthStore((s) => s.mfaEnabled);
   const origin = useAuthStore((s) => s.origin);
   const isSso = origin === "saml";
+  const directoryNeedsHttps = (origin === "ad" || origin === "ldap") && window.location.protocol !== "https:";
   const otp = useOtpInput(6);
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -467,6 +468,7 @@ function ReauthFactor({
 
   const submit = async () => {
     if (!canSubmit || submitting) return;
+    if (directoryNeedsHttps) { setError("Use trusted HTTPS before entering your directory password."); return; }
     setSubmitting(true);
     setError(null);
     try {

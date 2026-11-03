@@ -77,7 +77,7 @@ func pipe(sess Session, client gossh.Channel, agent gossh.Channel, seat int, don
 		defer client.CloseWrite() //nolint:errcheck
 
 		writers := []io.Writer{client}
-		if sess.Edition().IsEnterpriseOrCloud() {
+		{
 			recorder, err := NewRecorder(sess, seat)
 			if err != nil {
 				log.WithError(err).
@@ -122,7 +122,7 @@ func pipe(sess Session, client gossh.Channel, agent gossh.Channel, seat int, don
 		go func() {
 			defer fromAgent.Done()
 
-			if _, err := io.Copy(client.Stderr(), &deadReadGuard{r: agent.Stderr()}); err != nil && !errors.Is(err, io.EOF) {
+			if _, err := io.Copy(io.MultiWriter(append([]io.Writer{client.Stderr()}, writers[1:]...)...), &deadReadGuard{r: agent.Stderr()}); err != nil && !errors.Is(err, io.EOF) {
 				log.WithError(err).Error("failed on coping stderr from agent to client")
 
 				_ = agent.Close()

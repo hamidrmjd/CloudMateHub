@@ -1,0 +1,36 @@
+post:
+  operationId: testRecordingStorage
+  summary: Test recording storage without changing settings
+  description: Instance administrators only. Creates an exact owned probe object, verifies read-back, and deletes it. The ownership manifest is retained if cleanup fails. S3 credentials require trusted HTTPS.
+  security:
+    - jwt: []
+  tags: [community, storage]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/recordingStorage.yaml
+  responses:
+    '200':
+      description: Write, read and cleanup succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              ok:
+                type: boolean
+    '400':
+      description: Settings or verification failed.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml

@@ -50,3 +50,11 @@ The server receives the public HTTP and HTTPS ports from Compose. `Server.consol
 The keyboard-interactive challenge titles visible in native SSH are `cloudmatehub-approval` and `cloudmatehub-approval-denied`. The web terminal bridge reads the same constants within the server binary, so rebuilding the server updates both paths together. This changes prompt titles, not the device authentication signing format.
 
 Post-login welcome text comes from `Namespace.Settings.ConnectionAnnouncement` in PostgreSQL, read by `Session.Announce`. `envs.AnnouncementFor` supplies the default only when creating namespaces. Rebranding an existing installation therefore requires an explicit, scoped saved-announcement update as well as changing the default. Custom announcements must be preserved unless their replacement is requested.
+
+The managed deployment now places an independent HTTPS controller before Caddy. Public ports 8080/8443 belong to the controller; Caddy remains internal. Candidate confirmation uses 9443, and recovery is host-loopback-only on 9080. See [09 HTTPS and Recovery](09%20HTTPS%20and%20Recovery.md).
+
+Server-side SSH recording and admin-selected local/NFS/S3 archive storage are described in [[10 Session Recording and Storage]]. PostgreSQL retains a recovery copy; destination changes preserve existing recordings.
+
+## Client console entry point
+
+Clients discover devices under SSH → Browser Console (`/console`). Accepted-device listing stays namespace scoped and the page reuses the existing browser SSH connection dialog. The existing authenticated POST `/ws/ssh/session` enforces DeviceConnect and namespace/device matching; its single-use WebSocket handoff opens `/ws/ssh`. Existing SSH identity/access-policy checks and shared recording apply. No new anonymous API, direct arbitrary-host SSH gateway or elevated member role is introduced. Current-namespace terminals can be resumed from the page without creating a second connection. HTTPS is needed for browser-key identities on non-localhost addresses.

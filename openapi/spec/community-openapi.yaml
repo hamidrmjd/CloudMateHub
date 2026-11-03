@@ -58,6 +58,8 @@ tags:
     description: Requests executed internally by CloudMateHub server.
   - name: external
     description: Requests executed by the CloudMateHub user.
+  - name: storage
+    description: Instance administrator recording storage settings.
   - name: system
     description: Routes related to running instance.
   - name: provisioning-keys
@@ -138,6 +140,12 @@ paths:
     $ref: paths/api@sessions.yaml
   /api/sessions/{uid}:
     $ref: paths/api@sessions@{uid}.yaml
+  /api/storage:
+    $ref: paths/api@storage.yaml
+  /api/storage/test:
+    $ref: paths/api@storage@test.yaml
+  /api/sessions/{uid}/records/{seat}:
+    $ref: paths/api@sessions@{uid}@records@{seat}.yaml
   /api/sessions/{uid}/close:
     $ref: paths/api@sessions@{uid}@close.yaml
   /api/sshkeys/public-keys:

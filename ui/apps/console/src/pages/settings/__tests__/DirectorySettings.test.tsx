@@ -1,0 +1,15 @@
+import { beforeEach, expect, it, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { createTestWrapper } from "@/tests/wrapper";
+import DirectorySettings from "../DirectorySettings";
+const state = vi.hoisted(() => ({ isAdmin: true, userId: "directory-fixture-admin", token: "fixture-token" }));
+vi.mock("@/stores/authStore", () => ({ useAuthStore: Object.assign((selector: (s: typeof state) => unknown) => selector(state), { getState: () => state }) }));
+const profiles = ["ad", "openldap"].map((kind) => ({kind,id:`fixture-${kind}`,label:kind === "ad" ? "Active Directory" : "OpenLDAP",enabled:true,url:`ldaps://${kind}.example.com`,base_dn:"dc=example,dc=com",bind_dn:"cn=reader,dc=example,dc=com",password_set:true,ca_pem:"",user_filter:"(uid={username})",username_attribute:"uid",id_attribute:"entryUUID",email_attribute:"mail",name_attribute:"cn",required_group_dn:"",provision_accounts:false}));
+beforeEach(() => { state.isAdmin = true; vi.stubGlobal("fetch",vi.fn(async () => new Response(JSON.stringify(profiles), {status:200}))); });
+function mount() {render(<MemoryRouter initialEntries={["/settings/directories"]}><Routes><Route path="/settings/directories" element={<DirectorySettings />} /><Route path="/settings/general" element={<div>General settings</div>} /></Routes></MemoryRouter>, {wrapper:createTestWrapper()});}
+it("denies members without fetching connection settings",() => {state.isAdmin=false;mount();expect(screen.getByText("General settings")).toBeInTheDocument();expect(fetch).not.toHaveBeenCalled();});
+it("separates simultaneous AD and OpenLDAP profiles",async () => {mount();expect(await screen.findByDisplayValue("ldaps://ad.example.com")).toBeInTheDocument();await userEvent.click(screen.getByRole("tab",{name:"OpenLDAP"}));expect(await screen.findByDisplayValue("ldaps://openldap.example.com")).toBeInTheDocument();expect(screen.getByRole("link",{name:"User Management"})).toHaveAttribute("href","/users");});
+it("blocks directory secrets and tests on public HTTP",async () => {mount();await screen.findByDisplayValue("ldaps://ad.example.com");expect(screen.getByLabelText("Service account password")).toBeDisabled();expect(screen.getByRole("button",{name:"Test connection"})).toBeDisabled();expect(screen.getByRole("button",{name:"Verify and enable"})).toBeDisabled();});
+it("can disable a connection without sending a stored password",async () => {mount();await screen.findByDisplayValue("ldaps://ad.example.com");await userEvent.click(screen.getByRole("button",{name:"Disable connection"}));expect(await screen.findByText(/Directory sign-in disabled/)).toBeInTheDocument();const calls=vi.mocked(fetch).mock.calls;const save=calls.find(([,opts])=>opts?.method==="PUT");expect(save?.[0]).toBe("/api/directories/ad");expect(JSON.parse(String(save?.[1]?.body))).toMatchObject({enabled:false});expect(JSON.parse(String(save?.[1]?.body)).bind_password).toBeUndefined();});

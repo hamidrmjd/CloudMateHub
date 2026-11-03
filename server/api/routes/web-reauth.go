@@ -5,6 +5,7 @@ import (
 
 	"github.com/shellhub-io/shellhub/pkg/api/requests"
 	"github.com/shellhub-io/shellhub/pkg/models"
+	"github.com/shellhub-io/shellhub/server/api/pkg/authctx"
 	"github.com/shellhub-io/shellhub/server/api/pkg/gateway"
 	errs "github.com/shellhub-io/shellhub/server/api/routes/errors"
 )
@@ -18,6 +19,11 @@ const WebReauthURL = "/web-terminal/reauth"
 // refreshes the presented identity's re-auth window. Identity comes from the
 // gateway-injected X-ID/X-Tenant-ID, never the body.
 func (h *Handler) WebReauthVerify(c *gateway.Context) error {
+	origin := authctx.UserOrigin(c.Ctx())
+	if (origin == models.UserOriginActiveDirectory || origin == models.UserOriginLDAP) && c.Request().TLS == nil && c.Request().Header.Get("X-Forwarded-Proto") != "https" {
+		return c.JSON(400, map[string]string{"error": "Trusted HTTPS is required for directory password verification"})
+	}
+
 	req := new(requests.WebReauthVerify)
 	if err := c.Bind(req); err != nil {
 		return err

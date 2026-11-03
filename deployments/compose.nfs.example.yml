@@ -1,0 +1,14 @@
+# Set CLOUDMATEHUB_STORAGE_COMPOSE_FILE=deployments/compose.nfs.example.yml
+# in .env.override, along with the NFS server/export values below.
+# Then select NFS and /mnt/recordings in Settings > Storage & Recordings.
+services:
+  server:
+    volumes:
+      - recording-nfs:/mnt/recordings
+volumes:
+  recording-nfs:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=${CLOUDMATEHUB_NFS_SERVER:?Set the NFS server},nfsvers=4,rw,hard
+      device: ':${CLOUDMATEHUB_NFS_EXPORT:?Set the NFS export path}'

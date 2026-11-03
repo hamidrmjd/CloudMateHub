@@ -1,7 +1,7 @@
-name: shellhub-custom
+name: cloudmatehub
 services:
   server:
-    image: shellhub-custom/server:v0.27.0
+    image: cloudmatehub/server:local
     build:
       context: .
       dockerfile: deployments/server.Dockerfile
@@ -18,8 +18,12 @@ services:
         EDITION: community
     ports: !override
       - "${SHELLHUB_BIND_ADDRESS}:${SHELLHUB_SSH_PORT}:2222"
+    volumes:
+      - directory-state:/var/lib/cloudmatehub/directory
+      - recording-state:/var/lib/cloudmatehub/recordings
+      - recording-files:/recordings
   ui:
-    image: shellhub-custom/ui:v0.27.0
+    image: cloudmatehub/ui:local
     build:
       context: .
       dockerfile: ui/Dockerfile
@@ -30,7 +34,7 @@ services:
         SWS_VERSION: ${SWS_VERSION}
         REDOCLY_VERSION: ${REDOCLY_VERSION}
   gateway:
-    image: shellhub-custom/gateway:v0.27.0
+    image: cloudmatehub/gateway:local
     build:
       context: .
       dockerfile: deployments/gateway.Dockerfile
@@ -44,8 +48,42 @@ services:
         DOCKER_VERSION: ${DOCKER_VERSION}
         MJML_VERSION: ${MJML_VERSION}
         ALPINE_VERSION: ${ALPINE_VERSION}
+    environment:
+      CLOUDMATEHUB_HTTPS_EDGE: "true"
+      SHELLHUB_AUTO_SSL: "false"
+    ports: !reset []
     volumes:
       - gateway-data:/data
+  https-manager:
+    image: cloudmatehub/https-manager:v0.27.0
+    build:
+      context: .
+      dockerfile: deployments/gateway.Dockerfile
+      target: https-manager
+      args:
+        GOPROXY: ${SHELLHUB_GOPROXY:-https://proxy.golang.org|direct}
+        GOLANG_VERSION: ${GOLANG_VERSION}
+        ALPINE_VERSION: ${ALPINE_VERSION}
+        AIR_VERSION: ${AIR_VERSION}
+        GOLANGCI_LINT_VERSION: ${GOLANGCI_LINT_VERSION}
+    restart: unless-stopped
+    environment:
+      SHELLHUB_DOMAIN: ${SHELLHUB_DOMAIN}
+      SHELLHUB_HTTPS_PORT: ${SHELLHUB_HTTPS_PORT}
+      CLOUDMATEHUB_HTTPS_TRIAL_PORT: ${CLOUDMATEHUB_HTTPS_TRIAL_PORT:-9443}
+    ports:
+      - "${SHELLHUB_BIND_ADDRESS}:${SHELLHUB_HTTP_PORT}:80"
+      - "${SHELLHUB_BIND_ADDRESS}:${SHELLHUB_HTTPS_PORT}:443"
+      - "${SHELLHUB_BIND_ADDRESS}:${CLOUDMATEHUB_HTTPS_TRIAL_PORT:-9443}:444"
+      - "127.0.0.1:9080:9000"
+    volumes: [https-state:/data]
+    networks: [shellhub]
+    depends_on: [gateway, server]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9000/"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
   postgres:
     volumes:
       - postgres-data:/var/lib/postgresql
@@ -86,14 +124,38 @@ services:
       timeout: 5s
       retries: 6
 volumes:
+  directory-state:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_directory-state
+  recording-state:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_recording-state
+  recording-files:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_recording-files
   postgres-data:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_postgres-data
   gateway-data:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_gateway-data
+  https-state:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_https-state
 
 # WGDashboard is internal-only during local preparation. No public dashboard or VPN ports.
   wgdashboard-data:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_wgdashboard-data
   wireguard-config:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_wireguard-config
   amnezia-config:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_amnezia-config
   vpn-assignments:
+    external: ${CLOUDMATEHUB_EXISTING_VOLUMES:-false}
+    name: ${CLOUDMATEHUB_VOLUME_PREFIX:-cloudmatehub}_vpn-assignments
 secrets:
   wgdashboard_key:
     file: ./deployments/.secrets/wgdashboard-key

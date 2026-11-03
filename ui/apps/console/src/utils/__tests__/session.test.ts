@@ -20,10 +20,10 @@ describe("sessionHasTerminal", () => {
     expect(sessionHasTerminal(multiplexed)).toBe(true);
   });
 
-  it("does not hold for a session that asked for no terminal", () => {
+  it("includes commands without a PTY", () => {
     expect(
       sessionHasTerminal(session({ first: "exec", types: ["exec"] })),
-    ).toBe(false);
+    ).toBe(true);
   });
 });
 

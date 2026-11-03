@@ -1,0 +1,92 @@
+{
+  "owner": "codex-requested-demo-20261103",
+  "purpose": "User requested temporary dashboard test entries",
+  "status": "ready",
+  "retain_requested_demo": true,
+  "namespace": {
+    "name": "cmh-demo-1103",
+    "tenant_id": "22110b4e-1db3-48c9-8e44-4d5734c778bf",
+    "owner_username": "hamid",
+    "created": false,
+    "cancelled_reason": "Community installation supports one namespace; no additional namespace created"
+  },
+  "users": [
+    {
+      "username": "cmh-demo-operator-1103",
+      "email": "operator-1103@cloudmatehub.example.test",
+      "role": "operator",
+      "created": false,
+      "cancelled": true
+    },
+    {
+      "username": "cmh-demo-viewer-1103",
+      "email": "viewer-1103@cloudmatehub.example.test",
+      "role": "observer",
+      "created": false,
+      "cancelled": true
+    }
+  ],
+  "devices": [
+    {
+      "name": "demo-web-01",
+      "identity_mac": "02:ca:11:03:00:01",
+      "container": "cmh-demo-web-1103",
+      "desired_status": "accepted-online",
+      "container_id": "72c35c4657a2ba3ae1f52f0b20501c94055f5078fa0070a8713922b4f9667f0e",
+      "container_created": true,
+      "replaced_unregistered_container_id": "0adca91e55f70f2433c96fb4f68903ce23f3437d8cf7db43a07f17537c54d1b5",
+      "uid": "8df05edb56b85e76b43a5f0be82430847374ff5b86e32ec162e022b9bb7312b1",
+      "enrolled": true,
+      "accepted": true,
+      "verified_status": "accepted",
+      "verified_online": true
+    },
+    {
+      "name": "demo-db-01",
+      "identity_mac": "02:ca:11:03:00:02",
+      "container": "cmh-demo-db-1103",
+      "desired_status": "accepted-offline",
+      "container_id": "6373467ad70c9c76a247d502cf1da336db91a913790544930ab35035ba53ff84",
+      "container_created": true,
+      "replaced_unregistered_container_id": "ac3e50c933e974723528d0f5b5b0f8f2c2bf8400e37be5068bc1722282b60334",
+      "uid": "4f95bc05e34ae378714860321cbaa32593f287e1a5a3279610bd437415b75a33",
+      "enrolled": true,
+      "accepted": true,
+      "stopped_for_offline_demo": true,
+      "verified_status": "accepted",
+      "verified_online": false
+    },
+    {
+      "name": "demo-pending-01",
+      "identity_mac": "02:ca:11:03:00:03",
+      "container": "cmh-demo-pending-1103",
+      "desired_status": "pending-offline",
+      "container_id": "20dcc104b11c48d4d967f1209202ddf14404fe1c211d84fd3ec9785c657aed48",
+      "container_created": true,
+      "replaced_unregistered_container_id": "495bf9d637bc159d58f545471a78cf854980e869f14a7869f5d68ecbadba6403",
+      "uid": "208a2fd92c467114aba6f56c1d1400b8b63afc82ef1a15797db6ef5782f9bfd5",
+      "enrolled": true,
+      "stopped_for_offline_demo": true,
+      "verified_status": "pending",
+      "verified_online": false
+    }
+  ],
+  "image": "cloudmatehub/demo-agent:20261103",
+  "credential_file": "/tmp/cloudmatehub-demo-20261103/demo-logins.txt",
+  "cleanup": "Stop only exact labelled demo containers. Remove only recorded fixture device IDs via supported device API after dependency inspection. Never delete target namespace hamid, real accounts, or unowned sessions/files.",
+  "target_namespace": {
+    "name": "hamid",
+    "tenant_id": "f07375a6-0bbe-4772-b467-7309f0509892",
+    "owned_fixture": false,
+    "never_delete": true
+  },
+  "accounts_created": false,
+  "retention": "Requested demo devices intentionally retained for user testing; remove only on explicit demo cleanup request.",
+  "auth_verification": "Temporary 3-minute administrative API credential used only in process memory; no credential file or new account retained.",
+  "credential_file_removed": true,
+  "created_accounts": 0,
+  "created_namespaces": 0,
+  "created_devices": 3,
+  "created_sessions": 0,
+  "browser_verified": true
+}

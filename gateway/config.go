@@ -60,6 +60,8 @@ type GatewayConfig struct {
 	TLSKeyFile       string `env:"SHELLHUB_TLS_KEY_FILE" validate:"required_with=TLSCertFile"`
 	EnableAccessLogs bool   `env:"SHELLHUB_GATEWAY_ACCESS_LOGS,default=true"`
 
+	TrustedHTTPSFrontend bool `env:"CLOUDMATEHUB_HTTPS_EDGE,default=false"`
+
 	EnableEnterprise bool
 	APIBackend       string
 }

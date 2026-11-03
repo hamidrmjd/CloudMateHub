@@ -28,7 +28,13 @@ func (s *service) WebReauthVerify(ctx context.Context, req *requests.WebReauthVe
 		return "", NewErrUserNotFound(req.UserID, err)
 	}
 
-	if !user.Password.Compare(req.Password) {
+	valid := false
+	if user.Origin == models.UserOriginActiveDirectory || user.Origin == models.UserOriginLDAP {
+		valid = s.directoryVerifier != nil && s.directoryVerifier.VerifyUser(ctx, user, req.Password) == nil
+	} else {
+		valid = user.Password.Compare(req.Password)
+	}
+	if !valid {
 		return "", NewErrUserPasswordNotMatch(nil)
 	}
 

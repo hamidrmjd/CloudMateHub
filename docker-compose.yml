@@ -2,7 +2,7 @@ name: cloudmatehub
 
 services:
   server:
-    image: shellhubio/server:${SHELLHUB_VERSION}
+    image: cloudmatehub/server:local
     restart: unless-stopped
     environment:
       - SHELLHUB_VERSION=${SHELLHUB_VERSION}
@@ -57,7 +57,7 @@ services:
       interval: 30s
       start_period: 10s
   ui:
-    image: shellhubio/ui:${SHELLHUB_VERSION}
+    image: cloudmatehub/ui:local
     restart: unless-stopped
     environment:
       - SHELLHUB_EDITION=${SHELLHUB_EDITION}
@@ -72,7 +72,7 @@ services:
       interval: 30s
       start_period: 10s
   gateway:
-    image: shellhubio/gateway:${SHELLHUB_VERSION}
+    image: cloudmatehub/gateway:local
     restart: unless-stopped
     environment:
       - SHELLHUB_LOG_LEVEL=${SHELLHUB_LOG_LEVEL}

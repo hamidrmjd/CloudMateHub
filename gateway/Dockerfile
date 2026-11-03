@@ -35,7 +35,7 @@ WORKDIR $GOPATH/src/github.com/shellhub-io/shellhub/gateway
 
 RUN --mount=type=cache,id=cloudmatehub-go-mod,target=/go/pkg/mod,sharing=shared \
     --mount=type=cache,id=cloudmatehub-go-build,target=/root/.cache/go-build,sharing=shared \
-    go build
+    go build && go build -o /https-manager ./cmd/https-manager
 
 FROM golang:${GOLANG_VERSION} AS tools
 
@@ -70,3 +70,7 @@ VOLUME /data
 COPY --from=builder /go/src/github.com/shellhub-io/shellhub/gateway/gateway /gateway
 
 ENTRYPOINT ["/gateway"]
+
+FROM production AS https-manager
+COPY --from=builder /https-manager /https-manager
+ENTRYPOINT ["/https-manager"]

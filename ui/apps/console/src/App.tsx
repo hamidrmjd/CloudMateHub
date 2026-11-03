@@ -44,6 +44,11 @@ const SessionDetails = lazy(() => import("./pages/SessionDetails"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PublicKeys = lazy(() => import("./pages/public-keys"));
 const AccessPolicies = lazy(() => import("./pages/access-policies"));
+const DirectorySettings = lazy(() => import("./pages/settings/DirectorySettings"));
+const BrowserConsole = lazy(() => import("./pages/BrowserConsole"));
+const UserManagement = lazy(() => import("./pages/UserManagement"));
+const StorageSettings = lazy(() => import("./pages/settings/StorageSettings"));
+const HttpsSettings = lazy(() => import("./pages/settings/HttpsSettings"));
 const SSHIdentities = lazy(() => import("./pages/ssh-identities"));
 const DeviceDetails = lazy(() => import("./pages/DeviceDetails"));
 const AddDevice = lazy(() => import("./pages/add-device"));
@@ -213,6 +218,7 @@ export default function App() {
                     />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/devices" element={<Devices />} />
+                    <Route path="/console" element={<BrowserConsole />} />
                     <Route
                       path="/devices/pending"
                       element={<PendingDevices />}
@@ -285,8 +291,12 @@ export default function App() {
                       />
                     )}
                     <Route path="/team" element={<Team />} />
+                    <Route path="/users" element={<UserManagement />} />
                     <Route path="/settings" element={<SettingsLayout />}>
                       <Route path="general" element={<GeneralSettings />} />
+                      <Route path="https" element={<HttpsSettings />} />
+                      <Route path="storage" element={<StorageSettings />} />
+                      <Route path="directories" element={<DirectorySettings />} />
                       <Route path="ssh" element={<SshSettings />} />
                       {isCloud() && (
                         <Route path="billing" element={<BillingSettings />} />

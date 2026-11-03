@@ -18,6 +18,7 @@ export const authSessionVersion = 1;
 export function signedInSession(auth: UserAuth) {
   return {
     token: auth.token,
+    origin: auth.origin ?? null,
     user: auth.user,
     userId: auth.id,
     email: auth.email,

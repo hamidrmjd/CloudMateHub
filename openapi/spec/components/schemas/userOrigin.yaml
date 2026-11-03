@@ -1,3 +1,3 @@
 description: Specifies the method the user employed to register with CloudMateHub.
 type: string
-enum: [local, saml]
+enum: [local, saml, ad, ldap]

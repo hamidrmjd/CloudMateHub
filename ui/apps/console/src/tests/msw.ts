@@ -3,7 +3,7 @@ import { http, HttpResponse } from "msw";
 import { mockTag } from "./factories";
 
 /** MSW server shared by every test file — started once in setup.ts. */
-export const server = setupServer();
+export const server = setupServer(http.get("*/api/auth/directories", () => HttpResponse.json([])));
 
 /** JSON response with `X-Total-Count` for paginated endpoints. */
 export function jsonWithTotal<T>(data: T[], total = data.length) {

@@ -31,7 +31,7 @@ flowchart LR
 
 ## Deployment and state
 
-The current Compose stack has **seven containers**: the original five plus `vpn-broker` and `wgdashboard`. The dashboard is internal-only; no host management/UDP VPN port is published. NET_ADMIN is restricted to its container namespace, with no host-network or Docker-socket access. Assignment records, native WGDashboard state and WireGuard configuration files use separate volumes.
+The current Compose stack has **eight containers**: the original five, `vpn-broker`, `wgdashboard`, and the HTTPS controller. The dashboard is internal-only; no host management/UDP VPN port is published. NET_ADMIN is restricted to its container namespace, with no host-network or Docker-socket access. Assignment records, native WGDashboard state and WireGuard configuration files use separate volumes.
 
 This prepares local management; it is not a verified remote VPN. A reachable Ubuntu host, public/internal endpoint, subnets/DNS, routing/NAT, firewall/UDP publication and HTTPS must be deliberately configured later. Native traffic, external email/webhooks/OIDC/sharing, diagnostics and AmneziaWG depend on their own runtime setup. Public native client/share paths remain admin-gated rather than bypassing CloudMateHub roles.
 
@@ -48,3 +48,17 @@ The upstream admin UI retains its configuration/peer editing, bulk operations, t
 Test data uses isolated temporary fixtures and is removed after checks; real application records and keys are preserved.
 
 Related: [System overview](01%20System%20Overview.md), [Console](02%20Console%20and%20Design.md), [Connections](04%20Gateway%20and%20Connections.md), [Data](06%20Data%20and%20Trust.md), [Deployment](07%20Development%20and%20Deployment.md).
+
+## Hub sign-in and integrated sections
+
+Hub instance-admin authentication is the only browser sign-in for WireGuard management. The broker still revalidates Hub credentials on every request; ordinary members can list/download only their own assigned configurations. The upstream service retains internal API-key authentication. Its embedded frontend removes its separate sign-in route and reports session/service failures to Hub instead. Native `requireAuthentication` is answered as false only after the broker has verified a current Hub admin.
+
+WireGuard exposes Interfaces, Add interface, Restore, WG clients, Peer defaults, Interface settings, Webhooks, and User assignments as Hub tabs. Native navigation is hidden in the embedded editor. Monitoring/system-status/diagnostic navigation is excluded from these tabs and remains outside this management view. Native WG clients remain separate from Hub member assignments. The pinned upstream frontend adaptation fails the image build if the expected login implementation changes.
+
+Validation: production builds, TypeScript checking, five role/navigation UI tests, 21 broker tests, and a syntax check of the patched native router passed. All deployed containers passed their existing health checks. No persistent test users, peers, assignments, or configurations were created; temporary broker fixture databases were removed by test teardown. No production cleanup was required. An authenticated native-browser visual check could not be completed because the browser retained a stale page during navigation; no claim of full browser end-to-end verification is made.
+
+## Embedded creation compatibility repair (2026-11-03)
+
+The broker uses `Referrer-Policy: same-origin` for the embedded editor. Its native fetches can therefore prove same-origin access using Referer in browsers that omit Origin and Fetch Metadata headers. A previous `no-referrer` policy caused authenticated administration to fail with Forbidden and prevented creation. Cross-origin referrers still receive no identifying URL; outside/lookalike/wrong-scheme origins remain refused. Current Hub administrator validation and per-user configuration ownership are unchanged.
+
+Twenty-three broker tests passed. The live signed-in in-app browser now loads Interfaces and Add interface without a separate login or session error. An isolated, network-disabled container with temporary filesystems verified actual interface creation, peer creation, client configuration download and supported API teardown. The explicitly owned test container and disposable key were removed. No production fixtures were created. Real tunnel reachability remains a separate deployment requirement.

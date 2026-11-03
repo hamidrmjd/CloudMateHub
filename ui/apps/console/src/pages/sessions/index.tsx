@@ -28,7 +28,6 @@ import SessionPrincipal from "@/components/sessions/SessionPrincipal";
 import SessionTypeBadge from "@/components/sessions/SessionTypeBadge";
 import SessionLogin from "@/components/sessions/SessionLogin";
 import EmptyCell from "@/components/common/EmptyCell";
-import { isEnterpriseOrCloud } from "@/env";
 import { apiErrorMessage } from "@/api/errors";
 import { PER_PAGE } from "@/utils/pagination";
 import { useNavSectionTitle } from "@/components/layout/navSections";
@@ -71,16 +70,14 @@ function CloseButton({ onClose }: { onClose: () => Promise<unknown> }) {
 function SessionActions({
   session,
   playing,
-  premium,
   onPlay,
   onDownload,
   onClose,
 }: {
   session: Session;
   playing: boolean;
-  premium: boolean;
-  onPlay: (canPlay: boolean) => void;
-  onDownload: () => void;
+  onPlay: (canPlay: boolean, seat: number) => void;
+  onDownload: (seat: number) => void;
   onClose: () => Promise<unknown>;
 }) {
   const { available: canPlay, read } = useRecordingPermissions(
@@ -88,20 +85,23 @@ function SessionActions({
     session.recorded,
   );
   const hasTerminal = sessionHasTerminal(session);
+  const seats = session.events?.seats?.length ? session.events.seats : [0];
+  const [seat, setSeat] = useState(seats[0] ?? 0);
 
   return (
     <div className="flex items-center justify-end gap-1.5">
+      {hasTerminal && seats.length > 1 && <select aria-label="Recording channel" className="rounded border border-border bg-background text-xs p-1" value={seat} onClick={(e) => e.stopPropagation()} onChange={(e) => setSeat(Number(e.target.value))}>{seats.map((n) => <option key={n} value={n}>Channel {n + 1}</option>)}</select>}
       {hasTerminal && (
         <RestrictedAction action={read}>
           <button
             type="button"
             className={PLAY_BTN}
-            disabled={playing || (!canPlay && premium)}
+            disabled={playing || !canPlay}
             title={canPlay ? "Play recording" : "This session was not recorded"}
             aria-label="Play recording"
             onClick={(e) => {
               e.stopPropagation();
-              onPlay(canPlay);
+              onPlay(canPlay, seat);
             }}
           >
             {playing ? (
@@ -127,7 +127,7 @@ function SessionActions({
           <RecordingActionsMenu
             sessionUid={session.uid}
             recorded={session.recorded}
-            onDownload={onDownload}
+            onDownload={() => onDownload(seat)}
           />
         </div>
       )}
@@ -152,7 +152,6 @@ export default function Sessions() {
   });
   const closeSession = useCloseSession();
   const navigate = useNavigate();
-  const premium = isEnterpriseOrCloud();
   const [playTarget, setPlayTarget] = useState<string | null>(null);
   const [upsellOpen, setUpsellOpen] = useState(false);
   const {
@@ -164,13 +163,13 @@ export default function Sessions() {
 
   useLocalRecordings();
 
-  const handlePlay = async (s: Session, canPlay: boolean) => {
+  const handlePlay = async (s: Session, canPlay: boolean, seat: number) => {
     if (!canPlay) {
       setUpsellOpen(true);
       return;
     }
     setPlayTarget(s.uid);
-    await play(s);
+    await play(s, seat);
     setPlayTarget(null);
   };
 
@@ -271,9 +270,8 @@ export default function Sessions() {
         <SessionActions
           session={s}
           playing={logsLoading && playTarget === s.uid}
-          premium={premium}
-          onPlay={(canPlay) => void handlePlay(s, canPlay)}
-          onDownload={() => void download(s)}
+          onPlay={(canPlay, seat) => void handlePlay(s, canPlay, seat)}
+          onDownload={(seat) => void download(s, seat)}
           onClose={() =>
             closeSession.mutateAsync({
               path: { uid: s.uid },

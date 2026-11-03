@@ -47,3 +47,9 @@ Our Go Dockerfile copies add a build-time dependency-download fallback for the n
 `deployments/ubuntu` contains an environment example and handoff instructions for Ubuntu 24.04+. Build containers for the target CPU. A remote deployment, public TLS/DNS, and real device enrollment require the actual host details and have not been verified here.
 
 Related: [01 System Overview](01%20System%20Overview.md), [02 Console and Design](02%20Console%20and%20Design.md), [06 Data and Trust](06%20Data%20and%20Trust.md).
+
+Directory support adds the persistent `directory-state` server volume and additive migration 051. Include its complete contents in private backups, preserve existing volumes, and activate trusted HTTPS before entering directory credentials. See [[11 Directory Authentication and Users]].
+
+Requested temporary demo devices may run as separately labelled agent containers outside Compose. The current requested sample set is documented in `docs/verification/2026-11-04-requested-demo-data.md`, with exact ownership in its JSON manifest. Its online device is a real isolated agent tunnel; offline and pending examples are intentionally stopped. These sample containers are not production Compose services. Cleanup must inspect dependencies and match exact IDs/labels; the existing namespace and real data must be preserved.
+
+CloudMateHub deployment uses the `cloudmatehub` Compose project and locally built `cloudmatehub/server:local`, `cloudmatehub/ui:local`, and `cloudmatehub/gateway:local` images. Core application builds require no published ShellHub application images. Standard infrastructure and WGDashboard dependencies retain their upstream attribution. Existing installations may set `CLOUDMATEHUB_VOLUME_PREFIX` and `CLOUDMATEHUB_EXISTING_VOLUMES=true` to reuse their original data volumes; preserve signing keys and never reset volumes during migration.

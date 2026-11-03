@@ -1,0 +1,11 @@
+# Set CLOUDMATEHUB_STORAGE_COMPOSE_FILE=deployments/compose.local-storage.example.yml
+# and CLOUDMATEHUB_RECORDING_DIRECTORY=/absolute/host/folder in .env.override.
+# Choose a recording subfolder beneath /recordings in the admin settings.
+services:
+  server:
+    volumes:
+      - type: bind
+        source: ${CLOUDMATEHUB_RECORDING_DIRECTORY:?Set an existing absolute host folder}
+        target: /recordings
+        bind:
+          create_host_path: false

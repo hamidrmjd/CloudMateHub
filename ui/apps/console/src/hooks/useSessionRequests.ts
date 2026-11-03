@@ -27,7 +27,8 @@ export function useDeleteSessionRecording() {
       await deleteSessionRecord({ path: { uid, seat: 0 }, throwOnError: true });
     },
     onSuccess: async (_data, uid) => {
-      useTerminalStore.getState().closeRecording(uid);
+      const terminals = useTerminalStore.getState();
+      terminals.recordings.filter((recording) => recording.id === uid || recording.id.startsWith(`${uid}:`)).forEach((recording) => terminals.closeRecording(recording.id));
       await invalidate();
     },
   });

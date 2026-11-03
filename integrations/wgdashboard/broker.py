@@ -131,7 +131,10 @@ def create_app(config=None):
     def private_response(response):
         response.headers['Cache-Control'] = 'no-store'
         response.headers['X-Content-Type-Options'] = 'nosniff'
-        response.headers['Referrer-Policy'] = 'no-referrer'
+        # The embedded app uses same-origin fetches without an Origin header.
+        # Preserve their referrer for browsers without Fetch Metadata support;
+        # cross-origin requests still receive no referrer.
+        response.headers['Referrer-Policy'] = 'same-origin'
         response.headers['X-Frame-Options'] = 'SAMEORIGIN'
         return response
 
@@ -173,7 +176,7 @@ def create_app(config=None):
                     del sessions[key]
             sessions[sid] = (g.token, now + app.config['SESSION_TTL'])
         response = jsonify(url=DASH + '/', expires_in=app.config['SESSION_TTL'])
-        response.set_cookie(COOKIE, sid, httponly=True, secure=app.config['COOKIE_SECURE'],
+        response.set_cookie(COOKIE, sid, httponly=True, secure=app.config['COOKIE_SECURE'] or request.is_secure,
                             samesite='Strict', path=PREFIX, max_age=app.config['SESSION_TTL'])
         return response
 
@@ -191,6 +194,10 @@ def create_app(config=None):
     @app.route(DASH + '/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'])
     @authenticated(admin=True, cookie=True)
     def dashboard(path):
+        if path == 'embedded.css':
+            return Response(Path(__file__).with_name('embedded.css').read_text(), content_type='text/css')
+        if path == 'api/requireAuthentication':
+            return jsonify(status=True, data=False)
         if path == 'api/validateAuthentication':
             return jsonify(status=True, data=None)
         if path == 'api/signout':
@@ -228,7 +235,10 @@ def create_app(config=None):
             if not location.startswith(DASH + '/'):
                 abort(502, 'Unexpected WGDashboard redirect')
             headers['Location'] = location
-        return Response(upstream.content, status=upstream.status_code, headers=headers)
+        content = upstream.content
+        if path == '' and upstream.status_code == 200 and 'text/html' in upstream.headers.get('Content-Type', ''):
+            content = content.replace(b'</head>', b'<link rel="stylesheet" href="./embedded.css"></head>')
+        return Response(content, status=upstream.status_code, headers=headers)
 
     @app.get(PREFIX + '/assignments')
     @authenticated()

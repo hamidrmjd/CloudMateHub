@@ -15,7 +15,7 @@ Requires Docker Desktop on this Mac, or Docker Engine + Compose on Ubuntu.
 
 The default local configuration opens **http://localhost:8080**, with SSH at **localhost:2222**, bound to loopback. For LAN access, set both `SHELLHUB_BIND_ADDRESS` and `SHELLHUB_DOMAIN` in the ignored `.env.override` to the Mac’s LAN IPv4 address, then run `./deployments/cloudmatehub start`. Open `http://<LAN-IP>:8080`; SSH uses `<LAN-IP>:2222`. The gateway accepts the configured host, so use that IP after switching. Update both values if the LAN address changes. `stop` preserves application data.
 
-Project-owned product copy, npm workspaces (`@cloudmatehub/*`), icon/theme assets, and deployment commands use CloudMateHub. `deployments/shellhub` remains an alias. Upstream licenses, source attribution, published dependency/image addresses, Go module imports, `SHELLHUB_*` configuration, agent executable names and device authentication wire formats, existing browser storage keys, and the deployed Compose project (`shellhub-custom`) remain compatible with existing installations.
+Project-owned product copy, npm workspaces (`@cloudmatehub/*`), icon/theme assets, and deployment commands use CloudMateHub. `deployments/shellhub` remains an alias. Upstream licenses, source attribution, published dependency/image addresses, Go module imports, `SHELLHUB_*` configuration, agent executable names and device authentication wire formats, existing browser storage keys, remain compatible with existing installations. The active Compose project is `cloudmatehub`; previous data volumes are reused during migration.
 
 ## Architecture picture
 
@@ -27,7 +27,7 @@ Project-owned product copy, npm workspaces (`@cloudmatehub/*`), icon/theme asset
 flowchart LR
     Browser["Browser · CloudMateHub console"] -->|"HTTP / WebSocket · localhost:8080"| Gateway
     SSH["SSH / SCP / SFTP client"] -->|"localhost:2222 → server:2222"| Server
-    subgraph Stack["Local Docker Compose · shellhub-custom"]
+    subgraph Stack["Local Docker Compose · cloudmatehub"]
       Gateway["gateway · Go + Caddy"] -->|"UI and config"| UI["ui · static-web-server"]
       Gateway -->|"API + terminal + tunnel routes"| Server["server · Go / Echo
 API + SSH + worker"]
@@ -73,7 +73,7 @@ The server owns **API + authorization + SSH/tunnel/session coordination + an in-
 
 ## VPN / WireGuard
 
-**VPN → WireGuard** adds personal `.conf` downloads/QR codes, instance-admin peer assignment, and the embedded **WGDashboard 4.3.4** management workspace. Ordinary users receive only their assigned configurations; management is checked on the backend. Namespace admin roles alone do not grant instance management.
+**VPN → WireGuard** adds personal `.conf` downloads/QR codes, instance-admin peer assignment, and integrated **WGDashboard 4.3.4** management sections. Hub instance admins use their existing Hub sign-in; there is no separate WGDashboard login panel. WireGuard management tabs exclude monitoring navigation. Ordinary users receive only their assigned configurations; management is checked on the backend. Namespace admin roles alone do not grant instance management.
 
 [Integration, upstream feature coverage and Ubuntu requirements](integrations/wgdashboard/README.md).
 
@@ -106,3 +106,39 @@ When an unknown SSH key connects, the terminal’s approval link includes the pu
 Native keyboard-interactive prompts use `cloudmatehub-approval` and `cloudmatehub-approval-denied`. The server and browser terminal bridge share these names; existing device key signatures and signing keys remain unchanged.
 
 SSH welcome announcements are saved per namespace. Updating the default in source does not rewrite existing saved announcements. The current namespace’s saved welcome message was backed up and explicitly updated to CloudMateHub; upstream attribution remains in this repository.
+
+## HTTPS & Certificates
+
+Instance admins can open **Settings → HTTPS & Certificates** to validate PEM certificates, test HTTPS on a candidate address, confirm within 60 seconds, or restore the previous certificate. Invalid candidates leave the current dashboard untouched. Unconfirmed or interrupted activations roll back automatically. The recovery page is independent of Caddy and published only at `http://localhost:9080`; run `./deployments/cloudmatehub recovery` on the server for its private access link. Private-key uploads are allowed only over trusted HTTPS or through local recovery/SSH tunneling. Never share that recovery link or commit HTTPS state.
+
+The deployment now has eight services: the original five, the two VPN services, and the HTTPS controller. HTTP 8080 and HTTPS 8443 reach the controller, which forwards application traffic to the internal Caddy gateway. The candidate HTTPS port defaults to 9443 (`CLOUDMATEHUB_HTTPS_TRIAL_PORT`); a browser must reach it to confirm activation. Confirmed sites redirect HTTP to HTTPS. Until you supply and confirm a matching certificate, the existing HTTP dashboard remains active. Private CAs require browser and device-agent trust to be installed separately.
+
+[HTTPS architecture, recovery, backup requirements and limitations](docs/architecture/09%20HTTPS%20and%20Recovery.md). Automatic certificate issuance/renewal is a later phase.
+
+## Session recordings and storage
+
+Every new SSH shell or command connection is recorded on the server, including native terminal connections and commands without a PTY. Open **Sessions** to play or download a recording, and select a channel for multiplexed connections. SFTP file contents and raw input keystrokes are excluded.
+
+Instance admins can open **Settings → Storage & Recordings** to select local disk, an operator-mounted NFS share, or an HTTPS S3-compatible bucket. Destinations are verified before saving. Completed archives use the selected storage; PostgreSQL retains captured output as a recovery copy. Failed archive writes retry automatically, and previous recordings remain accessible after storage changes. New S3 credentials require trusted HTTPS.
+
+[Recording architecture, host disk/NFS setup, backup requirements and limits](docs/architecture/10%20Session%20Recording%20and%20Storage.md). The new `recording-state` and `recording-files` volumes must be included in backups. Existing real data and storage volumes are preserved.
+
+## Active Directory, OpenLDAP and User Management
+
+Instance admins can open **Settings → Directory connections** to configure Active Directory and OpenLDAP independently, test the encrypted connection, and check a user sign-in without creating an account. Both directories can be enabled together. The separate **User Management** tab lists Local, Active Directory and OpenLDAP accounts and creates local members; use **Team** for namespace access.
+
+Activate trusted HTTPS before entering directory or new-account passwords. Directory connections require LDAPS or mandatory StartTLS, verified certificates and an optional private CA. Local administrator sign-in stays available. Directory account creation on first sign-in is an explicit option; new accounts get no admin privileges or device access. Accounts are matched by permanent directory ID, never merged by email. Disabled AD accounts and required-group restrictions are checked at login and periodically while using Hub tokens.
+
+Back up the new `directory-state` volume privately alongside PostgreSQL. It contains encrypted connection settings and their encryption key. No real directory is configured automatically. [Connection setup, identity flow and operational limits](docs/architecture/11%20Directory%20Authentication%20and%20Users.md).
+
+WireGuard administration preserves same-origin referrers so embedded connection and peer creation also works in browsers without Fetch Metadata headers. Hub admin authorization and cross-origin request protection remain enforced.
+
+## Client browser SSH console
+
+Clients can open **SSH → Browser Console** (`/console`), choose an online accepted device, and select **Open console**. The existing connection dialog handles Linux usernames, browser SSH identities, or legacy device credentials. Open terminals can be resumed and stay connected while navigating the dashboard. Offline devices cannot be opened.
+
+Operator, Administrator or Owner namespace access is required. SSH identities and access policies continue to control device access; a Hub account or WireGuard assignment alone does not grant a shell. Namespaces using browser SSH keys require trusted HTTPS (or localhost) and a browser with Ed25519 WebCrypto and IndexedDB support. Sessions use the existing recorded SSH bridge.
+
+Temporary dashboard sample devices, when requested, are clearly named `demo-*` and tracked by exact fixture ownership. See [the requested demo-data notes](docs/verification/2026-11-04-requested-demo-data.md) for the current examples and cleanup boundaries. They do not grant additional user access or change production SSH policies.
+
+CloudMateHub deployment uses the `cloudmatehub` Compose project and locally built `cloudmatehub/server:local`, `cloudmatehub/ui:local`, and `cloudmatehub/gateway:local` images. Core application builds require no published ShellHub application images. Standard infrastructure and WGDashboard dependencies retain their upstream attribution. Existing installations may set `CLOUDMATEHUB_VOLUME_PREFIX` and `CLOUDMATEHUB_EXISTING_VOLUMES=true` to reuse their original data volumes; preserve signing keys and never reset volumes during migration.

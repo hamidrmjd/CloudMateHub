@@ -14,10 +14,10 @@ export function sessionTitle(session: Session): string {
 }
 
 /**
- * Whether the session had a terminal, which is what makes its recording playable.
+ * Whether the session opened a shell or command whose output can be played.
  */
 export function sessionHasTerminal(session: Session): boolean {
-  return (session.events?.types ?? []).includes("pty-req");
+  return (session.events?.types ?? []).some((type) => ["pty-req", "shell", "exec"].includes(type));
 }
 
 /**

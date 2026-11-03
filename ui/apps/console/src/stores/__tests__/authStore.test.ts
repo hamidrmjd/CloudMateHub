@@ -557,3 +557,28 @@ describe("authStore", () => {
     });
   });
 });
+
+describe("directory sign-in", () => {
+  it("uses the selected directory without falling back to local login", async () => {
+    const fetcher=vi.fn(async (_path: unknown, _options?: RequestInit) => new Response(JSON.stringify(mockUserAuth({origin:"ad"})), {status:200}));
+    vi.stubGlobal("fetch",fetcher);
+    vi.stubGlobal("window",{...window,location:{...window.location,protocol:"https:"}});
+    await useAuthStore.getState().login("DOMAIN\\alice","directory-password","ad");
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(fetcher.mock.calls[0]?.[0]).toBe("/api/auth/directory");
+    expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body))).toMatchObject({kind:"ad",username:"DOMAIN\\alice"});
+    expect(useAuthStore.getState().origin).toBe("ad");
+  });
+  it("refuses to send directory credentials over HTTP", async () => {
+    const fetcher=vi.fn();vi.stubGlobal("fetch",fetcher);
+    await expect(useAuthStore.getState().login("alice","directory-password","openldap")).rejects.toThrow("HTTPS");
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+  it("preserves the MFA challenge from directory authentication", async () => {
+    vi.stubGlobal("fetch",vi.fn(async()=>new Response(null,{status:401,headers:{"X-MFA-Token":"fixture-mfa"}})));
+    vi.stubGlobal("window",{...window,location:{...window.location,protocol:"https:"}});
+    await useAuthStore.getState().login("alice","directory-password","openldap");
+    expect(useAuthStore.getState().mfaToken).toBe("fixture-mfa");
+    expect(useAuthStore.getState().token).toBeNull();
+  });
+});

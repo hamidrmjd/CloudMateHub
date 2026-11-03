@@ -46,3 +46,9 @@ The public Community source is the baseline. Cloud/Enterprise-only backend exten
 Continue with [02 Console and Design](02%20Console%20and%20Design.md), [03 Server and Domain](03%20Server%20and%20Domain.md), [04 Gateway and Connections](04%20Gateway%20and%20Connections.md), [05 Device Agent](05%20Device%20Agent.md), [06 Data and Trust](06%20Data%20and%20Trust.md), and [07 Development and Deployment](07%20Development%20and%20Deployment.md).
 
 Follow-up verification on 2026-11-03: the enrolled device agent reauthenticated using its unchanged key, a native SSH command completed successfully, and the unknown-key terminal link reached the browser with its approval destination retained. See [branding/SSH verification](../verification/2026-11-03-branding-ssh-approval.md) for test coverage and fixture cleanup.
+
+The HTTPS extension adds a separate controller in front of Caddy, making eight containers. It handles public HTTP/HTTPS and provides a loopback-only recovery listener independent of the gateway. The earlier base diagram remains a picture of the original device-access core. See [09 HTTPS and Recovery](09%20HTTPS%20and%20Recovery.md).
+
+Server-side SSH recording and admin-selected local/NFS/S3 archive storage are described in [[10 Session Recording and Storage]]. PostgreSQL retains a recovery copy; destination changes preserve existing recordings.
+
+The server also owns encrypted Active Directory/OpenLDAP connections and the administrator User Management panel. Both directory types can coexist with local sign-in; namespace authorization stays with the Hub. See [[11 Directory Authentication and Users]].

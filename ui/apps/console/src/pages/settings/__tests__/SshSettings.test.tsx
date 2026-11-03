@@ -209,69 +209,11 @@ describe("SshSettings", () => {
   });
 
   describe("session recording", () => {
-    beforeEach(() => {
-      mockedGetConfig.mockReturnValue({
-        ...defaultConfig,
-        edition: "enterprise",
-      });
-    });
-
-    it("locks the REC switch for a role that may not change it", async () => {
-      seedAuthStore({ role: "operator" });
+    it.each(["community", "enterprise"] as const)("requires recording in %s", async (edition) => {
+      mockedGetConfig.mockReturnValue({ ...defaultConfig, edition });
       renderSsh();
-
-      expect(
-        await screen.findByRole("switch", { name: "Session recording" }),
-      ).toBeDisabled();
-    });
-
-    it("says so when recording cannot be changed", async () => {
-      server.use(
-        http.put("*/api/namespaces/:tenant", () =>
-          HttpResponse.json({}, { status: 500 }),
-        ),
-      );
-      const user = userEvent.setup();
-      renderSsh();
-
-      await user.click(
-        await screen.findByRole("switch", { name: "Session recording" }),
-      );
-
-      expect(await screen.findByRole("alert")).toHaveTextContent(
-        /couldn't change session recording/i,
-      );
-    });
-
-    it("turns recording on from the REC switch", async () => {
-      const bodies: unknown[] = [];
-      server.use(
-        http.put("*/api/namespaces/:tenant", async ({ request }) => {
-          bodies.push(await request.json());
-          return new HttpResponse(null, { status: 204 });
-        }),
-      );
-      const user = userEvent.setup();
-      renderSsh();
-
-      const rec = await screen.findByRole("switch", {
-        name: "Session recording",
-      });
-      expect(rec).not.toBeChecked();
-      await user.click(rec);
-
-      expect(await screen.findByRole("status")).toHaveTextContent("Saved");
-      expect(bodies).toEqual([{ settings: { session_record: true } }]);
-    });
-
-    it("is not offered in community", async () => {
-      mockedGetConfig.mockReturnValue({ ...defaultConfig });
-      renderSsh();
-
-      await screen.findByText("New");
-      expect(
-        screen.queryByRole("switch", { name: "Session recording" }),
-      ).not.toBeInTheDocument();
+      expect(await screen.findByText(/Every SSH shell and command connection is recorded/)).toBeInTheDocument();
+      expect(screen.queryByRole("switch", { name: "Session recording" })).not.toBeInTheDocument();
     });
   });
 

@@ -37,3 +37,9 @@ Related: [03 Server and Domain](03%20Server%20and%20Domain.md), [06 Data and Tru
 ## Branding and compatibility
 
 Owned UI copy, npm workspaces, icon symbols, theme assets and documentation use CloudMateHub. Published upstream links and legal attribution remain original. Persisted session/vault/browser-key identifiers retain their legacy values so existing accounts, preferences and encrypted vaults remain readable. The native SSH approval destination survives both initial sign-in and expired-token recovery.
+
+## Client Browser Console
+
+`/console`, linked as SSH → Browser Console for namespace members, provides accepted-device discovery, search/pagination, online state, a direct browser connection dialog and current-namespace terminal resumption. It reuses `useDevices`, `ConnectModal`, the in-memory terminal store and `TerminalManager` rather than a separate SSH implementation. Operators and higher roles may connect; observers receive an access explanation and do not fetch console targets. Device-selection state resets on user/namespace changes. Only terminals explicitly owned by the current namespace appear in the resume list.
+
+New-identity namespaces require a secure browser context for WebCrypto keys; the page explains HTTPS setup and prevents an unsupported plaintext browser-key connection. Credentials remain under the existing connection flow; the page stores no new passwords, keys or persistent fixtures. Existing terminals remain recorded by the shared server relay.

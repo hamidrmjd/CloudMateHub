@@ -33,7 +33,9 @@ type UserOrigin string
 const (
 	// UserOriginLocal indicates that the user was created through the standard signup process, without
 	// using third-party integrations like SSO IdPs.
-	UserOriginLocal UserOrigin = "local"
+	UserOriginLocal           UserOrigin = "local"
+	UserOriginActiveDirectory UserOrigin = "ad"
+	UserOriginLDAP            UserOrigin = "ldap"
 
 	// UserOriginSAML indicates that the user was created using a SAML method.
 	UserOriginSAML UserOrigin = "SAML"
@@ -50,6 +52,7 @@ type UserAuthMethod string
 const (
 	// UserAuthMethodLocal indicates that the user can authenticate using an email and password.
 	UserAuthMethodLocal UserAuthMethod = "local"
+	UserAuthMethodLDAP  UserAuthMethod = "ldap"
 
 	// UserAuthMethodSAML indicates that the user can authenticate using a third-party SAML application.
 	UserAuthMethodSAML UserAuthMethod = "saml"

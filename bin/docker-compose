@@ -103,6 +103,14 @@ if [ -n "$EXTRA_COMPOSE_FILE" ]; then
     fi
     COMPOSE_FILE="${COMPOSE_FILE}:${EXTRA_COMPOSE_FILE}"
 fi
+storage_compose=$(env_var CLOUDMATEHUB_STORAGE_COMPOSE_FILE "")
+if [ -n "$storage_compose" ]; then
+    if [ ! -f "$storage_compose" ]; then
+        echo "Recording storage compose file does not exist: $storage_compose" >&2
+        exit 1
+    fi
+    COMPOSE_FILE="${COMPOSE_FILE}:${storage_compose}"
+fi
 export COMPOSE_FILE
 
 installed_playwright_version() {

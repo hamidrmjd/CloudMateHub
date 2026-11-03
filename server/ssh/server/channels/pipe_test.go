@@ -248,6 +248,9 @@ func TestPipeKeepsStreamsApart(t *testing.T) {
 
 	assert.Equal(t, "to stdout", client.dataOut.String())
 	assert.Equal(t, "to stderr", client.stderrOut.String())
+	sess.mu.Lock()
+	assert.ElementsMatch(t, []string{"to stdout", "to stderr"}, sess.outputs, "community capture must include both output streams")
+	sess.mu.Unlock()
 }
 
 // TestPipeDrainsAgentStderrBeforeStdoutEOF covers the hang: extended data sits

@@ -9,6 +9,7 @@ import {
   authMfa,
   mfaRecover,
   type UserOrigin,
+  type UserAuth,
 } from "../client";
 import { queryClient } from "../api/queryClient";
 import { isSdkError } from "../api/errors";
@@ -42,7 +43,7 @@ interface AuthState {
   mfaToken: string | null;
   mfaRecoveryExpiry: number | null;
   signOutHandedOver: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string, provider?: "ad" | "openldap") => Promise<void>;
   loginWithToken: (token: string) => Promise<void>;
   logout: () => void;
   fetchUser: () => Promise<void>;
@@ -104,10 +105,16 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       ...initialState,
 
-      login: async (username: string, password: string) => {
+      login: async (username: string, password: string, provider?: "ad" | "openldap") => {
         set({ loading: true, mfaToken: null });
         try {
-          const { data, response } = await loginSdk({
+          const { data, response } = provider ? await (async () => {
+            if (window.location.protocol !== "https:") throw new Error("Trusted HTTPS is required");
+            const response = await fetch("/api/auth/directory", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:provider,username,password})});
+            const data = await response.json().catch(() => ({})) as UserAuth;
+            if (!response.ok && !response.headers.get("x-mfa-token")) throw {status:response.status,headers:response.headers};
+            return {data,response};
+          })() : await loginSdk({
             body: { username, password },
             throwOnError: true,
           });

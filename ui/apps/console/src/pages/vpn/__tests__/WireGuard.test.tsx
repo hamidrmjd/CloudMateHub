@@ -30,16 +30,16 @@ describe("WireGuard role views", () => {
   it("shows the user's empty state without admin controls", async () => {
     mount();
     expect(await screen.findByText("Your VPN starts here")).toBeInTheDocument();
-    expect(screen.queryByRole("tab", { name: "Administration" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("tab", { name: "Interfaces" })).not.toBeInTheDocument();
     expect(request).not.toHaveBeenCalledWith("/catalog");
   });
 
   it("opens the upstream workspace only after requesting an admin session", async () => {
     state.isAdmin = true;
     mount();
-    await userEvent.click(screen.getByRole("tab", { name: "Administration" }));
-    const iframe = await screen.findByTitle("WGDashboard administration");
-    expect(iframe).toHaveAttribute("src", "/api/vpn/dashboard/");
+    await userEvent.click(screen.getByRole("tab", { name: "Interfaces" }));
+    const iframe = await screen.findByTitle("WireGuard management");
+    expect(iframe).toHaveAttribute("src", "/api/vpn/dashboard/#/");
     expect(request).toHaveBeenCalledWith("/session", { method: "POST" });
   });
 
@@ -67,4 +67,14 @@ describe("WireGuard role views", () => {
     await userEvent.click(screen.getByRole("button", { name: "Hide QR code" }));
     await waitFor(() => expect(screen.queryByAltText("Private WireGuard configuration QR code")).not.toBeInTheDocument());
   });
+});
+
+it("integrates management sections without a monitoring tab or separate login", async () => {
+  state.isAdmin = true;
+  mount();
+  await screen.findByTitle("WireGuard management");
+  await userEvent.click(screen.getByRole("tab", { name: "Peer defaults" }));
+  expect(screen.getByTitle("WireGuard management")).toHaveAttribute("src", "/api/vpn/dashboard/#/settings/peers_settings");
+  expect(screen.queryByRole("tab", { name: /monitor|overview|system status/i })).not.toBeInTheDocument();
+  expect(screen.queryByRole("tab", { name: "Administration" })).not.toBeInTheDocument();
 });

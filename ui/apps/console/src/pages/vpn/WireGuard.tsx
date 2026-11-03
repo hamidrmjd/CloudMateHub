@@ -40,7 +40,7 @@ function AssignmentManager() {
     catch (e) { setError(e instanceof Error ? e.message : "Unassignment failed"); }
   };
   return <div className="space-y-5">
-    <Callout variant="info">Create a peer in Administration, then assign it to a CloudMateHub user here. Each peer has one owner. Removing an assignment removes download access; restrict or delete the peer in WGDashboard to revoke an existing VPN connection.</Callout>
+    <Callout variant="info">Create a peer under Interfaces, then assign it to a CloudMateHub user here. Each peer has one owner. Removing an assignment removes download access; restrict or delete the peer in WGDashboard to revoke an existing VPN connection.</Callout>
     {(error || catalog.error || assignments.error || directory.error) && <Callout variant="error">{error || catalog.error?.message || assignments.error?.message || directory.error?.message}</Callout>}
     <Card className="p-5 space-y-4">
       <div className="flex items-center justify-between"><h2 className="font-semibold">Assign a configuration</h2><Button variant="ghost" onClick={() => void catalog.refetch()} icon={<ArrowPathIcon className="w-4 h-4" />}>Refresh peers</Button></div>
@@ -58,7 +58,17 @@ function AssignmentManager() {
   </div>;
 }
 
-function Dashboard() {
+const managementSections = [
+  { id: "interfaces", name: "Interfaces", route: "/" },
+  { id: "create", name: "Add interface", route: "/new_configuration" },
+  { id: "restore", name: "Restore", route: "/restore_configuration" },
+  { id: "clients", name: "WG clients", route: "/clients" },
+  { id: "peer-defaults", name: "Peer defaults", route: "/settings/peers_settings" },
+  { id: "interface-settings", name: "Interface settings", route: "/settings/wireguard_settings" },
+  { id: "webhooks", name: "Webhooks", route: "/webhooks" },
+];
+
+function Dashboard({ route, title }: { route: string; title: string }) {
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
   const [generation, setGeneration] = useState(0);
@@ -74,17 +84,31 @@ function Dashboard() {
     const timer = window.setInterval(() => void open(), 240000);
     return () => { active = false; window.clearInterval(timer); };
   }, [generation]);
+  useEffect(() => {
+    const expired = (event: MessageEvent) => {
+      const frame = document.querySelector<HTMLIFrameElement>('iframe[title="WireGuard management"]');
+      if (event.origin !== window.location.origin || event.source !== frame?.contentWindow) return;
+      if (event.data?.type === "cmh-vpn-session-error") {
+        setUrl("");
+        setError("The management session or service is unavailable. Reload the workspace to reconnect using your Hub account.");
+      }
+    };
+    window.addEventListener("message", expired);
+    return () => window.removeEventListener("message", expired);
+  }, []);
   return <div className="space-y-4">
-    <div className="flex flex-wrap items-center justify-between gap-3"><p className="text-sm text-text-secondary">WGDashboard 4.3.4 · Full management workspace · Instance administrators only</p><Button variant="secondary" onClick={() => { setUrl(""); setGeneration((n) => n + 1); }}>Reload workspace</Button></div>
+    <div className="flex flex-wrap items-center justify-between gap-3"><p className="text-sm text-text-secondary">{title} · Managed with your Hub administrator account</p><Button variant="secondary" onClick={() => { setUrl(""); setGeneration((n) => n + 1); }}>Reload workspace</Button></div>
     {error && <Callout variant="error">{error}</Callout>}
-    {url && <iframe key={generation} title="WGDashboard administration" src={url} className="w-full min-h-[75vh] rounded-2xl border border-border bg-surface" referrerPolicy="same-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-popups" />}
+    {url && <iframe key={generation} title="WireGuard management" src={`${url}#${route}`} className="w-full min-h-[75vh] rounded-2xl border border-border bg-surface" referrerPolicy="same-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-popups" />}
   </div>;
 }
 
 export default function WireGuard() {
   const userId = useAuthStore((s) => s.userId);
   const isAdmin = useAuthStore((s) => s.isAdmin);
-  const [tab, setTab] = useState("mine");
+  const [tab, setTab] = useState(isAdmin ? "interfaces" : "mine");
+  useEffect(() => { setTab(isAdmin ? "interfaces" : "mine"); }, [isAdmin, userId]);
+  const section = managementSections.find((item) => item.id === tab);
   const [error, setError] = useState("");
   const [qr, setQr] = useState("");
   useEffect(() => { setQr(""); setError(""); }, [userId]);
@@ -104,7 +128,7 @@ export default function WireGuard() {
     <Callout variant="info">Local preparation: management is available here. A reachable Ubuntu VPN host and endpoint are still needed before these configurations can provide a real remote connection.</Callout>
     {status.error && <Callout variant="error">{status.error.message}</Callout>}
     {status.data && !status.data.connected && <Callout variant="warning">WGDashboard is not ready. Ask an instance administrator to check the VPN service.</Callout>}
-    <div role="tablist" aria-label="WireGuard sections" className="flex gap-2 flex-wrap border-b border-border pb-3">{[{ id: "mine", name: "My configurations" }, ...(isAdmin ? [{ id: "admin", name: "Administration" }, { id: "assign", name: "User assignments" }] : [])].map((item) => <button key={item.id} role="tab" aria-selected={tab === item.id} className={`px-4 py-2 rounded-lg text-sm ${tab === item.id ? "bg-primary/15 text-primary" : "text-text-secondary hover:bg-hover-medium"}`} onClick={() => { setTab(item.id); setQr(""); if (item.id === "mine") void assignments.refetch(); }}>{item.name}</button>)}</div>
+    <div role="tablist" aria-label="WireGuard sections" className="flex gap-2 flex-wrap border-b border-border pb-3">{[{ id: "mine", name: "My configurations" }, ...(isAdmin ? [...managementSections, { id: "assign", name: "User assignments" }] : [])].map((item) => <button key={item.id} role="tab" aria-selected={tab === item.id} className={`px-4 py-2 rounded-lg text-sm ${tab === item.id ? "bg-primary/15 text-primary" : "text-text-secondary hover:bg-hover-medium"}`} onClick={() => { setTab(item.id); setQr(""); if (item.id === "mine") void assignments.refetch(); }}>{item.name}</button>)}</div>
     {tab === "mine" && <div className="space-y-4">
       {(error || assignments.error) && <Callout variant="error">{error || assignments.error?.message}</Callout>}
       {assignments.isLoading && <p className="text-text-secondary">Loading your configurations…</p>}
@@ -112,7 +136,7 @@ export default function WireGuard() {
       {assignments.data?.map((item) => <Card key={item.id} className="p-5 flex flex-wrap gap-4 items-center justify-between"><div><h2 className="font-semibold">{item.label}</h2><p className="text-xs text-text-muted mt-1">{item.configuration} · Personal configuration</p></div><div className="flex gap-2"><Button variant="secondary" icon={<QrCodeIcon className="w-4 h-4" />} onClick={() => void download(item, true)}>QR code</Button><Button icon={<ArrowDownTrayIcon className="w-4 h-4" />} onClick={() => void download(item)}>Download .conf</Button></div></Card>)}
       {qr && <Card className="p-5 max-w-sm"><h2 className="font-semibold">Scan with your WireGuard app</h2><p className="text-xs text-text-secondary my-3">This code contains your private configuration. Keep it secret.</p><img src={qr} alt="Private WireGuard configuration QR code" className="w-full rounded-lg" /><Button className="mt-3" variant="secondary" onClick={() => setQr("")}>Hide QR code</Button></Card>}
     </div>}
-    {isAdmin && tab === "admin" && <Dashboard />}
+    {isAdmin && section && <Dashboard route={section.route} title={section.name} />}
     {isAdmin && tab === "assign" && <AssignmentManager />}
   </div>;
 }
