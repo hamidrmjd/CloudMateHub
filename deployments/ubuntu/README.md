@@ -1,9 +1,37 @@
-# Ubuntu deployment
+# Deploy CloudMateHub on Ubuntu
 
-Prerequisites: Ubuntu 24.04+ with Docker Engine, Docker Compose v2.24.4+ (for `!override`), Git, Make and OpenSSL. Do not copy macOS container images to a different CPU architecture; build on the target.
+Use Ubuntu 24.04 or newer on amd64 or arm64 with Docker Engine, Docker Compose v2.24.4 or newer, Git, Make, and OpenSSL. Run as a user with Docker access.
 
-Copy this source checkout to the Ubuntu Project directory, excluding `.git`, `.env.override`, private keys and deployment logs. Preserve upstream LICENSE.md. Copy `deployments/ubuntu/env.example` to `.env.override` and replace `REPLACE_WITH_RANDOM_PASSWORD` with a fresh value, for example from `openssl rand -hex 32`. Set file permissions to 600.
+## Fresh installation
 
-Run `./deployments/cloudmatehub build` then `./deployments/cloudmatehub start`. The initial defaults bind HTTP 8080 and SSH 2222 to localhost only. Use an SSH port forward to reach initial setup, or deliberately configure a trusted interface/domain and HTTPS following the upstream deployment documentation before granting remote access. Never expose the first-admin setup publicly.
+```bash
+git clone git@github.com:hamidrmjd/CloudMateHub.git
+cd CloudMateHub
+(
+  umask 077
+  set -C
+  db_password=$(openssl rand -hex 32) || exit 1
+  sed "s/REPLACE_WITH_RANDOM_PASSWORD/$db_password/" deployments/ubuntu/env.example > .env.override
+)
+```
 
-Production DNS, HTTPS, firewall rules, backups and a reachable public/internal hostname require the actual server details. This baseline does not enroll a host agent or modify host SSH. Each future target platform/application can be given its own directory.
+Check that the rendered image names include hamid001/cloudmatehub-server and the other hamid001/cloudmatehub images. If the registry requires authentication, run docker login --username hamid001 with the same server account that runs Compose.
+
+```bash
+./bin/docker-compose config --images
+./bin/docker-compose pull &&
+  ./deployments/cloudmatehub start &&
+  ./deployments/cloudmatehub status
+```
+
+From your computer, forward the dashboard port through your server's SSH login.
+
+```bash
+ssh -N -L 8080:127.0.0.1:8080 ubuntu@SERVER_IP
+```
+
+Open [initial setup](http://localhost:8080/setup) and create the first administrator. For LAN access after setup, set SHELLHUB_BIND_ADDRESS and SHELLHUB_DOMAIN to the server's LAN IP in .env.override and rerun the start command.
+
+## Existing installation
+
+Run git pull --ff-only and add the three Docker Hub settings from [env.example](env.example) to your existing .env.override. Preserve the other settings, keys and volumes. Run the image check, pull and start commands above.

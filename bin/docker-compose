@@ -111,6 +111,14 @@ if [ -n "$storage_compose" ]; then
     fi
     COMPOSE_FILE="${COMPOSE_FILE}:${storage_compose}"
 fi
+image_compose=$(env_var CLOUDMATEHUB_IMAGE_COMPOSE_FILE "")
+if [ -n "$image_compose" ]; then
+    if [ ! -f "$image_compose" ]; then
+        echo "Image compose file does not exist: $image_compose" >&2
+        exit 1
+    fi
+    COMPOSE_FILE="${COMPOSE_FILE}:${image_compose}"
+fi
 export COMPOSE_FILE
 
 installed_playwright_version() {
