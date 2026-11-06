@@ -99,19 +99,21 @@ func groupFilter(c Config, filter string) string {
 	return filter
 }
 
+func isGroupMember(conn ldapConnection, groupDN, userDN, username string) bool {
+	dn := ldap.EscapeFilter(userDN)
+	login := ldap.EscapeFilter(username)
+	group, err := conn.Search(ldap.NewSearchRequest(groupDN, ldap.ScopeBaseObject, ldap.NeverDerefAliases, 1, 5, false, "(|(member="+dn+")(uniqueMember="+dn+")(memberUid="+login+"))", []string{"dn"}, nil))
+	return err == nil && group != nil && len(group.Entries) == 1
+}
+
 func lookup(conn ldapConnection, c Config, filter string) (person, error) {
 	r, err := conn.Search(ldap.NewSearchRequest(c.BaseDN, ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 2, 5, false, groupFilter(c, filter), []string{c.IDAttribute, c.UsernameAttribute, c.EmailAttribute, c.NameAttribute}, nil))
 	if err != nil || r == nil || len(r.Entries) != 1 {
 		return person{}, ErrDenied
 	}
 	e := r.Entries[0]
-	if c.Kind == "openldap" && c.RequiredGroup != "" {
-		dn := ldap.EscapeFilter(e.DN)
-		login := ldap.EscapeFilter(e.GetAttributeValue(c.UsernameAttribute))
-		group, err := conn.Search(ldap.NewSearchRequest(c.RequiredGroup, ldap.ScopeBaseObject, ldap.NeverDerefAliases, 1, 5, false, "(|(member="+dn+")(uniqueMember="+dn+")(memberUid="+login+"))", []string{"dn"}, nil))
-		if err != nil || group == nil || len(group.Entries) != 1 {
-			return person{}, ErrDenied
-		}
+	if c.Kind == "openldap" && c.RequiredGroup != "" && !isGroupMember(conn, c.RequiredGroup, e.DN, e.GetAttributeValue(c.UsernameAttribute)) {
+		return person{}, ErrDenied
 	}
 	p := person{Stable: e.GetRawAttributeValue(c.IDAttribute), Login: e.GetAttributeValue(c.UsernameAttribute), Email: strings.ToLower(e.GetAttributeValue(c.EmailAttribute)), Name: e.GetAttributeValue(c.NameAttribute), DN: e.DN}
 	address, err := mail.ParseAddress(p.Email)

@@ -162,3 +162,32 @@ func (m *Manager) ValidateUser(ctx context.Context, u *models.User) error {
 	_ = m.cache.Set(ctx, key, true, time.Minute)
 	return nil
 }
+
+// InWebsiteGroup resolves membership using the authenticated account's stable
+// directory identity and the currently enabled directory connection.
+func (m *Manager) InWebsiteGroup(ctx context.Context, u *models.User, kind, groupDN string) bool {
+	c, revision, stable, err := m.userProfile(u)
+	if err != nil || c.Kind != kind {
+		return false
+	}
+	conn, err := m.connect(ctx, c)
+	if err != nil {
+		return false
+	}
+	defer conn.Close()
+	if conn.Bind(c.BindDN, c.BindPassword) != nil {
+		return false
+	}
+	filter := stableFilter(c, stable)
+	if kind == "ad" {
+		filter = "(&" + filter + "(memberOf:1.2.840.113556.1.4.1941:=" + ldap.EscapeFilter(groupDN) + "))"
+	}
+	p, err := lookup(conn, c, filter)
+	if err != nil {
+		return false
+	}
+	if kind == "openldap" && !isGroupMember(conn, groupDN, p.DN, p.Login) {
+		return false
+	}
+	return m.unchanged(c, revision)
+}

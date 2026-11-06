@@ -47,3 +47,9 @@ Migration 051 adds AD/LDAP origin values and the LDAP authentication method with
 A matching trusted HTTPS certificate must be activated before entering directory credentials. This feature does not obtain certificates or configure a customer's directory server. No real directory was supplied during implementation; protocol, authentication and UI tests use isolated fixtures. Configure and test each real connection before enabling it. Enable first-sign-in account creation explicitly. For access revocation, remove group eligibility or disable the directory; existing SSH streams follow their normal lifecycle.
 
 Related: [[06 Data and Trust]], [[09 HTTPS and Recovery]], [[07 Development and Deployment]].
+
+## Assigned websites
+
+The authenticated website catalog stores its configuration in `websites.json` in the directory-state volume. Instance admins manage entries. The server matches assignments against the authenticated Hub account, current namespace membership, and directory membership resolved using the account's stable directory identifier. Active Directory checks nested membership. OpenLDAP checks direct membership via member, uniqueMember, or memberUid. Directory errors fail closed for the affected assignment. Direct links use the user's browser and network.
+
+No persistent test fixtures were created, so no cleanup was needed.

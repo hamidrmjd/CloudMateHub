@@ -45,6 +45,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const PublicKeys = lazy(() => import("./pages/public-keys"));
 const AccessPolicies = lazy(() => import("./pages/access-policies"));
 const DirectorySettings = lazy(() => import("./pages/settings/DirectorySettings"));
+const Websites = lazy(() => import("./pages/Websites"));
 const BrowserConsole = lazy(() => import("./pages/BrowserConsole"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const StorageSettings = lazy(() => import("./pages/settings/StorageSettings"));
@@ -218,6 +219,7 @@ export default function App() {
                     />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/devices" element={<Devices />} />
+                    <Route path="/websites" element={<Websites />} />
                     <Route path="/console" element={<BrowserConsole />} />
                     <Route
                       path="/devices/pending"

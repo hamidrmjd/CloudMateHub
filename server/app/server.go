@@ -38,6 +38,7 @@ import (
 	"github.com/shellhub-io/shellhub/server/ssh/session"
 	"github.com/shellhub-io/shellhub/server/ssh/web"
 	"github.com/shellhub-io/shellhub/server/vpn"
+	"github.com/shellhub-io/shellhub/server/websites"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -351,6 +352,11 @@ func (s *Server) Setup(ctx context.Context) error {
 	directories.Register(s.router, service)
 	s.authn.AllowAnonymous("GET", "/api/auth/directories")
 	s.authn.AllowAnonymous("POST", "/api/auth/directory")
+	catalog, err := websites.New(directoryDir, store, directories.InWebsiteGroup)
+	if err != nil {
+		return fmt.Errorf("initialize website catalog: %w", err)
+	}
+	catalog.Register(s.router)
 	vpn.RegisterDirectory(s.router, store)
 	recordingStore.Register(s.router)
 	go recordingStore.Run(ctx)
@@ -611,7 +617,8 @@ func openAPIValidationSkipper(ctx *echo.Context) bool {
 	}
 
 	switch path {
-	case sshhttp.HandleConnectionV1Path,
+	case websites.Path,
+		sshhttp.HandleConnectionV1Path,
 		sshhttp.HandleConnectionV2Path,
 		sshhttp.HandleRevdialPath,
 		web.WebsocketSSHBridgeRoute,
@@ -619,7 +626,7 @@ func openAPIValidationSkipper(ctx *echo.Context) bool {
 		return true
 	}
 
-	for _, prefix := range []string{"/metrics", "/internal", "/mcp"} {
+	for _, prefix := range []string{websites.Path + "/", "/metrics", "/internal", "/mcp"} {
 		if strings.HasPrefix(path, prefix) {
 			return true
 		}

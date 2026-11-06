@@ -136,7 +136,7 @@ function buildSections(isNewNamespace: boolean, isAdmin = false): NavSection[] {
     },
     {
       title: "Resources",
-      items: resources,
+      items: [...resources, { to: "/websites", label: "Websites", icon: <GlobeAltIcon className={navIcon} /> }],
     },
     {
       title: "SSH",
