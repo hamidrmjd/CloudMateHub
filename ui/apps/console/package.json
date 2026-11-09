@@ -17,15 +17,15 @@
     "e2e:browsers": "playwright install --with-deps chromium"
   },
   "dependencies": {
+    "@cloudmatehub/design-system": "*",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@hey-api/openapi-ts": "^0.99.0",
     "@hookform/resolvers": "^3.10.0",
-    "@cloudmatehub/design-system": "*",
     "@stripe/react-stripe-js": "^3.11.0",
     "@stripe/stripe-js": "^4.8.0",
-    "@tanstack/react-query": "^5.104.2",
+    "@tanstack/react-query": "^5.105.2",
     "@xterm/addon-fit": "^0.11.0",
     "@xterm/addon-web-links": "^0.12.0",
     "@xterm/addon-webgl": "^0.19.0",
@@ -36,15 +36,15 @@
     "react-day-picker": "^10.0.2",
     "sshpk": "^1.18.0",
     "zod": "^3.25.76",
-    "zustand": "^5.0.15"
+    "zustand": "^5.0.16"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
-    "@tanstack/react-query-devtools": "^5.104.2",
+    "@tanstack/react-query-devtools": "^5.105.2",
     "@types/node-rsa": "^1.1.4",
     "@types/sshpk": "^1.17.5",
     "@xmldom/xmldom": "^0.8.15",
     "msw": "^2.15.0",
-    "xml-crypto": "^6.3.3"
+    "xml-crypto": "^6.4.0"
   }
 }
