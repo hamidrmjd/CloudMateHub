@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import NamespaceNameField from "./fields/NamespaceNameField";
 import { NAMESPACE_NAME_MIN_LENGTH } from "@/utils/validation";
 import { isEnterpriseOrCloud } from "@/env";
+import { useAuthStore } from "@/stores/authStore";
 import { useNamespaceCreateForm } from "@/hooks/useNamespaceCreateForm";
 
 const FORM_ID = "create-namespace-form";
@@ -23,10 +24,11 @@ export default function CreateNamespaceDialog({
 }: CreateNamespaceDialogProps) {
   const autoId = useId();
   const inputId = `create-ns-input-${autoId}`;
-  const isPremium = isEnterpriseOrCloud();
+  const isAdmin = useAuthStore((state) => state.isAdmin);
+  const canCreate = isAdmin || isEnterpriseOrCloud();
   const form = useNamespaceCreateForm(onClose);
 
-  if (!isPremium) return null;
+  if (!canCreate) return null;
 
   return (
     <Modal

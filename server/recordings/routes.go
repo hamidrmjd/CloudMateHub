@@ -44,6 +44,28 @@ func (m *Manager) Register(router *echo.Echo) {
 	}
 	router.POST("/api/storage/test", configure(false))
 	router.PUT("/api/storage", configure(true))
+	router.PUT("/api/storage/retention", gateway.Handler(func(c *gateway.Context) error {
+		if !c.IsAdmin() {
+			return c.NoContent(http.StatusForbidden)
+		}
+		var req struct {
+			Days *int `json:"days"`
+		}
+		if err := c.Bind(&req); err != nil || req.Days == nil || *req.Days < 0 || *req.Days > 3650 {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Enter 0 to disable retention or 1–3650 days."})
+		}
+		m.work.Lock()
+		defer m.work.Unlock()
+		m.mu.Lock()
+		defer m.mu.Unlock()
+		next := m.state
+		next.RetentionDays = *req.Days
+		if err := m.save(next); err != nil {
+			return c.JSON(http.StatusServiceUnavailable, map[string]string{"error": "Retention settings could not be saved."})
+		}
+		m.state = next
+		return c.JSON(http.StatusOK, map[string]bool{"ok": true})
+	}))
 	route := "/api/sessions/:uid/records/:seat"
 	resolve := func(c *gateway.Context, p authorizer.Permission) (*models.Session, int, error) {
 		if !c.Role().HasPermission(p) {

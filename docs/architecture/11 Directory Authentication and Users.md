@@ -53,3 +53,5 @@ Related: [[06 Data and Trust]], [[09 HTTPS and Recovery]], [[07 Development and 
 The authenticated website catalog stores its configuration in `websites.json` in the directory-state volume. Instance admins manage entries. The server matches assignments against the authenticated Hub account, current namespace membership, and directory membership resolved using the account's stable directory identifier. Active Directory checks nested membership. OpenLDAP checks direct membership via member, uniqueMember, or memberUid. Directory errors fail closed for the affected assignment. Direct links use the user's browser and network.
 
 No persistent test fixtures were created, so no cleanup was needed.
+
+Instance administrators can create local users and namespace groups from User Management over HTTP. Directory authentication and directory credential setup still require trusted HTTPS. HTTP does not encrypt local account passwords.

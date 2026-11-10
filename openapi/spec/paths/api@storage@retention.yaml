@@ -1,0 +1,30 @@
+put:
+  operationId: updateRecordingRetention
+  summary: Set automatic cleanup for completed recordings
+  description: Instance administrators only. Zero disables recording cleanup. Session history remains available.
+  security:
+    - jwt: []
+  tags: [community, storage]
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required: [days]
+          properties:
+            days:
+              type: integer
+              minimum: 0
+              maximum: 3650
+  responses:
+    '200':
+      description: Retention settings saved.
+    '400':
+      description: Invalid retention window.
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '503':
+      description: Settings could not be saved.

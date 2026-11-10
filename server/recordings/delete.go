@@ -13,6 +13,10 @@ import (
 func (m *Manager) Delete(ctx context.Context, s *models.Session) error {
 	m.work.Lock()
 	defer m.work.Unlock()
+	return m.deleteLocked(ctx, s)
+}
+
+func (m *Manager) deleteLocked(ctx context.Context, s *models.Session) error {
 	// Delete only objects referenced by this exact session's owned manifests.
 	for _, seat := range s.Events.Seats {
 		a, c, err := m.archived(s.UID, seat)

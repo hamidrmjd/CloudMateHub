@@ -71,6 +71,9 @@ func (h *Handler) GetNamespaceList(c *gateway.Context) error {
 
 // CreateNamespace creates a namespace owned by the caller.
 func (h *Handler) CreateNamespace(c *gateway.Context) error {
+	if !h.edition.IsEnterpriseOrCloud() && !c.IsAdmin() {
+		return c.NoContent(http.StatusForbidden)
+	}
 	req := new(requests.NamespaceCreate)
 
 	if err := c.Bind(req); err != nil {

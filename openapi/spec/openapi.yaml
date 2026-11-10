@@ -252,6 +252,8 @@ paths:
     $ref: paths/api@sessions@{uid}@close.yaml
   /api/storage:
     $ref: paths/api@storage.yaml
+  /api/storage/retention:
+    $ref: paths/api@storage@retention.yaml
   /api/storage/test:
     $ref: paths/api@storage@test.yaml
   /api/sessions/{uid}/records/{seat}:

@@ -202,9 +202,6 @@ func (m *Manager) registerUsers(router *echo.Echo) {
 		if !c.IsAdmin() {
 			return c.NoContent(403)
 		}
-		if !secure(c) {
-			return c.JSON(400, map[string]string{"error": "Enable trusted HTTPS before creating accounts"})
-		}
 		var req struct {
 			Name     string `json:"name"`
 			Username string `json:"username"`

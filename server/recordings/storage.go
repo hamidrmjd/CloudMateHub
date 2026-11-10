@@ -46,6 +46,7 @@ type Config struct {
 }
 type state struct {
 	Current string            `json:"current"`
+	RetentionDays int         `json:"retention_days"`
 	Targets map[string]Config `json:"targets"`
 }
 type archive struct {
@@ -195,7 +196,7 @@ func redacted(c Config) Config {
 func (m *Manager) Status() map[string]any {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	return map[string]any{"config": redacted(m.state.Targets[m.state.Current]), "recording_required": true, "last_error": m.lastError, "last_success": m.lastSuccess, "pending": m.pending, "capture_buffer": "PostgreSQL", "scope": "Completed session recordings"}
+	return map[string]any{"config": redacted(m.state.Targets[m.state.Current]), "recording_required": true, "retention_days": m.state.RetentionDays, "last_error": m.lastError, "last_success": m.lastSuccess, "pending": m.pending, "capture_buffer": "PostgreSQL", "scope": "Completed session recordings"}
 }
 func (m *Manager) prepare(c Config) (Config, error) {
 	m.mu.Lock()
@@ -322,7 +323,7 @@ func (m *Manager) Configure(ctx context.Context, c Config, save bool) error {
 		targets[k] = v
 	}
 	targets[c.ID] = c
-	s := state{Current: c.ID, Targets: targets}
+	s := state{Current: c.ID, Targets: targets, RetentionDays: m.state.RetentionDays}
 	if err = m.save(s); err != nil {
 		return err
 	}
@@ -698,6 +699,7 @@ func (m *Manager) Sweep(ctx context.Context) error {
 	m.mu.Lock()
 	m.page++
 	page := m.page
+	retention := m.state.RetentionDays
 	m.mu.Unlock()
 	list, count, err := m.db.SessionList(ctx, scope.NewUnbounded("archive completed recordings to the instance administrator's configured destination"), m.db.Options().Paginate(&query.Paginator{Page: page, PerPage: 50}))
 	if err != nil {
@@ -707,6 +709,18 @@ func (m *Manager) Sweep(ctx context.Context) error {
 		m.mu.Lock()
 		m.page = 0
 		m.mu.Unlock()
+	}
+	cutoff := time.Now().AddDate(0, 0, -retention)
+	var pruneErr error
+	for i := range list {
+		s := &list[i]
+		if retention > 0 && s.Recorded && !s.Active && !s.LastSeen.IsZero() && s.LastSeen.Before(cutoff) {
+			if err := m.deleteLocked(ctx, s); err != nil {
+				pruneErr = errors.New("Recording retention could not remove all expired recordings. Cleanup will retry.")
+			}
+			// Skip archiving this recording even when deletion must be retried.
+			s.Recorded = false
+		}
 	}
 	pending := 0
 	for i := range list {
@@ -731,6 +745,9 @@ func (m *Manager) Sweep(ctx context.Context) error {
 	m.pending = 0
 	m.lastSuccess = time.Now().UTC()
 	m.lastError = ""
+	if pruneErr != nil {
+		m.lastError = pruneErr.Error()
+	}
 	m.mu.Unlock()
 	return nil
 }

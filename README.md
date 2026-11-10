@@ -127,7 +127,7 @@ Instance admins can open **Settings → Storage & Recordings** to select local d
 
 Instance admins can open **Settings → Directory connections** to configure Active Directory and OpenLDAP independently, test the encrypted connection, and check a user sign-in without creating an account. Both directories can be enabled together. The separate **User Management** tab lists Local, Active Directory and OpenLDAP accounts and creates local members; use **Team** for namespace access.
 
-Activate trusted HTTPS before entering directory or new-account passwords. Directory connections require LDAPS or mandatory StartTLS, verified certificates and an optional private CA. Local administrator sign-in stays available. Directory account creation on first sign-in is an explicit option; new accounts get no admin privileges or device access. Accounts are matched by permanent directory ID, never merged by email. Disabled AD accounts and required-group restrictions are checked at login and periodically while using Hub tokens.
+Directory sign-in and directory credential setup require trusted HTTPS. Instance admins can create local users and namespace groups from **User Management** over HTTP or HTTPS. Use a trusted network for HTTP because it does not encrypt account passwords. Directory connections require LDAPS or mandatory StartTLS, verified certificates and an optional private CA. Local administrator sign-in stays available. Directory account creation on first sign-in is an explicit option; new accounts get no admin privileges or device access. Accounts are matched by permanent directory ID, never merged by email. Disabled AD accounts and required-group restrictions are checked at login and periodically while using Hub tokens.
 
 Back up the new `directory-state` volume privately alongside PostgreSQL. It contains encrypted connection settings and their encryption key. No real directory is configured automatically. [Connection setup, identity flow and operational limits](docs/architecture/11%20Directory%20Authentication%20and%20Users.md).
 
@@ -169,6 +169,10 @@ Use the versioned tag for repeatable deployment. `latest` tracks the newest publ
 To publish a subsequent release after `docker login`, run `python3 deployments/publish-dockerhub.py hamidrazavi000 --tag <release-tag>`. The script publishes the five production images for AMD64 and ARM64 using Docker credential storage. `--dry-run` displays destinations without uploading. Do not enable the pull-only image override on the build machine.
 
 For unattended updates on an amd64 server, see the [automated image update instructions](deployments/ubuntu/README.md#automated-image-updates).
+
+## Recording retention
+
+Instance admins can set automatic recording cleanup in **Settings → Storage & Recordings**. The retention window starts at the completed session’s last activity. Set it to 0 to disable this cleanup. Session history remains available.
 
 ## Assigned websites
 

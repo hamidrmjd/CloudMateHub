@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Callout, Card } from "@cloudmatehub/design-system/primitives";
+import CreateNamespaceDialog from "@/components/common/CreateNamespaceDialog";
 import { useAuthStore } from "@/stores/authStore";
 import { directoryRequest, directoryInput } from "@/api/directory";
 type User = { id: string; username: string; name: string; email: string; origin: string; admin: boolean; status: string; awaiting_approval: boolean };
@@ -12,6 +13,7 @@ export default function UserManagement() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [kind, setKind] = useState("local");
+  const [createGroup, setCreateGroup] = useState(false);
   const [create, setCreate] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
@@ -27,12 +29,13 @@ export default function UserManagement() {
   };
   return <div className="space-y-5"><h1 className="text-2xl font-semibold">User Management</h1><p className="text-sm text-text-secondary">Manage Local, Active Directory and OpenLDAP accounts. Namespace permissions and invitations are managed in <Link className="underline" to="/team">Team</Link>.</p>
     {message && <Callout variant="success">{message}</Callout>}{(error || users.error) && <Callout variant="error">{error || users.error?.message}</Callout>}
-    <div className="flex gap-3"><Button onClick={() => setCreate(!create)}>Add user</Button><Link className="underline self-center text-sm" to="/settings/directories">Directory connections</Link></div>
+    <div className="flex gap-3"><Button onClick={() => setCreate(!create)}>Add user</Button><Button variant="secondary" onClick={() => setCreateGroup(true)}>Add group</Button><Link className="underline self-center text-sm" to="/settings/directories">Directory connections</Link></div>
+    {createGroup && <CreateNamespaceDialog open onClose={() => setCreateGroup(false)} />}
     {create && <Card className="p-5 space-y-4"><label className="block text-sm">Account type<select className={directoryInput} value={kind} onChange={(e) => { setKind(e.target.value); setForm((f) => ({ ...f, password: "" })); }}><option value="local">Local</option><option value="ad">Active Directory</option><option value="openldap">OpenLDAP</option></select></label>
       {kind !== "local" ? <p className="text-sm">Configure and test the {kind === "ad" ? "Active Directory" : "OpenLDAP"} connection in <Link className="underline" to="/settings/directories">Directory connections</Link>, then enable account creation on first sign-in. Directory passwords stay managed by your directory.</p> : <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); void submit(); }}>
-        {location.protocol !== "https:" && <Callout variant="warning">Enable trusted HTTPS before entering a new account password.</Callout>}
-        {(["name", "username", "email", "password"] as const).map((key) => <label className="block text-sm capitalize" key={key}>{key}<input className={directoryInput} required minLength={key === "password" ? 12 : key === "username" ? 3 : 1} maxLength={key === "password" || key === "username" ? 32 : key === "name" ? 64 : 320} type={key === "password" ? "password" : key === "email" ? "email" : "text"} autoComplete={key === "password" ? "new-password" : "off"} disabled={busy || (key === "password" && location.protocol !== "https:")} value={form[key]} onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))} /></label>)}
-        <p className="text-sm text-text-secondary">Local accounts start without admin privileges or namespace access. Share the initial password securely.</p><Button type="submit" disabled={busy || location.protocol !== "https:"}>Create local account</Button>
+        {location.protocol !== "https:" && <Callout variant="warning">This connection uses HTTP. The new account password will travel without encryption.</Callout>}
+        {(["name", "username", "email", "password"] as const).map((key) => <label className="block text-sm capitalize" key={key}>{key}<input className={directoryInput} required minLength={key === "password" ? 12 : key === "username" ? 3 : 1} maxLength={key === "password" || key === "username" ? 32 : key === "name" ? 64 : 320} type={key === "password" ? "password" : key === "email" ? "email" : "text"} autoComplete={key === "password" ? "new-password" : "off"} disabled={busy} value={form[key]} onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))} /></label>)}
+        <p className="text-sm text-text-secondary">Local accounts start without admin privileges or namespace access. Share the initial password securely.</p><Button type="submit" disabled={busy}>Create local account</Button>
       </form>}
     </Card>}
     <label className="block text-sm max-w-md">Search username<input className={directoryInput} value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} /></label>
