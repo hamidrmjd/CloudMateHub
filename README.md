@@ -147,14 +147,14 @@ CloudMateHub deployment uses the `cloudmatehub` Compose project and locally buil
 
 Follow the [Ubuntu deployment guide](deployments/ubuntu/README.md) for a fresh installation or an upgrade.
 
-The Docker Hub deployment override selects `hamid001/cloudmatehub-server`, `cloudmatehub-ui`, `cloudmatehub-gateway`, `cloudmatehub-https-manager` and `cloudmatehub-wgdashboard`. VPN broker and WGDashboard use the same WireGuard integration image. It removes local build definitions. Registry publication must complete before these commands can succeed.
+The Docker Hub deployment override selects `hamidrazavi000/cloudmatehub-server`, `cloudmatehub-ui`, `cloudmatehub-gateway`, `cloudmatehub-https-manager` and `cloudmatehub-wgdashboard`. VPN broker and WGDashboard use the same WireGuard integration image. It removes local build definitions. Registry publication must complete before these commands can succeed.
 
 Add to the server's private `.env.override`:
 
 ```dotenv
 CLOUDMATEHUB_IMAGE_COMPOSE_FILE=deployments/compose.dockerhub.yml
-CLOUDMATEHUB_DOCKERHUB_NAMESPACE=hamid001
-CLOUDMATEHUB_IMAGE_TAG=2026.11.05-9a6b015f8
+CLOUDMATEHUB_DOCKERHUB_NAMESPACE=hamidrazavi000
+CLOUDMATEHUB_IMAGE_TAG=REPLACE_WITH_PUBLISHED_TAG
 ```
 
 Then run:
@@ -166,7 +166,7 @@ Then run:
 
 Use the versioned tag for repeatable deployment. `latest` tracks the newest published build. Preserve existing signing keys, `.env.override` and data volumes. Fresh servers still need their normal configuration and initial administrator setup. Standard PostgreSQL/Valkey images are pulled separately. Images contain application code, not your local database, accounts, certificates or recordings. Private repositories require `docker login` on the destination server.
 
-To publish a subsequent release after `docker login`, run `python3 deployments/publish-dockerhub.py hamid001 --tag <release-tag>`. The script publishes the five production images for AMD64 and ARM64 using Docker credential storage. `--dry-run` displays destinations without uploading. Do not enable the pull-only image override on the build machine.
+To publish a subsequent release after `docker login`, run `python3 deployments/publish-dockerhub.py hamidrazavi000 --tag <release-tag>`. The script publishes the five production images for AMD64 and ARM64 using Docker credential storage. `--dry-run` displays destinations without uploading. Do not enable the pull-only image override on the build machine.
 
 For unattended updates on an amd64 server, see the [automated image update instructions](deployments/ubuntu/README.md#automated-image-updates).
 

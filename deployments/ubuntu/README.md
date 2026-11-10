@@ -15,7 +15,9 @@ cd CloudMateHub
 )
 ```
 
-Check that the rendered image names include hamid001/cloudmatehub-server and the other hamid001/cloudmatehub images. If the registry requires authentication, run docker login --username hamid001 with the same server account that runs Compose.
+In `.env.override`, replace `REPLACE_WITH_PUBLISHED_TAG` with a tag published under `hamidrazavi000`.
+
+Check that the rendered image names include hamidrazavi000/cloudmatehub-server and the other hamidrazavi000/cloudmatehub images. If the registry requires authentication, run docker login --username hamidrazavi000 with the same server account that runs Compose.
 
 ```bash
 ./bin/docker-compose config --images
@@ -39,7 +41,7 @@ Run git pull --ff-only and add the three Docker Hub settings from [env.example](
 ## Automated image updates
 
 For `hamidrmjd/CloudMateHub`, add a Docker Hub token with write access to the
-five `hamid001/cloudmatehub-*` repositories as the GitHub Actions repository
+five `hamidrazavi000/cloudmatehub-*` repositories as the GitHub Actions repository
 secret `CLOUDMATEHUB_DOCKERHUB_TOKEN`. The Publish CloudMateHub images workflow
 builds Linux amd64 images on pushes to main and creates a Git tag only after
 every image is published. It can also be run manually from GitHub Actions.
