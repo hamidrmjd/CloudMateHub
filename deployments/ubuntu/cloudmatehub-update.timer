@@ -1,0 +1,9 @@
+[Unit]
+Description=Check for a published CloudMateHub release every ten minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=10min
+
+[Install]
+WantedBy=timers.target

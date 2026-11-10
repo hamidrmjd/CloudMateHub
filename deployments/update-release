@@ -1,0 +1,34 @@
+#!/bin/sh
+set -eu
+umask 077
+
+cd "$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+exec 9>.cloudmatehub-update.lock
+flock -n 9 || exit 0
+
+config=./.env.override
+test -f "$config"
+grep -qx 'CLOUDMATEHUB_IMAGE_COMPOSE_FILE=deployments/compose.dockerhub.yml' "$config"
+
+refs=$(git ls-remote --refs --tags --sort=-version:refname origin 'refs/tags/cloudmatehub-release-*')
+release=$(printf '%s\n' "$refs" | awk '$2 ~ /^refs\/tags\/cloudmatehub-release-[0-9]+-[0-9]+-[a-f0-9]+$/ { sub(/^refs\/tags\/cloudmatehub-/, "", $2); print $2; exit }')
+[ -n "$release" ] || exit 0
+
+current=$(sed -n 's/^CLOUDMATEHUB_IMAGE_TAG=//p' "$config")
+[ "$current" != "$release" ] || exit 0
+
+candidate=$(mktemp ./.env.release.XXXXXX)
+trap 'rm -f "$candidate"' EXIT
+awk '!/^CLOUDMATEHUB_IMAGE_TAG=/' "$config" > "$candidate"
+printf '\nCLOUDMATEHUB_IMAGE_TAG=%s\n' "$release" >> "$candidate"
+
+echo "Pulling CloudMateHub $release"
+ENV_OVERRIDE="$candidate" ./bin/docker-compose pull server ui gateway https-manager wgdashboard vpn-broker
+if ENV_OVERRIDE="$candidate" ./deployments/cloudmatehub start; then
+    mv "$candidate" "$config"
+    echo "Activated CloudMateHub $release"
+else
+    echo "Release $release failed its startup checks. Restoring the configured release." >&2
+    ./deployments/cloudmatehub start
+    exit 1
+fi

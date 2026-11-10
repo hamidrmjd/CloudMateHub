@@ -168,6 +168,8 @@ Use the versioned tag for repeatable deployment. `latest` tracks the newest publ
 
 To publish a subsequent release after `docker login`, run `python3 deployments/publish-dockerhub.py hamid001 --tag <release-tag>`. The script publishes the five production images for AMD64 and ARM64 using Docker credential storage. `--dry-run` displays destinations without uploading. Do not enable the pull-only image override on the build machine.
 
+For unattended updates on an amd64 server, see the [automated image update instructions](deployments/ubuntu/README.md#automated-image-updates).
+
 ## Assigned websites
 
 Open **Resources → Websites** to see links assigned to your account. Instance admins can add, edit, and remove links and assign them by Hub user ID, namespace ID, or an Active Directory or OpenLDAP group distinguished name. A link opens directly in a new browser tab using the user's network. Assignments control visibility in the Hub. The destination website enforces its own access policy.

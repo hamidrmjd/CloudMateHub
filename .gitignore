@@ -58,3 +58,7 @@ deployments/services.json
 **/__pycache__/
 **/*.pyc
 integrations/wgdashboard/*.db
+
+# Automated release updater files
+/.cloudmatehub-update.lock
+/.env.release.*

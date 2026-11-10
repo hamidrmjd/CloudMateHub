@@ -16,6 +16,7 @@ def main():
     parser.add_argument('namespace', help='Docker Hub username or organization')
     parser.add_argument('--tag', required=True, help='Immutable release tag')
     parser.add_argument('--platforms', default='linux/amd64,linux/arm64')
+    parser.add_argument('--no-latest', action='store_true', help='Publish only the versioned tag')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
     if not re.fullmatch(r'[a-z0-9][a-z0-9_-]*', args.namespace):
@@ -36,7 +37,7 @@ def main():
         target = {k: build[k] for k in ('context', 'dockerfile', 'args', 'target') if k in build}
         target['platforms'] = platforms
         target['tags'] = list(dict.fromkeys(
-            f'{args.namespace}/cloudmatehub-{service}:{tag}' for tag in (args.tag, 'latest')))
+            f'{args.namespace}/cloudmatehub-{service}:{tag}' for tag in ((args.tag,) if args.no_latest else (args.tag, 'latest'))))
         targets[service] = target
     if args.dry_run:
         print(json.dumps({s: t['tags'] for s, t in targets.items()}, indent=2))

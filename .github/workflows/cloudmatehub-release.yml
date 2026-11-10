@@ -1,0 +1,35 @@
+name: Publish CloudMateHub images
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cloudmatehub-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'hamidrmjd/CloudMateHub' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f
+        with:
+          username: hamid001
+          password: ${{ secrets.CLOUDMATEHUB_DOCKERHUB_TOKEN }}
+      - name: Publish images and mark the release ready
+        run: |
+          set -euo pipefail
+          tag="release-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}-${GITHUB_SHA:0:9}"
+          cp deployments/ubuntu/env.example .env.override
+          sed -i '/^CLOUDMATEHUB_IMAGE_COMPOSE_FILE=/d' .env.override
+          python3 deployments/publish-dockerhub.py hamid001 --platforms linux/amd64 --tag "$tag" --no-latest
+          git tag "cloudmatehub-$tag"
+          git push origin "refs/tags/cloudmatehub-$tag"
