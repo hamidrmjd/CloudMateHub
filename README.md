@@ -179,3 +179,11 @@ Instance admins can set automatic recording cleanup in **Settings → Storage & 
 Open **Resources → Websites** to see links assigned to your account. Instance admins can add, edit, and remove links and assign them by Hub user ID, namespace ID, or an Active Directory or OpenLDAP group distinguished name. A link opens directly in a new browser tab using the user's network. Assignments control visibility in the Hub. The destination website enforces its own access policy.
 
 The catalog is stored in the existing directory-state volume. [Assigned website architecture](docs/architecture/11%20Directory%20Authentication%20and%20Users.md#assigned-websites).
+
+## Agent connection controls
+
+Namespace owners and administrators can disconnect or reconnect an accepted agent from its device or container details. Disconnect pauses incoming tunnels. Reconnect clears the pause and closes any existing tunnel so the running agent can connect again. An agent that is stopped or unreachable must come back online before a connection can be established.
+
+## Workspaces
+
+Use **Workspaces** to switch between the namespaces you belong to. Instance admins can browse every workspace, use **Show members** to see who belongs to it, create workspaces, and add users through **Team → Add Member**. Each workspace has its own devices, sessions, and team roles. For a multi-organization trial, create one workspace per organization. Instance settings and the website and VPN catalogs are shared across the installation and use their own assignment rules.

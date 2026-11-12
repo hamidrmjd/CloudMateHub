@@ -164,3 +164,21 @@ func TestManagerEvictOfADeviceWithoutATunnelDoesNothing(t *testing.T) {
 
 	assert.Zero(t, m.Stats().Evicted)
 }
+
+func TestPausedAgentCanReconnectAfterResuming(t *testing.T) {
+	m := NewManager(clock.New())
+	require.NoError(t, m.Bind("tenant", "device", newAgentConn(t)))
+	m.ResetConnection("tenant", "device", true)
+
+	connected, paused := m.ConnectionState("tenant", "device")
+	require.False(t, connected)
+	require.True(t, paused)
+	require.ErrorIs(t, m.Bind("tenant", "device", newAgentConn(t)), ErrTunnelPaused)
+	require.NoError(t, m.Bind("other-tenant", "device", newAgentConn(t)))
+
+	m.ResetConnection("tenant", "device", false)
+	require.NoError(t, m.Bind("tenant", "device", newAgentConn(t)))
+	connected, paused = m.ConnectionState("tenant", "device")
+	require.True(t, connected)
+	require.False(t, paused)
+}

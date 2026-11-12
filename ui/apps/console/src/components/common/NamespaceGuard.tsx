@@ -86,6 +86,7 @@ export default function NamespaceGuard() {
 
   if (
     namespaces.length === 0 &&
+    pathname !== "/workspaces" &&
     !isAccountPath(pathname) &&
     !isPreferencesPath(pathname)
   ) {

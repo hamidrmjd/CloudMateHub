@@ -144,6 +144,8 @@ paths:
     $ref: paths/api@namespaces@{tenant}@upgrade.yaml
   /api/devices:
     $ref: paths/api@devices.yaml
+  /api/devices/{uid}/agent-connection:
+    $ref: paths/api@devices@{uid}@agent-connection.yaml
   /api/devices/{uid}:
     $ref: paths/api@devices@{uid}.yaml
   /api/devices/resolve:
@@ -202,6 +204,10 @@ paths:
     $ref: paths/api@web-terminal@reauth.yaml
   /api/stats:
     $ref: paths/api@stats.yaml
+  /api/user-management/workspaces:
+    $ref: paths/api@user-management@workspaces.yaml
+  /api/user-management/workspaces/{tenant}/members:
+    $ref: paths/api@user-management@workspaces@{tenant}@members.yaml
   /api/namespaces:
     $ref: paths/api@namespaces.yaml
   /api/namespaces/{tenant}:

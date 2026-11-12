@@ -158,6 +158,7 @@ func (m *Manager) Register(router *echo.Echo, tokens tokenIssuer) {
 		return c.JSON(200, map[string]bool{"ok": true})
 	}))
 	m.registerUsers(router)
+	m.registerWorkspaces(router)
 }
 
 type userSummary struct {

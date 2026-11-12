@@ -24,7 +24,7 @@ func TestRoutesRejectForgedAdminAndAnonymousSecrets(t *testing.T) {
 	for _, tc := range []struct {
 		method, path string
 		status       int
-	}{{"GET", "/api/directories", 401}, {"PUT", "/api/directories/ad", 401}, {"POST", "/api/directories/ad/test", 401}, {"POST", "/api/directories/ad/test-login", 401}, {"GET", "/api/user-management/users", 401}, {"POST", "/api/user-management/users", 401}, {"POST", "/api/auth/directory", 400}, {"GET", "/api/auth/directories", 200}} {
+	}{{"GET", "/api/directories", 401}, {"PUT", "/api/directories/ad", 401}, {"POST", "/api/directories/ad/test", 401}, {"POST", "/api/directories/ad/test-login", 401}, {"GET", "/api/user-management/users", 401}, {"GET", "/api/user-management/workspaces", 401}, {"GET", "/api/user-management/workspaces/00000000-0000-4000-8000-000000000000/members", 401}, {"POST", "/api/user-management/users", 401}, {"POST", "/api/auth/directory", 400}, {"GET", "/api/auth/directories", 200}} {
 		t.Run(tc.method+tc.path, func(t *testing.T) {
 			req := httptest.NewRequest(tc.method, tc.path, strings.NewReader(`{}`))
 			req.Header.Set("X-Admin", "true")

@@ -31,6 +31,7 @@ import { useAuthStore } from "../stores/authStore";
 import { useTerminalStore } from "../stores/terminalStore";
 import ActionDialog from "@/components/common/ActionDialog";
 import { useDeviceActionRunner } from "@/hooks/useDeviceActionRunner";
+import AgentConnectionControls from "@/components/AgentConnectionControls";
 import ConnectModal from "../components/ConnectModal";
 import CopyButton from "../components/common/CopyButton";
 import PlatformBadge from "../components/common/PlatformBadge";
@@ -191,7 +192,7 @@ export default function DeviceDetails() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex flex-wrap items-center gap-2">
           {device.status === "accepted" && (
             <>
               <RestrictedAction action="device:connect">
@@ -215,6 +216,7 @@ export default function DeviceDetails() {
                   Connect
                 </Button>
               </RestrictedAction>
+              <AgentConnectionControls uid={device.uid} />
               <RestrictedAction action="device:remove">
                 <IconButton
                   variant="danger"

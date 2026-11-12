@@ -6,6 +6,7 @@ import (
 	"io"
 	"net"
 	"os"
+	"sync"
 	"sync/atomic"
 	"time"
 
@@ -20,6 +21,8 @@ import (
 // presents itself to a caller trying to reach it.
 var ErrNoConnection = errors.New("no connection")
 
+var ErrTunnelPaused = errors.New("agent connection paused")
+
 // Manager holds the live tunnels, keyed by device. A device may hold more than one at a time
 // — during a reconnect both the old and new tunnel exist — so the newest wins and the older
 // is evicted.
@@ -27,6 +30,9 @@ type Manager struct {
 	Connections             *SyncSliceMap
 	DialerDoneCallback      func(string)
 	DialerKeepAliveCallback func(string)
+
+	controlMu sync.Mutex
+	paused    map[string]bool
 
 	clock clock.Clock
 
@@ -71,6 +77,7 @@ func (m *Manager) Stats() Stats {
 func NewManager(clk clock.Clock) *Manager {
 	return &Manager{
 		clock:                   clk,
+		paused:                  make(map[string]bool),
 		Connections:             &SyncSliceMap{},
 		DialerDoneCallback:      func(string) {},
 		DialerKeepAliveCallback: func(string) {},
@@ -83,7 +90,10 @@ func NewManager(clk clock.Clock) *Manager {
 func (m *Manager) Set(key string, conn *wsconnadapter.Adapter, connPath string) {
 	dialer := revdial.NewDialer(conn.Logger, conn, connPath, m.clock)
 
-	m.evict(key, m.Connections.Store(key, dialer))
+	if !m.attach(key, dialer) {
+		_ = dialer.Close()
+		return
+	}
 	m.DialerKeepAliveCallback(key)
 
 	pong := conn.Ping()
@@ -127,7 +137,10 @@ func (m *Manager) evict(key string, displaced []any) {
 func (m *Manager) Evict(tenant, uid string) {
 	key := NewKey(tenant, uid)
 
+	m.controlMu.Lock()
+	delete(m.paused, key)
 	evicted := m.Connections.Drain(key)
+	m.controlMu.Unlock()
 	if len(evicted) == 0 {
 		return
 	}
@@ -140,6 +153,38 @@ func (m *Manager) Evict(tenant, uid string) {
 	}).Info("Closing the tunnels of a removed device.")
 
 	go closeConnections(key, evicted)
+}
+
+// ConnectionState reports whether the agent is connected or paused on this server.
+func (m *Manager) ConnectionState(tenant, uid string) (connected, paused bool) {
+	key := NewKey(tenant, uid)
+	m.controlMu.Lock()
+	defer m.controlMu.Unlock()
+	return m.Connections.Size(key) > 0, m.paused[key]
+}
+
+// ResetConnection drops the current tunnel and either pauses or admits future connections.
+func (m *Manager) ResetConnection(tenant, uid string, pause bool) {
+	key := NewKey(tenant, uid)
+	m.controlMu.Lock()
+	if pause {
+		m.paused[key] = true
+	} else {
+		delete(m.paused, key)
+	}
+	connections := m.Connections.Drain(key)
+	m.controlMu.Unlock()
+	go closeConnections(key, connections)
+}
+
+func (m *Manager) attach(key string, connection io.Closer) bool {
+	m.controlMu.Lock()
+	defer m.controlMu.Unlock()
+	if m.paused[key] {
+		return false
+	}
+	m.evict(key, m.Connections.Store(key, connection))
+	return true
 }
 
 func closeConnections(key string, conns []any) {
@@ -188,7 +233,10 @@ func (m *Manager) Bind(tenant string, uid string, conn *wsconnadapter.Adapter) e
 		return err
 	}
 
-	m.evict(key, m.Connections.Store(key, session))
+	if !m.attach(key, session) {
+		_ = session.Close()
+		return ErrTunnelPaused
+	}
 	m.DialerKeepAliveCallback(key)
 
 	go func() {

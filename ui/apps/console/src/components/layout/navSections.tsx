@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import {
   HomeIcon,
+  Squares2X2Icon,
   KeyIcon,
   Cog6ToothIcon,
   UsersIcon,
@@ -132,6 +133,7 @@ function buildSections(isNewNamespace: boolean, isAdmin = false): NavSection[] {
           label: "Dashboard",
           icon: <HomeIcon className={navIcon} />,
         },
+        { to: "/workspaces", label: "Workspaces", icon: <Squares2X2Icon className={navIcon} /> },
       ],
     },
     {

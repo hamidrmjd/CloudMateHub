@@ -9,6 +9,7 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/shellhub-io/shellhub/pkg/clock"
 	"github.com/shellhub-io/shellhub/pkg/revdial"
+	"github.com/shellhub-io/shellhub/server/api/pkg/gateway"
 	routesmiddleware "github.com/shellhub-io/shellhub/server/api/routes/middleware"
 	"github.com/shellhub-io/shellhub/server/api/services"
 	"github.com/shellhub-io/shellhub/server/ssh/pkg/dialer"
@@ -86,6 +87,8 @@ func Register(router *echo.Echo, authn *routesmiddleware.Authenticator, d *diale
 	authn.AllowAnonymous(http.MethodGet, HandleRevdialPath)
 
 	router.POST(HandleSSHClosePath, handlers.HandleSSHClose)
+	router.GET("/api/devices/:uid/agent-connection", gateway.Handler(handlers.HandleAgentConnection))
+	router.PUT("/api/devices/:uid/agent-connection", gateway.Handler(handlers.HandleAgentConnection))
 
 	if err := applyTunnelExtensions(router, authn, d); err != nil {
 		log.WithError(err).Error("failed to register the tunnel extensions")

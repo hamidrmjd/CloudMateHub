@@ -16,11 +16,11 @@ const SUBMIT_ERRORS: Record<number, string> = {
  * before the request, keeps the field and its error in step, and turns a rejected creation into
  * text keyed by status. `onCreated` runs only after a successful creation.
  */
-export function useNamespaceCreateForm(onCreated?: () => void) {
+export function useNamespaceCreateForm(onCreated?: () => void, redirectTo?: string) {
   const [name, setName] = useState("");
   const [validationError, setValidationError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const createNs = useCreateNamespace();
+  const createNs = useCreateNamespace(redirectTo);
 
   const changeName = (value: string) => {
     setName(value);

@@ -13,6 +13,7 @@ const FORM_ID = "create-namespace-form";
 interface CreateNamespaceDialogProps {
   open: boolean;
   onClose: () => void;
+  workspace?: boolean;
 }
 
 /**
@@ -21,12 +22,13 @@ interface CreateNamespaceDialogProps {
 export default function CreateNamespaceDialog({
   open,
   onClose,
+  workspace = false,
 }: CreateNamespaceDialogProps) {
   const autoId = useId();
   const inputId = `create-ns-input-${autoId}`;
   const isAdmin = useAuthStore((state) => state.isAdmin);
   const canCreate = isAdmin || isEnterpriseOrCloud();
-  const form = useNamespaceCreateForm(onClose);
+  const form = useNamespaceCreateForm(onClose, workspace ? "/team" : undefined);
 
   if (!canCreate) return null;
 
@@ -35,8 +37,8 @@ export default function CreateNamespaceDialog({
       open={open}
       onClose={onClose}
       icon={<FolderPlusIcon />}
-      title="Create namespace"
-      description="A namespace keeps its own devices, members and access policies apart from the rest."
+      title={workspace ? "Create workspace" : "Create namespace"}
+      description={workspace ? "Add members after creating the workspace." : "A namespace keeps its own devices, members and access policies apart from the rest."}
       footerStart={
         <a
           href="https://docs.shellhub.io/self-hosted/administration"

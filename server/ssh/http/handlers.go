@@ -11,6 +11,7 @@ import (
 	"github.com/shellhub-io/shellhub/pkg/api/scope"
 	"github.com/shellhub-io/shellhub/pkg/models"
 	"github.com/shellhub-io/shellhub/pkg/wsconnadapter"
+	"github.com/shellhub-io/shellhub/server/api/pkg/gateway"
 	routeserrors "github.com/shellhub-io/shellhub/server/api/routes/errors"
 	"github.com/shellhub-io/shellhub/server/api/services"
 	"github.com/shellhub-io/shellhub/server/api/store"
@@ -219,6 +220,10 @@ func (h *Handlers) HandleConnectionV1(c *echo.Context) error {
 		tenant = device.TenantID
 	}
 
+	if _, paused := h.Tunnels.ConnectionState(tenant, uid); paused {
+		return c.NoContent(http.StatusServiceUnavailable)
+	}
+
 	logger := log.WithFields(log.Fields{
 		"request-id": requestID,
 		"tenant":     tenant,
@@ -288,6 +293,10 @@ func (h *Handlers) HandleConnectionV2(c *echo.Context) error {
 		}
 	}
 
+	if _, paused := h.Tunnels.ConnectionState(data.Tenant, data.UID); paused {
+		return c.NoContent(http.StatusServiceUnavailable)
+	}
+
 	logger := log.WithFields(log.Fields{
 		"request-id": data.RequestID,
 		"tenant":     data.Tenant,
@@ -313,6 +322,9 @@ func (h *Handlers) HandleConnectionV2(c *echo.Context) error {
 			wsconnadapter.WithClock(h.Config.clock()),
 		),
 	); err != nil {
+		if errors.Is(err, dialer.ErrTunnelPaused) {
+			return nil
+		}
 		logger.WithError(err).Error("failed to bind the connection")
 
 		return err
@@ -321,4 +333,41 @@ func (h *Handlers) HandleConnectionV2(c *echo.Context) error {
 	logger.Info("v2 connection bound")
 
 	return nil
+}
+
+// HandleAgentConnection serves controls for an accepted device in the caller's namespace.
+func (h *Handlers) HandleAgentConnection(c *gateway.Context) error {
+	if c.APIKeyID() != "" || !c.Role().HasPermission(authorizer.DeviceRemove) {
+		return c.NoContent(http.StatusForbidden)
+	}
+	sc, err := c.Scope()
+	if err != nil {
+		return err
+	}
+	device, err := h.Service.GetDevice(c.Ctx(), sc, models.UID(c.Param("uid")))
+	if errors.Is(err, store.ErrNoDocuments) {
+		return c.NoContent(http.StatusNotFound)
+	}
+	if err != nil {
+		return err
+	}
+	if device == nil || device.Status != models.DeviceStatusAccepted || device.RemovedAt != nil {
+		return c.NoContent(http.StatusNotFound)
+	}
+	c.Response().Header().Set("Cache-Control", "no-store")
+	if c.Request().Method == http.MethodGet {
+		connected, paused := h.Tunnels.ConnectionState(device.TenantID, device.UID)
+		return c.JSON(http.StatusOK, map[string]bool{"connected": connected, "paused": paused})
+	}
+	var req struct {
+		Action string `json:"action"`
+	}
+	if err := c.Bind(&req); err != nil {
+		return err
+	}
+	if req.Action != "disconnect" && req.Action != "reconnect" {
+		return c.NoContent(http.StatusBadRequest)
+	}
+	h.Tunnels.ResetConnection(device.TenantID, device.UID, req.Action == "disconnect")
+	return c.NoContent(http.StatusNoContent)
 }

@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { GlobeAltIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Button, Callout } from "@cloudmatehub/design-system/primitives";
 import { directoryRequest } from "@/api/directory";
 import PageHeader from "@/components/common/PageHeader";
@@ -46,7 +46,7 @@ export default function Websites() {
 
   return (
     <div className="space-y-5">
-      <PageHeader title="Websites" description="Open assigned websites in a new browser tab." />
+      <PageHeader icon={<GlobeAltIcon className="h-6 w-6" />} title="Websites" description="Open assigned websites in a new browser tab." />
       {isAdmin && !draft && <Button onClick={() => { change.reset(); setDraft(empty); }}>Add website</Button>}
       {(sites.error || change.error) && <Callout variant="error">{(change.error ?? sites.error)?.message}</Callout>}
       {isAdmin && draft && (

@@ -12,6 +12,7 @@ import (
 	"github.com/shellhub-io/shellhub/server/api/services"
 	servicemocks "github.com/shellhub-io/shellhub/server/api/services/mocks"
 	"github.com/shellhub-io/shellhub/server/api/store"
+	"github.com/shellhub-io/shellhub/server/ssh/pkg/dialer"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -25,7 +26,7 @@ func newConnectionTestServer(t *testing.T, service services.Service, cfg *Config
 	e.Validator = handlers.NewValidator()
 	e.HTTPErrorHandler = handlers.NewErrors(nil)
 
-	h := &Handlers{Config: cfg, Dialer: nil, Service: service}
+	h := &Handlers{Config: cfg, Tunnels: dialer.NewManager(cfg.clock()), Service: service}
 
 	e.GET(HandleConnectionV1Path, h.HandleConnectionV1)
 	e.GET(HandleConnectionV2Path, h.HandleConnectionV2)

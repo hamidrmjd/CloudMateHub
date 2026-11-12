@@ -1,0 +1,37 @@
+get:
+  operationId: listManagedWorkspaces
+  summary: List workspaces for an instance administrator
+  tags: [community, namespaces]
+  security:
+    - jwt: []
+  parameters:
+    - $ref: ../components/parameters/query/pageQuery.yaml
+  responses:
+    '200':
+      description: A page of workspaces.
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [items, total, per_page]
+            properties:
+              items:
+                type: array
+                items:
+                  type: object
+                  required: [name, tenant_id]
+                  properties:
+                    name:
+                      $ref: ../components/schemas/namespaceName.yaml
+                    tenant_id:
+                      $ref: ../components/schemas/namespaceTenantID.yaml
+              total:
+                type: integer
+              per_page:
+                type: integer
+    '401':
+      $ref: ../components/responses/401.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '503':
+      description: Workspace directory is unavailable.

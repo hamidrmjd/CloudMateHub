@@ -1,0 +1,55 @@
+parameters:
+  - name: uid
+    in: path
+    required: true
+    schema:
+      type: string
+get:
+  operationId: getAgentConnection
+  summary: Read the agent connection state
+  tags: [community, devices]
+  security:
+    - jwt: []
+  responses:
+    '200':
+      description: Current tunnel state.
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [connected, paused]
+            properties:
+              connected:
+                type: boolean
+              paused:
+                type: boolean
+    '403':
+      $ref: ../components/responses/403.yaml
+    '404':
+      $ref: ../components/responses/404.yaml
+put:
+  operationId: updateAgentConnection
+  summary: Disconnect or reconnect an agent
+  tags: [community, devices]
+  security:
+    - jwt: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required: [action]
+          properties:
+            action:
+              type: string
+              enum: [disconnect, reconnect]
+  responses:
+    '204':
+      description: Connection state updated.
+    '400':
+      $ref: ../components/responses/400.yaml
+    '403':
+      $ref: ../components/responses/403.yaml
+    '404':
+      $ref: ../components/responses/404.yaml

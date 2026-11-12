@@ -22,6 +22,7 @@ import { useTerminalStore } from "../stores/terminalStore";
 import { useActionDialog } from "../hooks/useActionDialog";
 import ActionDialog from "@/components/common/ActionDialog";
 import { useContainerActionRunner } from "@/hooks/useContainerActionRunner";
+import AgentConnectionControls from "@/components/AgentConnectionControls";
 import ConnectModal from "../components/ConnectModal";
 import CopyButton from "../components/common/CopyButton";
 import { buildSshid } from "../utils/sshid";
@@ -177,7 +178,7 @@ export default function ContainerDetails() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex flex-wrap items-center gap-2">
           {container.status === "accepted" && (
             <>
               <RestrictedAction action="device:connect">
@@ -201,6 +202,7 @@ export default function ContainerDetails() {
                   Connect
                 </Button>
               </RestrictedAction>
+              <AgentConnectionControls uid={container.uid} />
               <RestrictedAction action="device:remove">
                 <IconButton
                   variant="danger"

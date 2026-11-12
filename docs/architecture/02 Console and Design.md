@@ -43,3 +43,9 @@ Owned UI copy, npm workspaces, icon symbols, theme assets and documentation use 
 `/console`, linked as SSH → Browser Console for namespace members, provides accepted-device discovery, search/pagination, online state, a direct browser connection dialog and current-namespace terminal resumption. It reuses `useDevices`, `ConnectModal`, the in-memory terminal store and `TerminalManager` rather than a separate SSH implementation. Operators and higher roles may connect; observers receive an access explanation and do not fetch console targets. Device-selection state resets on user/namespace changes. Only terminals explicitly owned by the current namespace appear in the resume list.
 
 New-identity namespaces require a secure browser context for WebCrypto keys; the page explains HTTPS setup and prevents an unsupported plaintext browser-key connection. Credentials remain under the existing connection flow; the page stores no new passwords, keys or persistent fixtures. Existing terminals remain recorded by the shared server relay.
+
+## Workspaces
+
+The Workspaces page lists the signed-in user’s namespaces. Creating a workspace uses the namespace creation endpoint and opens its Team page. Opening a workspace or its team requests a fresh namespace token and switches the active scope through the same flow as the workspace switcher. Team roles determine membership actions. A workspace is one tenant, so an organization can be represented by a workspace in the trial. No persistent test fixtures were created.
+
+Instance administrators can browse all workspaces and expand a workspace to read its member roster. Both reads require a signed-in instance administrator, and the member query is scoped to the selected tenant. Pending invitations are separate from the member roster. No persistent test fixtures were created for the admin roster.

@@ -238,7 +238,7 @@ export function useSwitchNamespace() {
 /**
  * Creates a namespace and enters it, so the user ends up inside what they just made.
  */
-export function useCreateNamespace() {
+export function useCreateNamespace(redirectTo = "/dashboard") {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   return useMutation({
@@ -254,7 +254,7 @@ export function useCreateNamespace() {
           void navigate(
             pendingCode
               ? `/accept-device?code=${encodeURIComponent(pendingCode)}`
-              : "/dashboard",
+              : redirectTo,
           ),
       });
     },
