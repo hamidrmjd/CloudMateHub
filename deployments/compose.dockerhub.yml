@@ -1,20 +1,20 @@
 # Pull published CloudMateHub images without local source builds.
 services:
   server:
-    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-server:${CLOUDMATEHUB_IMAGE_TAG:-latest}
+    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-server:${CLOUDMATEHUB_IMAGE_TAG:?Set CLOUDMATEHUB_IMAGE_TAG to a published version}
     build: !reset null
   ui:
-    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-ui:${CLOUDMATEHUB_IMAGE_TAG:-latest}
+    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-ui:${CLOUDMATEHUB_IMAGE_TAG:?Set CLOUDMATEHUB_IMAGE_TAG to a published version}
     build: !reset null
   gateway:
-    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-gateway:${CLOUDMATEHUB_IMAGE_TAG:-latest}
+    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-gateway:${CLOUDMATEHUB_IMAGE_TAG:?Set CLOUDMATEHUB_IMAGE_TAG to a published version}
     build: !reset null
   https-manager:
-    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-https-manager:${CLOUDMATEHUB_IMAGE_TAG:-latest}
+    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-https-manager:${CLOUDMATEHUB_IMAGE_TAG:?Set CLOUDMATEHUB_IMAGE_TAG to a published version}
     build: !reset null
   wgdashboard:
-    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-wgdashboard:${CLOUDMATEHUB_IMAGE_TAG:-latest}
+    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-wgdashboard:${CLOUDMATEHUB_IMAGE_TAG:?Set CLOUDMATEHUB_IMAGE_TAG to a published version}
     build: !reset null
   vpn-broker:
-    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-wgdashboard:${CLOUDMATEHUB_IMAGE_TAG:-latest}
+    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-wgdashboard:${CLOUDMATEHUB_IMAGE_TAG:?Set CLOUDMATEHUB_IMAGE_TAG to a published version}
     build: !reset null

@@ -2,7 +2,7 @@ name: cloudmatehub
 
 services:
   server:
-    image: cloudmatehub/server:local
+    image: cloudmatehub/server:v${CLOUDMATEHUB_VERSION:?Set CLOUDMATEHUB_VERSION}
     restart: unless-stopped
     environment:
       - SHELLHUB_VERSION=${SHELLHUB_VERSION}
@@ -58,7 +58,7 @@ services:
       interval: 30s
       start_period: 10s
   ui:
-    image: cloudmatehub/ui:local
+    image: cloudmatehub/ui:v${CLOUDMATEHUB_VERSION:?Set CLOUDMATEHUB_VERSION}
     restart: unless-stopped
     environment:
       - SHELLHUB_EDITION=${SHELLHUB_EDITION}
@@ -73,7 +73,7 @@ services:
       interval: 30s
       start_period: 10s
   gateway:
-    image: cloudmatehub/gateway:local
+    image: cloudmatehub/gateway:v${CLOUDMATEHUB_VERSION:?Set CLOUDMATEHUB_VERSION}
     restart: unless-stopped
     environment:
       - SHELLHUB_LOG_LEVEL=${SHELLHUB_LOG_LEVEL}

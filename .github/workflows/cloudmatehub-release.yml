@@ -3,6 +3,7 @@ name: Publish CloudMateHub images
 on:
   push:
     branches: [main]
+    paths: [.env]
   workflow_dispatch:
 
 permissions:
@@ -27,9 +28,14 @@ jobs:
       - name: Publish images and mark the release ready
         run: |
           set -euo pipefail
-          tag="release-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}-${GITHUB_SHA:0:9}"
+          tag="v$(sed -n 's/^CLOUDMATEHUB_VERSION=//p' .env)"
+          published=$(git ls-remote --refs origin "refs/tags/cloudmatehub-$tag")
+          if [ -n "$published" ]; then
+            echo "CloudMateHub $tag is already released."
+            exit 0
+          fi
           cp deployments/ubuntu/env.example .env.override
           sed -i '/^CLOUDMATEHUB_IMAGE_COMPOSE_FILE=/d' .env.override
-          python3 deployments/publish-dockerhub.py hamidrazavi000 --platforms linux/amd64 --tag "$tag" --no-latest
-          git tag "cloudmatehub-$tag"
+          python3 deployments/publish-dockerhub.py hamidrazavi000 --platforms linux/amd64 --tag "$tag"
+          git -c user.name=github-actions -c user.email=41898282+github-actions[bot]@users.noreply.github.com tag -a "cloudmatehub-$tag" -m "CloudMateHub $tag"
           git push origin "refs/tags/cloudmatehub-$tag"

@@ -117,6 +117,15 @@ if [ -n "$image_compose" ]; then
         echo "Image compose file does not exist: $image_compose" >&2
         exit 1
     fi
+    if [ "${image_compose##*/}" = compose.dockerhub.yml ]; then
+        image_tag=$(env_var CLOUDMATEHUB_IMAGE_TAG "" | tr '[:upper:]' '[:lower:]')
+        case "$image_tag" in
+            ""|local|latest)
+                echo "Set CLOUDMATEHUB_IMAGE_TAG to a published version." >&2
+                exit 1
+                ;;
+        esac
+    fi
     COMPOSE_FILE="${COMPOSE_FILE}:${image_compose}"
 fi
 export COMPOSE_FILE

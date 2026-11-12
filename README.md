@@ -141,7 +141,7 @@ Operator, Administrator or Owner namespace access is required. SSH identities an
 
 Temporary dashboard sample devices, when requested, are clearly named `demo-*` and tracked by exact fixture ownership. See [the requested demo-data notes](docs/verification/2026-11-04-requested-demo-data.md) for the current examples and cleanup boundaries. They do not grant additional user access or change production SSH policies.
 
-CloudMateHub deployment uses the `cloudmatehub` Compose project and locally built `cloudmatehub/server:local`, `cloudmatehub/ui:local`, and `cloudmatehub/gateway:local` images. Core application builds require no published ShellHub application images. Standard infrastructure and WGDashboard dependencies retain their upstream attribution. Existing installations may set `CLOUDMATEHUB_VOLUME_PREFIX` and `CLOUDMATEHUB_EXISTING_VOLUMES=true` to reuse their original data volumes; preserve signing keys and never reset volumes during migration.
+CloudMateHub deployment uses the `cloudmatehub` Compose project and source-built CloudMateHub application images tagged from `CLOUDMATEHUB_VERSION` in `.env`. Core application builds require no published ShellHub application images. Standard infrastructure and WGDashboard dependencies retain their upstream attribution. Existing installations may set `CLOUDMATEHUB_VOLUME_PREFIX` and `CLOUDMATEHUB_EXISTING_VOLUMES=true` to reuse their original data volumes; preserve signing keys and never reset volumes during migration.
 
 ## Deploy on Linux with Docker Hub images
 
@@ -164,9 +164,9 @@ Then run:
 ./deployments/cloudmatehub start
 ```
 
-Use the versioned tag for repeatable deployment. `latest` tracks the newest published build. Preserve existing signing keys, `.env.override` and data volumes. Fresh servers still need their normal configuration and initial administrator setup. Standard PostgreSQL/Valkey images are pulled separately. Images contain application code, not your local database, accounts, certificates or recordings. Private repositories require `docker login` on the destination server.
+Set the tag to a published release before pulling the images. Preserve existing signing keys, `.env.override` and data volumes. Fresh servers still need their normal configuration and initial administrator setup. Standard PostgreSQL/Valkey images are pulled separately. Images contain application code, not your local database, accounts, certificates or recordings. Private repositories require `docker login` on the destination server.
 
-To publish a subsequent release after `docker login`, run `python3 deployments/publish-dockerhub.py hamidrazavi000 --tag <release-tag>`. The script publishes the five production images for AMD64 and ARM64 using Docker credential storage. `--dry-run` displays destinations without uploading. Do not enable the pull-only image override on the build machine.
+See the [release process](deployments/ubuntu/README.md#release-process) for version bumps, publication, and rollout.
 
 For unattended updates on an amd64 server, see the [automated image update instructions](deployments/ubuntu/README.md#automated-image-updates).
 
