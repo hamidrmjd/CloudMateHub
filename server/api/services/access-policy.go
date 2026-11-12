@@ -139,8 +139,9 @@ func (s *service) Authorize(ctx context.Context, tenantID string, principal mode
 
 	var reauthPeriod *int
 
+	now := s.clock.Now()
 	for _, policy := range policies {
-		if policy.Action == models.PolicyActionDeny {
+		if policy.Action == models.PolicyActionDeny || (policy.ExpiresAt != nil && !now.Before(*policy.ExpiresAt)) {
 			continue
 		}
 
@@ -436,6 +437,10 @@ func (s *service) GetAccessPolicy(ctx context.Context, req *requests.AccessPolic
 }
 
 func (s *service) CreateAccessPolicy(ctx context.Context, req *requests.AccessPolicyCreate) (*models.AccessPolicy, error) {
+	if req.ExpiresAt != nil && req.Action == string(models.PolicyActionDeny) {
+		return nil, NewErrAccessPolicyInvalidField(map[string]string{"expires_at": "Only allow policies can expire"})
+	}
+
 	sc, err := BoundTo(req.TenantID)
 	if err != nil {
 		return nil, err
@@ -468,6 +473,7 @@ func (s *service) CreateAccessPolicy(ctx context.Context, req *requests.AccessPo
 		Logins:        req.Logins,
 		SourceIP:      normalizeSourceIPs(req.SourceIP),
 		Action:        defaultAction(req.Action),
+		ExpiresAt:     req.ExpiresAt,
 		RequireReauth: req.RequireReauth,
 		ReauthPeriod:  normalizeReauthPeriod(req.ReauthPeriod),
 	}
@@ -488,6 +494,10 @@ func (s *service) CreateAccessPolicy(ctx context.Context, req *requests.AccessPo
 }
 
 func (s *service) UpdateAccessPolicy(ctx context.Context, req *requests.AccessPolicyUpdate) (*models.AccessPolicy, error) {
+	if req.ExpiresAt != nil && req.Action == string(models.PolicyActionDeny) {
+		return nil, NewErrAccessPolicyInvalidField(map[string]string{"expires_at": "Only allow policies can expire"})
+	}
+
 	sc, err := BoundTo(req.TenantID)
 	if err != nil {
 		return nil, err
@@ -525,6 +535,7 @@ func (s *service) UpdateAccessPolicy(ctx context.Context, req *requests.AccessPo
 		Logins:        req.Logins,
 		SourceIP:      normalizeSourceIPs(req.SourceIP),
 		Action:        defaultAction(req.Action),
+		ExpiresAt:     req.ExpiresAt,
 		RequireReauth: req.RequireReauth,
 		ReauthPeriod:  normalizeReauthPeriod(req.ReauthPeriod),
 	}

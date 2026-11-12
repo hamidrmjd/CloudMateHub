@@ -279,7 +279,15 @@ export default function AccessPolicies() {
       key: "name",
       header: "Name",
       render: (p) => (
-        <span className="text-sm font-medium text-text-primary">{p.name}</span>
+        <div>
+          <p className="text-sm font-medium text-text-primary">{p.name}</p>
+          {p.expires_at && (
+            <p className="text-xs text-text-muted">
+              {Date.parse(p.expires_at) <= Date.now() ? "Expired" : "Expires"}{" "}
+              {new Date(p.expires_at).toLocaleString()}
+            </p>
+          )}
+        </div>
       ),
     },
     {

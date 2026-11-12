@@ -135,6 +135,27 @@ func TestAuthorize(t *testing.T) {
 			expectedErr:     false,
 		},
 		{
+			description: "an expired allow policy grants no SSH access",
+			login:       "root",
+			requireMocks: func(storeMock *storemock.MockStore, _ *storemock.MockQueryOptions) {
+				storeMock.On("DeviceResolve", ctx, mock.Anything, store.DeviceUIDResolver, deviceID).
+					Return(device, nil).Once()
+				storeMock.On("NamespaceResolve", ctx, store.NamespaceTenantIDResolver, tenantID).
+					Return(namespaceWith(authorizer.RoleOperator), nil).Once()
+				expired := time.Unix(1, 0)
+				storeMock.On("AccessPolicyList", ctx, mock.Anything).
+					Return([]models.AccessPolicy{{
+						Action:    models.PolicyActionAllow,
+						Subject:   models.PolicySubject{Type: models.PolicySubjectAllMembers},
+						Filter:    models.AccessPolicyFilter{All: true},
+						Logins:    []string{"*"},
+						ExpiresAt: &expired,
+					}}, int64(1), nil).Once()
+			},
+			expectedReason: models.ReasonNoGrant,
+			expectedLogin:  "root",
+		},
+		{
 			description: "denies when the login is outside the policy's login list",
 			login:       "root",
 			requireMocks: func(storeMock *storemock.MockStore, queryOptionsMock *storemock.MockQueryOptions) {

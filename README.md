@@ -189,3 +189,11 @@ Namespace owners and administrators can disconnect or reconnect an accepted agen
 Use **Workspaces** to switch between the namespaces you belong to. Instance admins can browse every workspace, use **Show members** to see who belongs to it, create workspaces, and add users through **Team → Add Member**. Each workspace has its own devices, sessions, and team roles. For a multi-organization trial, create one workspace per organization. Instance settings and the website and VPN catalogs are shared across the installation and use their own assignment rules.
 
 For a self-hosted Community installation, set `CLOUDMATEHUB_MULTI_WORKSPACE=true` in the Compose environment and recreate the server to enable additional workspaces. The server keeps existing workspace IDs, memberships, and assets. Keep the setting enabled on installations that use multiple workspaces.
+
+## Temporary SSH access rules
+
+In a workspace that uses **SSH → Access Policies**, set **Expires at** on an allow rule to grant temporary access. New SSH connections stop matching that rule at the deadline. Other matching policies and existing sessions keep their usual behavior.
+
+## Update tutorials
+
+**What’s new** opens a short tutorial the first time a user sees a new tutorial release in their browser. The sparkle button in the top bar reopens it. To ship a tutorial with a feature update, give the latest update a new ID and add its steps in [updateTutorial.ts](ui/apps/console/src/components/layout/updateTutorial.ts).

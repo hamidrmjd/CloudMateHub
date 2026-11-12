@@ -49,3 +49,7 @@ New-identity namespaces require a secure browser context for WebCrypto keys; the
 The Workspaces page lists the signed-in user’s namespaces. Creating a workspace uses the namespace creation endpoint and opens its Team page. Opening a workspace or its team requests a fresh namespace token and switches the active scope through the same flow as the workspace switcher. Team roles determine membership actions. A workspace is one tenant, so an organization can be represented by a workspace in the trial. No persistent test fixtures were created.
 
 Instance administrators can browse all workspaces and expand a workspace to read its member roster. Both reads require a signed-in instance administrator, and the member query is scoped to the selected tenant. Pending invitations are separate from the member roster. No persistent test fixtures were created for the admin roster.
+
+## Update tutorials
+
+The signed-in console reads the current tutorial ID and steps from the bundled update catalog. It filters steps using the account and active workspace permissions. Dismissal is stored in the browser per account and tutorial ID. The sparkle button lets users reopen the tutorial. A new tutorial ID prompts the user again after deployment. No persistent server test fixtures were created.

@@ -25,6 +25,7 @@ type AccessPolicy struct {
 	SourceIP      []string  `bun:"source_ip,array"`
 	RequireReauth bool      `bun:"require_reauth"`
 	ReauthPeriod  *int      `bun:"reauth_period"`
+	ExpiresAt     *time.Time `bun:"expires_at"`
 	Action        string    `bun:"action"`
 	AllDevices    bool      `bun:"all_devices"`
 
@@ -66,6 +67,7 @@ func AccessPolicyFromModel(model *models.AccessPolicy) *AccessPolicy {
 		RequireReauth: model.RequireReauth,
 		ReauthPeriod:  model.ReauthPeriod,
 		Action:        string(model.Action),
+		ExpiresAt:     model.ExpiresAt,
 		AllDevices:    model.Filter.All,
 		Tags:          []*Tag{},
 	}
@@ -108,6 +110,7 @@ func AccessPolicyToModel(entity *AccessPolicy) *models.AccessPolicy {
 		RequireReauth: entity.RequireReauth,
 		ReauthPeriod:  entity.ReauthPeriod,
 		Action:        models.PolicyAction(entity.Action),
+		ExpiresAt:     entity.ExpiresAt,
 	}
 
 	if len(entity.Tags) > 0 {

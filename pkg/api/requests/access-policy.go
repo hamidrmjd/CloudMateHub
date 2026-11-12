@@ -1,5 +1,7 @@
 package requests
 
+import "time"
+
 // AccessPolicyFilter selects the devices an access policy applies to: every device when All is
 // set, or the devices carrying any of Tags. More than three tags fails validation; the service
 // refuses a filter that gives neither, or both.
@@ -33,6 +35,7 @@ type AccessPolicyCreate struct {
 	Logins        []string            `json:"logins" validate:"required,min=1,dive,required"`
 	SourceIP      []string            `json:"source_ip" validate:"omitempty,dive,cidr|ip"`
 	Action        string              `json:"action" validate:"omitempty,oneof=allow deny"`
+	ExpiresAt     *time.Time          `json:"expires_at"`
 	RequireReauth bool                `json:"require_reauth" validate:""`
 	ReauthPeriod  *int                `json:"reauth_period" validate:"omitempty,gte=0"`
 	TenantID      string              `json:"-"`
@@ -47,6 +50,7 @@ type AccessPolicyUpdate struct {
 	Logins        []string            `json:"logins" validate:"required,min=1,dive,required"`
 	SourceIP      []string            `json:"source_ip" validate:"omitempty,dive,cidr|ip"`
 	Action        string              `json:"action" validate:"omitempty,oneof=allow deny"`
+	ExpiresAt     *time.Time          `json:"expires_at"`
 	RequireReauth bool                `json:"require_reauth" validate:""`
 	ReauthPeriod  *int                `json:"reauth_period" validate:"omitempty,gte=0"`
 	TenantID      string              `json:"-"`

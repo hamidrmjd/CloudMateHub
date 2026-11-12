@@ -38,6 +38,11 @@ properties:
       - deny
     default: allow
     example: allow
+  expires_at:
+    description: Optional expiration for an allow policy. At this time the rule stops granting new SSH sessions.
+    type: string
+    format: date-time
+    nullable: true
   require_reauth:
     description: |
       Whether a recognized key must still complete a fresh per-session

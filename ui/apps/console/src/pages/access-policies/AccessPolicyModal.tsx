@@ -391,6 +391,7 @@ function AccessPolicyModal({
   const [sourceIpKey, setSourceIpKey] = useState(0);
   const [requireReauth, setRequireReauth] = useState(false);
   const [reauthPeriod, setReauthPeriod] = useState<number | null>(null);
+  const [expiry, setExpiry] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -428,6 +429,7 @@ function AccessPolicyModal({
     setSourceIpKey((k) => k + 1);
     setRequireReauth(editPolicy?.require_reauth ?? false);
     setReauthPeriod(editPolicy?.reauth_period ?? null);
+    setExpiry(null);
     setSubmitting(false);
     setError(null);
   });
@@ -444,6 +446,10 @@ function AccessPolicyModal({
   const canReauthenticate = (type: typeof subjectType) => type !== "api-key";
   const reauthApplies = canReauthenticate(subjectType);
 
+  const existingExpiry = editPolicy?.expires_at ? new Date(editPolicy.expires_at) : null;
+  const localExpiry = existingExpiry
+    ? new Date(existingExpiry.getTime() - existingExpiry.getTimezoneOffset() * 60_000).toISOString().slice(0, 16)
+    : "";
   const confirmDisabled =
     !name.trim() ||
     (subjectType === "user" && !userValue) ||
@@ -451,7 +457,8 @@ function AccessPolicyModal({
     (filterOption === "tags" &&
       (selectedTags.length === 0 || selectedTags.length > 3)) ||
     logins.length === 0 ||
-    sourceIpDraftError;
+    sourceIpDraftError ||
+    (action === "allow" && !!expiry && Number.isNaN(new Date(expiry).getTime()));
 
   const memberById = (id: string) => members.find((m) => m.id === id);
   const apiKeyById = (id: string) => apiKeys.find((k) => k.id === id);
@@ -494,6 +501,11 @@ function AccessPolicyModal({
       source_ip: sourceIP,
       require_reauth: reauthApplies && requireReauth,
       reauth_period: reauthApplies && requireReauth ? reauthPeriod : null,
+      ...(action === "allow" && expiry
+        ? { expires_at: new Date(expiry).toISOString() }
+        : action === "allow" && expiry === null && editPolicy?.expires_at
+          ? { expires_at: editPolicy.expires_at }
+          : {}),
     };
     try {
       if (isEdit && editPolicy) {
@@ -817,6 +829,21 @@ function AccessPolicyModal({
           onChange={setSourceIP}
           onDraftError={setSourceIpDraftError}
         />
+
+        {action === "allow" && (
+          <label className="block space-y-2 text-sm">
+            <span className="font-medium">Expires at (optional)</span>
+            <input
+              type="datetime-local"
+              value={expiry ?? localExpiry}
+              onChange={(event) => setExpiry(event.target.value)}
+              className="block w-full rounded-md border border-border bg-background px-3 py-2"
+            />
+            <span className="block text-xs text-text-muted">
+              Uses your local time. The rule stops granting new SSH sessions when it expires.
+            </span>
+          </label>
+        )}
 
         {reauthApplies && (
           <div

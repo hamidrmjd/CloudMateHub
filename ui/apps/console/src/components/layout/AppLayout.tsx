@@ -8,6 +8,7 @@ import { useSyncWorkspaceTab } from "@/hooks/useSyncWorkspaceTab";
 import TerminalManager from "../terminal/TerminalManager";
 import TabStrip from "./TabStrip";
 import WindowControls from "./WindowControls";
+import UpdateTutorial from "./UpdateTutorial";
 import ConnectivityBanner from "../common/ConnectivityBanner";
 import LicenseBanner from "../common/LicenseBanner";
 import DeviceLimitBanner from "@/components/common/DeviceLimitBanner";
@@ -157,6 +158,7 @@ export default function AppLayout() {
                       placement={isDesktop ? "tabStrip" : "tabStripAvatar"}
                     />
                   )}
+                  <UpdateTutorial />
                   <WindowControls
                     onOpenNavigation={
                       drawerNav ? handlers.toggleDrawer : undefined

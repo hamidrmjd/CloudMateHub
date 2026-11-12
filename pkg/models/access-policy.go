@@ -87,6 +87,8 @@ type AccessPolicy struct {
 	// Action is whether this policy grants (allow) or blocks (deny) the covered
 	// access. Defaults to allow.
 	Action PolicyAction `json:"action"`
+	// ExpiresAt stops an allow rule from granting new sessions after this time.
+	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 	// RequireReauth gates access granted by this policy on a fresh
 	// re-authentication (an out-of-band confirmation), even when the connecting
 	// key is already an identity. Off by default; the identity alone is the norm.

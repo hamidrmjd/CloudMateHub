@@ -40,3 +40,7 @@ HTTPS certificate revisions, encrypted TLS keys, the encryption master key, the 
 Server-side SSH recording and admin-selected local/NFS/S3 archive storage are described in [[10 Session Recording and Storage]]. PostgreSQL retains a recovery copy; destination changes preserve existing recordings.
 
 Local, Active Directory and OpenLDAP account trust and administrator user management are described in [[11 Directory Authentication and Users]]. Bind credentials are encrypted in the separate `directory-state` volume. User passwords are not persisted. Directory accounts use immutable external identifiers and are never merged into local accounts by email. Directory disabling invalidates token checks without deleting accounts or namespaces.
+
+## Temporary SSH grants
+
+Allow policies can store an optional expiration timestamp in PostgreSQL. The SSH policy evaluator skips expired grants for new sessions. Existing policies have no expiration, and deny rules continue to take precedence. Expiration does not terminate an open session. The policy form accepts the browser's local time and sends an absolute timestamp to the server. No persistent test fixtures were created.
