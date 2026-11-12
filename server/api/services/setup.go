@@ -137,7 +137,9 @@ func (s *service) Setup(ctx context.Context, req requests.Setup) (*models.UserAu
 	}
 
 	system.Setup = true
-	system.InstanceTenantID = namespace.TenantID
+	if !s.multiWorkspace {
+		system.InstanceTenantID = namespace.TenantID
+	}
 	if err := s.store.SystemSet(ctx, system); err != nil {
 		return nil, err
 	}

@@ -43,6 +43,7 @@ type service struct {
 	clock             clock.Clock
 
 	namespaceRequireVerifiedDeviceKey bool
+	multiWorkspace                    bool
 
 	edition      envs.Edition
 	version      string
@@ -149,6 +150,13 @@ func WithIssuer(issuer string) Option {
 func WithNamespaceRequireVerifiedDeviceKey(required bool) Option {
 	return func(service *APIService) {
 		service.namespaceRequireVerifiedDeviceKey = required
+	}
+}
+
+// WithMultiWorkspace leaves a newly configured instance unbound to a single workspace.
+func WithMultiWorkspace(enabled bool) Option {
+	return func(service *APIService) {
+		service.multiWorkspace = enabled
 	}
 }
 

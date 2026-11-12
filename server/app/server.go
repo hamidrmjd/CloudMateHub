@@ -106,6 +106,9 @@ type Env struct {
 	// that already exists keeps its own setting.
 	NamespaceRequireVerifiedDeviceKey bool `env:"SHELLHUB_NAMESPACE_REQUIRE_VERIFIED_DEVICE_KEY,default=true"`
 
+	// MultiWorkspace allows instance admins to create additional workspaces.
+	MultiWorkspace bool `env:"CLOUDMATEHUB_MULTI_WORKSPACE,default=false"`
+
 	// Edition is the edition the instance runs as. A value outside the three editions fails the
 	// parse, so a misconfigured instance stops at boot.
 	Edition envs.Edition `env:"SHELLHUB_EDITION"`
@@ -248,7 +251,7 @@ func (s *Server) Setup(ctx context.Context) error {
 		log.Info("Store wrapper applied")
 	}
 
-	if err := reconcileInstanceBinding(ctx, store); err != nil {
+	if err := reconcileInstanceBinding(ctx, store, s.env.MultiWorkspace); err != nil {
 		return errors.Join(errors.New("failed to reconcile instance binding"), err)
 	}
 
@@ -312,6 +315,7 @@ func (s *Server) Setup(ctx context.Context) error {
 		services.WithDevelopmentMode(s.env.Development()),
 		services.WithEnrollmentWebhookCIDRs(services.ParseEnrollmentWebhookCIDRs(s.env.EnrollmentWebhookAllowedCIDRs)),
 		services.WithNamespaceRequireVerifiedDeviceKey(s.env.NamespaceRequireVerifiedDeviceKey),
+		services.WithMultiWorkspace(s.env.MultiWorkspace),
 	)
 
 	privKey, pubKey, err := services.LoadKeys(s.env.PrivateKey, s.env.PublicKey)
@@ -393,7 +397,7 @@ func (s *Server) Setup(ctx context.Context) error {
 	return nil
 }
 
-func reconcileInstanceBinding(ctx context.Context, st store.Store) error {
+func reconcileInstanceBinding(ctx context.Context, st store.Store, multiWorkspace bool) error {
 	system, err := st.SystemGet(ctx)
 	if err != nil {
 		return err
@@ -401,6 +405,14 @@ func reconcileInstanceBinding(ctx context.Context, st store.Store) error {
 
 	if !system.Setup {
 		return nil
+	}
+
+	if multiWorkspace {
+		if system.InstanceTenantID == "" {
+			return nil
+		}
+		system.InstanceTenantID = ""
+		return st.SystemSet(ctx, system)
 	}
 
 	if system.InstanceTenantID == "" {

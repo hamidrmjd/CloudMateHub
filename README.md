@@ -187,3 +187,5 @@ Namespace owners and administrators can disconnect or reconnect an accepted agen
 ## Workspaces
 
 Use **Workspaces** to switch between the namespaces you belong to. Instance admins can browse every workspace, use **Show members** to see who belongs to it, create workspaces, and add users through **Team → Add Member**. Each workspace has its own devices, sessions, and team roles. For a multi-organization trial, create one workspace per organization. Instance settings and the website and VPN catalogs are shared across the installation and use their own assignment rules.
+
+For a self-hosted Community installation, set `CLOUDMATEHUB_MULTI_WORKSPACE=true` in the Compose environment and recreate the server to enable additional workspaces. The server keeps existing workspace IDs, memberships, and assets. Keep the setting enabled on installations that use multiple workspaces.

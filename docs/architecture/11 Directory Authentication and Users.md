@@ -9,6 +9,8 @@ CloudMateHub supports Local, Active Directory and OpenLDAP accounts in Community
 
 Both panels enforce live instance-administrator authorization on the server. Client navigation visibility is only presentation. New local and directory accounts have no administrator privileges, no namespace creation allowance and no device access. Existing account roles and data are unchanged.
 
+Self-hosted Community deployments can enable `CLOUDMATEHUB_MULTI_WORKSPACE=true`. Initial setup then leaves the system unbound to a single workspace. On upgrade, startup clears an existing single-workspace binding without changing the workspace or its memberships. Instance administrators can create additional workspaces and invite directory accounts to them. Workspace tokens and assets remain scoped to Hub membership.
+
 ## Sign-in and identity
 
 The login page offers Local plus enabled directory connections. Directory authentication is explicit; local sign-in never falls back to a directory. A service account searches for exactly one user, then the server binds as the resolved user with the submitted password. Blank passwords and ambiguous searches are refused. Passwords used to sign in are never persisted.
