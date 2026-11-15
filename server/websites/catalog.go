@@ -26,14 +26,15 @@ import (
 const Path = "/api/assigned-websites"
 
 type Assignment struct {
-	Kind string `json:"kind"`
+	Kind  string `json:"kind"`
 	Value string `json:"value"`
 }
 
 type Website struct {
-	ID string `json:"id"`
-	Name string `json:"name"`
-	URL string `json:"url"`
+	ID          string       `json:"id"`
+	Name        string       `json:"name"`
+	URL         string       `json:"url"`
+	ThroughHub  bool         `json:"through_hub,omitempty"`
 	Assignments []Assignment `json:"assignments,omitempty"`
 }
 
@@ -45,15 +46,16 @@ type identities interface {
 type groupCheck func(context.Context, *models.User, string, string) bool
 
 type Catalog struct {
-	mu sync.RWMutex
-	path string
-	sites []Website
-	db identities
-	inGroup groupCheck
+	mu         sync.RWMutex
+	path       string
+	sites      []Website
+	db         identities
+	inGroup    groupCheck
+	httpClient *http.Client
 }
 
 func New(dir string, db identities, inGroup groupCheck) (*Catalog, error) {
-	c := &Catalog{path: filepath.Join(dir, "websites.json"), db: db, inGroup: inGroup}
+	c := &Catalog{path: filepath.Join(dir, "websites.json"), db: db, inGroup: inGroup, httpClient: previewClient()}
 	data, err := os.ReadFile(c.path)
 	if errors.Is(err, os.ErrNotExist) {
 		return c, nil
@@ -116,7 +118,7 @@ func valid(site *Website) bool {
 	return true
 }
 
-func (c *Catalog) list(g *gateway.Context, id string) []Website {
+func (c *Catalog) list(g *gateway.Context, id, siteID string) []Website {
 	c.mu.RLock()
 	sites := slices.Clone(c.sites)
 	c.mu.RUnlock()
@@ -127,6 +129,9 @@ func (c *Catalog) list(g *gateway.Context, id string) []Website {
 	userResolved := false
 	checks := make(map[Assignment]bool)
 	for _, site := range sites {
+		if siteID != "" && site.ID != siteID {
+			continue
+		}
 		if g.IsAdmin() {
 			out = append(out, site)
 			continue
@@ -209,7 +214,7 @@ func (c *Catalog) Register(r *echo.Echo) {
 			return g.NoContent(http.StatusForbidden)
 		}
 		g.Response().Header().Set("Cache-Control", "no-store")
-		return g.JSON(http.StatusOK, c.list(g, id))
+		return g.JSON(http.StatusOK, c.list(g, id, ""))
 	}))
 	mutate := gateway.Handler(func(g *gateway.Context) error {
 		if _, ok := g.GetID(); !ok || !g.IsAdmin() || g.APIKeyID() != "" {
@@ -217,6 +222,7 @@ func (c *Catalog) Register(r *echo.Echo) {
 		}
 		return c.change(g)
 	})
+	r.GET(Path+"/:id/preview", gateway.Handler(c.preview))
 	r.POST(Path, mutate)
 	r.PUT(Path+"/:id", mutate)
 	r.DELETE(Path+"/:id", mutate)

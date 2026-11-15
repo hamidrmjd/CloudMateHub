@@ -53,3 +53,5 @@ Instance administrators can browse all workspaces and expand a workspace to read
 ## Update tutorials
 
 The signed-in console reads the current tutorial ID and steps from the bundled update catalog. It filters steps using the account and active workspace permissions. Dismissal is stored in the browser per account and tutorial ID. The sparkle button lets users reopen the tutorial. A new tutorial ID prompts the user again after deployment. No persistent server test fixtures were created.
+
+Each major user-facing update ships with a new tutorial ID. Release `v0.29.0` explains opening assigned websites through the Hub and shows website assignment and NVIDIA example setup to instance administrators.

@@ -25,7 +25,7 @@ it("opens once for the current update and can be replayed", async () => {
   const user = userEvent.setup();
   const first = mount();
   const dialog = screen.getByRole("dialog", { name: "What’s new" });
-  expect(within(dialog).getByText("Switch between workspaces")).toBeInTheDocument();
+  expect(within(dialog).getByText("Open assigned websites")).toBeInTheDocument();
   await user.click(within(dialog).getByRole("button", { name: "Done" }));
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   first.unmount();
@@ -42,7 +42,7 @@ it("shows administration steps to admins and allows moving back", async () => {
   mount();
   const dialog = within(screen.getByRole("dialog", { name: "What’s new" }));
   await user.click(dialog.getByRole("button", { name: "Next" }));
-  expect(dialog.getByText("Create a workspace and add members")).toBeInTheDocument();
+  expect(dialog.getByText("Set who can open a website")).toBeInTheDocument();
   await user.click(dialog.getByRole("button", { name: "Back" }));
-  expect(dialog.getByRole("link", { name: "Go to Workspaces" })).toHaveAttribute("href", "/workspaces");
+  expect(dialog.getByRole("link", { name: "Go to Websites" })).toHaveAttribute("href", "/websites");
 });

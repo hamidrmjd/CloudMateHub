@@ -11,3 +11,9 @@ If no persistent fixtures were created, record that no cleanup was needed. If ow
 ## Documentation
 
 Update README.md and the matching Obsidian architecture notes when a feature changes architecture, deployment, or data flows. The vault is `../CloudMateHub/CloudMateHub`. Keep secrets out of notes, diagrams, screenshots and Git. Preserve upstream licensing and source attribution.
+
+## Workstation Docker and What's New
+
+After implementing and verifying feature changes, build and deploy the latest changes to the workstation Docker stack for review. Use versioned images and preserve existing volumes and signing keys. GitHub pushes and Docker Hub publication still require the user's approval.
+
+For every major user-facing update, update the console's What's New catalog in `ui/apps/console/src/components/layout/updateTutorial.ts`. Give the update a new ID so users see it once, describe the new workflow in short steps, and gate admin-only steps by role. Verify the tutorial before the workstation rollout.

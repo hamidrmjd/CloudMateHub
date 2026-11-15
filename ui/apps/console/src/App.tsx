@@ -47,6 +47,7 @@ const AccessPolicies = lazy(() => import("./pages/access-policies"));
 const DirectorySettings = lazy(() => import("./pages/settings/DirectorySettings"));
 const Workspaces = lazy(() => import("./pages/Workspaces"));
 const Websites = lazy(() => import("./pages/Websites"));
+const WebsiteView = lazy(() => import("./pages/WebsiteView"));
 const BrowserConsole = lazy(() => import("./pages/BrowserConsole"));
 const UserManagement = lazy(() => import("./pages/UserManagement"));
 const StorageSettings = lazy(() => import("./pages/settings/StorageSettings"));
@@ -159,6 +160,7 @@ export default function App() {
               <Route path="/install" element={<Install />} />
             </Route>
             <Route element={<ProtectedRoute />}>
+              <Route path="/websites/:websiteId/view" element={<WebsiteView />} />
               <Route path="/profile/*" element={<LegacyProfileRedirect />} />
               <Route
                 path="/account/appearance"

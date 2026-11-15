@@ -176,7 +176,9 @@ Instance admins can set automatic recording cleanup in **Settings → Storage & 
 
 ## Assigned websites
 
-Open **Resources → Websites** to see links assigned to your account. Instance admins can add, edit, and remove links and assign them by Hub user ID, namespace ID, or an Active Directory or OpenLDAP group distinguished name. A link opens directly in a new browser tab using the user's network. Assignments control visibility in the Hub. The destination website enforces its own access policy.
+Open **Resources → Websites** to see links assigned to your account. Instance admins can show a link to everyone in the selected workspace or filter visibility by Hub users, workspaces, or Active Directory and OpenLDAP groups. Search by Hub username to select a user. **Open directly** opens the link in a new browser tab using the user's network. The destination website enforces its own access policy.
+
+For employees without internet access, enable **Proxy traffic through the Hub** when adding a public HTTP or HTTPS website. Assigned users can select **Open through Hub** to read the page in a new tab using the Hub’s internet connection. No separate host or port allowlist is needed. The preview supports static HTML and plain text. It blocks file downloads and leaves out scripts, forms, and external resources. **Add NVIDIA example** prefills a website for review before saving.
 
 The catalog is stored in the existing directory-state volume. [Assigned website architecture](docs/architecture/11%20Directory%20Authentication%20and%20Users.md#assigned-websites).
 

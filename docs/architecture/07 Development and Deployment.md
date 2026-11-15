@@ -59,3 +59,12 @@ Docker Hub deployment can set `CLOUDMATEHUB_IMAGE_COMPOSE_FILE=deployments/compo
 The Ubuntu deployment template pins the published Linux amd64/arm64 release. Verify the resolved image names with `./bin/docker-compose config --images` before pulling. Deployment configuration validation created no persistent fixtures.
 
 GitHub Actions publishes versioned amd64 images and writes a Git tag once every image is ready. On dar, a systemd timer checks those tags, pulls the full set and saves the active tag only after Compose startup checks pass. The existing Compose configuration and volumes provide the deployment state. No persistent test fixtures were created.
+
+## Agent network access
+
+The agent makes outbound API and WebSocket connections to its configured Hub
+URL. With the example mappings, use TCP 8080 for HTTP or TCP 8443 for HTTPS.
+TCP 2222 serves SSH clients connecting through the Hub. An agent can be
+offline in CloudMateHub while its host remains reachable over SSH.
+See [Agent connectivity through a firewall](../../deployments/ubuntu/README.md#agent-connectivity-through-a-firewall)
+for Docker firewall rules and verification.

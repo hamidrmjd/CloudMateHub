@@ -57,3 +57,7 @@ The authenticated website catalog stores its configuration in `websites.json` in
 No persistent test fixtures were created, so no cleanup was needed.
 
 Instance administrators can create local users and namespace groups from User Management over HTTP. Directory authentication and directory credential setup still require trusted HTTPS. HTTP does not encrypt local account passwords.
+
+The Websites form stores organization-wide visibility as a namespace assignment for the selected workspace and uses User Management search to resolve Hub usernames to stable account IDs. This change required no persistent test fixtures.
+
+A website marked `through_hub` has an authenticated read-only preview endpoint. It checks the same assignments as the catalog, then issues a GET from the Hub server to the saved public HTTP or HTTPS URL. The SSRF guard checks the resolved destination for each connection, including redirects. The fetcher forwards no Hub credentials, rejects attachment responses and non-page media types, and caps the body size. The response contains sanitized HTML or escaped text rendered in a sandboxed frame on a dedicated signed-in Hub route that opens in a new browser tab. The tab sends the existing Hub session through the normal authenticated API. Scripts, links, forms, and external resources are excluded. The NVIDIA example prefills an unsaved draft. No persistent verification fixtures were created.

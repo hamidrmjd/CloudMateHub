@@ -34,6 +34,25 @@ ssh -N -L 8080:127.0.0.1:8080 ubuntu@SERVER_IP
 
 Open [initial setup](http://localhost:8080/setup) and create the first administrator. For LAN access after setup, set SHELLHUB_BIND_ADDRESS and SHELLHUB_DOMAIN to the server's LAN IP in .env.override and rerun the start command.
 
+## Agent connectivity through a firewall
+
+Allow outbound TCP from each agent host to the host and port in its
+`SHELLHUB_SERVER_ADDRESS`. The agent uses that same endpoint for HTTP API
+requests and its WebSocket tunnel. No inbound device port is needed. For the
+example port mappings, allow TCP 8080 for HTTP, or TCP 8443 for HTTPS when the
+Hub has a certificate trusted by the agent. TCP 2222 is for SSH clients using
+the Hub and is separate from agent connectivity.
+
+On a Hub host that uses Docker's iptables backend, `DOCKER-USER` sees packets
+after Docker translates the destination port. For the 8080-to-80 mapping, a
+source-specific allow rule can match TCP destination port 80 together with
+`--ctorigdst HUB_IP --ctorigdstport 8080`. Insert it above the existing drop
+rule. Use the agent's source IP as seen by the Hub. Verify from the agent host
+with `curl --max-time 5 http://HUB_IP:8080/info`, then check for a fresh
+heartbeat in CloudMateHub. A live iptables rule must be added to the host's
+managed firewall configuration separately if it should survive a reload or
+reboot.
+
 ## Existing installation
 
 Run git pull --ff-only and add the three Docker Hub settings from [env.example](env.example) to your existing .env.override. Preserve the other settings, keys and volumes. Run the image check, pull and start commands above.
