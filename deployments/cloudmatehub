@@ -3,7 +3,14 @@ set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT"
 case "${1:-help}" in
-  build) exec ./bin/docker-compose build server ui gateway wgdashboard https-manager ;;
+  build)
+    set -- server ui gateway wgdashboard https-manager
+    services=$(./bin/docker-compose config --services)
+    if printf '%s\n' "$services" | grep -qx website-renderer; then
+      set -- "$@" website-renderer
+    fi
+    exec ./bin/docker-compose build "$@"
+    ;;
   start) umask 077; ./deployments/prepare-vpn; make keygen; exec ./bin/docker-compose up -d --wait --wait-timeout 180 ;;
   stop) exec ./bin/docker-compose stop ;;
   recovery) exec ./bin/docker-compose exec -T https-manager /https-manager recovery-url ;;

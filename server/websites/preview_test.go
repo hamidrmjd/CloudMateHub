@@ -23,6 +23,7 @@ func TestPreviewAuthorizationAndIsolation(t *testing.T) {
 	catalog := &Catalog{
 		sites: []Website{
 			{ID: "assigned", URL: "http://internal.example:8080/report", ThroughHub: true, Assignments: []Assignment{{Kind: "user", Value: "member"}}},
+			{ID: "script-only", URL: "http://internal.example:8080/app", ThroughHub: true, Assignments: []Assignment{{Kind: "user", Value: "member"}}},
 			{ID: "attachment", URL: "http://internal.example:8080/download", ThroughHub: true, Assignments: []Assignment{{Kind: "user", Value: "member"}}},
 			{ID: "direct", URL: "http://other.example/report", ThroughHub: false, Assignments: []Assignment{{Kind: "user", Value: "member"}}},
 		},
@@ -30,7 +31,11 @@ func TestPreviewAuthorizationAndIsolation(t *testing.T) {
 			fetches++
 			require.Empty(t, req.Header.Get("Authorization"))
 			require.Empty(t, req.Header.Get("Cookie"))
+			require.Contains(t, req.UserAgent(), "CloudMateHub-Preview")
 			header := http.Header{"Content-Type": {"text/html"}}
+			if req.URL.Path == "/app" {
+				return &http.Response{StatusCode: http.StatusOK, Header: header, Body: io.NopCloser(strings.NewReader(`<div id="root"></div><script src="/assets/app.js"></script>`))}, nil
+			}
 			if req.URL.Path == "/download" {
 				header.Set("Content-Disposition", "attachment; filename=report.html")
 			} else {
@@ -65,6 +70,7 @@ func TestPreviewAuthorizationAndIsolation(t *testing.T) {
 	body := check("member", "", "assigned", 200)
 	require.Equal(t, 1, fetches)
 	require.Contains(t, body, "Report")
+	require.Contains(t, check("member", "", "script-only", 422), "no readable content")
 	require.Contains(t, check("member", "", "attachment", 415), "Downloads are disabled")
 	for _, unsafe := range []string{"onclick", "bad()", "other.example", "action", "input"} {
 		require.NotContains(t, body, unsafe)

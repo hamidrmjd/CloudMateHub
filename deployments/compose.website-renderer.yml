@@ -1,0 +1,39 @@
+services:
+  server:
+    environment:
+      CLOUDMATEHUB_WEBSITE_RENDERER_SOCKET_DIR: /run/website-renderer
+      CLOUDMATEHUB_WEBSITE_HTTPS_RELAY: ${CLOUDMATEHUB_WEBSITE_HTTPS_RELAY:-}
+    volumes:
+      - website-renderer-sockets:/run/website-renderer
+  website-renderer:
+    image: cloudmatehub/website-renderer:v${CLOUDMATEHUB_VERSION:?Set CLOUDMATEHUB_VERSION}
+    build:
+      context: .
+      dockerfile: integrations/website-renderer/Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+    environment:
+      HOME: /tmp
+    init: true
+    network_mode: none
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    tmpfs: ["/tmp:size=256m"]
+    shm_size: 256m
+    mem_limit: 2g
+    pids_limit: 768
+    volumes:
+      - website-renderer-sockets:/run/website-renderer
+    depends_on:
+      server:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('node:fs').accessSync('/run/website-renderer/render.sock')"]
+      interval: 5s
+      timeout: 3s
+      retries: 6
+
+volumes:
+  website-renderer-sockets:

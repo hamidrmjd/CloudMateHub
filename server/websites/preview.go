@@ -1,11 +1,13 @@
 package websites
 
 import (
+	"context"
 	"html"
 	"io"
 	"mime"
 	"net"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -14,11 +16,45 @@ import (
 	nethtml "golang.org/x/net/html"
 )
 
-const previewLimit = 2 << 20
+const (
+	previewLimit     = 2 << 20
+	previewUserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 CloudMateHub-Preview/1.0 (+https://github.com/hamidrmjd/CloudMateHub)"
+)
+
+type httpsOriginRelay struct {
+	normal *http.Transport
+	relays map[string]*http.Transport
+}
+
+func (t httpsOriginRelay) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.URL.Scheme == "https" && (req.URL.Port() == "" || req.URL.Port() == "443") {
+		if relay := t.relays[strings.ToLower(req.URL.Hostname())]; relay != nil {
+			return relay.RoundTrip(req)
+		}
+	}
+	return t.normal.RoundTrip(req)
+}
 
 func previewClient() *http.Client {
 	guard := ssrf.New(ssrf.WithAnyPort())
 	dialer := net.Dialer{Timeout: 4 * time.Second, Control: guard.Safe}
+	direct := &http.Transport{
+		MaxResponseHeaderBytes: 64 << 10,
+		ForceAttemptHTTP2:      true,
+		DialContext:            dialer.DialContext,
+	}
+	transport := httpsOriginRelay{normal: direct, relays: make(map[string]*http.Transport)}
+	for _, setting := range strings.Split(os.Getenv("CLOUDMATEHUB_WEBSITE_HTTPS_RELAY"), ",") {
+		host, address, ok := strings.Cut(strings.TrimSpace(setting), "=")
+		if !ok || host == "" || address == "" {
+			continue
+		}
+		relay := direct.Clone()
+		relay.DialContext = func(ctx context.Context, network, _ string) (net.Conn, error) {
+			return (&net.Dialer{Timeout: 4 * time.Second}).DialContext(ctx, network, address)
+		}
+		transport.relays[strings.ToLower(host)] = relay
+	}
 	return &http.Client{
 		Timeout: 10 * time.Second,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
@@ -27,22 +63,20 @@ func previewClient() *http.Client {
 			}
 			return nil
 		},
-		Transport: &http.Transport{
-			MaxResponseHeaderBytes: 64 << 10,
-			DialContext:            dialer.DialContext,
-		},
+		Transport: transport,
 	}
 }
 
 // Keep static content and discard attributes and executable or embedded content.
-func staticHTML(body string) string {
+func staticHTML(body string) (string, bool) {
+	var hasText bool
 	var out strings.Builder
 	tokens := nethtml.NewTokenizer(strings.NewReader(body))
 	skip := ""
 	for {
 		kind := tokens.Next()
 		if kind == nethtml.ErrorToken {
-			return out.String()
+			return out.String(), hasText
 		}
 		token := tokens.Token()
 		if skip != "" {
@@ -52,6 +86,7 @@ func staticHTML(body string) string {
 			continue
 		}
 		if kind == nethtml.TextToken {
+			hasText = hasText || strings.TrimSpace(token.Data) != ""
 			out.WriteString(html.EscapeString(token.Data))
 			continue
 		}
@@ -59,7 +94,7 @@ func staticHTML(body string) string {
 			continue
 		}
 		switch token.Data {
-		case "head", "script", "style", "iframe", "svg", "math", "template":
+		case "head", "script", "style", "iframe", "svg", "math", "template", "noscript":
 			if kind == nethtml.StartTagToken {
 				skip = token.Data
 			}
@@ -90,6 +125,7 @@ func (c *Catalog) preview(g *gateway.Context) error {
 			return g.NoContent(http.StatusBadGateway)
 		}
 		req.Header.Set("Accept", "text/html, text/plain")
+		req.Header.Set("User-Agent", previewUserAgent)
 		response, err := c.httpClient.Do(req)
 		if err != nil {
 			return g.NoContent(http.StatusBadGateway)
@@ -111,8 +147,22 @@ func (c *Catalog) preview(g *gateway.Context) error {
 			return g.JSON(http.StatusBadGateway, map[string]string{"error": "The website response could not be read or exceeded 2 MiB."})
 		}
 		content := "<pre>" + html.EscapeString(string(body)) + "</pre>"
+		hasText := strings.TrimSpace(string(body)) != ""
 		if mediaType == "text/html" {
-			content = staticHTML(string(body))
+			content, hasText = staticHTML(string(body))
+		}
+		if mediaType == "text/html" && c.renderer != nil {
+			image, err := c.renderer.capture(g.Ctx(), response.Request.URL.String())
+			if err == nil {
+				payload := map[string]string{"name": site.Name, "image": image}
+				if hasText {
+					payload["html"] = content
+				}
+				return g.JSON(http.StatusOK, payload)
+			}
+		}
+		if !hasText {
+			return g.JSON(http.StatusUnprocessableEntity, map[string]string{"error": "This site returned no readable content for the Hub preview. It may require an interactive browser with JavaScript."})
 		}
 		return g.JSON(http.StatusOK, map[string]string{"name": site.Name, "html": content})
 	}

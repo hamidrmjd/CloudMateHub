@@ -52,10 +52,21 @@ type Catalog struct {
 	db         identities
 	inGroup    groupCheck
 	httpClient *http.Client
+	renderer   *renderer
 }
 
 func New(dir string, db identities, inGroup groupCheck) (*Catalog, error) {
 	c := &Catalog{path: filepath.Join(dir, "websites.json"), db: db, inGroup: inGroup, httpClient: previewClient()}
+	if dir := os.Getenv("CLOUDMATEHUB_WEBSITE_RENDERER_SOCKET_DIR"); dir != "" {
+		if err := os.Chmod(dir, 0o777); err != nil {
+			return nil, err
+		}
+		renderer, err := startRenderer(dir, c.httpClient)
+		if err != nil {
+			return nil, err
+		}
+		c.renderer = renderer
+	}
 	data, err := os.ReadFile(c.path)
 	if errors.Is(err, os.ErrNotExist) {
 		return c, nil
@@ -223,6 +234,7 @@ func (c *Catalog) Register(r *echo.Echo) {
 		return c.change(g)
 	})
 	r.GET(Path+"/:id/preview", gateway.Handler(c.preview))
+	r.POST(Path+"/:id/browser", gateway.Handler(c.browser))
 	r.POST(Path, mutate)
 	r.PUT(Path+"/:id", mutate)
 	r.DELETE(Path+"/:id", mutate)
