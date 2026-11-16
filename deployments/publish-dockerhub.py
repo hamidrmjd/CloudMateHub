@@ -2,13 +2,14 @@
 """Build and publish CloudMateHub images using Docker's existing credential store."""
 import argparse
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
-SERVICES = ('server', 'ui', 'gateway', 'https-manager', 'wgdashboard')
+SERVICES = ('server', 'ui', 'gateway', 'https-manager', 'wgdashboard', 'website-renderer')
 VERSION_TAG = r'v(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)'
 
 
@@ -31,7 +32,9 @@ def main():
         parser.error('supported platforms: linux/amd64,linux/arm64')
     # Keep runtime configuration in memory. Only source-build arguments go into Bake.
     config = json.loads(subprocess.check_output(
-        [str(ROOT / 'bin/docker-compose'), 'config', '--format', 'json'], cwd=ROOT, text=True))
+        [str(ROOT / 'bin/docker-compose'), 'config', '--format', 'json'], cwd=ROOT, text=True,
+        env={**os.environ, 'CLOUDMATEHUB_WEBSITE_RENDERER_COMPOSE_FILE':
+             'deployments/compose.website-renderer.yml'}))
     targets = {}
     for service in SERVICES:
         build = config['services'][service].get('build')

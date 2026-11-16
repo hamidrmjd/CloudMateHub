@@ -1,0 +1,4 @@
+services:
+  website-renderer:
+    image: ${CLOUDMATEHUB_DOCKERHUB_NAMESPACE:-hamidrazavi000}/cloudmatehub-website-renderer:${CLOUDMATEHUB_IMAGE_TAG:?Set CLOUDMATEHUB_IMAGE_TAG to a published version}
+    build: !reset null

@@ -111,7 +111,7 @@ if [ -n "$storage_compose" ]; then
     fi
     COMPOSE_FILE="${COMPOSE_FILE}:${storage_compose}"
 fi
-renderer_compose=$(env_var CLOUDMATEHUB_WEBSITE_RENDERER_COMPOSE_FILE "")
+renderer_compose=${CLOUDMATEHUB_WEBSITE_RENDERER_COMPOSE_FILE:-$(env_var CLOUDMATEHUB_WEBSITE_RENDERER_COMPOSE_FILE "")}
 if [ -n "$renderer_compose" ]; then
     COMPOSE_FILE="${COMPOSE_FILE}:${renderer_compose}"
 fi
@@ -131,6 +131,9 @@ if [ -n "$image_compose" ]; then
         esac
     fi
     COMPOSE_FILE="${COMPOSE_FILE}:${image_compose}"
+    if [ "${image_compose##*/}" = compose.dockerhub.yml ] && [ -n "$renderer_compose" ]; then
+        COMPOSE_FILE="${COMPOSE_FILE}:deployments/compose.website-renderer.dockerhub.yml"
+    fi
 fi
 export COMPOSE_FILE
 

@@ -182,6 +182,8 @@ For employees without internet access, enable **Proxy traffic through the Hub** 
 
 Source-built deployments enable this feature with `CLOUDMATEHUB_WEBSITE_RENDERER_COMPOSE_FILE=deployments/compose.website-renderer.yml` in `.env.override`, then build and start the Hub and `website-renderer` service. The worker has no Docker network and accesses public HTTP/HTTPS destinations through the Hub's SSRF-guarded Unix-socket broker. Every input/frame request rechecks website assignments. Website cookies stay inside the temporary remote browser; Hub credentials are never forwarded. Four concurrent sessions are supported by the default worker. WebSockets, file transfer, and browser permission dialogs are unsupported. Linked public websites remain browsable within the session; assignments control the starting website, not a domain allowlist. **Add NVIDIA example** prefills a website for review before saving.
 
+Docker Hub deployments can set the same renderer Compose option. The wrapper then pulls the versioned browser worker alongside the other published images.
+
 The catalog is stored in the existing directory-state volume. [Assigned website architecture](docs/architecture/11%20Directory%20Authentication%20and%20Users.md#assigned-websites).
 
 ## Agent connection controls
